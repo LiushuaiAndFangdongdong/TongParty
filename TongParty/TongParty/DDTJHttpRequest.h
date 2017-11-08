@@ -17,4 +17,22 @@
 + (void)loginWithMobile:(NSString *)mobile password:(NSString *)password block:(void(^)(NSDictionary *dict))dict failure:(void(^)())failure;
 /**用户详情页*/
 + (void)getUserDetailInfoWithToken:(NSString *)token block:(void(^)(NSDictionary *dict))dict failure:(void(^)())failure;
+
+
+
+/**创建桌子*/
+//+ (void)createDeskWithToken:(NSString *)token
 @end
+
+
+
+
+
+
+
+
+
+
+
+
+

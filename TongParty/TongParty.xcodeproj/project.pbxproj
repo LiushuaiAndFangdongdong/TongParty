@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4BA32F951FACD41F007E94F9 /* LSSortingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BA32F941FACD41F007E94F9 /* LSSortingView.m */; };
 		7FE31485F55A2C72A2918B02 /* Pods_TongParty.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B59ADC9FAFDF929FDA97EB90 /* Pods_TongParty.framework */; };
 		980093921F73975600FE0FE9 /* DDDeskViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 980093911F73975600FE0FE9 /* DDDeskViewController.m */; };
 		980093951F73979C00FE0FE9 /* DDJoinedVc.m in Sources */ = {isa = PBXBuildFile; fileRef = 980093941F73979C00FE0FE9 /* DDJoinedVc.m */; };
@@ -94,6 +93,12 @@
 		986E5A081FAABC8D00FD391C /* LSRecommendAddressCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 986E5A051FAABC8D00FD391C /* LSRecommendAddressCell.m */; };
 		986E5A101FAAEC6900FD391C /* LXAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 986E5A0D1FAAEB1700FD391C /* LXAlertView.m */; };
 		986E5A111FAAEC6900FD391C /* UILabel+LXAdd.m in Sources */ = {isa = PBXBuildFile; fileRef = 986E5A0F1FAAEB1700FD391C /* UILabel+LXAdd.m */; };
+		98752B331FACBDE100B94996 /* LLSegmentBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 98752B301FACBD0700B94996 /* LLSegmentBar.m */; };
+		98752B341FACBDE100B94996 /* LLSegmentBarConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 98752B321FACBD0800B94996 /* LLSegmentBarConfig.m */; };
+		98752B351FACBDE100B94996 /* LLSegmentBarVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 98752B2E1FACBD0700B94996 /* LLSegmentBarVC.m */; };
+		98752B361FACBDE100B94996 /* UIView+LLSegmentBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 98752B2C1FACBD0600B94996 /* UIView+LLSegmentBar.m */; };
+		98752B391FACBF8F00B94996 /* DDInterestTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 98752B381FACBF8F00B94996 /* DDInterestTableViewCell.m */; };
+		98752B3C1FACC07500B94996 /* DDStatusAvatar.m in Sources */ = {isa = PBXBuildFile; fileRef = 98752B3B1FACC07500B94996 /* DDStatusAvatar.m */; };
 		989420611F70C1A500AFF310 /* UIView+RedPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = 989420601F70C1A500AFF310 /* UIView+RedPoint.m */; };
 		989441321F9DC423000BA3E9 /* DDRadioButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 989441311F9DC423000BA3E9 /* DDRadioButton.m */; };
 		989441471F9DC87C000BA3E9 /* NSCalendar+DDPlus.m in Sources */ = {isa = PBXBuildFile; fileRef = 98578E0A1F8B58CC00FEF64D /* NSCalendar+DDPlus.m */; };
@@ -252,8 +257,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		4BA32F931FACD41F007E94F9 /* LSSortingView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LSSortingView.h; sourceTree = "<group>"; };
-		4BA32F941FACD41F007E94F9 /* LSSortingView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LSSortingView.m; sourceTree = "<group>"; };
 		75A4C4B7BBFC3961C6B13BE9 /* Pods-TongParty.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TongParty.release.xcconfig"; path = "Pods/Target Support Files/Pods-TongParty/Pods-TongParty.release.xcconfig"; sourceTree = "<group>"; };
 		980093901F73975600FE0FE9 /* DDDeskViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DDDeskViewController.h; sourceTree = "<group>"; };
 		980093911F73975600FE0FE9 /* DDDeskViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DDDeskViewController.m; sourceTree = "<group>"; };
@@ -432,6 +435,18 @@
 		986E5A0D1FAAEB1700FD391C /* LXAlertView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LXAlertView.m; sourceTree = "<group>"; };
 		986E5A0E1FAAEB1700FD391C /* LXAlertView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LXAlertView.h; sourceTree = "<group>"; };
 		986E5A0F1FAAEB1700FD391C /* UILabel+LXAdd.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UILabel+LXAdd.m"; sourceTree = "<group>"; };
+		98752B2B1FACBD0600B94996 /* UIView+LLSegmentBar.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIView+LLSegmentBar.h"; sourceTree = "<group>"; };
+		98752B2C1FACBD0600B94996 /* UIView+LLSegmentBar.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIView+LLSegmentBar.m"; sourceTree = "<group>"; };
+		98752B2D1FACBD0700B94996 /* LLSegmentBarVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LLSegmentBarVC.h; sourceTree = "<group>"; };
+		98752B2E1FACBD0700B94996 /* LLSegmentBarVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LLSegmentBarVC.m; sourceTree = "<group>"; };
+		98752B2F1FACBD0700B94996 /* LLSegmentBarConfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LLSegmentBarConfig.h; sourceTree = "<group>"; };
+		98752B301FACBD0700B94996 /* LLSegmentBar.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LLSegmentBar.m; sourceTree = "<group>"; };
+		98752B311FACBD0700B94996 /* LLSegmentBar.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LLSegmentBar.h; sourceTree = "<group>"; };
+		98752B321FACBD0800B94996 /* LLSegmentBarConfig.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LLSegmentBarConfig.m; sourceTree = "<group>"; };
+		98752B371FACBF8F00B94996 /* DDInterestTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DDInterestTableViewCell.h; sourceTree = "<group>"; };
+		98752B381FACBF8F00B94996 /* DDInterestTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DDInterestTableViewCell.m; sourceTree = "<group>"; };
+		98752B3A1FACC07500B94996 /* DDStatusAvatar.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DDStatusAvatar.h; sourceTree = "<group>"; };
+		98752B3B1FACC07500B94996 /* DDStatusAvatar.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DDStatusAvatar.m; sourceTree = "<group>"; };
 		9894205F1F70C1A500AFF310 /* UIView+RedPoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+RedPoint.h"; sourceTree = "<group>"; };
 		989420601F70C1A500AFF310 /* UIView+RedPoint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+RedPoint.m"; sourceTree = "<group>"; };
 		989441301F9DC422000BA3E9 /* DDRadioButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DDRadioButton.h; sourceTree = "<group>"; };
@@ -764,6 +779,10 @@
 		9800938D1F7396BD00FE0FE9 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				98752B371FACBF8F00B94996 /* DDInterestTableViewCell.h */,
+				98752B381FACBF8F00B94996 /* DDInterestTableViewCell.m */,
+				98752B3A1FACC07500B94996 /* DDStatusAvatar.h */,
+				98752B3B1FACC07500B94996 /* DDStatusAvatar.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -1026,8 +1045,6 @@
 				98F675B11F70FB980038E372 /* DDLoopProgressView.m */,
 				98F675B61F711E5E0038E372 /* NHHomeNeiHanShareView.h */,
 				98F675B71F711E5E0038E372 /* NHHomeNeiHanShareView.m */,
-				4BA32F931FACD41F007E94F9 /* LSSortingView.h */,
-				4BA32F941FACD41F007E94F9 /* LSSortingView.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -1424,6 +1441,29 @@
 			name = Alert;
 			sourceTree = "<group>";
 		};
+		98752B291FACBCDD00B94996 /* ThirdAPI */ = {
+			isa = PBXGroup;
+			children = (
+				98752B2A1FACBCF900B94996 /* LLSegmentBar */,
+			);
+			name = ThirdAPI;
+			sourceTree = "<group>";
+		};
+		98752B2A1FACBCF900B94996 /* LLSegmentBar */ = {
+			isa = PBXGroup;
+			children = (
+				98752B311FACBD0700B94996 /* LLSegmentBar.h */,
+				98752B301FACBD0700B94996 /* LLSegmentBar.m */,
+				98752B2F1FACBD0700B94996 /* LLSegmentBarConfig.h */,
+				98752B321FACBD0800B94996 /* LLSegmentBarConfig.m */,
+				98752B2D1FACBD0700B94996 /* LLSegmentBarVC.h */,
+				98752B2E1FACBD0700B94996 /* LLSegmentBarVC.m */,
+				98752B2B1FACBD0600B94996 /* UIView+LLSegmentBar.h */,
+				98752B2C1FACBD0600B94996 /* UIView+LLSegmentBar.m */,
+			);
+			name = LLSegmentBar;
+			sourceTree = "<group>";
+		};
 		9894414E1F9F1953000BA3E9 /* CYTabBar */ = {
 			isa = PBXGroup;
 			children = (
@@ -1602,6 +1642,7 @@
 		989931921F691A1700E4BCAA /* Other */ = {
 			isa = PBXGroup;
 			children = (
+				98752B291FACBCDD00B94996 /* ThirdAPI */,
 				985746701FA717500017E5D1 /* Pattern */,
 				985746551FA6D4C70017E5D1 /* Networking */,
 				98578E191F8B65AB00FEF64D /* Tools */,
@@ -2628,6 +2669,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				98752B331FACBDE100B94996 /* LLSegmentBar.m in Sources */,
+				98752B341FACBDE100B94996 /* LLSegmentBarConfig.m in Sources */,
+				98752B351FACBDE100B94996 /* LLSegmentBarVC.m in Sources */,
+				98752B361FACBDE100B94996 /* UIView+LLSegmentBar.m in Sources */,
 				98F40AF41FAC16F1002B06B6 /* DDStretchableTableHeaderView.m in Sources */,
 				986E5A101FAAEC6900FD391C /* LXAlertView.m in Sources */,
 				986E5A111FAAEC6900FD391C /* UILabel+LXAdd.m in Sources */,
@@ -2685,11 +2730,13 @@
 				985308ED1F6BC97A003B475C /* DDHomeListViewController.m in Sources */,
 				98DEFF451F78F094007F73D1 /* DDNumbersTextView.m in Sources */,
 				989931E91F69306900E4BCAA /* UIImage+ImageEffects.m in Sources */,
+				98752B391FACBF8F00B94996 /* DDInterestTableViewCell.m in Sources */,
 				989931DD1F69305F00E4BCAA /* UINavigationBar+Addition.m in Sources */,
 				98F675A31F70F0D60038E372 /* NSBundle+PYSearchExtension.m in Sources */,
 				98DEFF421F78EDA2007F73D1 /* DDUsercenterTableViewCell.m in Sources */,
 				9800939B1F739A1600FE0FE9 /* DDInterestedVc.m in Sources */,
 				985308E01F6BA6DF003B475C /* DDBaseTableViewController.m in Sources */,
+				98752B3C1FACC07500B94996 /* DDStatusAvatar.m in Sources */,
 				985746661FA6E2150017E5D1 /* DDTJHttpRequest.m in Sources */,
 				98F589D41F6A8127005E674A /* DDBaseImageView.m in Sources */,
 				9857466C1FA6E5BA0017E5D1 /* DDValidateManager.m in Sources */,
@@ -2840,7 +2887,6 @@
 				989932421F693A1800E4BCAA /* NSObject+AddProperty.m in Sources */,
 				989931C51F6925C300E4BCAA /* MBProgressHUD+NHAddition.m in Sources */,
 				980093B41F73C06800FE0FE9 /* DDUsercenterVc.m in Sources */,
-				4BA32F951FACD41F007E94F9 /* LSSortingView.m in Sources */,
 				98F589C21F6A7B05005E674A /* DDUserInfoManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

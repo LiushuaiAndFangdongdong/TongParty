@@ -139,6 +139,7 @@ height=305;\
             //
         }];
     });
+
 }
 - (void)initStretchHeader
 {
@@ -157,7 +158,7 @@ height=305;\
     self.stretchHeaderView = [DDStretchableTableHeaderView new];
     [self.stretchHeaderView stretchHeaderForTableView:self.tableView withView:bgImageView subViews:contentView];
     
-    [self.headerView updateUserInfoWith:_model];
+//    [self.headerView updateUserInfoWith:_model];
 }
 
 -(void)customNavi{
