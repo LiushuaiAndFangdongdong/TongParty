@@ -1,0 +1,6 @@
+framework module Pods_TongParty {
+  umbrella header "Pods-TongParty-umbrella.h"
+
+  export *
+  module * { export * }
+}
