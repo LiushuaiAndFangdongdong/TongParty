@@ -8,10 +8,12 @@
 
 #import "DDHomeMapViewController.h"
 #import "DDMAAnnotationView.h"
+#import "LSSortingView.h"
 
 @interface DDHomeMapViewController ()<MAMapViewDelegate>
 
 @property (nonatomic, strong)MAMapView *mapView;
+@property (nonatomic, strong)LSSortingView *sortingView;
 @end
 
 @implementation DDHomeMapViewController
@@ -20,7 +22,17 @@
     [super viewDidLoad];
     [AMapServices sharedServices].enableHTTPS = YES;
     [self.view addSubview:self.mapView];
+    [self.view addSubview:self.sortingView];
 }
+
+- (LSSortingView *)sortingView {
+    
+    if (!_sortingView) {
+        _sortingView = [[LSSortingView alloc] initWithFrame:CGRectMake(0, 64, kScreenWidth, 44)];
+    }
+    return _sortingView;
+}
+
 - (MAMapView *)mapView {
     
     if (!_mapView) {

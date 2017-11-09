@@ -162,6 +162,7 @@
 		989932521F693A4900E4BCAA /* NSArray+Addition.m in Sources */ = {isa = PBXBuildFile; fileRef = 989932511F693A4900E4BCAA /* NSArray+Addition.m */; };
 		989932551F693A5100E4BCAA /* NSNotificationCenter+Addition.m in Sources */ = {isa = PBXBuildFile; fileRef = 989932541F693A5100E4BCAA /* NSNotificationCenter+Addition.m */; };
 		989932581F693A8100E4BCAA /* NSDate+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 989932571F693A8100E4BCAA /* NSDate+Extension.m */; };
+		98B54A151FB4458B0071567E /* LSSortingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 98B54A131FB4458A0071567E /* LSSortingView.m */; };
 		98BD9F131F74BBAB0080A6FE /* UIButton+DDEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 98BD9F121F74BBAB0080A6FE /* UIButton+DDEvent.m */; };
 		98BD9F161F74BBC10080A6FE /* UIButton+DDImagePosition.m in Sources */ = {isa = PBXBuildFile; fileRef = 98BD9F151F74BBC10080A6FE /* UIButton+DDImagePosition.m */; };
 		98BF202E1F794D8D00E94394 /* DDAlbumCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 98BF202D1F794D8D00E94394 /* DDAlbumCellView.m */; };
@@ -569,6 +570,8 @@
 		989932541F693A5100E4BCAA /* NSNotificationCenter+Addition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSNotificationCenter+Addition.m"; sourceTree = "<group>"; };
 		989932561F693A8100E4BCAA /* NSDate+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+Extension.h"; sourceTree = "<group>"; };
 		989932571F693A8100E4BCAA /* NSDate+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+Extension.m"; sourceTree = "<group>"; };
+		98B54A131FB4458A0071567E /* LSSortingView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LSSortingView.m; sourceTree = "<group>"; };
+		98B54A141FB4458B0071567E /* LSSortingView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LSSortingView.h; sourceTree = "<group>"; };
 		98BD9F111F74BBAB0080A6FE /* UIButton+DDEvent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIButton+DDEvent.h"; sourceTree = "<group>"; };
 		98BD9F121F74BBAB0080A6FE /* UIButton+DDEvent.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIButton+DDEvent.m"; sourceTree = "<group>"; };
 		98BD9F141F74BBC10080A6FE /* UIButton+DDImagePosition.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIButton+DDImagePosition.h"; sourceTree = "<group>"; };
@@ -1045,6 +1048,8 @@
 				98F675B11F70FB980038E372 /* DDLoopProgressView.m */,
 				98F675B61F711E5E0038E372 /* NHHomeNeiHanShareView.h */,
 				98F675B71F711E5E0038E372 /* NHHomeNeiHanShareView.m */,
+				98B54A141FB4458B0071567E /* LSSortingView.h */,
+				98B54A131FB4458A0071567E /* LSSortingView.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -2863,6 +2868,7 @@
 				98C6AE4C1F7B9455001AAA47 /* DDFriendsViewController.m in Sources */,
 				98578E131F8B5A9600FEF64D /* UIView+DDPlus.m in Sources */,
 				98D5580A1F7E3261006124C5 /* DDPermissonViewController.m in Sources */,
+				98B54A151FB4458B0071567E /* LSSortingView.m in Sources */,
 				98BF20501F7A58FC00E94394 /* DDTongCoinVC.m in Sources */,
 				98C6AE441F7B837B001AAA47 /* DDTongCoinView.m in Sources */,
 				980093A21F73A4D900FE0FE9 /* DDDiscoverViewController.m in Sources */,

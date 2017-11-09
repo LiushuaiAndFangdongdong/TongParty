@@ -15,32 +15,15 @@
 
 @interface DDHomeMainVC ()<UISearchBarDelegate,PYSearchViewControllerDelegate,CYTabBarDelegate>
 
-@property (nonatomic, strong) UISearchBar *searchBar;
 @property (nonatomic, strong) UIScrollView *scrollView;
+@property (nonatomic, strong) UIView   *view_title;
+@property (nonatomic, strong) UILabel  *lbl_line;
 @property (nonatomic, strong) DDHomeListViewController *listVc;
 @property (nonatomic, strong) DDHomeMapViewController *mapVc;
 
 @end
 
 @implementation DDHomeMainVC
-
-- (UISearchBar *)searchBar {
-    if (!_searchBar) {
-        UIColor *color =  self.navigationController.navigationBar.barTintColor;
-        _searchBar = [[UISearchBar alloc] initWithFrame:CGRectZero];
-        _searchBar.delegate = self;
-        _searchBar.frame = CGRectMake(0, 0, DDFitWidth(240), DDFitHeight(30));
-        _searchBar.backgroundColor = color;
-        _searchBar.layer.cornerRadius = DDFitHeight(15);
-        _searchBar.layer.masksToBounds = YES;
-        [_searchBar.layer setBorderWidth:5];
-        [_searchBar.layer setBorderColor:[UIColor whiteColor].CGColor];  //设置边框为白色
-        _searchBar.backgroundImage = [NSBundle py_imageNamed:@"clearImage"];
-        _searchBar.text = @"你看他在狼人杀";
-        //[self.searchBar resignFirstResponder];
-    }
-    return _searchBar;
-}
 
 -(UIScrollView *)scrollView{
     if (!_scrollView) {
@@ -51,8 +34,36 @@
         _scrollView.contentSize     = CGSizeMake(kScreenWidth * 2, kScreenHeight);
         _scrollView.pagingEnabled   = YES;
         _scrollView.bounces         = NO;
+        _scrollView.scrollEnabled   = NO;
     }
     return _scrollView;
+}
+
+- (UIView *)view_title {
+    if (!_view_title) {
+        UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth/3.f, 40)];
+        UIButton *btn_map = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth/6.f, 35)];
+        btn_map.titleLabel.font = DDFitFont(16.f);
+        [btn_map setTitle:@"地图" forState:UIControlStateNormal];
+        [btn_map setTitleColor:kRGBColor(123.f, 198.f, 239.f) forState:UIControlStateNormal];
+        btn_map.tag = 3607;
+        [btn_map addTarget:self action:@selector(modelTransform:) forControlEvents:UIControlEventTouchUpInside];
+        [view addSubview:btn_map];
+        UIButton *btn_list = [[UIButton alloc] initWithFrame:CGRectMake(kScreenWidth/6.f, 0, kScreenWidth/6.f, 35)];
+        btn_list.titleLabel.font = DDFitFont(16.f);
+        [btn_list setTitle:@"列表" forState:UIControlStateNormal];
+        [btn_list setTitleColor:kCommonGrayTextColor forState:UIControlStateNormal];
+        btn_list.tag = 3608;
+        [btn_list addTarget:self action:@selector(modelTransform:) forControlEvents:UIControlEventTouchUpInside];
+        [view addSubview:btn_list];
+        _lbl_line = [[UILabel alloc] initWithFrame:CGRectMake(0, 39, kScreenWidth/7.f, 3)];
+        _lbl_line.centerX = btn_map.centerX;
+        _lbl_line.backgroundColor = kRGBColor(123.f, 198.f, 239.f);
+        [view addSubview:_lbl_line];
+        _view_title = view;
+    }
+    
+    return _view_title;
 }
 -(DDHomeMapViewController *)mapVc{
     if (!_mapVc) {
@@ -83,26 +94,19 @@
     self.listVc.view.frame = CGRectMake(kScreenWidth, 0, kScreenWidth, kScreenHeight);
     [self.scrollView addSubview:self.mapVc.view];
     [self.scrollView addSubview:self.listVc.view];
-//    [self.view addSubview:self.contentView];
+    //    [self.view addSubview:self.contentView];
 }
 
 -(void)customNavi{
     
-    //搜索栏
-    UIView *titleView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, DDFitWidth(240), DDFitHeight(30))];
-    titleView.backgroundColor = [UIColor whiteColor];
-    UIColor *color =  self.navigationController.navigationBar.barTintColor;
-    [titleView setBackgroundColor:color];
-    [titleView addSubview:self.searchBar];
-    [self.navigationItem.titleView sizeToFit];
-    self.navigationItem.titleView = titleView;
-    
+    // title 视图
+    self.navigationItem.titleView = self.view_title;
     //左边消息按钮
-    UIBarButtonItem *leftBtn = [self customButtonForNavigationBarWithAction:@selector(messagesAction) imageNamed:@"navi_message" isRedPoint:YES pointValue:@"99" CGSizeMake:CGSizeMake(20, 15)];
+    UIBarButtonItem *leftBtn = [self customButtonForNavigationBarWithAction:@selector(messagesAction) imageNamed:@"navi_nf" isRedPoint:YES pointValue:@"9" CGSizeMake:CGSizeMake(20, 15)];
     self.navigationItem.leftBarButtonItem = leftBtn;
     
     //右边items
-    self.navigationItem.rightBarButtonItems = [self customVariousButtonForNavigationBarWithFirstAction:@selector(modelTransform) firstImage:@"navi_list" firstIsRedPoint:NO firstPointValue:nil secondAction:@selector(scanAction) secondImage:@"navi_scan" secondIsRedPoint:NO secondPointValue:nil];
+    self.navigationItem.rightBarButtonItems = [self customVariousButtonForNavigationBarWithFirstAction:@selector(scanAction) firstImage:@"navi_scan" firstIsRedPoint:NO firstPointValue:nil secondAction:@selector(searchAction) secondImage:@"navi_search" secondIsRedPoint:NO secondPointValue:nil];
 }
 #pragma mark - CYTabBarDelegate
 //中间按钮点击
@@ -119,43 +123,16 @@
     NSLog(@"切换到---> %ld",index);
 }
 
-#pragma mark - search bar delegate
-
-- (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar {
-    
-    // 1. Create an Array of popular search
-    NSArray *hotSeaches = @[@"狼人杀", @"三国杀", @"万纸牌", @"麻将", @"斗地主", @"跑团", @"唱K", @"夜店", @"撸串儿", @"咖啡厅", @"JYClub", @"吃鸡", @"小龙虾", @"桌游"];
-    PYSearchViewController *searchViewController = [PYSearchViewController searchViewControllerWithHotSearches:hotSeaches searchBarPlaceholder: @"搜索活动" didSearchBlock:^(PYSearchViewController *searchViewController, UISearchBar *searchBar, NSString *searchText) {
-        // Called when search begain.
-        // eg：Push to a temp view controller
-        
-        searchViewController.searchHistoryStyle = PYHotSearchStyleDefault;
-        
-        self.searchBar.text = searchText;
-        [searchViewController dismissViewControllerAnimated:YES completion:nil];
-        
-    }];
-    searchViewController.hotSearchStyle = PYHotSearchStyleColorfulTag;
-    
-    // 4. Set delegate
-    searchViewController.delegate = self;
-    // 5. Present a navigation controller
-    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:searchViewController];
-    [self presentViewController:nav animated:YES completion:nil];
-}
-
 #pragma mark - PYSearchViewControllerDelegate
 - (void)searchViewController:(PYSearchViewController *)searchViewController searchTextDidChange:(UISearchBar *)seachBar searchText:(NSString *)searchText
 {
     if (searchText.length) {
-        // Simulate a send request to get a search suggestions
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.25 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             NSMutableArray *searchSuggestionsM = [NSMutableArray array];
             for (int i = 0; i < arc4random_uniform(5) + 10; i++) {
                 NSString *searchSuggestion = [NSString stringWithFormat:@"Search suggestion %d", i];
                 [searchSuggestionsM addObject:searchSuggestion];
             }
-            // Refresh and display the search suggustions
             searchViewController.searchSuggestions = searchSuggestionsM;
         });
     }
@@ -168,16 +145,48 @@
     
 }
 -(void)scanAction{
-
-  
+    
 }
-//地图和列表模式切换
--(void)modelTransform{
-    [UIView animateWithDuration:0.5f animations:^{
-        self.scrollView.contentOffset = CGPointMake(kScreenWidth, 0);
-    } completion:^(BOOL finished) {
-        //
+
+- (void) searchAction {
+    NSArray *hotSeaches = @[@"狼人杀", @"三国杀", @"万纸牌", @"麻将", @"斗地主", @"跑团", @"唱K", @"夜店", @"撸串儿", @"咖啡厅", @"JYClub", @"吃鸡", @"小龙虾", @"桌游"];
+    PYSearchViewController *searchViewController = [PYSearchViewController searchViewControllerWithHotSearches:hotSeaches searchBarPlaceholder: @"搜索活动" didSearchBlock:^(PYSearchViewController *searchViewController, UISearchBar *searchBar, NSString *searchText) {
+        searchViewController.searchHistoryStyle = PYHotSearchStyleDefault;
+        [searchViewController dismissViewControllerAnimated:YES completion:nil];
     }];
+    searchViewController.hotSearchStyle = PYHotSearchStyleColorfulTag;
+    searchViewController.delegate = self;
+    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:searchViewController];
+    [self presentViewController:nav animated:YES completion:nil];
+}
+
+//地图和列表模式切换
+-(void)modelTransform:(UIButton *)sender {
+    
+    for (id obj in [_view_title subviews]) {
+        if ([obj isKindOfClass:[UIButton class]]) {
+            UIButton *btn = (UIButton *)obj;
+            if (btn.tag != sender.tag) {
+                [btn setTitleColor:kCommonGrayTextColor forState:UIControlStateNormal];
+            }
+        }
+    }
+    [sender setTitleColor:kRGBColor(123.f, 198.f, 239.f) forState:UIControlStateNormal];
+    if (sender.tag == 3608 ) {
+        [UIView animateWithDuration:0.5f animations:^{
+            self.scrollView.contentOffset = CGPointMake(kScreenWidth, 0);
+            _lbl_line.centerX = sender.centerX;
+        } completion:^(BOOL finished) {
+            //
+        }];
+    } else {
+        [UIView animateWithDuration:0.5f animations:^{
+            self.scrollView.contentOffset = CGPointMake(0, 0);
+            _lbl_line.centerX = sender.centerX;
+        } completion:^(BOOL finished) {
+            //
+        }];
+    }
     
 }
 
