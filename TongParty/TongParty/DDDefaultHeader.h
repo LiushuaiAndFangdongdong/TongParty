@@ -130,9 +130,9 @@ typedef NS_ENUM(NSUInteger, DDHomeAttentionListType) {
 
 #define DDUserDefault [NSUserDefaults standardUserDefaults]
 
-#define DDFitFont(font) [UIFont systemFontOfSize:(font/667.f)*kScreenHeight]
-#define DDFitWidth(w) (w/375.f)*kScreenWidth
-#define DDFitHeight(h) (h/667.f)*kScreenHeight
+#define DDFitFont(font) (iPhoneX ? [UIFont systemFontOfSize:(font)] : [UIFont systemFontOfSize:(font/667.f)*kScreenHeight])
+#define DDFitWidth(w) (iPhoneX ? w : (w/375.f)*kScreenWidth)
+#define DDFitHeight(h) (iPhoneX ? h : (h/667.f)*kScreenHeight)
 
 
 //第三方服务的key

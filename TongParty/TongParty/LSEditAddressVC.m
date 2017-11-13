@@ -7,12 +7,16 @@
 //
 
 #import "LSEditAddressVC.h"
+#import "DDPickerArea.h"
 #import "LSEditAddressTableViewCell.h"
 
-@interface LSEditAddressVC ()
-<UITableViewDelegate,UITableViewDataSource>
+@interface LSEditAddressVC ()<
+DDPickerAreaDelegate,
+UITableViewDelegate,
+UITableViewDataSource>
 @property (nonatomic, strong)UITableView  *tableview;
 @property (nonatomic, strong)UIButton     *btn_saveAddress;
+@property (nonatomic, strong)DDPickerArea *area_picker;
 @end
 
 @implementation LSEditAddressVC
@@ -44,7 +48,7 @@
     [self.view addSubview:self.btn_saveAddress];
     [_btn_saveAddress mas_makeConstraints:^(MASConstraintMaker *make) {
         make.bottom.right.left.equalTo(weakSelf.view);
-        make.height.mas_equalTo(DDFitHeight(45.f));
+        make.height.mas_equalTo(kTabBarHeight);
     }];
 }
 
@@ -75,6 +79,14 @@
         _btn_saveAddress.titleLabel.font = DDFitFont(16.f);
     }
     return _btn_saveAddress;
+}
+
+- (DDPickerArea *)area_picker {
+    if (!_area_picker) {
+        _area_picker = [[DDPickerArea alloc] init];
+        _area_picker.delegate = self;
+    }
+    return _area_picker;
 }
 
 
@@ -132,6 +144,18 @@
     return cell;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [self.tableview endEditing:YES];
+    if (indexPath.row == 0) {
+        [self.area_picker show];
+    }
+}
+
+#pragma mark DDPickerArea Delegate
+- (void)pickerArea:(DDPickerArea *)pickerArea province:(NSString *)province city:(NSString *)city area:(NSString *)area {
+    
+    
+}
 
 
 - (void)didReceiveMemoryWarning {

@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface LSSortingView : UIView
-
+@property (nonatomic, copy) void(^onTapBlcok)(NSInteger index);
 @end

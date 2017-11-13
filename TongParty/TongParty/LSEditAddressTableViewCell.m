@@ -9,8 +9,8 @@
 #import "LSEditAddressTableViewCell.h"
 
 @interface LSEditAddressTableViewCell ()<UITextFieldDelegate>
-
-
+@property (nonatomic, strong)UILabel     *lbl_title;
+@property (nonatomic, strong)UITextField *tf_address;
 @end
 
 @implementation LSEditAddressTableViewCell
@@ -20,39 +20,39 @@
     _style = style;
     switch (_style) {
         case LSCreateCellSytleAddressLable:{
-            UILabel *lbl_title = [UILabel new];
-            [self.contentView addSubview:lbl_title];
-            [lbl_title mas_makeConstraints:^(MASConstraintMaker *make) {
+            _lbl_title = [UILabel new];
+            [self.contentView addSubview:self.lbl_title];
+            [_lbl_title mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.left.mas_equalTo(self.contentView).offset(DDFitWidth(10.f));
                 make.height.equalTo(self.contentView).multipliedBy(0.7f);
                 make.centerY.equalTo(self.contentView);
             }];
-            lbl_title.text = @"所在地区：  北京市朝阳区三环到四环之间";
-            lbl_title.font = DDFitFont(15.f);
-            lbl_title.textColor = kBlackColor;
+            _lbl_title.text = @"所在地区：  北京市朝阳区三环到四环之间";
+            _lbl_title.font = DDFitFont(15.f);
+            _lbl_title.textColor = kBlackColor;
             self.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         }break;
         case LSCreateCellSytleEditAddress:{
-            UILabel *lbl_title = [UILabel new];
-            [self.contentView addSubview:lbl_title];
-            [lbl_title mas_makeConstraints:^(MASConstraintMaker *make) {
+            _lbl_title = [UILabel new];
+            [self.contentView addSubview:self.lbl_title];
+            [_lbl_title mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.left.mas_equalTo(self.contentView).offset(DDFitWidth(10.f));
                 make.height.equalTo(self.contentView).multipliedBy(0.7f);
                 make.centerY.equalTo(self.contentView);
             }];
-            lbl_title.text = @"详细地址：";
-            lbl_title.font = DDFitFont(15.f);
-            lbl_title.textColor = kBlackColor;
-            UITextField *tf_address = [UITextField new];
-            [self.contentView addSubview:tf_address];
-            [tf_address mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.left.mas_equalTo(lbl_title.mas_right).offset(DDFitWidth(5.f));
+            _lbl_title.text = @"详细地址：";
+            _lbl_title.font = DDFitFont(15.f);
+            _lbl_title.textColor = kBlackColor;
+            _tf_address = [UITextField new];
+            [self.contentView addSubview:self.tf_address];
+            [_tf_address mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.left.mas_equalTo(_lbl_title.mas_right).offset(DDFitWidth(5.f));
                 make.height.equalTo(self.contentView).multipliedBy(0.7f);
                 make.centerY.equalTo(self.contentView);
             }];
-            tf_address.font = DDFitFont(15.f);
-            tf_address.textColor = kBlackColor;
-            tf_address.placeholder = @"北京市朝阳区三环到四环之间";
+            _tf_address.font = DDFitFont(15.f);
+            _tf_address.textColor = kBlackColor;
+            _tf_address.placeholder = @"北京市朝阳区三环到四环之间";
             
         }break;
         case LSCreateCellSytleLableManager:{
@@ -85,7 +85,6 @@
         default:
             break;
     }
-    
 }
 
 

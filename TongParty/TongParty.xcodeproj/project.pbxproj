@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4B05AD0F1FB83B7C007583E9 /* LSCreateDeskChildLabelCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B05AD0E1FB83B7C007583E9 /* LSCreateDeskChildLabelCell.m */; };
+		4B05AD121FB88D57007583E9 /* area.plist in Sources */ = {isa = PBXBuildFile; fileRef = 98578E181F8B635100FEF64D /* area.plist */; };
 		7FE31485F55A2C72A2918B02 /* Pods_TongParty.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B59ADC9FAFDF929FDA97EB90 /* Pods_TongParty.framework */; };
 		980093921F73975600FE0FE9 /* DDDeskViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 980093911F73975600FE0FE9 /* DDDeskViewController.m */; };
 		980093951F73979C00FE0FE9 /* DDJoinedVc.m in Sources */ = {isa = PBXBuildFile; fileRef = 980093941F73979C00FE0FE9 /* DDJoinedVc.m */; };
@@ -258,6 +260,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4B05AD0D1FB83B7C007583E9 /* LSCreateDeskChildLabelCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LSCreateDeskChildLabelCell.h; sourceTree = "<group>"; };
+		4B05AD0E1FB83B7C007583E9 /* LSCreateDeskChildLabelCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LSCreateDeskChildLabelCell.m; sourceTree = "<group>"; };
 		75A4C4B7BBFC3961C6B13BE9 /* Pods-TongParty.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TongParty.release.xcconfig"; path = "Pods/Target Support Files/Pods-TongParty/Pods-TongParty.release.xcconfig"; sourceTree = "<group>"; };
 		980093901F73975600FE0FE9 /* DDDeskViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DDDeskViewController.h; sourceTree = "<group>"; };
 		980093911F73975600FE0FE9 /* DDDeskViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DDDeskViewController.m; sourceTree = "<group>"; };
@@ -1190,19 +1194,19 @@
 				98578E041F8B58A000FEF64D /* DDPickerView.m */,
 				98578E071F8B58B900FEF64D /* 单数组 */,
 				98578E061F8B58B100FEF64D /* 日期 */,
-				98578E051F8B58A900FEF64D /* 地区 */,
+				98578E051F8B58A900FEF64D /* AreaPicker */,
 			);
 			name = PickerView;
 			sourceTree = "<group>";
 		};
-		98578E051F8B58A900FEF64D /* 地区 */ = {
+		98578E051F8B58A900FEF64D /* AreaPicker */ = {
 			isa = PBXGroup;
 			children = (
 				98578E181F8B635100FEF64D /* area.plist */,
 				98578E0F1F8B58DA00FEF64D /* DDPickerArea.h */,
 				98578E0E1F8B58DA00FEF64D /* DDPickerArea.m */,
 			);
-			name = "地区";
+			name = AreaPicker;
 			sourceTree = "<group>";
 		};
 		98578E061F8B58B100FEF64D /* 日期 */ = {
@@ -1406,6 +1410,8 @@
 			children = (
 				986E59F71FAABC7000FD391C /* LSCreateDeskTableViewCell.h */,
 				986E59F51FAABC7000FD391C /* LSCreateDeskTableViewCell.m */,
+				4B05AD0D1FB83B7C007583E9 /* LSCreateDeskChildLabelCell.h */,
+				4B05AD0E1FB83B7C007583E9 /* LSCreateDeskChildLabelCell.m */,
 				986E59ED1FAABC6F00FD391C /* LSCDTitleItemView.h */,
 				986E59F11FAABC7000FD391C /* LSCDTitleItemView.m */,
 				986E59F31FAABC7000FD391C /* LSCreateDeskActionCellView.h */,
@@ -2674,6 +2680,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4B05AD121FB88D57007583E9 /* area.plist in Sources */,
 				98752B331FACBDE100B94996 /* LLSegmentBar.m in Sources */,
 				98752B341FACBDE100B94996 /* LLSegmentBarConfig.m in Sources */,
 				98752B351FACBDE100B94996 /* LLSegmentBarVC.m in Sources */,
@@ -2693,6 +2700,7 @@
 				9853D7371FA02C9A004AD6BF /* PlusAnimate.m in Sources */,
 				989441471F9DC87C000BA3E9 /* NSCalendar+DDPlus.m in Sources */,
 				98578E5E1F909B2000FEF64D /* CCDraggableContainer.m in Sources */,
+				4B05AD0F1FB83B7C007583E9 /* LSCreateDeskChildLabelCell.m in Sources */,
 				98578E5D1F909B1B00FEF64D /* CCDraggableCardView.m in Sources */,
 				98578E5C1F909B1400FEF64D /* CustomCardView.m in Sources */,
 				98578E491F905E8B00FEF64D /* YLButton.m in Sources */,

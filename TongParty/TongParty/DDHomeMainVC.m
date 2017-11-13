@@ -27,7 +27,7 @@
 
 -(UIScrollView *)scrollView{
     if (!_scrollView) {
-        _scrollView  = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight)];
+        _scrollView  = [[UIScrollView alloc]initWithFrame:self.view.bounds];
         _scrollView.delegate = self;
         _scrollView.showsHorizontalScrollIndicator  = NO;
         _scrollView.showsVerticalScrollIndicator    = NO;
@@ -35,6 +35,7 @@
         _scrollView.pagingEnabled   = YES;
         _scrollView.bounces         = NO;
         _scrollView.scrollEnabled   = NO;
+        _scrollView.backgroundColor = [UIColor blackColor];
     }
     return _scrollView;
 }
@@ -43,14 +44,14 @@
     if (!_view_title) {
         UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth/3.f, 40)];
         UIButton *btn_map = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth/6.f, 35)];
-        btn_map.titleLabel.font = DDFitFont(16.f);
+        btn_map.titleLabel.font = DDFitFont(15.f);
         [btn_map setTitle:@"地图" forState:UIControlStateNormal];
         [btn_map setTitleColor:kRGBColor(123.f, 198.f, 239.f) forState:UIControlStateNormal];
         btn_map.tag = 3607;
         [btn_map addTarget:self action:@selector(modelTransform:) forControlEvents:UIControlEventTouchUpInside];
         [view addSubview:btn_map];
         UIButton *btn_list = [[UIButton alloc] initWithFrame:CGRectMake(kScreenWidth/6.f, 0, kScreenWidth/6.f, 35)];
-        btn_list.titleLabel.font = DDFitFont(16.f);
+        btn_list.titleLabel.font = DDFitFont(15.f);
         [btn_list setTitle:@"列表" forState:UIControlStateNormal];
         [btn_list setTitleColor:kCommonGrayTextColor forState:UIControlStateNormal];
         btn_list.tag = 3608;
@@ -65,15 +66,19 @@
     
     return _view_title;
 }
+
 -(DDHomeMapViewController *)mapVc{
     if (!_mapVc) {
         _mapVc = [[DDHomeMapViewController alloc]init];
+        _mapVc.view.frame = CGRectMake(0, 0, kScreenWidth, kScreenHeight);
     }
     return _mapVc;
 }
+
 -(DDHomeListViewController *)listVc{
     if (!_listVc) {
         _listVc = [[DDHomeListViewController alloc]init];
+        _listVc.view.frame = CGRectMake(kScreenWidth, 0, kScreenWidth, kScreenHeight);
     }
     return _listVc;
 }
@@ -89,16 +94,11 @@
     [self.view addSubview:self.scrollView];
     [self addChildViewController:self.mapVc];
     [self addChildViewController:self.listVc];
-    
-    self.mapVc.view.frame = CGRectMake(0, 0, kScreenWidth, kScreenHeight);
-    self.listVc.view.frame = CGRectMake(kScreenWidth, 0, kScreenWidth, kScreenHeight);
     [self.scrollView addSubview:self.mapVc.view];
     [self.scrollView addSubview:self.listVc.view];
-    //    [self.view addSubview:self.contentView];
 }
 
 -(void)customNavi{
-    
     // title 视图
     self.navigationItem.titleView = self.view_title;
     //左边消息按钮
@@ -138,17 +138,17 @@
     }
 }
 
-
 #pragma mark - push
 
 -(void)messagesAction{
     
 }
+
 -(void)scanAction{
     
 }
 
-- (void) searchAction {
+- (void)searchAction {
     NSArray *hotSeaches = @[@"狼人杀", @"三国杀", @"万纸牌", @"麻将", @"斗地主", @"跑团", @"唱K", @"夜店", @"撸串儿", @"咖啡厅", @"JYClub", @"吃鸡", @"小龙虾", @"桌游"];
     PYSearchViewController *searchViewController = [PYSearchViewController searchViewControllerWithHotSearches:hotSeaches searchBarPlaceholder: @"搜索活动" didSearchBlock:^(PYSearchViewController *searchViewController, UISearchBar *searchBar, NSString *searchText) {
         searchViewController.searchHistoryStyle = PYHotSearchStyleDefault;
@@ -174,14 +174,14 @@
     [sender setTitleColor:kRGBColor(123.f, 198.f, 239.f) forState:UIControlStateNormal];
     if (sender.tag == 3608 ) {
         [UIView animateWithDuration:0.5f animations:^{
-            self.scrollView.contentOffset = CGPointMake(kScreenWidth, 0);
+            self.scrollView.contentOffset = CGPointMake(kScreenWidth, -kNavigationBarHeight);
             _lbl_line.centerX = sender.centerX;
         } completion:^(BOOL finished) {
             //
         }];
     } else {
         [UIView animateWithDuration:0.5f animations:^{
-            self.scrollView.contentOffset = CGPointMake(0, 0);
+            self.scrollView.contentOffset = CGPointMake(0, -kNavigationBarHeight);
             _lbl_line.centerX = sender.centerX;
         } completion:^(BOOL finished) {
             //

@@ -9,9 +9,10 @@
 #import "LSRecommendAddressVC.h"
 #import "LSRecommendAddressCell.h"
 #import "DOPDropDownMenu.h"
-@interface LSRecommendAddressVC ()<UISearchBarDelegate,DOPDropDownMenuDataSource,DOPDropDownMenuDelegate>
+#import "LSSortingView.h"
+@interface LSRecommendAddressVC ()<UISearchBarDelegate>
 @property (nonatomic, strong) UISearchBar *searchBar;
-@property (nonatomic, weak) DOPDropDownMenu *menu;
+@property (nonatomic, strong) LSSortingView *sortingView;
 @property (nonatomic, strong) NSArray *classifys;
 @end
 
@@ -77,6 +78,16 @@
     return _searchBar;
 }
 
+- (LSSortingView *)sortingView {
+    if (!_sortingView) {
+        _sortingView = [[LSSortingView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, 40)];
+        _sortingView.onTapBlcok = ^(NSInteger index) {
+            NSLog(@"%ld",index);
+        };
+    }
+    return _sortingView;
+}
+
 #pragma mark - UITableViewDelegate
 - (NSInteger)tj_numberOfSections {
     return 1;
@@ -97,92 +108,22 @@
 }
 
 - (CGFloat)tj_sectionHeaderHeightAtSection:(NSInteger)section {
-    return DDFitWidth(44.f);
+    return DDFitWidth(40.f);
 }
 
 - (void)tj_didSelectCellAtIndexPath:(NSIndexPath *)indexPath cell:(DDBaseTableViewCell *)cell {
-    //    NHDiscoverCategoryElement *elementModel = self.dataArray[indexPath.row];
-    //    NHDiscoverTopicViewController *topic = [[NHDiscoverTopicViewController alloc] initWithCategoryElement:elementModel];
-    //    //    [[NHDiscoverTopicViewController alloc] initWithCatogoryId:elementModel.ID];
-    //    [self pushVc:topic];
+    if (_selectedAddressResult) {
+        _selectedAddressResult(@"阜北社区8号楼41单元9号");
+    }
+    [self pop];
 }
 
 - (UIView *)tj_headerAtSection:(NSInteger)section {
 
-    // 添加下拉菜单
-    DOPDropDownMenu *menu = [[DOPDropDownMenu alloc] initWithOrigin:CGPointMake(0, 0) andHeight:44];
-    menu.delegate = self;
-    menu.dataSource = self;
-    menu.layer.borderWidth = 0.24;
-    menu.layer.borderColor = [UIColor grayColor].CGColor;
-    //    [self.view addSubview:menu];
-    _menu = menu;
-    //当下拉菜单收回时的回调，用于网络请求新的数据
-    _menu.finishedBlock=^(DOPIndexPath *indexPath){
-        if (indexPath.item >= 0) {
-            NSLog(@"收起:点击了 %ld - %ld - %ld 项目",indexPath.column,indexPath.row,indexPath.item);
-        }else {
-            NSLog(@"收起:点击了 %ld - %ld 项目",indexPath.column,indexPath.row);
-        }
-    };
-    //     创建menu 第一次显示 不会调用点击代理，可以用这个手动调用
-    //    [menu selectDefalutIndexPath];
-    [menu selectIndexPath:[DOPIndexPath indexPathWithCol:0 row:0 item:0]];
-
-    
-    return menu;
+    return self.sortingView;
 }
 
-#pragma mark  -DOPDropDownMenuDataSource \DOPDropDownMenuDelegate
 
-- (NSInteger)numberOfColumnsInMenu:(DOPDropDownMenu *)menu
-{
-    return 4;
-}
-
-- (NSInteger)menu:(DOPDropDownMenu *)menu numberOfRowsInColumn:(NSInteger)column {
-    return 0;
-}
-
-- (NSString *)menu:(DOPDropDownMenu *)menu titleForRowAtIndexPath:(DOPIndexPath *)indexPath {
-    return self.classifys[indexPath.column];
-}
-
-// new datasource
-- (NSString *)menu:(DOPDropDownMenu *)menu imageNameForRowAtIndexPath:(DOPIndexPath *)indexPath {
-    return nil;
-}
-
-- (NSString *)menu:(DOPDropDownMenu *)menu imageNameForItemsInRowAtIndexPath:(DOPIndexPath *)indexPath {
-    return nil;
-}
-
-// new datasource
-
-- (NSString *)menu:(DOPDropDownMenu *)menu detailTextForRowAtIndexPath:(DOPIndexPath *)indexPath {
-    return nil;
-}
-
-- (NSString *)menu:(DOPDropDownMenu *)menu detailTextForItemsInRowAtIndexPath:(DOPIndexPath *)indexPath {
-    return nil;
-}
-
-- (NSInteger)menu:(DOPDropDownMenu *)menu numberOfItemsInRow:(NSInteger)row column:(NSInteger)column {
-    return 0;
-}
-
-- (NSString *)menu:(DOPDropDownMenu *)menu titleForItemsInRowAtIndexPath:(DOPIndexPath *)indexPath {
-    return nil;
-}
-
-- (void)menu:(DOPDropDownMenu *)menu didSelectRowAtIndexPath:(DOPIndexPath *)indexPath
-{
-    if (indexPath.item >= 0) {
-        NSLog(@"点击了 %ld - %ld - %ld 项目",indexPath.column,indexPath.row,indexPath.item);
-    }else {
-        NSLog(@"点击了 %ld - %ld 项目",indexPath.column,indexPath.row);
-    }
-}
 
 
 

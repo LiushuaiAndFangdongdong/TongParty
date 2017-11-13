@@ -26,9 +26,11 @@
 }
 
 - (LSSortingView *)sortingView {
-    
     if (!_sortingView) {
-        _sortingView = [[LSSortingView alloc] initWithFrame:CGRectMake(0, 64, kScreenWidth, 44)];
+        _sortingView = [[LSSortingView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, 40)];
+        _sortingView.onTapBlcok = ^(NSInteger index) {
+            NSLog(@"%ld",index);
+        };
     }
     return _sortingView;
 }
@@ -86,8 +88,6 @@
         MAPointAnnotation *pointAnnotation = [[MAPointAnnotation alloc] init];
         pointAnnotation.coordinate = coor;
         
-        
-        
         //        //设置地图的定位中心点坐标
         //        self.mapView.centerCoordinate = coor;
         //将点添加到地图上，即所谓的大头针
@@ -108,9 +108,7 @@
     if ([annotation isKindOfClass:[MAPointAnnotation class]]) {//判断是否是自己的定位气泡，如果是自己的定位气泡，不做任何设置，显示为蓝点，如果不是自己的定位气泡，比如大头针就会进入
         if (!pinView) {
             pinView = [[DDMAAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:kPin];
-            
             [pinView setDraggable:YES];
-            
         }
     }
     return pinView;
