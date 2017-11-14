@@ -10,9 +10,12 @@
 
 
 @interface LSSortingView ()
-
+@property (nonatomic, strong)UIView    *view_bg;
+@property (nonatomic, strong)UILabel   *lbl_temp;
+@property (nonatomic, strong)UIButton  *btn_temp;
 @end
 static NSInteger baseTag = 171;
+static NSInteger btn_baseTag = 253;
 @implementation LSSortingView
 
 - (instancetype)initWithFrame:(CGRect)frame {
@@ -27,7 +30,7 @@ static NSInteger baseTag = 171;
 
 - (void)setupViews {
     
-    NSArray *titleArr = @[@"内容",@"时间",@"位置",@"其他"];
+    NSArray *titleArr = @[@"内容",@"人均",@"位置",@"其他"];
     CGFloat tap_viewW = kScreenWidth/4.f;
     CGFloat tap_viewH = 40.f;
     for (int i = 0; i < titleArr.count; i++) {
@@ -55,9 +58,85 @@ static NSInteger baseTag = 171;
 }
 
 - (void)tapAction:(UITapGestureRecognizer *)tap {
+    if (_lbl_temp) {
+        _lbl_temp.textColor = kCommonGrayTextColor;
+    }
+    UILabel *lbltap = (UILabel *)[tap view];
+    lbltap.textColor = kBlackColor;
     if (_onTapBlcok) {
         _onTapBlcok([tap.view tag] - baseTag);
     }
+    _lbl_temp = lbltap;
+}
+
+- (NSArray *)getSecondaryViewDataByTag:(NSInteger)tag {
+    switch (tag) {
+        case 0:{
+            
+        }break;
+        case 1:{
+            return @[@"50元以上",@"50-100",@"100-300",@"300以上"];
+        }break;
+        case 2:{
+            
+        }break;
+        case 3:{
+            return @[@"24小时",@"11:00-14:00",@"17:00-21:30",@"17:10-03:30"];
+        }break;
+        default:
+            break;
+    }
+    return nil;
+}
+
+static NSInteger lastTag;
+- (void)showSecondaryViewWithTag:(NSInteger)tag onView:(UIView *)fatherView{
+    if (_view_bg && lastTag && lastTag == tag) {
+        [_view_bg removeFromSuperview];
+        lastTag = 222 + tag; // 最好设随机 记录当前次级菜单加载内容及隐藏
+        return;
+    }
+    if (_view_bg) {
+        [_view_bg removeFromSuperview];
+    }
+    NSArray *array = [self  getSecondaryViewDataByTag:tag];
+    _view_bg = [[UIView alloc] initWithFrame:CGRectMake(0, self.bottom, self.frame.size.width,0)];
+    _view_bg.backgroundColor = kBgWhiteGrayColor;
+    [fatherView addSubview:self.view_bg];
+    [UIView animateWithDuration:0.3f animations:^{
+        _view_bg.frame = CGRectMake(0, self.bottom, self.frame.size.width,DDFitHeight(40.f));
+        CGFloat btn_lableH = DDFitHeight(25.f);
+        CGFloat btn_lableW = (kScreenWidth - DDFitWidth(70.f))/4.f;
+        for (int btn_count = 0; btn_count < array.count; btn_count++) {
+            UIButton *btn_label = [UIButton new];
+            btn_label.frame = CGRectMake(DDFitWidth(20.f) + (btn_lableW + DDFitWidth(10.f))  * btn_count, DDFitHeight(6.25f), btn_lableW, btn_lableH);
+            [btn_label setTitle:array[btn_count] forState:UIControlStateNormal];
+            btn_label.layer.borderColor = kCommonGrayTextColor.CGColor;
+            btn_label.layer.borderWidth = kLineHeight;
+            btn_label.layer.cornerRadius = 3.f;
+            [btn_label setTitleColor:kCommonGrayTextColor forState:UIControlStateNormal];
+            btn_label.titleLabel.font = DDFitFont(12.f);
+            btn_label.tag = btn_baseTag + btn_count;
+            btn_label.backgroundColor = kWhiteColor;
+            [btn_label addTarget:self action:@selector(chooseSecondaryLabel:) forControlEvents:UIControlEventTouchUpInside];
+            [_view_bg addSubview:btn_label];
+        }
+    } completion:^(BOOL finished) {
+        lastTag = tag;
+    }];
+}
+
+- (void)chooseSecondaryLabel:(UIButton *)sender {
+    if (_btn_temp) {
+        _btn_temp.backgroundColor = kWhiteColor;
+        [_btn_temp setTitleColor:kCommonGrayTextColor forState:UIControlStateNormal];
+    }
+    [sender setTitleColor:kWhiteColor forState:UIControlStateNormal];
+    sender.backgroundColor = kRGBColor(118.f, 213.f, 113.f);
+    if (_onClickBlcok) {
+        _onClickBlcok(sender);
+    }
+    _btn_temp = sender;
 }
 
 @end

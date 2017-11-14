@@ -26,10 +26,14 @@
 }
 
 - (LSSortingView *)sortingView {
+    WeakSelf(weakSelf);
     if (!_sortingView) {
         _sortingView = [[LSSortingView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, 40)];
         _sortingView.onTapBlcok = ^(NSInteger index) {
-            NSLog(@"%ld",index);
+            [weakSelf.sortingView showSecondaryViewWithTag:index onView:weakSelf.view];
+        };
+        _sortingView.onClickBlcok = ^(UIButton *sender) {
+            NSLog(@"%@",sender.titleLabel.text);
         };
     }
     return _sortingView;
