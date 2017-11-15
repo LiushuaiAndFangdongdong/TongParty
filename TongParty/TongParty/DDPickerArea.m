@@ -182,6 +182,7 @@
     if (!_arrayRoot) {
         NSString *path = [[NSBundle mainBundle]pathForResource:@"area" ofType:@"plist"];
         _arrayRoot = [[NSArray alloc]initWithContentsOfFile:path];
+        
     }
     return _arrayRoot;
 }

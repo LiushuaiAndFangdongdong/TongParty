@@ -23,6 +23,7 @@
 /**创建桌子*/
 //+ (void)createDeskWithToken:(NSString *)token
 
+
 /**添加地址*/
 + (void)addCustomAddressWithToken:(NSString *)token latitude:(NSString *)latitude longitude:(NSString *)longitude label:(NSString *)label addr:(NSString *)addr detail:(NSString *)detail block:(void(^)(NSDictionary *dict))dict failure:(void(^)())failure;
 
@@ -37,6 +38,7 @@
 
 /**用户自定义地址列表*/
 + (void)getCustomAddressListWithToken:(NSString *)token block:(void(^)(NSDictionary *dict))dict failure:(void(^)())failure;
+
 @end
 
 

@@ -90,9 +90,6 @@
     }];
 }
 
-
-
-
 /**添加地址*/
 + (void)addCustomAddressWithToken:(NSString *)token
                          latitude:(NSString *)latitude
@@ -110,7 +107,7 @@
     [self setWithMutableDict:md key:@"label" value:label];
     [self setWithMutableDict:md key:@"addr" value:addr];
     [self setWithMutableDict:md key:@"detail" value:detail];
-    
+
 //    [self postWithAction:kTJAddAddressAPI params:md type:kDDHttpResponseTypeJson block:^(DDResponseModel *result) {
 //        if (result.status.integerValue == kDDResponseStateSuccess) {
 //
@@ -121,23 +118,25 @@
 //    } failure:^{
 //        //
 //    }];
-    
-    [self getWithAction:kTJAddAddressAPI params:md type:kDDHttpResponseTypeJson block:^(DDResponseModel *result) {
-        if (result.status.integerValue == kDDResponseStateSuccess) {
 
-        } else {
-            failure();
-        }
-        [MBProgressHUD showMessage:result.msg_cn toView:[UIApplication sharedApplication].keyWindow];
-    } failure:^{
+[self getWithAction:kTJAddAddressAPI params:md type:kDDHttpResponseTypeJson block:^(DDResponseModel *result) {
+    if (result.status.integerValue == kDDResponseStateSuccess) {
+        
+    } else {
         failure();
-    }];
-    
+    }
+    [MBProgressHUD showMessage:result.msg_cn toView:[UIApplication sharedApplication].keyWindow];
+} failure:^{
+    failure();
+}];
+
 }
+
 
 /**修改地址*/
 + (void)editCustomAddressWithToken:(NSString *)token aid:(NSString *)aid latitude:(NSString *)latitude longitude:(NSString *)longitude label:(NSString *)label addr:(NSString *)addr detail:(NSString *)detail block:(void(^)(NSDictionary *dict))dict failure:(void(^)())failure{
 }
+
 
 /**删除地址*/
 + (void)deleteCustomAddressWithToken:(NSString *)token aid:(NSString *)aid  block:(void(^)(NSDictionary *dict))dict failure:(void(^)())failure{
@@ -153,6 +152,7 @@
 + (void)getCustomAddressListWithToken:(NSString *)token block:(void(^)(NSDictionary *dict))dict failure:(void(^)())failure{
     
 }
+
 @end
 
 

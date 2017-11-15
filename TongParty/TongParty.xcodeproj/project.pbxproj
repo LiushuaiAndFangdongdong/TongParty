@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4B05AD0F1FB83B7C007583E9 /* LSCreateDeskChildLabelCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B05AD0E1FB83B7C007583E9 /* LSCreateDeskChildLabelCell.m */; };
+		4B05AD121FB88D57007583E9 /* area.plist in Sources */ = {isa = PBXBuildFile; fileRef = 98578E181F8B635100FEF64D /* area.plist */; };
 		7FE31485F55A2C72A2918B02 /* Pods_TongParty.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B59ADC9FAFDF929FDA97EB90 /* Pods_TongParty.framework */; };
 		980093921F73975600FE0FE9 /* DDDeskViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 980093911F73975600FE0FE9 /* DDDeskViewController.m */; };
 		980093951F73979C00FE0FE9 /* DDJoinedVc.m in Sources */ = {isa = PBXBuildFile; fileRef = 980093941F73979C00FE0FE9 /* DDJoinedVc.m */; };
@@ -163,7 +165,6 @@
 		989932551F693A5100E4BCAA /* NSNotificationCenter+Addition.m in Sources */ = {isa = PBXBuildFile; fileRef = 989932541F693A5100E4BCAA /* NSNotificationCenter+Addition.m */; };
 		989932581F693A8100E4BCAA /* NSDate+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 989932571F693A8100E4BCAA /* NSDate+Extension.m */; };
 		98B54A151FB4458B0071567E /* LSSortingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 98B54A131FB4458A0071567E /* LSSortingView.m */; };
-		98B54A181FBA9DB00071567E /* DDLocationAddressVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 98B54A171FBA9DB00071567E /* DDLocationAddressVC.m */; };
 		98BD9F131F74BBAB0080A6FE /* UIButton+DDEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 98BD9F121F74BBAB0080A6FE /* UIButton+DDEvent.m */; };
 		98BD9F161F74BBC10080A6FE /* UIButton+DDImagePosition.m in Sources */ = {isa = PBXBuildFile; fileRef = 98BD9F151F74BBC10080A6FE /* UIButton+DDImagePosition.m */; };
 		98BF202E1F794D8D00E94394 /* DDAlbumCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 98BF202D1F794D8D00E94394 /* DDAlbumCellView.m */; };
@@ -259,6 +260,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4B05AD0D1FB83B7C007583E9 /* LSCreateDeskChildLabelCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LSCreateDeskChildLabelCell.h; sourceTree = "<group>"; };
+		4B05AD0E1FB83B7C007583E9 /* LSCreateDeskChildLabelCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LSCreateDeskChildLabelCell.m; sourceTree = "<group>"; };
 		75A4C4B7BBFC3961C6B13BE9 /* Pods-TongParty.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TongParty.release.xcconfig"; path = "Pods/Target Support Files/Pods-TongParty/Pods-TongParty.release.xcconfig"; sourceTree = "<group>"; };
 		980093901F73975600FE0FE9 /* DDDeskViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DDDeskViewController.h; sourceTree = "<group>"; };
 		980093911F73975600FE0FE9 /* DDDeskViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DDDeskViewController.m; sourceTree = "<group>"; };
@@ -573,8 +576,6 @@
 		989932571F693A8100E4BCAA /* NSDate+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+Extension.m"; sourceTree = "<group>"; };
 		98B54A131FB4458A0071567E /* LSSortingView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LSSortingView.m; sourceTree = "<group>"; };
 		98B54A141FB4458B0071567E /* LSSortingView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LSSortingView.h; sourceTree = "<group>"; };
-		98B54A161FBA9DB00071567E /* DDLocationAddressVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DDLocationAddressVC.h; sourceTree = "<group>"; };
-		98B54A171FBA9DB00071567E /* DDLocationAddressVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DDLocationAddressVC.m; sourceTree = "<group>"; };
 		98BD9F111F74BBAB0080A6FE /* UIButton+DDEvent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIButton+DDEvent.h"; sourceTree = "<group>"; };
 		98BD9F121F74BBAB0080A6FE /* UIButton+DDEvent.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIButton+DDEvent.m"; sourceTree = "<group>"; };
 		98BD9F141F74BBC10080A6FE /* UIButton+DDImagePosition.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIButton+DDImagePosition.h"; sourceTree = "<group>"; };
@@ -1002,8 +1003,6 @@
 				986E59E41FAABC4900FD391C /* LSCreateDeskVC.m */,
 				986E59DE1FAABC4900FD391C /* LSEditAddressVC.h */,
 				986E59E11FAABC4900FD391C /* LSEditAddressVC.m */,
-				98B54A161FBA9DB00071567E /* DDLocationAddressVC.h */,
-				98B54A171FBA9DB00071567E /* DDLocationAddressVC.m */,
 				986E59E31FAABC4900FD391C /* LSManageAddressVC.h */,
 				986E59E21FAABC4900FD391C /* LSManageAddressVC.m */,
 				986E59DF1FAABC4900FD391C /* LSRecommendAddressVC.h */,
@@ -1195,19 +1194,19 @@
 				98578E041F8B58A000FEF64D /* DDPickerView.m */,
 				98578E071F8B58B900FEF64D /* 单数组 */,
 				98578E061F8B58B100FEF64D /* 日期 */,
-				98578E051F8B58A900FEF64D /* 地区 */,
+				98578E051F8B58A900FEF64D /* AreaPicker */,
 			);
 			name = PickerView;
 			sourceTree = "<group>";
 		};
-		98578E051F8B58A900FEF64D /* 地区 */ = {
+		98578E051F8B58A900FEF64D /* AreaPicker */ = {
 			isa = PBXGroup;
 			children = (
 				98578E181F8B635100FEF64D /* area.plist */,
 				98578E0F1F8B58DA00FEF64D /* DDPickerArea.h */,
 				98578E0E1F8B58DA00FEF64D /* DDPickerArea.m */,
 			);
-			name = "地区";
+			name = AreaPicker;
 			sourceTree = "<group>";
 		};
 		98578E061F8B58B100FEF64D /* 日期 */ = {
@@ -1411,6 +1410,8 @@
 			children = (
 				986E59F71FAABC7000FD391C /* LSCreateDeskTableViewCell.h */,
 				986E59F51FAABC7000FD391C /* LSCreateDeskTableViewCell.m */,
+				4B05AD0D1FB83B7C007583E9 /* LSCreateDeskChildLabelCell.h */,
+				4B05AD0E1FB83B7C007583E9 /* LSCreateDeskChildLabelCell.m */,
 				986E59ED1FAABC6F00FD391C /* LSCDTitleItemView.h */,
 				986E59F11FAABC7000FD391C /* LSCDTitleItemView.m */,
 				986E59F31FAABC7000FD391C /* LSCreateDeskActionCellView.h */,
@@ -2679,6 +2680,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4B05AD121FB88D57007583E9 /* area.plist in Sources */,
 				98752B331FACBDE100B94996 /* LLSegmentBar.m in Sources */,
 				98752B341FACBDE100B94996 /* LLSegmentBarConfig.m in Sources */,
 				98752B351FACBDE100B94996 /* LLSegmentBarVC.m in Sources */,
@@ -2698,7 +2700,7 @@
 				9853D7371FA02C9A004AD6BF /* PlusAnimate.m in Sources */,
 				989441471F9DC87C000BA3E9 /* NSCalendar+DDPlus.m in Sources */,
 				98578E5E1F909B2000FEF64D /* CCDraggableContainer.m in Sources */,
-				98B54A181FBA9DB00071567E /* DDLocationAddressVC.m in Sources */,
+				4B05AD0F1FB83B7C007583E9 /* LSCreateDeskChildLabelCell.m in Sources */,
 				98578E5D1F909B1B00FEF64D /* CCDraggableCardView.m in Sources */,
 				98578E5C1F909B1400FEF64D /* CustomCardView.m in Sources */,
 				98578E491F905E8B00FEF64D /* YLButton.m in Sources */,

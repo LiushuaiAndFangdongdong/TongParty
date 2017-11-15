@@ -30,6 +30,7 @@ UIKIT_EXTERN NSString *const kTJUserChangePasswordAPI;
 UIKIT_EXTERN NSString *const kTJUserFindPasswordAPI;
 
 
+
 /** 添加地址*/
 UIKIT_EXTERN NSString *const kTJAddAddressAPI;
 /** 修改地址*/
@@ -40,6 +41,7 @@ UIKIT_EXTERN NSString *const kTJDeleteAddressAPI;
 UIKIT_EXTERN NSString *const kTJGetAddressListAPI;
 /** 设置默认地址*/
 UIKIT_EXTERN NSString *const kTJSetDefaultAddressAPI;
+
 
 
 

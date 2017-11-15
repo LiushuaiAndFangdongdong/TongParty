@@ -9,5 +9,5 @@
 #import "DDBaseTableViewController.h"
 
 @interface LSRecommendAddressVC : DDBaseTableViewController
-
+@property (nonatomic, copy) void(^selectedAddressResult)(NSString *addressString);
 @end
