@@ -8,6 +8,7 @@
 
 #import "LSEditAddressVC.h"
 #import "LSEditAddressTableViewCell.h"
+#import "DDLocationAddressVC.h"
 
 @interface LSEditAddressVC ()
 <UITableViewDelegate,UITableViewDataSource>
@@ -21,6 +22,11 @@
     [super viewDidLoad];
     [self setupNavi];
     [self setupViews];
+    [DDTJHttpRequest addCustomAddressWithToken:[DDUserSingleton shareInstance].token latitude:@"12" longitude:@"88" label:@"公司" addr:@"中国尊" detail:@"32楼3209室" block:^(NSDictionary *dict) {
+        NSLog(@"添加地址成功");
+    } failure:^{
+        //
+    }];
 }
 
 - (void)setupNavi {
@@ -84,6 +90,8 @@
 
 - (void)deleteAddress:(UIButton *)sender {
     // 删除地址
+    DDLocationAddressVC *locationVC = [[DDLocationAddressVC alloc] init];
+    [self.navigationController pushViewController:locationVC animated:YES];
 }
 
 #pragma mark - tableview data source + delegate

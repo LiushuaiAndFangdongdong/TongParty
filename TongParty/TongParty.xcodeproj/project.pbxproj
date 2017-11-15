@@ -163,6 +163,7 @@
 		989932551F693A5100E4BCAA /* NSNotificationCenter+Addition.m in Sources */ = {isa = PBXBuildFile; fileRef = 989932541F693A5100E4BCAA /* NSNotificationCenter+Addition.m */; };
 		989932581F693A8100E4BCAA /* NSDate+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 989932571F693A8100E4BCAA /* NSDate+Extension.m */; };
 		98B54A151FB4458B0071567E /* LSSortingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 98B54A131FB4458A0071567E /* LSSortingView.m */; };
+		98B54A181FBA9DB00071567E /* DDLocationAddressVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 98B54A171FBA9DB00071567E /* DDLocationAddressVC.m */; };
 		98BD9F131F74BBAB0080A6FE /* UIButton+DDEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 98BD9F121F74BBAB0080A6FE /* UIButton+DDEvent.m */; };
 		98BD9F161F74BBC10080A6FE /* UIButton+DDImagePosition.m in Sources */ = {isa = PBXBuildFile; fileRef = 98BD9F151F74BBC10080A6FE /* UIButton+DDImagePosition.m */; };
 		98BF202E1F794D8D00E94394 /* DDAlbumCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 98BF202D1F794D8D00E94394 /* DDAlbumCellView.m */; };
@@ -572,6 +573,8 @@
 		989932571F693A8100E4BCAA /* NSDate+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+Extension.m"; sourceTree = "<group>"; };
 		98B54A131FB4458A0071567E /* LSSortingView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LSSortingView.m; sourceTree = "<group>"; };
 		98B54A141FB4458B0071567E /* LSSortingView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LSSortingView.h; sourceTree = "<group>"; };
+		98B54A161FBA9DB00071567E /* DDLocationAddressVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DDLocationAddressVC.h; sourceTree = "<group>"; };
+		98B54A171FBA9DB00071567E /* DDLocationAddressVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DDLocationAddressVC.m; sourceTree = "<group>"; };
 		98BD9F111F74BBAB0080A6FE /* UIButton+DDEvent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIButton+DDEvent.h"; sourceTree = "<group>"; };
 		98BD9F121F74BBAB0080A6FE /* UIButton+DDEvent.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIButton+DDEvent.m"; sourceTree = "<group>"; };
 		98BD9F141F74BBC10080A6FE /* UIButton+DDImagePosition.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIButton+DDImagePosition.h"; sourceTree = "<group>"; };
@@ -999,6 +1002,8 @@
 				986E59E41FAABC4900FD391C /* LSCreateDeskVC.m */,
 				986E59DE1FAABC4900FD391C /* LSEditAddressVC.h */,
 				986E59E11FAABC4900FD391C /* LSEditAddressVC.m */,
+				98B54A161FBA9DB00071567E /* DDLocationAddressVC.h */,
+				98B54A171FBA9DB00071567E /* DDLocationAddressVC.m */,
 				986E59E31FAABC4900FD391C /* LSManageAddressVC.h */,
 				986E59E21FAABC4900FD391C /* LSManageAddressVC.m */,
 				986E59DF1FAABC4900FD391C /* LSRecommendAddressVC.h */,
@@ -2693,6 +2698,7 @@
 				9853D7371FA02C9A004AD6BF /* PlusAnimate.m in Sources */,
 				989441471F9DC87C000BA3E9 /* NSCalendar+DDPlus.m in Sources */,
 				98578E5E1F909B2000FEF64D /* CCDraggableContainer.m in Sources */,
+				98B54A181FBA9DB00071567E /* DDLocationAddressVC.m in Sources */,
 				98578E5D1F909B1B00FEF64D /* CCDraggableCardView.m in Sources */,
 				98578E5C1F909B1400FEF64D /* CustomCardView.m in Sources */,
 				98578E491F905E8B00FEF64D /* YLButton.m in Sources */,
