@@ -7,16 +7,13 @@
 //
 
 #import "LSEditAddressVC.h"
-#import "DDPickerArea.h"
 #import "LSEditAddressTableViewCell.h"
+#import "DDLocationAddressVC.h"
 
-@interface LSEditAddressVC ()<
-DDPickerAreaDelegate,
-UITableViewDelegate,
-UITableViewDataSource>
+@interface LSEditAddressVC ()
+<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic, strong)UITableView  *tableview;
 @property (nonatomic, strong)UIButton     *btn_saveAddress;
-@property (nonatomic, strong)DDPickerArea *area_picker;
 @end
 
 @implementation LSEditAddressVC
@@ -25,12 +22,6 @@ UITableViewDataSource>
     [super viewDidLoad];
     [self setupNavi];
     [self setupViews];
-    [DDTJHttpRequest addCustomAddressWithToken:[DDUserSingleton shareInstance].token latitude:@"12" longitude:@"88" label:@"公司" addr:@"中国尊" detail:@"32楼3209室" block:^(NSDictionary *dict) {
-        NSLog(@"添加地址成功");
-    } failure:^{
-        //
-    }];
-
 }
 
 - (void)setupNavi {
@@ -54,7 +45,7 @@ UITableViewDataSource>
     [self.view addSubview:self.btn_saveAddress];
     [_btn_saveAddress mas_makeConstraints:^(MASConstraintMaker *make) {
         make.bottom.right.left.equalTo(weakSelf.view);
-        make.height.mas_equalTo(kTabBarHeight);
+        make.height.mas_equalTo(DDFitHeight(45.f));
     }];
 }
 
@@ -87,14 +78,6 @@ UITableViewDataSource>
     return _btn_saveAddress;
 }
 
-- (DDPickerArea *)area_picker {
-    if (!_area_picker) {
-        _area_picker = [[DDPickerArea alloc] init];
-        _area_picker.delegate = self;
-    }
-    return _area_picker;
-}
-
 
 - (void)didSelectedToSaveNewAddress:(UIButton *)sender {
     // 保存地址
@@ -102,6 +85,8 @@ UITableViewDataSource>
 
 - (void)deleteAddress:(UIButton *)sender {
     // 删除地址
+    DDLocationAddressVC *locationVC   = [[DDLocationAddressVC alloc] init];
+    [self.navigationController pushViewController:locationVC animated:YES];
 }
 
 #pragma mark - tableview data source + delegate
@@ -150,18 +135,6 @@ UITableViewDataSource>
     return cell;
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [self.tableview endEditing:YES];
-    if (indexPath.row == 0) {
-        [self.area_picker show];
-    }
-}
-
-#pragma mark DDPickerArea Delegate
-- (void)pickerArea:(DDPickerArea *)pickerArea province:(NSString *)province city:(NSString *)city area:(NSString *)area {
-    
-    
-}
 
 
 - (void)didReceiveMemoryWarning {

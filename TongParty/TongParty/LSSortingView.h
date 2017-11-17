@@ -9,7 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface LSSortingView : UIView
-@property (nonatomic, copy) void(^onTapBlcok)(NSInteger index);
-@property (nonatomic, copy) void(^onClickBlcok)(UIButton *sender);
-- (void)showSecondaryViewWithTag:(NSInteger)tag onView:(UIView *)fatherView;
+
 @end

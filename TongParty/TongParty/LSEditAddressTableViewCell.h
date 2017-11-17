@@ -20,6 +20,7 @@ typedef NS_ENUM(NSUInteger, LSEditCellStyle) {
 @interface LSEditAddressTableViewCell : DDBaseTableViewCell
 
 @property (nonatomic, copy) void(^onClickBlcok)(NSInteger index);
+
 @property (nonatomic, assign)LSEditCellStyle style;
 
 @end

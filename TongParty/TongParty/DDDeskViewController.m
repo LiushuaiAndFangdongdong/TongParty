@@ -7,27 +7,16 @@
 //
 
 #import "DDDeskViewController.h"
+#import "DDCustomSegmentView.h"
 #import "DDJoinedVc.h"
 #import "DDInterestedVc.h"
-#import "LLSegmentBarVC.h"
 
 @interface DDDeskViewController ()
 @property (nonatomic, strong) DDJoinedVc  *joinedVc;
 @property (nonatomic, strong) DDInterestedVc *interestedVc;
-@property (nonatomic, weak) LLSegmentBarVC * segmentVC;
 @end
 
 @implementation DDDeskViewController
-
-- (LLSegmentBarVC *)segmentVC{
-    if (!_segmentVC) {
-        LLSegmentBarVC *vc = [[LLSegmentBarVC alloc]init];
-        // 添加到到控制器
-        [self addChildViewController:vc];
-        _segmentVC = vc;
-    }
-    return _segmentVC;
-}
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
@@ -36,35 +25,29 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-//    [self setupNavi];
-    // 1 设置segmentBar的frame
-    self.segmentVC.segmentBar.frame = CGRectMake(0, 0, kScreenWidth, 35);
-    self.navigationItem.titleView = self.segmentVC.segmentBar;
-    
-    // 2 添加控制器的View
-    self.segmentVC.view.frame = self.view.bounds;
-    [self.view addSubview:self.segmentVC.view];
-    
-    NSArray *items = @[@"参加", @"感兴趣"];
-    DDJoinedVc *vc1 = [DDJoinedVc new];
-    DDInterestedVc *vc2 = [DDInterestedVc new];
-    
-    // 3 添加标题数组和控住器数组
-    [self.segmentVC setUpWithItems:items childVCs:@[vc1,vc2]];
-    
-    // 4  配置基本设置  可采用链式编程模式进行设置
-    [self.segmentVC.segmentBar updateWithConfig:^(LLSegmentBarConfig *config) {
-        config.itemNormalColor([UIColor blackColor]).itemSelectColor([UIColor redColor]).indicatorColor([UIColor greenColor]);
-    }];
+    [self setupNavi];
 }
 
+-(void)setupNavi{
+    WeakSelf(weakSelf);
+    // 精选关注
+    DDCustomSegmentView *segment = [[DDCustomSegmentView alloc] initWithItemTitles:@[@"参加", @"感兴趣"]];
+    self.navigationItem.titleView = segment;
+    segment.frame = CGRectMake(0, 0, 130, 35);
+    [segment clickDefault];
+    segment.DDCustomSegmentViewBtnClickHandle = ^(DDCustomSegmentView *segment, NSString *title, NSInteger currentIndex) {
+        BOOL isFeatured = (currentIndex == 0);
+        weakSelf.joinedVc.view.hidden = !isFeatured;
+        weakSelf.interestedVc.view.hidden =  isFeatured;
+    };
+}
 - (DDJoinedVc *)joinedVc {
     if (!_joinedVc) {
         DDJoinedVc *joinVC = [[DDJoinedVc alloc] init];
         [joinVC willMoveToParentViewController:self];
         [self addChildViewController:joinVC];
         [self.view addSubview:joinVC.view];
-        joinVC.view.frame = CGRectMake(0, kNavigationBarHeight, kScreenWidth, kScreenHeight - kNavigationBarHeight - kTabBarHeight);
+        joinVC.view.frame = CGRectMake(0, 0, kScreenWidth, kScreenHeight - kNavigationBarHeight);
         _joinedVc = joinVC;
     }
     return _joinedVc;
@@ -76,7 +59,7 @@
         [intertedVC willMoveToParentViewController:self];
         [self addChildViewController:intertedVC];
         [self.view addSubview:intertedVC.view];
-        intertedVC.view.frame = CGRectMake(0, kNavigationBarHeight, kScreenWidth, kScreenHeight - kNavigationBarHeight- kTabBarHeight);
+        intertedVC.view.frame = CGRectMake(0, 0, kScreenWidth, kScreenHeight - kNavigationBarHeight);
         _interestedVc = intertedVC;
     }
     return _interestedVc;

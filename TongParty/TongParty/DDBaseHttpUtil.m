@@ -62,11 +62,7 @@
     NSString *string3 = [NSString stringWithFormat:@"%@%@",string1,string2];
     NSString *string4 = [self keyValueWithNSDictionary:params];
     NSString *paraStr = [NSString stringWithFormat:@"%@%@",string3,string4];
-    //汉字要encode
-    NSString *encodePara = [paraStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    NSString *encryPara = [self hmac:encodePara withKey:Api_secret];
-    
-//    NSString *encryPara = [self hmac:paraStr withKey:Api_secret];
+    NSString *encryPara = [self hmac:paraStr withKey:Api_secret];
     
     NSLog(@"时间戳：%@",string2);
     NSLog(@"需要加密的：%@",paraStr);

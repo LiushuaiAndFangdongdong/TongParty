@@ -21,15 +21,11 @@
 @property (nonatomic, strong)UIButton          *btn_managerAddress;
 @property (nonatomic, strong)UIButton          *btn_recommendAddress;
 @property (nonatomic, strong)UIView            *view_bg_expandMore;
-@property (nonatomic, strong)UILabel           *lbl_expandMore;
+@property (nonatomic, strong)UILabel          *lbl_expandMore;
 @property (nonatomic, strong)UIImageView       *iv_expandMore;
 @property (nonatomic, strong)UIView            *view_tap_expandMore;
 @property (nonatomic, strong)UIButton          *btn_temp;
-@property (nonatomic, assign)CGFloat           final_height;
-@property (nonatomic, assign)CGFloat           min_height;
-@property (nonatomic, strong)NSMutableArray    *array_btns; // 标签按钮容器
 @end
-static BOOL isShowAllLabels = NO;
 static NSInteger baseTag = 88888;
 static NSInteger label_baseTag = 99999;
 @implementation LSCDTimeAddressView
@@ -45,7 +41,6 @@ static NSInteger label_baseTag = 99999;
 -(void)initViews{
     WeakSelf(weakSelf);
     
-    self.array_btns = [NSMutableArray array];
     self.backgroundColor = kWhiteColor;
     // 开始时间
     _ti_startTime = [LSCDTitleItemView new];
@@ -177,7 +172,7 @@ static NSInteger label_baseTag = 99999;
         make.top.bottom.left.equalTo(_view_bg_expandMore);
         make.right.equalTo(_iv_expandMore.mas_left);
     }];
-    _lbl_expandMore.text = @"展开全部";
+    _lbl_expandMore.text = @"展开更多";
     _lbl_expandMore.textColor = kCommonGrayTextColor;
     _lbl_expandMore.textAlignment = NSTextAlignmentRight;
     _lbl_expandMore.font = DDFitFont(12.f);
@@ -185,9 +180,7 @@ static NSInteger label_baseTag = 99999;
     _view_tap_expandMore = [UIView new];
     [self addSubview:self.view_tap_expandMore];
     [_view_tap_expandMore mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.right.equalTo(_view_bg_expandMore);
-        make.top.equalTo(_view_bg_expandMore).offset(-DDFitHeight(10.f));
-        make.bottom.equalTo(_view_bg_expandMore).offset(DDFitHeight(10.f));
+        make.edges.equalTo(_view_bg_expandMore);
     }];
     [_view_tap_expandMore addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(expandMore:)]];
 }
@@ -199,43 +192,14 @@ static NSInteger label_baseTag = 99999;
 }
 
 - (void)expandMore:(UITapGestureRecognizer *)tap {
-    
-    if (isShowAllLabels) {
-        isShowAllLabels = NO;
-        _lbl_expandMore.text = @"收起全部";
-        if (_expandMoreBlcok) {
-            _expandMoreBlcok(self.min_height);
-        }
-    } else {
-        isShowAllLabels = YES;
-        _lbl_expandMore.text = @"展开全部";
-        if (_expandMoreBlcok) {
-            _expandMoreBlcok(self.final_height);
-        }
+    if (_expandMoreBlcok) {
+        _expandMoreBlcok(1);
     }
 }
 
+
 - (void)putDataToViewWith:(id)obj returnHeight:(void (^)(CGFloat))height{
     
-    NSArray *array = (NSArray *)obj;
-    if (array.count <= 4) {
-        self.min_height = DDFitHeight(210.f);
-    }
-    if (array.count > 4) {
-        self.min_height = DDFitHeight(270.f);
-    }
-    
-    if (array.count <= 8) {
-        _lbl_expandMore.hidden = YES;
-        _view_tap_expandMore.hidden = YES;
-        _iv_expandMore.hidden = YES;
-    }
-    if (_array_btns) {
-        for (UIButton *btn in _array_btns) {
-            [btn removeFromSuperview];
-        }
-        [_array_btns removeAllObjects];
-    }
     CGFloat btn_lableH = DDFitHeight(25.f);
     CGFloat btn_lableW = (kScreenWidth - DDFitWidth(70.f))/4.f;
     NSArray *lableArr = (NSArray *)obj;
@@ -256,38 +220,19 @@ static NSInteger label_baseTag = 99999;
             [btn_label setTitleColor:kCommonGrayTextColor forState:UIControlStateNormal];
             btn_label.titleLabel.font = DDFitFont(12.f);
             btn_label.tag = label_baseTag + btn_count;
-            [_array_btns addObject:btn_label];
             [btn_label addTarget:self action:@selector(chooseLabel:) forControlEvents:UIControlEventTouchUpInside];
             [self addSubview:btn_label];
-        }
-    }
-    
-    [self showBtn_label];
-}
-
-- (void)showBtn_label {
-    
-    if (isShowAllLabels) {
-        for (UIButton *btn in _array_btns) {
-            btn.hidden = NO;
-        }
-    } else {
-        if ( _array_btns.count > 4) {
-            for (UIButton *btn in _array_btns) {
-                if (btn.tag - label_baseTag >= 8) {
-                    btn.hidden = YES;
-                }
+            if (btn_count == lableArr.count - 1) {
+                height(self.height = btn_label.bottom + DDFitWidth(10.f));
+                
             }
         }
-        
-        if (_array_btns.count > 8) {
-            UIButton *btn = _array_btns[_array_btns.count - 1];
-            self.final_height = btn.bottom + DDFitWidth(30.f);
-        }
     }
+    
 }
 
 - (void)chooseLabel:(UIButton *)sender {
+    
     if (_btn_temp) {
         [_btn_temp setTitleColor:kCommonGrayTextColor forState:UIControlStateNormal];
         _btn_temp.backgroundColor = kWhiteColor;
@@ -296,14 +241,8 @@ static NSInteger label_baseTag = 99999;
     sender.backgroundColor = kRGBColor(118.f, 213.f, 113.f);
     [sender setTitleColor:kWhiteColor forState:UIControlStateNormal];
     _btn_temp = sender;
-}
-
-- (void)putStringToChildView:(NSString *)string {
-    _tf_address_content.text = string;
-}
-
-- (void)setCurrent_height:(CGFloat)current_height {
-    _current_height = current_height;
+    
+    
 }
 
 @end

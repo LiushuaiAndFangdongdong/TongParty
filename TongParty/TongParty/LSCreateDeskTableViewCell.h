@@ -25,11 +25,9 @@ typedef NS_ENUM(NSUInteger, LSCreateDeslCellStyle) {
 
 
 @property (nonatomic, assign)LSCreateDeslCellStyle style;
-@property (nonatomic, assign)CGFloat           current_height;
+
 @property (nonatomic, copy) void(^onClickBlcok)(NSInteger index);
-@property (nonatomic, copy) void(^expandMoreBlcok)(CGFloat final_height);
 
 - (void)updateWithObj:(id)obj;
-- (void)putStringToChildView:(NSString *)string;
 
 @end

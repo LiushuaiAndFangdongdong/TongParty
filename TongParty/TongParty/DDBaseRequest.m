@@ -17,7 +17,6 @@
 
 #pragma mark - 构造
 + (instancetype)tj_request {
-    
     return [[self alloc] init];
 }
 

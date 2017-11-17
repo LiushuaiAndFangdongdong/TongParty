@@ -31,20 +31,6 @@ NSString *const kTJUserChangePasswordAPI = @"/tongju/api/update_pwd.php";
 NSString *const kTJUserFindPasswordAPI = @"/tongju/api/forget_pwd.php";
 
 
-/** 添加地址*/
-NSString *const kTJAddAddressAPI = @"/tongju/api/set_user_addr.php";
-/** 修改地址*/
-NSString *const kTJEditAddressAPI = @"/tongju/api/update_user_addr.php";
-/** 删除地址*/
-NSString *const kTJDeleteAddressAPI = @"/tongju/api/delete_user_addr.php";
-/** 获取地址列表*/
-NSString *const kTJGetAddressListAPI = @"/tongju/api/get_user_addr.php";
-/** 设置默认地址*/
-NSString *const kTJSetDefaultAddressAPI = @"/tongju/api/set_default_addr.php";
-
-
-
-
 
 #pragma mark - HOME / 首页
 /** 内涵动态列表*/

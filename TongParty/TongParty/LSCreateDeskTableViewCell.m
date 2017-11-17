@@ -51,11 +51,6 @@
                 _onClickBlcok(index);
             }
         };
-        weakSelf.view_startTime.expandMoreBlcok = ^(CGFloat final_height) {
-            if (_expandMoreBlcok) {
-                _expandMoreBlcok(final_height);
-            }
-        };
     }
     return _view_startTime;
 }
@@ -155,21 +150,14 @@
         case LSCreateCellSytleTimeAndAddress:{
             [_view_startTime putDataToViewWith:obj returnHeight:^(CGFloat height) {
                 self.height = height;
-                NSLog(@"heiht~~~~~~~~~~~~~~~~~~~~~~%lf",self.height);
             }];
         }break;
         default:
             break;
     }
+    
 }
 
-- (void)putStringToChildView:(NSString *)string {
-    [_view_startTime putStringToChildView:string];
-}
-
-- (void)setCurrent_height:(CGFloat)current_height {
-    _current_height = current_height;
-}
 
 
 

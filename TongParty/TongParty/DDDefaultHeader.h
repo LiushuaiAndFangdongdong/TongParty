@@ -130,9 +130,9 @@ typedef NS_ENUM(NSUInteger, DDHomeAttentionListType) {
 
 #define DDUserDefault [NSUserDefaults standardUserDefaults]
 
-#define DDFitFont(font) (iPhoneX ? [UIFont systemFontOfSize:(font)] : [UIFont systemFontOfSize:(font/667.f)*kScreenHeight])
-#define DDFitWidth(w) (iPhoneX ? w : (w/375.f)*kScreenWidth)
-#define DDFitHeight(h) (iPhoneX ? h : (h/667.f)*kScreenHeight)
+#define DDFitFont(font) [UIFont systemFontOfSize:(font/667.f)*kScreenHeight]
+#define DDFitWidth(w) (w/375.f)*kScreenWidth
+#define DDFitHeight(h) (h/667.f)*kScreenHeight
 
 
 //第三方服务的key
@@ -143,11 +143,8 @@ typedef NS_ENUM(NSUInteger, DDHomeAttentionListType) {
 #define ShareQQAppKey @"" //腾讯appKey
 #define WetChatAppId @"wx6c456aa37d56cec1" //微信appID
 #define WetChatAppSecret @"e504fbccc592263b650f48f0ffbf74d5" //微信appSecret
-
-#define SinaWeiboAppKey  @"3954920930"
-#define SinaWeiboAppSecret @"64b1c0ff4f9ba28b837c15da9f5ce315"
-#define kSinaRedirectURI   @"http://www.weibo.com"
-
+#define SinaWeiboAppId   @""
+#define SinaWeiboAppSecret @""
 #define SMSMobAppKey @"" //MobAppKey
 #define SMSMobAppSecret @""
 #define SMSMobAppKeyTest @"" //MobAppKey--测试使用

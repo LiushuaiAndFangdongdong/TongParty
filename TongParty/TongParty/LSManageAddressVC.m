@@ -37,11 +37,12 @@
 
 - (void)setupViews {
     WeakSelf(weakSelf);
+    
     [self.view addSubview:self.tableview];
     [self.view addSubview:self.btn_addNewAddress];
     [_btn_addNewAddress mas_makeConstraints:^(MASConstraintMaker *make) {
         make.bottom.right.left.equalTo(weakSelf.view);
-        make.height.mas_equalTo(kTabBarHeight);
+        make.height.mas_equalTo(DDFitHeight(45.f));
     }];
 }
 
@@ -88,10 +89,12 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
     return DDFitHeight(100.f);
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    
     return DDFitHeight(10.f);
 }
 
