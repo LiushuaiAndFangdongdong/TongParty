@@ -139,7 +139,7 @@
     model.vercode  = self.checkCodeTxt.textFiled.text;
     if ([self.validateManager validateLoginWithModel:model]) {
         [DDTJHttpRequest registerWithMobile:model.username passwd:model.password code:model.vercode block:^(NSDictionary *dict) {
-            
+            [self.navigationController popViewControllerAnimated:YES];
         } failure:^{
             //
         }];

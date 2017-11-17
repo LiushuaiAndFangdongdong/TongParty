@@ -17,6 +17,7 @@
 @end
 
 @implementation DDCustomSegmentView
+
 - (instancetype)initWithItemTitles:(NSArray *)itemTitles {
     if (self = [super init]) {
         _itemTitles = itemTitles;

@@ -31,6 +31,21 @@ UIKIT_EXTERN NSString *const kTJUserFindPasswordAPI;
 
 
 
+/** 添加地址*/
+UIKIT_EXTERN NSString *const kTJAddAddressAPI;
+/** 修改地址*/
+UIKIT_EXTERN NSString *const kTJEditAddressAPI;
+/** 删除地址*/
+UIKIT_EXTERN NSString *const kTJDeleteAddressAPI;
+/** 获取地址列表*/
+UIKIT_EXTERN NSString *const kTJGetAddressListAPI;
+/** 设置默认地址*/
+UIKIT_EXTERN NSString *const kTJSetDefaultAddressAPI;
+
+
+
+
+
 #pragma mark - HOME / 首页
 /** 内涵动态列表*/
 UIKIT_EXTERN NSString *const kNHHomeServiceListAPI;

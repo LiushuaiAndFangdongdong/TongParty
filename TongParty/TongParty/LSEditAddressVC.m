@@ -7,15 +7,22 @@
 //
 
 #import "LSEditAddressVC.h"
+#import "DDPickerArea.h"
 #import "LSEditAddressTableViewCell.h"
 #import "DDLocationAddressVC.h"
 
-@interface LSEditAddressVC ()
-<UITableViewDelegate,UITableViewDataSource>
+@interface LSEditAddressVC ()<
+DDPickerAreaDelegate,
+UITableViewDelegate,
+UITableViewDataSource>
 @property (nonatomic, strong)UITableView  *tableview;
 @property (nonatomic, strong)UIButton     *btn_saveAddress;
+//@property (nonatomic, strong)DDPickerArea *area_picker;
+@property (nonatomic, copy) NSString *locationAddr;
 @end
 
+
+static NSString *cellId = @"cell";
 @implementation LSEditAddressVC
 
 - (void)viewDidLoad {
@@ -45,7 +52,7 @@
     [self.view addSubview:self.btn_saveAddress];
     [_btn_saveAddress mas_makeConstraints:^(MASConstraintMaker *make) {
         make.bottom.right.left.equalTo(weakSelf.view);
-        make.height.mas_equalTo(DDFitHeight(45.f));
+        make.height.mas_equalTo(kTabBarHeight);
     }];
 }
 
@@ -78,15 +85,26 @@
     return _btn_saveAddress;
 }
 
+//- (DDPickerArea *)area_picker {
+//    if (!_area_picker) {
+//        _area_picker = [[DDPickerArea alloc] init];
+//        _area_picker.delegate = self;
+//    }
+//    return _area_picker;
+//}
+
 
 - (void)didSelectedToSaveNewAddress:(UIButton *)sender {
     // 保存地址
+    [DDTJHttpRequest addCustomAddressWithToken:[DDUserSingleton shareInstance].token latitude:@"12" longitude:@"88" label:@"公司" addr:@"中国尊" detail:@"32楼3209室" block:^(NSDictionary *dict) {
+        NSLog(@"添加地址成功");
+    } failure:^{
+        //
+    }];
 }
 
 - (void)deleteAddress:(UIButton *)sender {
     // 删除地址
-    DDLocationAddressVC *locationVC   = [[DDLocationAddressVC alloc] init];
-    [self.navigationController pushViewController:locationVC animated:YES];
 }
 
 #pragma mark - tableview data source + delegate
@@ -115,13 +133,16 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *cellId = @"cell";
     LSEditAddressTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellId];
     if (!cell) {
         cell = [[LSEditAddressTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellId];
     }
+    for (UIView *subview in [cell.contentView subviews]) {
+        [subview removeFromSuperview];
+    }  
     if (indexPath.row == 0) {
         cell.style = LSCreateCellSytleAddressLable;
+        cell.locationAddress = _locationAddr;
     }
     
     if (indexPath.row == 1) {
@@ -135,6 +156,30 @@
     return cell;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [self.tableview endEditing:YES];
+    if (indexPath.row == 0) {
+//        [self.area_picker show];
+        [self pushLocationVC];
+    }
+}
+
+- (void)pushLocationVC{
+    DDLocationAddressVC *locationVC   = [[DDLocationAddressVC alloc] init];
+    
+    locationVC.locationAddressSelectBlcok = ^(AMapPOI *POI) {
+        _locationAddr = POI.name;
+        NSIndexPath  *indexPath_1 = [NSIndexPath indexPathForRow:0 inSection:0];
+        [self.tableview reloadRowsAtIndexPaths:@[indexPath_1] withRowAnimation:UITableViewRowAnimationMiddle];
+    };
+    [self.navigationController pushViewController:locationVC animated:YES];
+}
+
+#pragma mark DDPickerArea Delegate
+- (void)pickerArea:(DDPickerArea *)pickerArea province:(NSString *)province city:(NSString *)city area:(NSString *)area {
+    
+    
+}
 
 
 - (void)didReceiveMemoryWarning {

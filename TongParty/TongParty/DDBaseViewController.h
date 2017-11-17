@@ -62,7 +62,8 @@ typedef void(^DDBaseViewControllerHandle)();
 //控制器pop时的模态效果
 - (void)popModalViewController;
 
-
+//pop方法
+-(void)popViewController;
 
 @end
 

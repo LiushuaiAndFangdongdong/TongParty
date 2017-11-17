@@ -9,9 +9,10 @@
 #import <UIKit/UIKit.h>
 
 @interface LSCDTimeAddressView : UIView
-@property (nonatomic, copy) void(^onClickBlcok)(NSInteger index);
-@property (nonatomic, copy) void(^expandMoreBlcok)(NSInteger index);
+@property (nonatomic, assign) CGFloat           current_height;
+@property (nonatomic,   copy) void(^onClickBlcok)(NSInteger index);
+@property (nonatomic,   copy) void(^expandMoreBlcok)(CGFloat final_height);
 - (void)putDataToViewWith:(id)obj returnHeight:(void(^)(CGFloat height))height;
-//@property (nonatomic, assign)CGFloat height;
+- (void)putStringToChildView:(NSString *)string;
 @end
 

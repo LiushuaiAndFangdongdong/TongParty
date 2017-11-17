@@ -37,7 +37,8 @@ static DDTJShareManager *_singleton = nil;
     //QQ
     [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_QQ appKey:ShareQQAppID appSecret:ShareQQAppKey redirectURL:@"https://www.baidu.com/home/news/data/newspage?nid=16194802801658600217&n_type=0&p_from=1&dtype=-1"];
     //新浪微博
-    [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_Sina appKey:SinaWeiboAppId appSecret:SinaWeiboAppSecret redirectURL:@"https://www.baidu.com/home/news/data/newspage?nid=16194802801658600217&n_type=0&p_from=1&dtype=-1"];
+    [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_Sina appKey:SinaWeiboAppKey appSecret:SinaWeiboAppSecret redirectURL:kSinaRedirectURI];
+
 }
 
 -(void)manageShareWithSharedType:(UMSocialPlatformType)platformType

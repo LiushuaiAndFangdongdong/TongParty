@@ -8,7 +8,10 @@
 //定位地址并选择地址
 
 #import "DDBaseViewController.h"
+#import <AMapFoundationKit/AMapFoundationKit.h>
+#import <AMapSearchKit/AMapSearchKit.h>
 
 @interface DDLocationAddressVC : DDBaseViewController
+@property (nonatomic, copy) void(^locationAddressSelectBlcok)(AMapPOI *POI);
 
 @end
