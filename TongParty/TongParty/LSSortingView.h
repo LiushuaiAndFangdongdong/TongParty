@@ -11,5 +11,6 @@
 @interface LSSortingView : UIView
 @property (nonatomic, copy) void(^onTapBlcok)(NSInteger index);
 @property (nonatomic, copy) void(^onClickBlcok)(UIButton *sender);
+@property (nonatomic, copy) void(^onAddressSelected)(NSString *addString);
 - (void)showSecondaryViewWithTag:(NSInteger)tag onView:(UIView *)fatherView;
 @end

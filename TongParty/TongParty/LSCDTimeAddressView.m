@@ -203,12 +203,14 @@ static NSInteger label_baseTag = 99999;
     if (isShowAllLabels) {
         isShowAllLabels = NO;
         _lbl_expandMore.text = @"收起全部";
+        _iv_expandMore.image = kImage(@"desk_addr_less");
         if (_expandMoreBlcok) {
             _expandMoreBlcok(self.min_height);
         }
     } else {
         isShowAllLabels = YES;
         _lbl_expandMore.text = @"展开全部";
+        _iv_expandMore.image = kImage(@"desk_addr_more");
         if (_expandMoreBlcok) {
             _expandMoreBlcok(self.final_height);
         }

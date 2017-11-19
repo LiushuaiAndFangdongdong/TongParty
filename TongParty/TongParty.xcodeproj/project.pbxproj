@@ -9,6 +9,14 @@
 /* Begin PBXBuildFile section */
 		4B05AD0F1FB83B7C007583E9 /* LSCreateDeskChildLabelCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B05AD0E1FB83B7C007583E9 /* LSCreateDeskChildLabelCell.m */; };
 		4B05AD121FB88D57007583E9 /* area.plist in Sources */ = {isa = PBXBuildFile; fileRef = 98578E181F8B635100FEF64D /* area.plist */; };
+		4B2A09781FBF34F000154EC3 /* LSRecommendAddressCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B2A09771FBF34EF00154EC3 /* LSRecommendAddressCell.m */; };
+		4B2A50E61FBFED20008588B1 /* region_dumps.json in Resources */ = {isa = PBXBuildFile; fileRef = 4B2A50E51FBFED20008588B1 /* region_dumps.json */; };
+		4B2A50E91FBFEE87008588B1 /* LSSortingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B2A50E81FBFEE87008588B1 /* LSSortingView.m */; };
+		4B2A50EC1FBFEEF6008588B1 /* LSRegionDumpsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B2A50EB1FBFEEF6008588B1 /* LSRegionDumpsView.m */; };
+		4B2A50EF1FC14266008588B1 /* LSRegionModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B2A50EE1FC14266008588B1 /* LSRegionModel.m */; };
+		4B2A50F21FC165CD008588B1 /* LSContentSortView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B2A50F11FC165CD008588B1 /* LSContentSortView.m */; };
+		4B2A50F51FC16855008588B1 /* LSMapContentSortCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B2A50F41FC16855008588B1 /* LSMapContentSortCell.m */; };
+		4B2A50FB1FC1C49E008588B1 /* LSContentSortModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B2A50FA1FC1C49E008588B1 /* LSContentSortModel.m */; };
 		7FE31485F55A2C72A2918B02 /* Pods_TongParty.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B59ADC9FAFDF929FDA97EB90 /* Pods_TongParty.framework */; };
 		980093921F73975600FE0FE9 /* DDDeskViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 980093911F73975600FE0FE9 /* DDDeskViewController.m */; };
 		980093951F73979C00FE0FE9 /* DDJoinedVc.m in Sources */ = {isa = PBXBuildFile; fileRef = 980093941F73979C00FE0FE9 /* DDJoinedVc.m */; };
@@ -92,7 +100,6 @@
 		986E59FF1FAABC7100FD391C /* LSCDDescriptionCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 986E59F61FAABC7000FD391C /* LSCDDescriptionCellView.m */; };
 		986E5A061FAABC8D00FD391C /* LSAddressTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 986E5A001FAABC8C00FD391C /* LSAddressTableViewCell.m */; };
 		986E5A071FAABC8D00FD391C /* LSEditAddressTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 986E5A041FAABC8D00FD391C /* LSEditAddressTableViewCell.m */; };
-		986E5A081FAABC8D00FD391C /* LSRecommendAddressCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 986E5A051FAABC8D00FD391C /* LSRecommendAddressCell.m */; };
 		986E5A101FAAEC6900FD391C /* LXAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 986E5A0D1FAAEB1700FD391C /* LXAlertView.m */; };
 		986E5A111FAAEC6900FD391C /* UILabel+LXAdd.m in Sources */ = {isa = PBXBuildFile; fileRef = 986E5A0F1FAAEB1700FD391C /* UILabel+LXAdd.m */; };
 		98752B331FACBDE100B94996 /* LLSegmentBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 98752B301FACBD0700B94996 /* LLSegmentBar.m */; };
@@ -169,7 +176,6 @@
 		989932521F693A4900E4BCAA /* NSArray+Addition.m in Sources */ = {isa = PBXBuildFile; fileRef = 989932511F693A4900E4BCAA /* NSArray+Addition.m */; };
 		989932551F693A5100E4BCAA /* NSNotificationCenter+Addition.m in Sources */ = {isa = PBXBuildFile; fileRef = 989932541F693A5100E4BCAA /* NSNotificationCenter+Addition.m */; };
 		989932581F693A8100E4BCAA /* NSDate+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 989932571F693A8100E4BCAA /* NSDate+Extension.m */; };
-		98B54A151FB4458B0071567E /* LSSortingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 98B54A131FB4458A0071567E /* LSSortingView.m */; };
 		98BD9F131F74BBAB0080A6FE /* UIButton+DDEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 98BD9F121F74BBAB0080A6FE /* UIButton+DDEvent.m */; };
 		98BD9F161F74BBC10080A6FE /* UIButton+DDImagePosition.m in Sources */ = {isa = PBXBuildFile; fileRef = 98BD9F151F74BBC10080A6FE /* UIButton+DDImagePosition.m */; };
 		98BF202E1F794D8D00E94394 /* DDAlbumCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 98BF202D1F794D8D00E94394 /* DDAlbumCellView.m */; };
@@ -267,6 +273,21 @@
 /* Begin PBXFileReference section */
 		4B05AD0D1FB83B7C007583E9 /* LSCreateDeskChildLabelCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LSCreateDeskChildLabelCell.h; sourceTree = "<group>"; };
 		4B05AD0E1FB83B7C007583E9 /* LSCreateDeskChildLabelCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LSCreateDeskChildLabelCell.m; sourceTree = "<group>"; };
+		4B2A09761FBF34EF00154EC3 /* LSRecommendAddressCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LSRecommendAddressCell.h; sourceTree = "<group>"; };
+		4B2A09771FBF34EF00154EC3 /* LSRecommendAddressCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LSRecommendAddressCell.m; sourceTree = "<group>"; };
+		4B2A50E51FBFED20008588B1 /* region_dumps.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = region_dumps.json; sourceTree = "<group>"; };
+		4B2A50E71FBFEE87008588B1 /* LSSortingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LSSortingView.h; sourceTree = "<group>"; };
+		4B2A50E81FBFEE87008588B1 /* LSSortingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LSSortingView.m; sourceTree = "<group>"; };
+		4B2A50EA1FBFEEF6008588B1 /* LSRegionDumpsView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LSRegionDumpsView.h; sourceTree = "<group>"; };
+		4B2A50EB1FBFEEF6008588B1 /* LSRegionDumpsView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LSRegionDumpsView.m; sourceTree = "<group>"; };
+		4B2A50ED1FC14266008588B1 /* LSRegionModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LSRegionModel.h; sourceTree = "<group>"; };
+		4B2A50EE1FC14266008588B1 /* LSRegionModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LSRegionModel.m; sourceTree = "<group>"; };
+		4B2A50F01FC165CD008588B1 /* LSContentSortView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LSContentSortView.h; sourceTree = "<group>"; };
+		4B2A50F11FC165CD008588B1 /* LSContentSortView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LSContentSortView.m; sourceTree = "<group>"; };
+		4B2A50F31FC16855008588B1 /* LSMapContentSortCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LSMapContentSortCell.h; sourceTree = "<group>"; };
+		4B2A50F41FC16855008588B1 /* LSMapContentSortCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LSMapContentSortCell.m; sourceTree = "<group>"; };
+		4B2A50F91FC1C49E008588B1 /* LSContentSortModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LSContentSortModel.h; sourceTree = "<group>"; };
+		4B2A50FA1FC1C49E008588B1 /* LSContentSortModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LSContentSortModel.m; sourceTree = "<group>"; };
 		75A4C4B7BBFC3961C6B13BE9 /* Pods-TongParty.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TongParty.release.xcconfig"; path = "Pods/Target Support Files/Pods-TongParty/Pods-TongParty.release.xcconfig"; sourceTree = "<group>"; };
 		980093901F73975600FE0FE9 /* DDDeskViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DDDeskViewController.h; sourceTree = "<group>"; };
 		980093911F73975600FE0FE9 /* DDDeskViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DDDeskViewController.m; sourceTree = "<group>"; };
@@ -436,11 +457,9 @@
 		986E59F71FAABC7000FD391C /* LSCreateDeskTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LSCreateDeskTableViewCell.h; sourceTree = "<group>"; };
 		986E59F81FAABC7100FD391C /* LSCDDescriptionCellView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LSCDDescriptionCellView.h; sourceTree = "<group>"; };
 		986E5A001FAABC8C00FD391C /* LSAddressTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LSAddressTableViewCell.m; sourceTree = "<group>"; };
-		986E5A011FAABC8C00FD391C /* LSRecommendAddressCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LSRecommendAddressCell.h; sourceTree = "<group>"; };
 		986E5A021FAABC8D00FD391C /* LSAddressTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LSAddressTableViewCell.h; sourceTree = "<group>"; };
 		986E5A031FAABC8D00FD391C /* LSEditAddressTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LSEditAddressTableViewCell.h; sourceTree = "<group>"; };
 		986E5A041FAABC8D00FD391C /* LSEditAddressTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LSEditAddressTableViewCell.m; sourceTree = "<group>"; };
-		986E5A051FAABC8D00FD391C /* LSRecommendAddressCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LSRecommendAddressCell.m; sourceTree = "<group>"; };
 		986E5A0C1FAAEB1700FD391C /* UILabel+LXAdd.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UILabel+LXAdd.h"; sourceTree = "<group>"; };
 		986E5A0D1FAAEB1700FD391C /* LXAlertView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LXAlertView.m; sourceTree = "<group>"; };
 		986E5A0E1FAAEB1700FD391C /* LXAlertView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LXAlertView.h; sourceTree = "<group>"; };
@@ -587,8 +606,6 @@
 		989932541F693A5100E4BCAA /* NSNotificationCenter+Addition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSNotificationCenter+Addition.m"; sourceTree = "<group>"; };
 		989932561F693A8100E4BCAA /* NSDate+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+Extension.h"; sourceTree = "<group>"; };
 		989932571F693A8100E4BCAA /* NSDate+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+Extension.m"; sourceTree = "<group>"; };
-		98B54A131FB4458A0071567E /* LSSortingView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LSSortingView.m; sourceTree = "<group>"; };
-		98B54A141FB4458B0071567E /* LSSortingView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LSSortingView.h; sourceTree = "<group>"; };
 		98BD9F111F74BBAB0080A6FE /* UIButton+DDEvent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIButton+DDEvent.h"; sourceTree = "<group>"; };
 		98BD9F121F74BBAB0080A6FE /* UIButton+DDEvent.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIButton+DDEvent.m"; sourceTree = "<group>"; };
 		98BD9F141F74BBC10080A6FE /* UIButton+DDImagePosition.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIButton+DDImagePosition.h"; sourceTree = "<group>"; };
@@ -1067,8 +1084,14 @@
 				98F675B11F70FB980038E372 /* DDLoopProgressView.m */,
 				98F675B61F711E5E0038E372 /* NHHomeNeiHanShareView.h */,
 				98F675B71F711E5E0038E372 /* NHHomeNeiHanShareView.m */,
-				98B54A141FB4458B0071567E /* LSSortingView.h */,
-				98B54A131FB4458A0071567E /* LSSortingView.m */,
+				4B2A50E71FBFEE87008588B1 /* LSSortingView.h */,
+				4B2A50E81FBFEE87008588B1 /* LSSortingView.m */,
+				4B2A50EA1FBFEEF6008588B1 /* LSRegionDumpsView.h */,
+				4B2A50EB1FBFEEF6008588B1 /* LSRegionDumpsView.m */,
+				4B2A50F01FC165CD008588B1 /* LSContentSortView.h */,
+				4B2A50F11FC165CD008588B1 /* LSContentSortView.m */,
+				4B2A50F31FC16855008588B1 /* LSMapContentSortCell.h */,
+				4B2A50F41FC16855008588B1 /* LSMapContentSortCell.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -1078,6 +1101,10 @@
 			children = (
 				985308F81F6BD5B4003B475C /* NHDiscoverModel.h */,
 				985308F91F6BD5B4003B475C /* NHDiscoverModel.m */,
+				4B2A50ED1FC14266008588B1 /* LSRegionModel.h */,
+				4B2A50EE1FC14266008588B1 /* LSRegionModel.m */,
+				4B2A50F91FC1C49E008588B1 /* LSContentSortModel.h */,
+				4B2A50FA1FC1C49E008588B1 /* LSContentSortModel.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -1085,6 +1112,7 @@
 		985308EE1F6BCE91003B475C /* Request */ = {
 			isa = PBXGroup;
 			children = (
+				4B2A50E51FBFED20008588B1 /* region_dumps.json */,
 				985308FB1F6BD6FD003B475C /* DDHomeListRequest.h */,
 				985308FC1F6BD6FD003B475C /* DDHomeListRequest.m */,
 			);
@@ -1446,12 +1474,12 @@
 		986E5A0A1FAAC5DE00FD391C /* AddressManage */ = {
 			isa = PBXGroup;
 			children = (
+				4B2A09761FBF34EF00154EC3 /* LSRecommendAddressCell.h */,
+				4B2A09771FBF34EF00154EC3 /* LSRecommendAddressCell.m */,
 				986E5A021FAABC8D00FD391C /* LSAddressTableViewCell.h */,
 				986E5A001FAABC8C00FD391C /* LSAddressTableViewCell.m */,
 				986E5A031FAABC8D00FD391C /* LSEditAddressTableViewCell.h */,
 				986E5A041FAABC8D00FD391C /* LSEditAddressTableViewCell.m */,
-				986E5A011FAABC8C00FD391C /* LSRecommendAddressCell.h */,
-				986E5A051FAABC8D00FD391C /* LSRecommendAddressCell.m */,
 			);
 			name = AddressManage;
 			sourceTree = "<group>";
@@ -2635,6 +2663,7 @@
 				989931651F69160800E4BCAA /* Assets.xcassets in Resources */,
 				989931631F69160800E4BCAA /* Main.storyboard in Resources */,
 				989931A21F6921C700E4BCAA /* 3.jpg in Resources */,
+				4B2A50E61FBFED20008588B1 /* region_dumps.json in Resources */,
 				98F675A41F70F0D60038E372 /* PYSearch.bundle in Resources */,
 				989931A01F6921C700E4BCAA /* 1.jpg in Resources */,
 			);
@@ -2842,6 +2871,7 @@
 				98C6AE411F7B4386001AAA47 /* DDPersonLabelVc.m in Sources */,
 				985746591FA6D5100017E5D1 /* DDBaseHttpUtil.m in Sources */,
 				98F589CB1F6A7FF7005E674A /* DDCustomAlertView.m in Sources */,
+				4B2A50EC1FBFEEF6008588B1 /* LSRegionDumpsView.m in Sources */,
 				989932331F693A0C00E4BCAA /* NSString+Addition.m in Sources */,
 				989931C31F6925C300E4BCAA /* UIView+Layer.m in Sources */,
 				981BAEC21FA9CD7C00909F28 /* DDDeskMatchViewController.m in Sources */,
@@ -2854,8 +2884,10 @@
 				989931C11F6925C300E4BCAA /* UILabel+Addition.m in Sources */,
 				98F589B11F6A77D6005E674A /* DDCustomActionSheet.m in Sources */,
 				989931EA1F69306900E4BCAA /* UIImageView+LBBlurredImage.m in Sources */,
+				4B2A50FB1FC1C49E008588B1 /* LSContentSortModel.m in Sources */,
 				982F015C1F7CCEFA008061CF /* DDRealNameAuthVc.m in Sources */,
 				98F589E61F6A8658005E674A /* DDBaseTableView.m in Sources */,
+				4B2A50F51FC16855008588B1 /* LSMapContentSortCell.m in Sources */,
 				989931CE1F69265900E4BCAA /* AppDelegate+AppService.m in Sources */,
 				98D5580E1F7E3EE5006124C5 /* DDShowBlindViewController.m in Sources */,
 				989931F91F6932EC00E4BCAA /* APPStartMovieController.m in Sources */,
@@ -2877,7 +2909,6 @@
 				988663E61FBD8B9900B6F24D /* TSActionDemoView.m in Sources */,
 				98F589C51F6A7BA7005E674A /* DDCommonConstant.m in Sources */,
 				98D557FC1F7E2462006124C5 /* DDAboutViewController.m in Sources */,
-				986E5A081FAABC8D00FD391C /* LSRecommendAddressCell.m in Sources */,
 				98F40AF81FAC3F12002B06B6 /* DDUserInfoModel.m in Sources */,
 				98578E2F1F8F206B00FEF64D /* DDDeskView.m in Sources */,
 				989931ED1F69306900E4BCAA /* UIImageView+Addition.m in Sources */,
@@ -2886,17 +2917,21 @@
 				98578E4C1F906B4400FEF64D /* UIImage+ATWatermark.m in Sources */,
 				985309001F6BD772003B475C /* DDHomeListTableCell.m in Sources */,
 				985308FA1F6BD5B4003B475C /* NHDiscoverModel.m in Sources */,
+				4B2A09781FBF34F000154EC3 /* LSRecommendAddressCell.m in Sources */,
 				989931F61F69308300E4BCAA /* UIButton+Addition.m in Sources */,
+				4B2A50F21FC165CD008588B1 /* LSContentSortView.m in Sources */,
 				989931C81F69262700E4BCAA /* AppDelegate+AppRootVC.m in Sources */,
 				98F675A91F70F0D60038E372 /* UIView+PYSearchExtension.m in Sources */,
 				98D557F41F7DFC2C006124C5 /* DDPrivateViewController.m in Sources */,
 				98F589B41F6A7912005E674A /* DDUtils.m in Sources */,
+				4B2A50EF1FC14266008588B1 /* LSRegionModel.m in Sources */,
 				989931D11F692E8000E4BCAA /* FXBlurView.m in Sources */,
 				98F675B21F70FB980038E372 /* DDLoopProgressView.m in Sources */,
 				98F589DD1F6A8327005E674A /* DDCommonAPIConstant.m in Sources */,
 				989932581F693A8100E4BCAA /* NSDate+Extension.m in Sources */,
 				981BAEB91FA97CEE00909F28 /* DDUsercenterHeaderView.m in Sources */,
 				986E59E51FAABC4900FD391C /* LSRecommendAddressVC.m in Sources */,
+				4B2A50E91FBFEE87008588B1 /* LSSortingView.m in Sources */,
 				985746691FA6E57B0017E5D1 /* DDLoginModel.m in Sources */,
 				98F589E01F6A836E005E674A /* DDLocationManager.m in Sources */,
 				98D263C01F7EA45200D77744 /* UIImage+Color.m in Sources */,
@@ -2910,7 +2945,6 @@
 				98C6AE4C1F7B9455001AAA47 /* DDFriendsViewController.m in Sources */,
 				98578E131F8B5A9600FEF64D /* UIView+DDPlus.m in Sources */,
 				98D5580A1F7E3261006124C5 /* DDPermissonViewController.m in Sources */,
-				98B54A151FB4458B0071567E /* LSSortingView.m in Sources */,
 				98BF20501F7A58FC00E94394 /* DDTongCoinVC.m in Sources */,
 				98C6AE441F7B837B001AAA47 /* DDTongCoinView.m in Sources */,
 				980093A21F73A4D900FE0FE9 /* DDDiscoverViewController.m in Sources */,
