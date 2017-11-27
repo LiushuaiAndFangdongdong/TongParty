@@ -32,10 +32,9 @@
 #import "DDBaseImageView.h"
 #import "UINavigationItem+NHAddition.h"
 #import "MBProgressHUD+NHAddition.h"
-
+#import "UIViewController+Loading.h"
 
 //#import <MBProgressHUD/MBProgressHUD.h>
-
 
 //#import <UMSocialCore/UMSocialCore.h>
 //#import <UMSocial.h>
@@ -54,6 +53,7 @@
 #import "DDUserSingleton.h"
 
 #endif /* DDPrefixHeader_pch */
+
 
 
 

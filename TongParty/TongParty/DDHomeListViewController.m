@@ -151,9 +151,9 @@
     //当下拉菜单收回时的回调，用于网络请求新的数据
     _menu.finishedBlock=^(DOPIndexPath *indexPath){
         if (indexPath.item >= 0) {
-            NSLog(@"收起:点击了 %ld - %ld - %ld 项目",indexPath.column,indexPath.row,indexPath.item);
+            NSLog(@"收起:点击了 %ld - %ld - %ld 项目",(long)indexPath.column,(long)indexPath.row,indexPath.item);
         }else {
-            NSLog(@"收起:点击了 %ld - %ld 项目",indexPath.column,indexPath.row);
+            NSLog(@"收起:点击了 %ld - %ld 项目",(long)indexPath.column,(long)indexPath.row);
         }
     };
     //     创建menu 第一次显示 不会调用点击代理，可以用这个手动调用
@@ -202,7 +202,7 @@
 - (NSString *)menu:(DOPDropDownMenu *)menu imageNameForRowAtIndexPath:(DOPIndexPath *)indexPath
 {
     if (indexPath.column == 0 || indexPath.column == 1) {
-        return [NSString stringWithFormat:@"ic_filter_category_%ld",indexPath.row];
+        return [NSString stringWithFormat:@"ic_filter_category_%ld",(long)indexPath.row];
     }
     return nil;
 }
@@ -210,7 +210,7 @@
 - (NSString *)menu:(DOPDropDownMenu *)menu imageNameForItemsInRowAtIndexPath:(DOPIndexPath *)indexPath
 {
     if (indexPath.column == 0 && indexPath.item >= 0) {
-        return [NSString stringWithFormat:@"ic_filter_category_%ld",indexPath.item];
+        return [NSString stringWithFormat:@"ic_filter_category_%ld",(long)indexPath.item];
     }
     return nil;
 }
@@ -261,9 +261,9 @@
 - (void)menu:(DOPDropDownMenu *)menu didSelectRowAtIndexPath:(DOPIndexPath *)indexPath
 {
     if (indexPath.item >= 0) {
-        NSLog(@"点击了 %ld - %ld - %ld 项目",indexPath.column,indexPath.row,indexPath.item);
+        NSLog(@"点击了 %ld - %ld - (long)%ld 项目",(long)indexPath.column,indexPath.row,indexPath.item);
     }else {
-        NSLog(@"点击了 %ld - %ld 项目",indexPath.column,indexPath.row);
+        NSLog(@"点击了 %ld - (long)%ld 项目",(long)indexPath.column,indexPath.row);
     }
 }
 

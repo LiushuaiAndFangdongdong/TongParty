@@ -43,6 +43,10 @@ UIKIT_EXTERN NSString *const kTJGetAddressListAPI;
 UIKIT_EXTERN NSString *const kTJSetDefaultAddressAPI;
 
 
+/** 创建桌子*/
+UIKIT_EXTERN NSString *const kTJCreateDeskAPI;
+
+
 
 
 

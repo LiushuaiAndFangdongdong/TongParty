@@ -160,7 +160,7 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     
     if (section== 0 || section == 1 || section == 2 || section == 3 || section == 4) {
-        return DDFitHeight(10.f);
+        return DDFitHeight(5.f);
     }
     return 0.000001;
 }
@@ -168,7 +168,7 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
     
     if (section == 4) {
-        return DDFitHeight(10.f);
+        return DDFitHeight(5.f);
     }
     return 0.000001;
 }

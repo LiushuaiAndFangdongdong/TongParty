@@ -101,7 +101,29 @@
 
 +(void)postWithUrl:(NSString *)url action:(NSString *)action params:(NSDictionary *)params type:(DDHttpResponseType)type block:(void (^)(id))block failure:(void(^)())failure
 {
+    NSString *string0 = [NSString stringWithFormat:@"%@%@", url, action];
+    NSString *string1 = [NSString stringWithFormat:@"%@%@",@"POST",action];
+    NSString *string2 = [self unixTime];
+    NSString *string3 = [NSString stringWithFormat:@"%@%@",string1,string2];
+    
+    NSString *string4 = [self keyValueWithNSDictionary:params];
+    NSString *paraStr = [NSString stringWithFormat:@"%@%@",string3,string4];
+    //汉字要encode
+//    NSString *encodePara = [paraStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    //post参数不参与加密
+    NSString *encryPara = [self hmac:string3 withKey:Api_secret];
+    
+    //    NSString *encryPara = [self hmac:paraStr withKey:Api_secret];
+    
+    NSLog(@"时间戳：%@",string2);
+    NSLog(@"需要加密的：%@",paraStr);
+    NSLog(@"加密后==%@",encryPara);
+    
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    //设置请求内容的类型
+    [manager.requestSerializer setValue:string2 forHTTPHeaderField:@"api-expires"];
+    //设置请求的编码类型
+    [manager.requestSerializer setValue:encryPara forHTTPHeaderField:@"api-signature"];
     if (type == kDDHttpResponseTypeText) {
         manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     } else {
@@ -113,9 +135,9 @@
     
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json",@"text/json", @"text/plain", @"text/html", nil];
     
-    NSString *urlStr = [NSString stringWithFormat:@"%@%@", url, action];
+//    NSString *urlStr = [NSString stringWithFormat:@"%@%@", url, action];
     
-    [manager POST:urlStr parameters:params progress:^(NSProgress * _Nonnull uploadProgress) {
+    [manager POST:string0 parameters:params progress:^(NSProgress * _Nonnull uploadProgress) {
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         block(responseObject);
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {

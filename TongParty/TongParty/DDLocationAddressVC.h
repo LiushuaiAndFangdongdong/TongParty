@@ -13,5 +13,4 @@
 
 @interface DDLocationAddressVC : DDBaseViewController
 @property (nonatomic, copy) void(^locationAddressSelectBlcok)(AMapPOI *POI);
-
 @end

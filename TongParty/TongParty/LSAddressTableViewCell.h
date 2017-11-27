@@ -7,7 +7,10 @@
 //
 
 #import "DDBaseTableViewCell.h"
+#import "DDAddressModel.h"
 
 @interface LSAddressTableViewCell : DDBaseTableViewCell
 @property (nonatomic, copy) void(^onClickBlcok)(NSInteger index);
+@property (nonatomic, copy) void(^setDefaultBlcok)();
+- (void)updateWithModel:(DDAddressModel *)model;
 @end

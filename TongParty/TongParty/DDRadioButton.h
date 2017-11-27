@@ -17,7 +17,7 @@
 //    id<DDRadioButtonDelegate>       _delegate;
 }
 @property(nonatomic, assign) id<DDRadioButtonDelegate>   delegate;
-@property(nonatomic, copy)NSString            *groupId;
+@property(nonatomic, copy)   NSString            *groupId;
 @property(nonatomic, assign) BOOL checked;
 
 - (id)initWithDelegate:(id)delegate groupId:(NSString*)groupId;

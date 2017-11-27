@@ -22,6 +22,7 @@ PODS:
   - AMapSearch (5.3.0):
     - AMapFoundation (~> 1.2)
   - DZNEmptyDataSet (1.8.1)
+  - IQKeyboardManager (5.0.4)
   - Masonry (1.0.2)
   - MBProgressHUD (1.0.0)
   - MJExtension (3.0.13)
@@ -72,6 +73,7 @@ DEPENDENCIES:
   - AMapLocation
   - AMapSearch
   - DZNEmptyDataSet
+  - IQKeyboardManager
   - Masonry
   - MBProgressHUD
   - MJExtension
@@ -93,6 +95,7 @@ SPEC CHECKSUMS:
   AMapLocation: 47b62b5381a66e4d0c2931b70ffde72682427896
   AMapSearch: beb01c6b2e7be18fb4898e97162fedf144420c6f
   DZNEmptyDataSet: 9525833b9e68ac21c30253e1d3d7076cc828eaa7
+  IQKeyboardManager: 1df9c0f147af1681cfb2d9977bc30309d45a7e76
   Masonry: 7c429b56da9d4ee0bbb3ed77a5ea710d6a5df39e
   MBProgressHUD: 4890f671c94e8a0f3cf959aa731e9de2f036d71a
   MJExtension: 5932755f451458eefa24239358817f8d291240c7
@@ -106,6 +109,6 @@ SPEC CHECKSUMS:
   YYText: 5c461d709e24d55a182d1441c41dc639a18a4849
   YYWebImage: 5f7f36aee2ae293f016d418c7d6ba05c4863e928
 
-PODFILE CHECKSUM: 412e0ae77667dad72e58895afd0b962e71bdb491
+PODFILE CHECKSUM: 93e2852154d11dd2619dc74085d359327996e5b2
 
 COCOAPODS: 1.2.1

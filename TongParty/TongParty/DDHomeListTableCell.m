@@ -44,8 +44,8 @@
         self.nameL.attributedText = [DDUtils attStringWithString:elementModel.name keyWord:self.keyWord font:kFont(15) highlightedColor:kCommonHighLightRedColor textColor:kBlackColor];
     }
     [self.iconImg sd_setImageWithURL:[NSURL URLWithString:elementModel.icon_url]];
-    self.joinPeoplesL.text = [NSString stringWithFormat:@"%ld 订阅", elementModel.subscribe_count];
-    NSString *totalText =  [NSString stringWithFormat:@"总贴数 %ld", elementModel.today_updates];
+    self.joinPeoplesL.text = [NSString stringWithFormat:@"%ld 订阅", (long)elementModel.subscribe_count];
+    NSString *totalText =  [NSString stringWithFormat:@"总贴数 %ld", (long)elementModel.today_updates];
     NSMutableAttributedString *string = [[NSMutableAttributedString alloc] initWithString:totalText];
     NSRange range = [totalText rangeOfString:@"总贴数 "];
     if (range.location != NSNotFound) {

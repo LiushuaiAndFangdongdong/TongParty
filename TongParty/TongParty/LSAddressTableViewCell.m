@@ -42,7 +42,7 @@ static NSInteger baseTag = 88888;
         make.height.mas_equalTo(DDFitHeight(14.f));
         make.top.mas_equalTo(DDFitHeight(5.f));
     }];
-    _lbl_lable.text = @"公司    ";
+//    _lbl_lable.text = @"公司    ";
     _lbl_lable.font = DDFitFont(10.f);
     _lbl_lable.textColor = kRGBColor(118.f, 213.f, 113.f);
     _lbl_lable.layer.borderColor = kRGBColor(118.f, 213.f, 113.f).CGColor;
@@ -59,7 +59,7 @@ static NSInteger baseTag = 88888;
         make.height.mas_equalTo(30.f);
         make.right.mas_equalTo(-DDFitWidth(10.f));
     }];
-    _lbl_address.text = @"北京市海淀区阜北社区41单元9号";
+//    _lbl_address.text = @"北京市海淀区阜北社区41单元9号";
     _lbl_address.font = DDFitFont(16.f);
     _lbl_address.textColor = kBlackColor;
     
@@ -137,12 +137,24 @@ static NSInteger baseTag = 88888;
         make.height.width.mas_equalTo(DDFitHeight(15.f));
     }];
     _iv_edit.image = kImage(@"desk_address_edit");
-    
+}
+
+- (void)updateWithModel:(DDAddressModel *)model{
+     _lbl_lable.text = [NSString stringWithFormat:@"  %@  ",model.label];
+    _lbl_address.text = [NSString stringWithFormat:@"%@,%@",model.addr,model.detail];
+    _ra_default.checked = [model.is_default intValue] == 1 ? YES : NO;
 }
 
 - (void)onClicked:(UIButton *)sender {
     if (_onClickBlcok) {
         _onClickBlcok(sender.tag - baseTag);
+    }
+}
+
+#pragma mark - DDRadioButtonDelegate
+- (void)didSelectedRadioButton:(DDRadioButton *)radio groupId:(NSString *)groupId{
+    if (_setDefaultBlcok) {
+        _setDefaultBlcok();
     }
 }
 
@@ -156,7 +168,6 @@ static NSInteger baseTag = 88888;
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
-
 }
 
 @end

@@ -115,12 +115,12 @@
 }
 //是否允许切换
 - (BOOL)tabBar:(CYTabBar *)tabBar willSelectIndex:(NSInteger)index{
-    NSLog(@"将要切换到---> %ld",index);
+    NSLog(@"将要切换到---> %ld",(long)index);
     return YES;
 }
 //通知切换的下标
 - (void)tabBar:(CYTabBar *)tabBar didSelectIndex:(NSInteger)index{
-    NSLog(@"切换到---> %ld",index);
+    NSLog(@"切换到---> %ld",(long)index);
 }
 
 #pragma mark - PYSearchViewControllerDelegate

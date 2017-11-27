@@ -58,7 +58,7 @@
         _imageView = img;
         
         for (NSInteger i = 0; i < 17; i++) {
-            UIImage *image = [UIImage imageNamed:[NSString stringWithFormat:@"refreshjoke_loading_%ld", i % 17]];
+            UIImage *image = [UIImage imageNamed:[NSString stringWithFormat:@"refreshjoke_loading_%d", i % 17]];
             [self.imageArray addObject:image];
         }
         self.imageView.animationDuration = 1.0;

@@ -8,11 +8,15 @@
 
 #import "LSManageAddressVC.h"
 #import "LSAddressTableViewCell.h"
-#import "LSEditAddressVC.h"
+#import "DDAddressModel.h"
+#import "DDCustomCommonEmptyView.h"
+#import "DDEditAddrViewController.h"
 
 @interface LSManageAddressVC ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic, strong)UITableView  *tableview;
 @property (nonatomic, strong)UIButton     *btn_addNewAddress;
+@property (nonatomic, strong)NSMutableArray *dataArray;
+@property (nonatomic, weak) DDCustomCommonEmptyView *emptyView;
 @end
 
 @implementation LSManageAddressVC
@@ -20,12 +24,31 @@
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     self.navigationController.navigationBar.translucent = NO;
+    [self loadData];
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setupNavi];
     [self setupViews];
+}
+
+- (void)loadData{
+    if (_emptyView) {
+        [_emptyView removeFromSuperview];
+    }
+    [MBProgressHUD showLoading:self.view];
+    [DDTJHttpRequest getCustomAddressListWithToken:TOKEN block:^(NSDictionary *dict) {
+        [MBProgressHUD hideAllHUDsInView:self.view];
+        _dataArray = [DDAddressModel mj_objectArrayWithKeyValuesArray:dict];
+        if (_dataArray.count == 0) {
+            [self.emptyView showInView:self.view];
+        }else{
+             [_tableview reloadData];
+        }
+    } failure:^{
+        [self.emptyView showInView:self.view];
+    }];
 }
 
 - (void)setupNavi {
@@ -60,6 +83,15 @@
     return _tableview;
 }
 
+- (DDCustomCommonEmptyView *)emptyView {
+    if (!_emptyView) {
+        DDCustomCommonEmptyView *empty = [[DDCustomCommonEmptyView alloc] initWithTitle:@"暂无数据" secondTitle:@"不好意思，网络跟您开了一个玩笑了" iconname:@"nocontent"];
+        [self.view addSubview:empty];
+        _emptyView = empty;
+    }
+    return _emptyView;
+}
+
 - (UIButton *)btn_addNewAddress {
     
     if (!_btn_addNewAddress) {
@@ -75,12 +107,12 @@
 
 // 添加新地址
 - (void)didSelectedToAddNewAddress:(UIButton *)sender {
-    
+    [self pushEditVCWithTitle:@"新增地址" model:nil];
 }
 
 #pragma mark - tableview data source + delegate
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 5;
+    return _dataArray.count;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -88,11 +120,11 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return DDFitHeight(100.f);
+    return DDFitHeight(90.f);
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return DDFitHeight(10.f);
+    return DDFitHeight(5.f);
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
@@ -105,25 +137,62 @@
     if (!cell) {
         cell = [[LSAddressTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellId];
     }
+    [cell updateWithModel:_dataArray[indexPath.section]];
     cell.onClickBlcok = ^(NSInteger index) {
         switch (index) {
             case 0:{
                 NSLog(@"编辑地点");
-                 [self.navigationController pushViewController:[[LSEditAddressVC alloc] init] animated:YES];
+                [self pushEditVCWithTitle:@"编辑地址" model:_dataArray[indexPath.section]];
             }break;
             case 1:{
                 NSLog(@"删除地点");
+                [self deleteAddressWithIndexPath:indexPath];
             }break;
             default:
                 break;
         }
     };
+    cell.setDefaultBlcok = ^{
+        [self setDefaultAddrWithIndexPath:indexPath];
+    };
     return cell;
 }
 
+//设置默认
+- (void)setDefaultAddrWithIndexPath:(NSIndexPath *)indexPath{
+    DDAddressModel *model = _dataArray[indexPath.section];
+    [MBProgressHUD showLoading:self.view];
+    [DDTJHttpRequest setDefaultAddressWithToken:TOKEN aid:model.id block:^(NSDictionary *dict) {
+        [MBProgressHUD hideAllHUDsInView:self.view];
+    } failure:^{
+        //
+    }];
+}
 
+//删除
+- (void)deleteAddressWithIndexPath:(NSIndexPath *)indexPath{
+    DDAddressModel *model = _dataArray[indexPath.section];
+    [MBProgressHUD showLoading:self.view];
+    [DDTJHttpRequest deleteCustomAddressWithToken:TOKEN aid:model.id block:^(NSDictionary *dict) {
+        [MBProgressHUD hideAllHUDsInView:self.view];
+        [_dataArray removeObjectAtIndex:indexPath.section];
+        [_tableview deleteSections:[NSIndexSet indexSetWithIndex:indexPath.section] withRowAnimation:UITableViewRowAnimationMiddle];
+        [_tableview reloadData];
+        if (_dataArray.count == 0) {
+            [self.emptyView showInView:self.view];
+        }
+    } failure:^{
+        //
+    }];
+}
 
+- (void)pushEditVCWithTitle:(NSString *)title model:(DDAddressModel *)model{
 
+    DDEditAddrViewController *editVC = [[DDEditAddrViewController alloc] init];
+    editVC.titleStr = title;
+    editVC.tmpModel = model;
+    [self.navigationController pushViewController:editVC animated:YES];
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

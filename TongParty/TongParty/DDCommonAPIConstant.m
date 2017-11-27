@@ -43,6 +43,9 @@ NSString *const kTJGetAddressListAPI = @"/tongju/api/get_user_addr.php";
 NSString *const kTJSetDefaultAddressAPI = @"/tongju/api/set_default_addr.php";
 
 
+/** 创建桌子*/
+NSString *const kTJCreateDeskAPI = @"/tongju/api/set_table_info.php";
+
 
 
 

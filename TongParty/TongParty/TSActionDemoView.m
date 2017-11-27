@@ -17,6 +17,8 @@
 @property (strong,nonatomic)UITextField * inputField;//输入框
 @property (strong,nonatomic)UIButton * sureBtn;//确定按钮
 @property (strong,nonatomic)UIButton * cancelBtn;//取消按钮
+@property (nonatomic, copy) NSString *pl;
+@property (nonatomic, copy) NSString *btnTitle;
 
 @end
 @implementation TSActionDemoView
@@ -86,7 +88,7 @@
     if (_headerBtn == nil) {
         _headerBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         _headerBtn.backgroundColor = [UIColor grayColor];
-        [_headerBtn setTitle:@"活动名称" forState:UIControlStateNormal];
+        [_headerBtn setTitle:_btnTitle forState:UIControlStateNormal];
         [_headerBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         _headerBtn.userInteractionEnabled = NO;
     }
@@ -98,7 +100,7 @@
     if (_inputField == nil){
         _inputField = [UITextField new];
         _inputField.textAlignment = NSTextAlignmentCenter;
-        _inputField.placeholder = @"phone number";
+        _inputField.placeholder = _pl;
         _inputField.layer.borderColor = [UIColor lightGrayColor].CGColor;
         _inputField.layer.borderWidth = 1;
         _inputField.layer.cornerRadius = 5;
@@ -107,12 +109,21 @@
     return _inputField ;
 }
 
+- (void)setTitleString:(NSString *)titleString{
+    _btnTitle = titleString;
+    [_headerBtn setTitle:titleString forState:UIControlStateNormal];
+}
+- (void)setPloceHolderString:(NSString *)ploceHolderString{
+    _pl = ploceHolderString;
+    _inputField.placeholder = ploceHolderString;
+}
+
 //确定
 - (UIButton *)sureBtn{
     if (_sureBtn == nil) {
         _sureBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        _sureBtn.backgroundColor = [UIColor greenColor];
-        [_sureBtn setTitle:@"Accept" forState:UIControlStateNormal];
+        _sureBtn.backgroundColor = kBgGreenColor;
+        [_sureBtn setTitle:@"确定" forState:UIControlStateNormal];
         _sureBtn.layer.cornerRadius = 5;
         _sureBtn.layer.masksToBounds = YES;
         [_sureBtn addTarget:self action:@selector(sureAction) forControlEvents:UIControlEventTouchUpInside];
@@ -124,7 +135,7 @@
 - (UIButton *)cancelBtn{
     if (_cancelBtn == nil) {
         _cancelBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        [_cancelBtn setTitle:@"Cancle" forState:UIControlStateNormal];
+        [_cancelBtn setTitle:@"取消" forState:UIControlStateNormal];
         _cancelBtn.backgroundColor =[UIColor lightGrayColor];
         _cancelBtn.layer.cornerRadius = 5;
         _cancelBtn.layer.masksToBounds = YES;

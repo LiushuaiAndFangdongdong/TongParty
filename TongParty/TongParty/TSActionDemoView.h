@@ -11,5 +11,6 @@
 @interface TSActionDemoView : TSActionAlertView
 
 @property (strong,nonatomic)TSActionAlertViewStringHandler stringHandler;
-
+@property (nonatomic, copy) NSString *ploceHolderString;
+@property (nonatomic, copy) NSString *titleString;
 @end

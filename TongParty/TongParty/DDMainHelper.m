@@ -98,9 +98,9 @@ static DDMainHelper *helper = nil;
 //    [DDMainHelper GetlatestImageForTakeScreenshot:YES finished:^(UIImage *image) {
 //        NSLog(@"我要分享");
 //    }];
-    UIViewController *rootViewController = [[[UIApplication sharedApplication] keyWindow] rootViewController];
-    UIView *snapView = [rootViewController.view snapshotViewAfterScreenUpdates:NO];
-    UIImage *shareImage = [self createImageWithView:snapView];
+//    UIViewController *rootViewController = [[[UIApplication sharedApplication] keyWindow] rootViewController];
+//    UIView *snapView = [rootViewController.view snapshotViewAfterScreenUpdates:NO];
+//    UIImage *shareImage = [self createImageWithView:snapView];
     
     
 }

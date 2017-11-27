@@ -15,7 +15,10 @@ typedef NS_ENUM(NSUInteger, DDHomeAttentionListType) {
     /** 当前用户的关注用户列表*/
     DDHomeAttentionListTypeNormal
 };
- 
+
+
+#define TOKEN  [DDUserSingleton shareInstance].token
+
 /**
  *  弱指针
  */

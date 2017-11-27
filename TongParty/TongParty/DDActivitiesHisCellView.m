@@ -114,7 +114,7 @@
     }
 }
 -(void)activitiesItemClick:(UITapGestureRecognizer *)tap{
-    NSLog(@"%ld",[tap view].tag);
+    NSLog(@"%d",[tap view].tag);
     if (_activityHistoryClickBlcok) {
         _activityHistoryClickBlcok([tap view].tag - 100);
     }

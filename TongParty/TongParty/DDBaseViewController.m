@@ -204,7 +204,7 @@
 - (UIBarButtonItem *)customTitleButtonForNavigationWithAction:(SEL)action title:(NSString *)title CGSize:(CGSize)size{
     UIButton* button= [UIButton buttonWithType:UIButtonTypeCustom];
     [button setTitle:title forState:UIControlStateNormal];
-    [button setTitleColor:kWhiteColor forState:UIControlStateNormal];
+    [button setTitleColor:kGrayColor forState:UIControlStateNormal];
     [button setTitleColor:kBgGreenColor forState:UIControlStateHighlighted];
     button.titleLabel.font = kFont(14);
     button.frame = CGRectMake(0, 0, size.width,size.height);
