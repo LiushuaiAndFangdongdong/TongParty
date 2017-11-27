@@ -13,10 +13,13 @@
 		4B2A50E61FBFED20008588B1 /* region_dumps.json in Resources */ = {isa = PBXBuildFile; fileRef = 4B2A50E51FBFED20008588B1 /* region_dumps.json */; };
 		4B2A50E91FBFEE87008588B1 /* LSSortingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B2A50E81FBFEE87008588B1 /* LSSortingView.m */; };
 		4B2A50EC1FBFEEF6008588B1 /* LSRegionDumpsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B2A50EB1FBFEEF6008588B1 /* LSRegionDumpsView.m */; };
-		4B2A50EF1FC14266008588B1 /* LSRegionModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B2A50EE1FC14266008588B1 /* LSRegionModel.m */; };
 		4B2A50F21FC165CD008588B1 /* LSContentSortView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B2A50F11FC165CD008588B1 /* LSContentSortView.m */; };
 		4B2A50F51FC16855008588B1 /* LSMapContentSortCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B2A50F41FC16855008588B1 /* LSMapContentSortCell.m */; };
 		4B2A50FB1FC1C49E008588B1 /* LSContentSortModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B2A50FA1FC1C49E008588B1 /* LSContentSortModel.m */; };
+		4BF385B11FC6B222007085F0 /* LSMapAnnotationModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BF385B01FC6B222007085F0 /* LSMapAnnotationModel.m */; };
+		4BF99CE91FCBE82700E4F403 /* LSCreatDeskEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BF99CE81FCBE82700E4F403 /* LSCreatDeskEntity.m */; };
+		4BF99CEC1FCBF2A000E4F403 /* LSUpLoadImageManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BF99CEA1FCBF2A000E4F403 /* LSUpLoadImageManager.m */; };
+		4BF99CEF1FCBF75900E4F403 /* LSCDPhotoIV.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BF99CEE1FCBF75900E4F403 /* LSCDPhotoIV.m */; };
 		7FE31485F55A2C72A2918B02 /* Pods_TongParty.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B59ADC9FAFDF929FDA97EB90 /* Pods_TongParty.framework */; };
 		980093921F73975600FE0FE9 /* DDDeskViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 980093911F73975600FE0FE9 /* DDDeskViewController.m */; };
 		980093951F73979C00FE0FE9 /* DDJoinedVc.m in Sources */ = {isa = PBXBuildFile; fileRef = 980093941F73979C00FE0FE9 /* DDJoinedVc.m */; };
@@ -280,14 +283,20 @@
 		4B2A50E81FBFEE87008588B1 /* LSSortingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LSSortingView.m; sourceTree = "<group>"; };
 		4B2A50EA1FBFEEF6008588B1 /* LSRegionDumpsView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LSRegionDumpsView.h; sourceTree = "<group>"; };
 		4B2A50EB1FBFEEF6008588B1 /* LSRegionDumpsView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LSRegionDumpsView.m; sourceTree = "<group>"; };
-		4B2A50ED1FC14266008588B1 /* LSRegionModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LSRegionModel.h; sourceTree = "<group>"; };
-		4B2A50EE1FC14266008588B1 /* LSRegionModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LSRegionModel.m; sourceTree = "<group>"; };
 		4B2A50F01FC165CD008588B1 /* LSContentSortView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LSContentSortView.h; sourceTree = "<group>"; };
 		4B2A50F11FC165CD008588B1 /* LSContentSortView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LSContentSortView.m; sourceTree = "<group>"; };
 		4B2A50F31FC16855008588B1 /* LSMapContentSortCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LSMapContentSortCell.h; sourceTree = "<group>"; };
 		4B2A50F41FC16855008588B1 /* LSMapContentSortCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LSMapContentSortCell.m; sourceTree = "<group>"; };
 		4B2A50F91FC1C49E008588B1 /* LSContentSortModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LSContentSortModel.h; sourceTree = "<group>"; };
 		4B2A50FA1FC1C49E008588B1 /* LSContentSortModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LSContentSortModel.m; sourceTree = "<group>"; };
+		4BF385AF1FC6B222007085F0 /* LSMapAnnotationModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LSMapAnnotationModel.h; sourceTree = "<group>"; };
+		4BF385B01FC6B222007085F0 /* LSMapAnnotationModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LSMapAnnotationModel.m; sourceTree = "<group>"; };
+		4BF99CE71FCBE82700E4F403 /* LSCreatDeskEntity.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LSCreatDeskEntity.h; sourceTree = "<group>"; };
+		4BF99CE81FCBE82700E4F403 /* LSCreatDeskEntity.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LSCreatDeskEntity.m; sourceTree = "<group>"; };
+		4BF99CEA1FCBF2A000E4F403 /* LSUpLoadImageManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LSUpLoadImageManager.m; sourceTree = "<group>"; };
+		4BF99CEB1FCBF2A000E4F403 /* LSUpLoadImageManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LSUpLoadImageManager.h; sourceTree = "<group>"; };
+		4BF99CED1FCBF75900E4F403 /* LSCDPhotoIV.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LSCDPhotoIV.h; sourceTree = "<group>"; };
+		4BF99CEE1FCBF75900E4F403 /* LSCDPhotoIV.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LSCDPhotoIV.m; sourceTree = "<group>"; };
 		75A4C4B7BBFC3961C6B13BE9 /* Pods-TongParty.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TongParty.release.xcconfig"; path = "Pods/Target Support Files/Pods-TongParty/Pods-TongParty.release.xcconfig"; sourceTree = "<group>"; };
 		980093901F73975600FE0FE9 /* DDDeskViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DDDeskViewController.h; sourceTree = "<group>"; };
 		980093911F73975600FE0FE9 /* DDDeskViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DDDeskViewController.m; sourceTree = "<group>"; };
@@ -787,6 +796,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4BF99CE61FCBE80B00E4F403 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				4BF99CE71FCBE82700E4F403 /* LSCreatDeskEntity.h */,
+				4BF99CE81FCBE82700E4F403 /* LSCreatDeskEntity.m */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
 		8F0BEDA8DF29B7F3DF1985AE /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -1011,6 +1029,7 @@
 		983742B11F96F90700200B7E /* CreateDesk */ = {
 			isa = PBXGroup;
 			children = (
+				4BF99CE61FCBE80B00E4F403 /* Model */,
 				983742B31F96F91700200B7E /* Controller */,
 				983742B21F96F91300200B7E /* View */,
 			);
@@ -1101,10 +1120,10 @@
 			children = (
 				985308F81F6BD5B4003B475C /* NHDiscoverModel.h */,
 				985308F91F6BD5B4003B475C /* NHDiscoverModel.m */,
-				4B2A50ED1FC14266008588B1 /* LSRegionModel.h */,
-				4B2A50EE1FC14266008588B1 /* LSRegionModel.m */,
 				4B2A50F91FC1C49E008588B1 /* LSContentSortModel.h */,
 				4B2A50FA1FC1C49E008588B1 /* LSContentSortModel.m */,
+				4BF385AF1FC6B222007085F0 /* LSMapAnnotationModel.h */,
+				4BF385B01FC6B222007085F0 /* LSMapAnnotationModel.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -1275,6 +1294,8 @@
 		98578E191F8B65AB00FEF64D /* Tools */ = {
 			isa = PBXGroup;
 			children = (
+				4BF99CEB1FCBF2A000E4F403 /* LSUpLoadImageManager.h */,
+				4BF99CEA1FCBF2A000E4F403 /* LSUpLoadImageManager.m */,
 				989931B61F69252A00E4BCAA /* DDDefaultHeader.h */,
 				98DEFF3B1F78B8D3007F73D1 /* DDBasicViewMacro.h */,
 				98F589B21F6A7912005E674A /* DDUtils.h */,
@@ -1467,6 +1488,8 @@
 				986E59F61FAABC7000FD391C /* LSCDDescriptionCellView.m */,
 				986E59EC1FAABC6F00FD391C /* LSCDJoinDeskCellView.h */,
 				986E59F41FAABC7000FD391C /* LSCDJoinDeskCellView.m */,
+				4BF99CED1FCBF75900E4F403 /* LSCDPhotoIV.h */,
+				4BF99CEE1FCBF75900E4F403 /* LSCDPhotoIV.m */,
 			);
 			name = CreateDesk;
 			sourceTree = "<group>";
@@ -2771,6 +2794,7 @@
 				98578E161F8B5B4200FEF64D /* DDPickerDate.m in Sources */,
 				98578E171F8B5B4200FEF64D /* DDPickerArea.m in Sources */,
 				98BF20461F7A28CA00E94394 /* DDPersonInfoTableViewCell.m in Sources */,
+				4BF99CEF1FCBF75900E4F403 /* LSCDPhotoIV.m in Sources */,
 				985308FD1F6BD6FD003B475C /* DDHomeListRequest.m in Sources */,
 				989931F01F69307700E4BCAA /* UILabel+CountDown.m in Sources */,
 				986E59FF1FAABC7100FD391C /* LSCDDescriptionCellView.m in Sources */,
@@ -2785,6 +2809,7 @@
 				98BF20311F794FA200E94394 /* DDActivitiesHisCellView.m in Sources */,
 				98F675AF1F70FB6A0038E372 /* DDMAAnnotationView.m in Sources */,
 				98F589E91F6A88F7005E674A /* DDBaseTableHeaderFooterView.m in Sources */,
+				4BF99CEC1FCBF2A000E4F403 /* LSUpLoadImageManager.m in Sources */,
 				98F675A81F70F0D60038E372 /* UIColor+PYSearchExtension.m in Sources */,
 				98DEFF3A1F78B869007F73D1 /* DDBaseView.m in Sources */,
 				985746761FA81DB90017E5D1 /* DDHisHerViewController.m in Sources */,
@@ -2885,6 +2910,7 @@
 				98F589B11F6A77D6005E674A /* DDCustomActionSheet.m in Sources */,
 				989931EA1F69306900E4BCAA /* UIImageView+LBBlurredImage.m in Sources */,
 				4B2A50FB1FC1C49E008588B1 /* LSContentSortModel.m in Sources */,
+				4BF99CE91FCBE82700E4F403 /* LSCreatDeskEntity.m in Sources */,
 				982F015C1F7CCEFA008061CF /* DDRealNameAuthVc.m in Sources */,
 				98F589E61F6A8658005E674A /* DDBaseTableView.m in Sources */,
 				4B2A50F51FC16855008588B1 /* LSMapContentSortCell.m in Sources */,
@@ -2916,6 +2942,7 @@
 				98D51B801FA5CC510095BC8F /* DDRegisterViewController.m in Sources */,
 				98578E4C1F906B4400FEF64D /* UIImage+ATWatermark.m in Sources */,
 				985309001F6BD772003B475C /* DDHomeListTableCell.m in Sources */,
+				4BF385B11FC6B222007085F0 /* LSMapAnnotationModel.m in Sources */,
 				985308FA1F6BD5B4003B475C /* NHDiscoverModel.m in Sources */,
 				4B2A09781FBF34F000154EC3 /* LSRecommendAddressCell.m in Sources */,
 				989931F61F69308300E4BCAA /* UIButton+Addition.m in Sources */,
@@ -2924,7 +2951,6 @@
 				98F675A91F70F0D60038E372 /* UIView+PYSearchExtension.m in Sources */,
 				98D557F41F7DFC2C006124C5 /* DDPrivateViewController.m in Sources */,
 				98F589B41F6A7912005E674A /* DDUtils.m in Sources */,
-				4B2A50EF1FC14266008588B1 /* LSRegionModel.m in Sources */,
 				989931D11F692E8000E4BCAA /* FXBlurView.m in Sources */,
 				98F675B21F70FB980038E372 /* DDLoopProgressView.m in Sources */,
 				98F589DD1F6A8327005E674A /* DDCommonAPIConstant.m in Sources */,

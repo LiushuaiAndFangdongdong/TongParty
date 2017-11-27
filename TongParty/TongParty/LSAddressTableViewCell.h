@@ -9,5 +9,5 @@
 #import "DDBaseTableViewCell.h"
 
 @interface LSAddressTableViewCell : DDBaseTableViewCell
-@property (nonatomic, copy) void(^onClickBlcok)(NSInteger index);
+@property (nonatomic, copy) void(^onClickBlcok)(NSInteger index, NSString *aid);
 @end

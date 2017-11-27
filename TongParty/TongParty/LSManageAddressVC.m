@@ -105,14 +105,15 @@
     if (!cell) {
         cell = [[LSAddressTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellId];
     }
-    cell.onClickBlcok = ^(NSInteger index) {
+    cell.onClickBlcok = ^(NSInteger index, NSString *aid) {
         switch (index) {
             case 0:{
                 NSLog(@"编辑地点");
-                 [self.navigationController pushViewController:[[LSEditAddressVC alloc] init] animated:YES];
+                [self editAddressWithAid:aid];
             }break;
             case 1:{
                 NSLog(@"删除地点");
+                [self deleteAddressWithAid:aid];
             }break;
             default:
                 break;
@@ -121,8 +122,18 @@
     return cell;
 }
 
+// 根据地址id编辑地址
+- (void)editAddressWithAid:(NSString *)aid {
+    LSEditAddressVC *editAddVC = [[LSEditAddressVC alloc] init];
+    editAddVC.isEditAddress = YES;
+    editAddVC.aid = aid;
+    [self.navigationController pushViewController:editAddVC animated:YES];
+}
 
-
+// 根据地址id删除地址
+- (void)deleteAddressWithAid:(NSString *)aid {
+    // 删除地址
+}
 
 
 - (void)didReceiveMemoryWarning {

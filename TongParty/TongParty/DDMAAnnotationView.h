@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <MAMapKit/MAMapKit.h>
+#import "LSMapAnnotationModel.h"
 
 @interface DDMAAnnotationView : MAAnnotationView
 

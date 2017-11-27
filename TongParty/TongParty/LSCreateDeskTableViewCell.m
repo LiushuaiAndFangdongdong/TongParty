@@ -7,11 +7,6 @@
 //
 
 #import "LSCreateDeskTableViewCell.h"
-#import "LSCreateDeskActionCellView.h"
-#import "LSCDTimeAddressView.h"
-#import "LSCDMembersCellView.h"
-#import "LSCDDescriptionCellView.h"
-#import "LSCDJoinDeskCellView.h"
 @interface LSCreateDeskTableViewCell ()
 // 1
 @property (nonatomic, strong)LSCreateDeskActionCellView *view_action;
@@ -68,8 +63,12 @@
 }
 
 - (LSCDDescriptionCellView *)view_description {
+    WeakSelf(weakSelf);
     if (!_view_description) {
         _view_description = [LSCDDescriptionCellView new];
+        _view_description.selectPhotos = ^(LSCDPhotoIV *iv_photo) {
+            weakSelf.selectPhotos(iv_photo);
+        };
     }
     return _view_description;
 }
@@ -84,11 +83,6 @@
 
 - (void)setStyle:(LSCreateDeslCellStyle)style {
     _style = style;
-    [_view_action removeFromSuperview];
-    [_view_members removeFromSuperview];
-    [_view_startTime removeFromSuperview];
-    [_view_joinDesk removeFromSuperview];
-    [_view_description removeFromSuperview];
     switch (_style) {
         case LSCreateCellSytleActionAndTheme:{
             [self setupActionView];
@@ -158,7 +152,9 @@
                 NSLog(@"heiht~~~~~~~~~~~~~~~~~~~~~~%lf",self.height);
             }];
         }break;
-        default:
+        case LSCreateCellSytleDescription:{
+//            [_view_description putPhotosWhitArray:(NSMutableArray *)obj];
+        }default:
             break;
     }
 }

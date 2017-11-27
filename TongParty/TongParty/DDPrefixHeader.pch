@@ -53,6 +53,11 @@
 #import "DDLoginManager.h"
 #import "DDUserSingleton.h"
 
+
+// new
+#import "LSUpLoadImageManager.h"
+
+
 #endif /* DDPrefixHeader_pch */
 
 

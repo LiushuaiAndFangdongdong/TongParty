@@ -10,6 +10,7 @@
 #import "DDLoopProgressView.h"
 #import "UIView+Layer.h"
 
+
 @interface DDMAAnnotationView ()
 @property (nonatomic, strong)UIView      *view_bg;
 @property (nonatomic, strong)UIImageView *iv_bg;
@@ -84,4 +85,6 @@
     }
     return _lbl_actionName;
 }
+
+
 @end

@@ -7,7 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "LSCDPhotoIV.h"
 
 @interface LSCDDescriptionCellView : UIView
-
+@property (nonatomic,   copy) void(^selectPhotos)(LSCDPhotoIV *iv_photo);
+//- (void)putPhotosWhitArray:(NSMutableArray *)photos;
 @end

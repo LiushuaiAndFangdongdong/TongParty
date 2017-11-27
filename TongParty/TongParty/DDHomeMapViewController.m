@@ -105,7 +105,7 @@
 }
 
 - (void)mapView:(MAMapView *)mapView regionDidChangeAnimated:(BOOL)animated {
-    
+    // 根据屏幕位置转换地图坐标经纬度
     CLLocationCoordinate2D markCoordinate = [self.mapView convertPoint:_iv_mark.frame.origin toCoordinateFromView:self.view];
     [self addMarkAnimation];
 }

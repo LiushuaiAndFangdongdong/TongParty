@@ -207,6 +207,10 @@
 }
 
 - (NSArray *)area_array {
+    if (![[DDUserSingleton shareInstance].city isEqualToString:[DDUserDefault objectForKey:@"currentCity"]] && [DDUserSingleton shareInstance].city && ![[DDUserSingleton shareInstance].city isEqualToString:@""]) {
+        _area_array = nil;
+        [DDUserDefault setObject:[DDUserSingleton shareInstance].city forKey:@"currentCity"];
+    }
     if (!_area_array) {
         NSData *JSONData = [NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"region_dumps" ofType:@"json"]];
         NSArray *dataArray = [NSJSONSerialization JSONObjectWithData:JSONData options:NSJSONReadingAllowFragments error:nil];
@@ -215,14 +219,22 @@
             NSArray *citiesArray = dict[@"cities"];
              if (citiesArray.count > 0 ) {
                  NSDictionary *citiesDict = citiesArray[0];
-                 if ([[DDUserSingleton shareInstance].city isEqualToString:citiesDict[@"name"]] ||
-                     [[DDUserDefault objectForKey:@"currentCity"] isEqualToString:citiesDict[@"name"]]) {
+                 NSString *cityString = [NSString string];
+                 if (![[DDUserSingleton shareInstance].city isEqualToString:@""] && [DDUserSingleton shareInstance].city) {
+                     cityString = citiesDict[@"name"];
+                 } else if ([DDUserDefault objectForKey:@"currentCity"]) {
+                     cityString = [DDUserDefault objectForKey:@"currentCity"];
+                 } else {
+                     // 在数据为空的时候，设置默认当前城市
+                     cityString = @"北京市";
+                 }
+                 if ([cityString isEqualToString:citiesDict[@"name"]]) {
                      NSArray *countiesArray = citiesDict[@"counties"];
                          for (NSDictionary *areaDic in countiesArray) {
                              [newArray addObject:areaDic[@"name"]];
                              [self.region_array addObject:areaDic];
                          }
-                 }
+                   }
              }
         }
         _area_array = newArray;

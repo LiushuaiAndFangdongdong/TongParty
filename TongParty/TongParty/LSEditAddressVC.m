@@ -76,11 +76,17 @@ static NSString *cellId = @"cell";
     
     if (!_btn_saveAddress) {
         _btn_saveAddress = [[UIButton alloc] init];
-        [_btn_saveAddress addTarget:self action:@selector(didSelectedToSaveNewAddress:) forControlEvents:UIControlEventTouchUpInside];
-        [_btn_saveAddress setTitle:@"保存地址" forState:UIControlStateNormal];
         [_btn_saveAddress setTitleColor:kWhiteColor forState:UIControlStateNormal];
         _btn_saveAddress.backgroundColor = kRGBColor(118.f, 213.f, 113.f);
         _btn_saveAddress.titleLabel.font = DDFitFont(16.f);
+    }
+    
+    if (_isEditAddress) {
+        [_btn_saveAddress setTitle:@"修改地址" forState:UIControlStateNormal];
+        [_btn_saveAddress addTarget:self action:@selector(didSelectedToEditAddress:) forControlEvents:UIControlEventTouchUpInside];
+    } else {
+        [_btn_saveAddress setTitle:@"保存地址" forState:UIControlStateNormal];
+        [_btn_saveAddress addTarget:self action:@selector(didSelectedToSaveNewAddress:) forControlEvents:UIControlEventTouchUpInside];
     }
     return _btn_saveAddress;
 }
@@ -93,7 +99,12 @@ static NSString *cellId = @"cell";
 //    return _area_picker;
 //}
 
+// 确认修改地址
+- (void)didSelectedToEditAddress:(UIButton *)sender {
+    
+}
 
+// 保存新地址
 - (void)didSelectedToSaveNewAddress:(UIButton *)sender {
     // 保存地址
     [DDTJHttpRequest addCustomAddressWithToken:[DDUserSingleton shareInstance].token latitude:@"12" longitude:@"88" label:@"公司" addr:@"中国尊" detail:@"32楼3209室" block:^(NSDictionary *dict) {
@@ -166,7 +177,6 @@ static NSString *cellId = @"cell";
 
 - (void)pushLocationVC{
     DDLocationAddressVC *locationVC   = [[DDLocationAddressVC alloc] init];
-    
     locationVC.locationAddressSelectBlcok = ^(AMapPOI *POI) {
         _locationAddr = POI.name;
         NSIndexPath  *indexPath_1 = [NSIndexPath indexPathForRow:0 inSection:0];

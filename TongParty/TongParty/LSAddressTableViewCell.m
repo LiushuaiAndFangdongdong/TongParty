@@ -142,7 +142,7 @@ static NSInteger baseTag = 88888;
 
 - (void)onClicked:(UIButton *)sender {
     if (_onClickBlcok) {
-        _onClickBlcok(sender.tag - baseTag);
+        _onClickBlcok(sender.tag - baseTag, @"aid");
     }
 }
 
