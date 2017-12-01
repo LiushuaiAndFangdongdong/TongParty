@@ -69,6 +69,9 @@
         _view_description.selectPhotos = ^(LSCDPhotoIV *iv_photo) {
             weakSelf.selectPhotos(iv_photo);
         };
+        _view_description.deleteUpdate = ^(NSInteger index) {
+            weakSelf.deleteUpdate(index);
+        };
     }
     return _view_description;
 }
@@ -83,6 +86,11 @@
 
 - (void)setStyle:(LSCreateDeslCellStyle)style {
     _style = style;
+    [_view_action removeFromSuperview];
+    [_view_startTime removeFromSuperview];
+    [_view_members removeFromSuperview];
+    [_view_description removeFromSuperview];
+    [_view_joinDesk removeFromSuperview];
     switch (_style) {
         case LSCreateCellSytleActionAndTheme:{
             [self setupActionView];
@@ -149,11 +157,10 @@
         case LSCreateCellSytleTimeAndAddress:{
             [_view_startTime putDataToViewWith:obj returnHeight:^(CGFloat height) {
                 self.height = height;
-                NSLog(@"heiht~~~~~~~~~~~~~~~~~~~~~~%lf",self.height);
             }];
         }break;
         case LSCreateCellSytleDescription:{
-//            [_view_description putPhotosWhitArray:(NSMutableArray *)obj];
+            [_view_description putPhotosWhitModel:obj];
         }default:
             break;
     }

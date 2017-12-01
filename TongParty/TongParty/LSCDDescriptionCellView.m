@@ -8,6 +8,7 @@
 
 #import "LSCDDescriptionCellView.h"
 #import "LSCDTitleItemView.h"
+#import "LSCreatDeskEntity.h"
 
 @interface LSCDDescriptionCellView ()
 @property (nonatomic, strong)LSCDTitleItemView *ti_decription;
@@ -19,6 +20,7 @@
 @property (nonatomic, strong)LSCDPhotoIV       *iv_photos_show2;
 @property (nonatomic, strong)LSCDPhotoIV       *iv_photos_show3;
 @property (nonatomic, strong)LSCDPhotoIV       *iv_photos_show4;
+@property (nonatomic, strong)LSCreatDeskEntity *entity;
 @end
 static NSInteger baseTag = 363398279;
 @implementation LSCDDescriptionCellView
@@ -60,7 +62,7 @@ static NSInteger baseTag = 363398279;
     [_iv_photos_show mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(_tf_decription_content);
         make.height.width.mas_equalTo(DDFitHeight(70.f));
-        make.top.equalTo(_tf_decription_content.mas_bottom).offset(DDFitHeight(1.f));
+        make.top.equalTo(_tf_decription_content.mas_bottom).offset(DDFitHeight(5.f));
     }];
     _iv_photos_show.image = kImage(@"desk_imgadd_default");
     
@@ -124,56 +126,58 @@ static NSInteger baseTag = 363398279;
     _lbl_photo_des.font = DDFitFont(14.f);
     
     NSArray *image_shows_array = @[_iv_photos_show,_iv_photos_show1,_iv_photos_show2,_iv_photos_show3,_iv_photos_show4];
+    
     for (int i = 0 ; i < image_shows_array.count; i++) {
         LSCDPhotoIV *iv = image_shows_array[i];
-        if (i == 0 ) {
-            iv.hidden = NO;
-        } else {
-            iv.hidden = YES;
-        }
-        iv.putImageOnImageView = ^(BOOL isSuccess) {
-            if (isSuccess) {
-                [self reloadPhotosView];
-            }
-        };
         iv.tag = baseTag + i;
         iv.userInteractionEnabled = YES;
+        iv.deleteClicked = ^(NSInteger tag) {
+            if (weakSelf.deleteUpdate) {
+                weakSelf.deleteUpdate(tag - baseTag);
+            }
+        };
         [iv addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(addPhotos:)]];
     }
 }
 
 #pragma mark - 添加图片
 - (void)addPhotos:(UITapGestureRecognizer *)tap {
+    _entity.dEscription = _tf_decription_content.text;
     if (_selectPhotos) {
         _selectPhotos((LSCDPhotoIV *)tap.view);
     }
 }
 
-// 刷新p
-- (void)reloadPhotosView {
-    
+- (void)putPhotosWhitModel:(id)obj {
+    self.entity = (LSCreatDeskEntity *)obj;
+    _tf_decription_content.text = _entity.dEscription;
     NSArray *image_shows_array = @[_iv_photos_show,_iv_photos_show1,_iv_photos_show2,_iv_photos_show3,_iv_photos_show4];
-    for (int i = 0 ; i < image_shows_array.count; i++) {
-        LSCDPhotoIV *iv = image_shows_array[i];
-        
-        if (!iv.imageUrl) {
-            iv.hidden = NO;
-            return;
+    if(_entity.Images.count > 0) { // 如果有图片，根据图片的数量显示，留一个添加按钮
+        for (int i = 0 ; i <= _entity.Images.count; i++) {
+            LSCDPhotoIV *iv = image_shows_array[i];
+            if (i == _entity.Images.count) {
+                iv.hidden = NO;
+                iv.image = kImage(@"desk_imgadd_default");
+            } else {
+                iv.hidden = NO;
+                iv.image = _entity.Images[i];
+                iv.isClose = NO;
+            }
+        }
+    } else { // 如果没有图片，显示第一个添加按钮
+        for (LSCDPhotoIV *ivj in image_shows_array) {
+            if (ivj.tag - baseTag == 0) {
+                ivj.hidden = NO;
+                ivj.isClose = YES;
+            } else {
+                ivj.hidden = YES;
+            }
         }
     }
 }
 
-//- (void)putPhotosWhitArray:(NSMutableArray *)photos {
-//    NSArray *image_shows_array = @[_iv_photos_show,_iv_photos_show1,_iv_photos_show2,_iv_photos_show3,_iv_photos_show4];
-//    for (int i = 0 ; i < image_shows_array.count; i++) {
-//        LSCDPhotoIV *iv = image_shows_array[i];
-//        if (!iv.imageUrl) {
-//            iv.hidden = NO;
-//            return;
-//        } else {
-//            iv.image = photos[i];
-//        }
-//    }
-//}
+- (void)setEntity:(LSCreatDeskEntity *)entity {
+    _entity = entity;
+}
 
 @end

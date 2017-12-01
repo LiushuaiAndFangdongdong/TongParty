@@ -10,4 +10,12 @@
 
 @implementation LSCreatDeskEntity
 
+
+- (instancetype)init {
+    if (self = [super init]) {
+        self.Images = [NSMutableArray new];
+    }
+    return self;
+}
+
 @end

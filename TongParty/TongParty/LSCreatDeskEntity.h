@@ -26,7 +26,7 @@
 /**人均消费*/
 @property (nonatomic, copy)NSString *average_price;
 /**描述*/
-@property (nonatomic, copy)NSString *description;
+@property (nonatomic, copy)NSString *dEscription;
 /**是否为心跳桌*/
 @property (nonatomic, copy)NSString *is_heart;
 /**纬度*/
@@ -34,5 +34,7 @@
 /**经度*/
 @property (nonatomic, copy)NSString *longitude;
 /**桌子图片 file*/
-@property (nonatomic, copy)NSString *Image;
+@property (nonatomic, strong)NSMutableArray *Images;
+/**地址标签 */
+@property (nonatomic, strong)NSArray *labels;
 @end

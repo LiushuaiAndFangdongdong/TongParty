@@ -11,6 +11,7 @@
 #import "LSManageAddressVC.h"
 #import "LSRecommendAddressVC.h"
 #import "LSEditAddressVC.h"
+#import "LSCreatDeskEntity.h"
 
 @interface LSCreateDeskVC ()<UITableViewDelegate,UITableViewDataSource,LSUpLoadImageManagerDelegate>{
     BOOL isExpandPhotoCell;
@@ -20,10 +21,10 @@
 @property (nonatomic, strong)NSMutableArray *label_array;
 @property (nonatomic, strong)LSRecommendAddressVC *recommendVC;
 @property (nonatomic, strong)LSManageAddressVC    *manageAddressVC;
-@property (nonatomic, strong)LSCDPhotoIV          *iv_temp;  // 用来接受cell传过来的imageview
 @property (nonatomic, strong)NSMutableArray *photosArray;
+@property (nonatomic, strong)LSCreatDeskEntity  *requestEntity;
 @end
-
+static NSString *cellId = @"cellId";
 @implementation LSCreateDeskVC
 
 -(void)viewWillAppear:(BOOL)animated{
@@ -40,8 +41,11 @@
 
 - (void)loadData {
     _photosArray = [NSMutableArray array];
+    
+    //创建数据
+    _requestEntity = [[LSCreatDeskEntity alloc] init];
     NSArray *labelArr = @[@"KTV",@"咖啡厅",@"家",@"公司",@"酒吧",@"球场",@"夜店",@"餐厅",@"夜总会",@"公园",@"水吧",@"俱乐部",@"茶馆"];
-    _label_array = [NSMutableArray arrayWithArray:labelArr];
+    _requestEntity.labels = labelArr;
     [self.tableview reloadData];
 }
 
@@ -80,6 +84,7 @@
         _tableview.estimatedSectionFooterHeight = 0;
         _tableview.showsVerticalScrollIndicator = NO;
         _tableview.separatorStyle = UITableViewCellSeparatorStyleNone;
+        [_tableview registerClass:[LSCreateDeskTableViewCell class] forCellReuseIdentifier:cellId];
     }
     return _tableview;
 }
@@ -138,10 +143,10 @@
             if (testHeight || testHeight != 0) {
                 return testHeight;
             }
-            if (_label_array.count <= 4) {
+            if (_requestEntity.labels.count <= 4) {
                 return DDFitHeight(210.f);
             }
-            if (_label_array.count > 4) {
+            if (_requestEntity.labels.count > 4) {
                 return DDFitHeight(270.f);
             }
 
@@ -151,7 +156,7 @@
         } break;
         case 3:{
             
-            if (_photosArray.count < 4) {
+            if (_requestEntity.Images.count < 4) {
                 return DDFitHeight(190.f);
             }
             else {
@@ -186,34 +191,33 @@
 static CGFloat testHeight;
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSString *cellId = [NSString stringWithFormat:@"cellID%ld%ld",indexPath.section,indexPath.row];
+    
     LSCreateDeskTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellId];
     if (!cell) {
         cell = [[LSCreateDeskTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellId];
-        switch (indexPath.section) {
-            case 0:{
-                cell.style = LSCreateCellSytleActionAndTheme;
-            } break;
-            case 1:{
-                cell.style = LSCreateCellSytleTimeAndAddress;
-                // 造标签数据
-                [cell updateWithObj:_label_array];
-            } break;
-            case 2:{
-                cell.style = LSCreateCellSytleMembersEstimatePerCapita;
-            } break;
-            case 3:{
-                cell.style = LSCreateCellSytleDescription;
-                [cell updateWithObj:_photosArray];
-            } break;
-            case 4:{
-                cell.style = LSCreateCellSytleIsJoinDesk;
-            } break;
-            default:
-                break;
-        }
     }
-
+    switch (indexPath.section) {
+        case 0:{
+            cell.style = LSCreateCellSytleActionAndTheme;
+        } break;
+        case 1:{
+            cell.style = LSCreateCellSytleTimeAndAddress;
+        } break;
+        case 2:{
+            cell.style = LSCreateCellSytleMembersEstimatePerCapita;
+        } break;
+        case 3:{
+            cell.style = LSCreateCellSytleDescription;
+        } break;
+        case 4:{
+            cell.style = LSCreateCellSytleIsJoinDesk;
+        } break;
+        default:
+            break;
+    }
+    
+    [cell updateWithObj:_requestEntity];
+    
     __block LSCreateDeskTableViewCell *blockCell = cell;
     cell.onClickBlcok = ^(NSInteger index) {
         switch (index) {
@@ -239,9 +243,11 @@ static CGFloat testHeight;
         [self.tableview reloadSections:[[NSIndexSet alloc] initWithIndex:1] withRowAnimation:UITableViewRowAnimationAutomatic];
     };
     cell.selectPhotos = ^(LSCDPhotoIV *iv_photo) {
-        _iv_temp = iv_photo;
-        [self.tableview reloadSections:[[NSIndexSet alloc] initWithIndex:3] withRowAnimation:UITableViewRowAnimationAutomatic];
         [LSUPLOAD_IMAGE showActionSheetInFatherViewController:self delegate:self];
+    };
+    cell.deleteUpdate = ^(NSInteger index) {
+        [_requestEntity.Images removeObjectAtIndex:index];
+        [self.tableview reloadSections:[[NSIndexSet alloc] initWithIndex:3] withRowAnimation:UITableViewRowAnimationAutomatic];
     };
     return cell;
 }
@@ -253,11 +259,9 @@ static CGFloat testHeight;
 
 #pragma mark - LSUpLoadImageManagerDelegate
 - (void)uploadImageToServerWithImage:(UIImage *)image {
-    if (_iv_temp) {
-        _iv_temp.image = image;
-        _iv_temp.imageUrl = @"3201";
-        [_photosArray addObject:image];
-    }
+    [_requestEntity.Images addObject:image];
+    [self.tableview reloadSections:[[NSIndexSet alloc] initWithIndex:3] withRowAnimation:UITableViewRowAnimationAutomatic];
+    
 }
 
 - (void)didReceiveMemoryWarning {

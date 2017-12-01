@@ -34,7 +34,7 @@ typedef NS_ENUM(NSUInteger, LSCreateDeslCellStyle) {
 @property (nonatomic, copy) void(^onClickBlcok)(NSInteger index);
 @property (nonatomic, copy) void(^expandMoreBlcok)(CGFloat final_height);
 @property (nonatomic,   copy) void(^selectPhotos)(LSCDPhotoIV *iv_photo);
-
+@property (nonatomic,   copy) void(^deleteUpdate)(NSInteger index);
 - (void)updateWithObj:(id)obj;
 - (void)putStringToChildView:(NSString *)string;
 

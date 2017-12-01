@@ -11,5 +11,6 @@
 
 @interface LSCDDescriptionCellView : UIView
 @property (nonatomic,   copy) void(^selectPhotos)(LSCDPhotoIV *iv_photo);
-//- (void)putPhotosWhitArray:(NSMutableArray *)photos;
+@property (nonatomic,   copy) void(^deleteUpdate)(NSInteger index);
+- (void)putPhotosWhitModel:(id )obj;
 @end

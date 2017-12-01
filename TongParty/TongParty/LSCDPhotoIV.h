@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface LSCDPhotoIV : UIImageView
-@property (nonatomic,   copy) void(^putImageOnImageView)(BOOL isSuccess);
+@property (nonatomic,   copy) void(^deleteClicked)(NSInteger tag);
 @property (nonatomic, copy)NSString *imageUrl;
+@property (nonatomic, assign)BOOL   isClose;
 @end
