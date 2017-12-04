@@ -8,8 +8,10 @@
 
 #import "DDJoinedVc.h"
 #import "DDHomeListRequest.h"  //request
-#import "DDHomeListTableCell.h"//cell
-#import "NHDiscoverModel.h"    //model
+//#import "DDHomeListTableCell.h"//cell
+#import "DDInterestTableViewCell.h"
+//#import "NHDiscoverModel.h"    //model
+#import "DDTableModel.h"
 #import "DDCustomCommonEmptyView.h"
 
 @interface DDJoinedVc ()
@@ -33,6 +35,17 @@
 - (void)loadData {
 // [self showLoadingAnimation];
     [super loadData];
+    
+    
+    [DDTJHttpRequest getJoinedDeskWithToken:TOKEN lat:@"" lon:@"" block:^(NSDictionary *dict) {
+        NSLog(@"参加的桌子列表");
+    } failure:^{
+        //
+    }];
+    
+
+    
+    
 //    DDHomeListRequest *request = [DDHomeListRequest tj_request];
 //    request.tj_url = kNHDiscoverHotListAPI;
 //    [request tj_sendRequestWithCompletion:^(id response, BOOL success, NSString *message) {
@@ -64,13 +77,13 @@
 }
 
 - (DDBaseTableViewCell *)tj_cellAtIndexPath:(NSIndexPath *)indexPath {
-    DDHomeListTableCell *cell = [DDHomeListTableCell cellWithTableView:self.tableView];
-    cell.elementModel = self.dataArray[indexPath.row];
+    DDInterestTableViewCell *cell = [DDInterestTableViewCell cellWithTableView:self.tableView];
+//    cell.elementModel = self.dataArray[indexPath.row];
     return cell;
 }
 
 - (CGFloat)tj_cellheightAtIndexPath:(NSIndexPath *)indexPath {
-    return 75;
+    return 145;
 }
 - (void)tj_didSelectCellAtIndexPath:(NSIndexPath *)indexPath cell:(DDBaseTableViewCell *)cell {
 }

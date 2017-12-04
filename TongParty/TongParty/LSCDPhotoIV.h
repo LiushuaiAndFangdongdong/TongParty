@@ -1,0 +1,15 @@
+//
+//  LSCDPhotoIV.h
+//  TongParty
+//
+//  Created by 刘帅 on 2017/11/27.
+//  Copyright © 2017年 桐聚. All rights reserved.
+//
+
+#import <UIKit/UIKit.h>
+
+@interface LSCDPhotoIV : UIImageView
+@property (nonatomic,   copy) void(^deleteClicked)(NSInteger tag);
+@property (nonatomic, copy)NSString *imageUrl;
+@property (nonatomic, assign)BOOL   isClose;
+@end

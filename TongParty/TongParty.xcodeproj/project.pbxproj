@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4B05AD0F1FB83B7C007583E9 /* LSCreateDeskChildLabelCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B05AD0E1FB83B7C007583E9 /* LSCreateDeskChildLabelCell.m */; };
 		4B05AD121FB88D57007583E9 /* area.plist in Sources */ = {isa = PBXBuildFile; fileRef = 98578E181F8B635100FEF64D /* area.plist */; };
 		7FE31485F55A2C72A2918B02 /* Pods_TongParty.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B59ADC9FAFDF929FDA97EB90 /* Pods_TongParty.framework */; };
 		980093921F73975600FE0FE9 /* DDDeskViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 980093911F73975600FE0FE9 /* DDDeskViewController.m */; };
@@ -27,11 +26,24 @@
 		981CA97E1FC678320007AFBA /* HexColors.m in Sources */ = {isa = PBXBuildFile; fileRef = 981CA97C1FC678310007AFBA /* HexColors.m */; };
 		981CA9811FC6AF490007AFBA /* DDEditAddrViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 981CA9801FC6AF490007AFBA /* DDEditAddrViewController.m */; };
 		981CA9841FC6AFA90007AFBA /* DDEditAddrView.m in Sources */ = {isa = PBXBuildFile; fileRef = 981CA9831FC6AFA90007AFBA /* DDEditAddrView.m */; };
+		981E5A621FCD0344001B6448 /* DDJoinDeskMessageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 981E5A611FCD0344001B6448 /* DDJoinDeskMessageCell.m */; };
+		981E5A651FCD0371001B6448 /* DDNoticeMessageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 981E5A641FCD0371001B6448 /* DDNoticeMessageCell.m */; };
+		981E5A681FCD488E001B6448 /* DDLoveDeskView.m in Sources */ = {isa = PBXBuildFile; fileRef = 981E5A671FCD488E001B6448 /* DDLoveDeskView.m */; };
+		981E5A6B1FCD48C5001B6448 /* DDDeskMatchView.m in Sources */ = {isa = PBXBuildFile; fileRef = 981E5A6A1FCD48C5001B6448 /* DDDeskMatchView.m */; };
 		982F01511F7C98F4008061CF /* DDPersonAuthVc.m in Sources */ = {isa = PBXBuildFile; fileRef = 982F01501F7C98F4008061CF /* DDPersonAuthVc.m */; };
 		982F01541F7C9C3C008061CF /* DDPersonAuthTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 982F01531F7C9C3C008061CF /* DDPersonAuthTableViewCell.m */; };
 		982F01591F7CCED1008061CF /* DDSesameAuthVc.m in Sources */ = {isa = PBXBuildFile; fileRef = 982F01581F7CCED1008061CF /* DDSesameAuthVc.m */; };
 		982F015C1F7CCEFA008061CF /* DDRealNameAuthVc.m in Sources */ = {isa = PBXBuildFile; fileRef = 982F015B1F7CCEFA008061CF /* DDRealNameAuthVc.m */; };
 		982F01621F7CD116008061CF /* DDTitletxtFieldView.m in Sources */ = {isa = PBXBuildFile; fileRef = 982F01611F7CD116008061CF /* DDTitletxtFieldView.m */; };
+		9840E6571FCBBF0A00F0E570 /* LSMapContentSortCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9840E6521FCBBF0400F0E570 /* LSMapContentSortCell.m */; };
+		9840E6581FCBBF0A00F0E570 /* LSRegionDumpsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9840E6551FCBBF0800F0E570 /* LSRegionDumpsView.m */; };
+		9840E6591FCBBF0A00F0E570 /* LSContentSortView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9840E6561FCBBF0A00F0E570 /* LSContentSortView.m */; };
+		9840E65E1FCBBF7900F0E570 /* LSMapAnnotationModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9840E65A1FCBBF7600F0E570 /* LSMapAnnotationModel.m */; };
+		9840E65F1FCBBF7900F0E570 /* LSContentSortModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9840E65B1FCBBF7700F0E570 /* LSContentSortModel.m */; };
+		9840E6671FCC1A4500F0E570 /* DDMessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9840E6661FCC1A4500F0E570 /* DDMessageViewController.m */; };
+		9845222D1FD1586B00097143 /* DDShopDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9845222C1FD1586B00097143 /* DDShopDetailViewController.m */; };
+		984522301FD158B100097143 /* DDShopView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9845222F1FD158B100097143 /* DDShopView.m */; };
+		984522331FD15B3000097143 /* DDShopTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 984522321FD15B3000097143 /* DDShopTableView.m */; };
 		985308E01F6BA6DF003B475C /* DDBaseTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 985308DF1F6BA6DF003B475C /* DDBaseTableViewController.m */; };
 		985308E31F6BB320003B475C /* DDBaseRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 985308E21F6BB320003B475C /* DDBaseRequest.m */; };
 		985308ED1F6BC97A003B475C /* DDHomeListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 985308EC1F6BC97A003B475C /* DDHomeListViewController.m */; };
@@ -88,13 +100,6 @@
 		986E59E51FAABC4900FD391C /* LSRecommendAddressVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 986E59DD1FAABC4900FD391C /* LSRecommendAddressVC.m */; };
 		986E59E71FAABC4900FD391C /* LSManageAddressVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 986E59E21FAABC4900FD391C /* LSManageAddressVC.m */; };
 		986E59E81FAABC4900FD391C /* LSCreateDeskVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 986E59E41FAABC4900FD391C /* LSCreateDeskVC.m */; };
-		986E59F91FAABC7100FD391C /* LSCDTimeAddressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 986E59EF1FAABC6F00FD391C /* LSCDTimeAddressView.m */; };
-		986E59FA1FAABC7100FD391C /* LSCreateDeskActionCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 986E59F01FAABC6F00FD391C /* LSCreateDeskActionCellView.m */; };
-		986E59FB1FAABC7100FD391C /* LSCDTitleItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = 986E59F11FAABC7000FD391C /* LSCDTitleItemView.m */; };
-		986E59FC1FAABC7100FD391C /* LSCDMembersCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 986E59F21FAABC7000FD391C /* LSCDMembersCellView.m */; };
-		986E59FD1FAABC7100FD391C /* LSCDJoinDeskCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 986E59F41FAABC7000FD391C /* LSCDJoinDeskCellView.m */; };
-		986E59FE1FAABC7100FD391C /* LSCreateDeskTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 986E59F51FAABC7000FD391C /* LSCreateDeskTableViewCell.m */; };
-		986E59FF1FAABC7100FD391C /* LSCDDescriptionCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 986E59F61FAABC7000FD391C /* LSCDDescriptionCellView.m */; };
 		986E5A061FAABC8D00FD391C /* LSAddressTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 986E5A001FAABC8C00FD391C /* LSAddressTableViewCell.m */; };
 		986E5A081FAABC8D00FD391C /* LSRecommendAddressCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 986E5A051FAABC8D00FD391C /* LSRecommendAddressCell.m */; };
 		986E5A101FAAEC6900FD391C /* LXAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 986E5A0D1FAAEB1700FD391C /* LXAlertView.m */; };
@@ -111,6 +116,18 @@
 		988663E31FBD8ADB00B6F24D /* UIWindow+SIUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 988663DD1FBD8AB900B6F24D /* UIWindow+SIUtils.m */; };
 		988663E61FBD8B9900B6F24D /* TSActionDemoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 988663E51FBD8B9900B6F24D /* TSActionDemoView.m */; };
 		988D23BA1FC2CF05002C5D2C /* DDAddressModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 988D23B91FC2CF05002C5D2C /* DDAddressModel.m */; };
+		988E16991FD4F5AA003FFC72 /* LSCreatDeskEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 988E16981FD4F5AA003FFC72 /* LSCreatDeskEntity.m */; };
+		988E169C1FD4F667003FFC72 /* LSUpLoadImageManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 988E169B1FD4F666003FFC72 /* LSUpLoadImageManager.m */; };
+		988E16B21FD4F83A003FFC72 /* LSCreateDeskTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 988E16AF1FD4F7F6003FFC72 /* LSCreateDeskTableViewCell.m */; };
+		988E16B31FD4F83A003FFC72 /* LSCreateDeskChildLabelCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 988E16AD1FD4F7F5003FFC72 /* LSCreateDeskChildLabelCell.m */; };
+		988E16B41FD4F83A003FFC72 /* LSCDTitleItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = 988E16AA1FD4F7F5003FFC72 /* LSCDTitleItemView.m */; };
+		988E16B51FD4F83A003FFC72 /* LSCreateDeskActionCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 988E16AC1FD4F7F5003FFC72 /* LSCreateDeskActionCellView.m */; };
+		988E16B61FD4F83A003FFC72 /* LSCDTimeAddressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 988E16A21FD4F7F4003FFC72 /* LSCDTimeAddressView.m */; };
+		988E16B71FD4F83A003FFC72 /* LSCDMembersCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 988E16A01FD4F7F4003FFC72 /* LSCDMembersCellView.m */; };
+		988E16B81FD4F83A003FFC72 /* LSCDDescriptionCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 988E16B11FD4F7F6003FFC72 /* LSCDDescriptionCellView.m */; };
+		988E16B91FD4F83A003FFC72 /* LSCDJoinDeskCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 988E16A51FD4F7F4003FFC72 /* LSCDJoinDeskCellView.m */; };
+		988E16BA1FD4F83A003FFC72 /* LSCDPhotoIV.m in Sources */ = {isa = PBXBuildFile; fileRef = 988E16AE1FD4F7F5003FFC72 /* LSCDPhotoIV.m */; };
+		988E16BD1FD5013B003FFC72 /* region_dumps.json in Resources */ = {isa = PBXBuildFile; fileRef = 988E16BB1FD4FF2E003FFC72 /* region_dumps.json */; };
 		989420611F70C1A500AFF310 /* UIView+RedPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = 989420601F70C1A500AFF310 /* UIView+RedPoint.m */; };
 		989441321F9DC423000BA3E9 /* DDRadioButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 989441311F9DC423000BA3E9 /* DDRadioButton.m */; };
 		989441471F9DC87C000BA3E9 /* NSCalendar+DDPlus.m in Sources */ = {isa = PBXBuildFile; fileRef = 98578E0A1F8B58CC00FEF64D /* NSCalendar+DDPlus.m */; };
@@ -174,6 +191,8 @@
 		989932521F693A4900E4BCAA /* NSArray+Addition.m in Sources */ = {isa = PBXBuildFile; fileRef = 989932511F693A4900E4BCAA /* NSArray+Addition.m */; };
 		989932551F693A5100E4BCAA /* NSNotificationCenter+Addition.m in Sources */ = {isa = PBXBuildFile; fileRef = 989932541F693A5100E4BCAA /* NSNotificationCenter+Addition.m */; };
 		989932581F693A8100E4BCAA /* NSDate+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 989932571F693A8100E4BCAA /* NSDate+Extension.m */; };
+		98AD0B571FCE5A56006C3EE8 /* DDTableModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 98AD0B561FCE5A56006C3EE8 /* DDTableModel.m */; };
+		98AD0B5A1FCE8905006C3EE8 /* DDBannerModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 98AD0B591FCE8905006C3EE8 /* DDBannerModel.m */; };
 		98B54A151FB4458B0071567E /* LSSortingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 98B54A131FB4458A0071567E /* LSSortingView.m */; };
 		98BD9F131F74BBAB0080A6FE /* UIButton+DDEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 98BD9F121F74BBAB0080A6FE /* UIButton+DDEvent.m */; };
 		98BD9F161F74BBC10080A6FE /* UIButton+DDImagePosition.m in Sources */ = {isa = PBXBuildFile; fileRef = 98BD9F151F74BBC10080A6FE /* UIButton+DDImagePosition.m */; };
@@ -270,8 +289,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		4B05AD0D1FB83B7C007583E9 /* LSCreateDeskChildLabelCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LSCreateDeskChildLabelCell.h; sourceTree = "<group>"; };
-		4B05AD0E1FB83B7C007583E9 /* LSCreateDeskChildLabelCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LSCreateDeskChildLabelCell.m; sourceTree = "<group>"; };
 		75A4C4B7BBFC3961C6B13BE9 /* Pods-TongParty.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TongParty.release.xcconfig"; path = "Pods/Target Support Files/Pods-TongParty/Pods-TongParty.release.xcconfig"; sourceTree = "<group>"; };
 		980093901F73975600FE0FE9 /* DDDeskViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DDDeskViewController.h; sourceTree = "<group>"; };
 		980093911F73975600FE0FE9 /* DDDeskViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DDDeskViewController.m; sourceTree = "<group>"; };
@@ -307,6 +324,14 @@
 		981CA9801FC6AF490007AFBA /* DDEditAddrViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DDEditAddrViewController.m; sourceTree = "<group>"; };
 		981CA9821FC6AFA90007AFBA /* DDEditAddrView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DDEditAddrView.h; sourceTree = "<group>"; };
 		981CA9831FC6AFA90007AFBA /* DDEditAddrView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DDEditAddrView.m; sourceTree = "<group>"; };
+		981E5A601FCD0344001B6448 /* DDJoinDeskMessageCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DDJoinDeskMessageCell.h; sourceTree = "<group>"; };
+		981E5A611FCD0344001B6448 /* DDJoinDeskMessageCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DDJoinDeskMessageCell.m; sourceTree = "<group>"; };
+		981E5A631FCD0371001B6448 /* DDNoticeMessageCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DDNoticeMessageCell.h; sourceTree = "<group>"; };
+		981E5A641FCD0371001B6448 /* DDNoticeMessageCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DDNoticeMessageCell.m; sourceTree = "<group>"; };
+		981E5A661FCD488E001B6448 /* DDLoveDeskView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DDLoveDeskView.h; sourceTree = "<group>"; };
+		981E5A671FCD488E001B6448 /* DDLoveDeskView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DDLoveDeskView.m; sourceTree = "<group>"; };
+		981E5A691FCD48C5001B6448 /* DDDeskMatchView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DDDeskMatchView.h; sourceTree = "<group>"; };
+		981E5A6A1FCD48C5001B6448 /* DDDeskMatchView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DDDeskMatchView.m; sourceTree = "<group>"; };
 		982F014F1F7C98F4008061CF /* DDPersonAuthVc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DDPersonAuthVc.h; sourceTree = "<group>"; };
 		982F01501F7C98F4008061CF /* DDPersonAuthVc.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DDPersonAuthVc.m; sourceTree = "<group>"; };
 		982F01521F7C9C3C008061CF /* DDPersonAuthTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DDPersonAuthTableViewCell.h; sourceTree = "<group>"; };
@@ -317,6 +342,24 @@
 		982F015B1F7CCEFA008061CF /* DDRealNameAuthVc.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DDRealNameAuthVc.m; sourceTree = "<group>"; };
 		982F01601F7CD116008061CF /* DDTitletxtFieldView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DDTitletxtFieldView.h; sourceTree = "<group>"; };
 		982F01611F7CD116008061CF /* DDTitletxtFieldView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DDTitletxtFieldView.m; sourceTree = "<group>"; };
+		9840E6511FCBBF0400F0E570 /* LSRegionDumpsView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LSRegionDumpsView.h; sourceTree = "<group>"; };
+		9840E6521FCBBF0400F0E570 /* LSMapContentSortCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LSMapContentSortCell.m; sourceTree = "<group>"; };
+		9840E6531FCBBF0600F0E570 /* LSContentSortView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LSContentSortView.h; sourceTree = "<group>"; };
+		9840E6541FCBBF0700F0E570 /* LSMapContentSortCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LSMapContentSortCell.h; sourceTree = "<group>"; };
+		9840E6551FCBBF0800F0E570 /* LSRegionDumpsView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LSRegionDumpsView.m; sourceTree = "<group>"; };
+		9840E6561FCBBF0A00F0E570 /* LSContentSortView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LSContentSortView.m; sourceTree = "<group>"; };
+		9840E65A1FCBBF7600F0E570 /* LSMapAnnotationModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LSMapAnnotationModel.m; sourceTree = "<group>"; };
+		9840E65B1FCBBF7700F0E570 /* LSContentSortModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LSContentSortModel.m; sourceTree = "<group>"; };
+		9840E65C1FCBBF7700F0E570 /* LSMapAnnotationModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LSMapAnnotationModel.h; sourceTree = "<group>"; };
+		9840E65D1FCBBF7800F0E570 /* LSContentSortModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LSContentSortModel.h; sourceTree = "<group>"; };
+		9840E6651FCC1A4500F0E570 /* DDMessageViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DDMessageViewController.h; sourceTree = "<group>"; };
+		9840E6661FCC1A4500F0E570 /* DDMessageViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DDMessageViewController.m; sourceTree = "<group>"; };
+		9845222B1FD1586B00097143 /* DDShopDetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DDShopDetailViewController.h; sourceTree = "<group>"; };
+		9845222C1FD1586B00097143 /* DDShopDetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DDShopDetailViewController.m; sourceTree = "<group>"; };
+		9845222E1FD158B100097143 /* DDShopView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DDShopView.h; sourceTree = "<group>"; };
+		9845222F1FD158B100097143 /* DDShopView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DDShopView.m; sourceTree = "<group>"; };
+		984522311FD15B3000097143 /* DDShopTableView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DDShopTableView.h; sourceTree = "<group>"; };
+		984522321FD15B3000097143 /* DDShopTableView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DDShopTableView.m; sourceTree = "<group>"; };
 		985308DE1F6BA6DF003B475C /* DDBaseTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDBaseTableViewController.h; sourceTree = "<group>"; };
 		985308DF1F6BA6DF003B475C /* DDBaseTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDBaseTableViewController.m; sourceTree = "<group>"; };
 		985308E11F6BB320003B475C /* DDBaseRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDBaseRequest.h; sourceTree = "<group>"; };
@@ -436,20 +479,6 @@
 		986E59E21FAABC4900FD391C /* LSManageAddressVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LSManageAddressVC.m; sourceTree = "<group>"; };
 		986E59E31FAABC4900FD391C /* LSManageAddressVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LSManageAddressVC.h; sourceTree = "<group>"; };
 		986E59E41FAABC4900FD391C /* LSCreateDeskVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LSCreateDeskVC.m; sourceTree = "<group>"; };
-		986E59EB1FAABC6F00FD391C /* LSCDMembersCellView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LSCDMembersCellView.h; sourceTree = "<group>"; };
-		986E59EC1FAABC6F00FD391C /* LSCDJoinDeskCellView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LSCDJoinDeskCellView.h; sourceTree = "<group>"; };
-		986E59ED1FAABC6F00FD391C /* LSCDTitleItemView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LSCDTitleItemView.h; sourceTree = "<group>"; };
-		986E59EE1FAABC6F00FD391C /* LSCDTimeAddressView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LSCDTimeAddressView.h; sourceTree = "<group>"; };
-		986E59EF1FAABC6F00FD391C /* LSCDTimeAddressView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LSCDTimeAddressView.m; sourceTree = "<group>"; };
-		986E59F01FAABC6F00FD391C /* LSCreateDeskActionCellView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LSCreateDeskActionCellView.m; sourceTree = "<group>"; };
-		986E59F11FAABC7000FD391C /* LSCDTitleItemView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LSCDTitleItemView.m; sourceTree = "<group>"; };
-		986E59F21FAABC7000FD391C /* LSCDMembersCellView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LSCDMembersCellView.m; sourceTree = "<group>"; };
-		986E59F31FAABC7000FD391C /* LSCreateDeskActionCellView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LSCreateDeskActionCellView.h; sourceTree = "<group>"; };
-		986E59F41FAABC7000FD391C /* LSCDJoinDeskCellView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LSCDJoinDeskCellView.m; sourceTree = "<group>"; };
-		986E59F51FAABC7000FD391C /* LSCreateDeskTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LSCreateDeskTableViewCell.m; sourceTree = "<group>"; };
-		986E59F61FAABC7000FD391C /* LSCDDescriptionCellView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LSCDDescriptionCellView.m; sourceTree = "<group>"; };
-		986E59F71FAABC7000FD391C /* LSCreateDeskTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LSCreateDeskTableViewCell.h; sourceTree = "<group>"; };
-		986E59F81FAABC7100FD391C /* LSCDDescriptionCellView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LSCDDescriptionCellView.h; sourceTree = "<group>"; };
 		986E5A001FAABC8C00FD391C /* LSAddressTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LSAddressTableViewCell.m; sourceTree = "<group>"; };
 		986E5A011FAABC8C00FD391C /* LSRecommendAddressCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LSRecommendAddressCell.h; sourceTree = "<group>"; };
 		986E5A021FAABC8D00FD391C /* LSAddressTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LSAddressTableViewCell.h; sourceTree = "<group>"; };
@@ -480,6 +509,29 @@
 		988663E51FBD8B9900B6F24D /* TSActionDemoView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TSActionDemoView.m; sourceTree = "<group>"; };
 		988D23B81FC2CF05002C5D2C /* DDAddressModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DDAddressModel.h; sourceTree = "<group>"; };
 		988D23B91FC2CF05002C5D2C /* DDAddressModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DDAddressModel.m; sourceTree = "<group>"; };
+		988E16971FD4F5AA003FFC72 /* LSCreatDeskEntity.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LSCreatDeskEntity.h; sourceTree = "<group>"; };
+		988E16981FD4F5AA003FFC72 /* LSCreatDeskEntity.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LSCreatDeskEntity.m; sourceTree = "<group>"; };
+		988E169A1FD4F666003FFC72 /* LSUpLoadImageManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LSUpLoadImageManager.h; sourceTree = "<group>"; };
+		988E169B1FD4F666003FFC72 /* LSUpLoadImageManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LSUpLoadImageManager.m; sourceTree = "<group>"; };
+		988E16A01FD4F7F4003FFC72 /* LSCDMembersCellView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LSCDMembersCellView.m; sourceTree = "<group>"; };
+		988E16A11FD4F7F4003FFC72 /* LSCreateDeskChildLabelCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LSCreateDeskChildLabelCell.h; sourceTree = "<group>"; };
+		988E16A21FD4F7F4003FFC72 /* LSCDTimeAddressView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LSCDTimeAddressView.m; sourceTree = "<group>"; };
+		988E16A31FD4F7F4003FFC72 /* LSCDDescriptionCellView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LSCDDescriptionCellView.h; sourceTree = "<group>"; };
+		988E16A41FD4F7F4003FFC72 /* LSCDJoinDeskCellView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LSCDJoinDeskCellView.h; sourceTree = "<group>"; };
+		988E16A51FD4F7F4003FFC72 /* LSCDJoinDeskCellView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LSCDJoinDeskCellView.m; sourceTree = "<group>"; };
+		988E16A61FD4F7F5003FFC72 /* LSCreateDeskActionCellView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LSCreateDeskActionCellView.h; sourceTree = "<group>"; };
+		988E16A71FD4F7F5003FFC72 /* LSCDMembersCellView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LSCDMembersCellView.h; sourceTree = "<group>"; };
+		988E16A81FD4F7F5003FFC72 /* LSCDTitleItemView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LSCDTitleItemView.h; sourceTree = "<group>"; };
+		988E16A91FD4F7F5003FFC72 /* LSCDPhotoIV.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LSCDPhotoIV.h; sourceTree = "<group>"; };
+		988E16AA1FD4F7F5003FFC72 /* LSCDTitleItemView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LSCDTitleItemView.m; sourceTree = "<group>"; };
+		988E16AB1FD4F7F5003FFC72 /* LSCreateDeskTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LSCreateDeskTableViewCell.h; sourceTree = "<group>"; };
+		988E16AC1FD4F7F5003FFC72 /* LSCreateDeskActionCellView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LSCreateDeskActionCellView.m; sourceTree = "<group>"; };
+		988E16AD1FD4F7F5003FFC72 /* LSCreateDeskChildLabelCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LSCreateDeskChildLabelCell.m; sourceTree = "<group>"; };
+		988E16AE1FD4F7F5003FFC72 /* LSCDPhotoIV.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LSCDPhotoIV.m; sourceTree = "<group>"; };
+		988E16AF1FD4F7F6003FFC72 /* LSCreateDeskTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LSCreateDeskTableViewCell.m; sourceTree = "<group>"; };
+		988E16B01FD4F7F6003FFC72 /* LSCDTimeAddressView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LSCDTimeAddressView.h; sourceTree = "<group>"; };
+		988E16B11FD4F7F6003FFC72 /* LSCDDescriptionCellView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LSCDDescriptionCellView.m; sourceTree = "<group>"; };
+		988E16BB1FD4FF2E003FFC72 /* region_dumps.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = region_dumps.json; sourceTree = "<group>"; };
 		9894205F1F70C1A500AFF310 /* UIView+RedPoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+RedPoint.h"; sourceTree = "<group>"; };
 		989420601F70C1A500AFF310 /* UIView+RedPoint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+RedPoint.m"; sourceTree = "<group>"; };
 		989441301F9DC422000BA3E9 /* DDRadioButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DDRadioButton.h; sourceTree = "<group>"; };
@@ -602,6 +654,10 @@
 		989932541F693A5100E4BCAA /* NSNotificationCenter+Addition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSNotificationCenter+Addition.m"; sourceTree = "<group>"; };
 		989932561F693A8100E4BCAA /* NSDate+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+Extension.h"; sourceTree = "<group>"; };
 		989932571F693A8100E4BCAA /* NSDate+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+Extension.m"; sourceTree = "<group>"; };
+		98AD0B551FCE5A56006C3EE8 /* DDTableModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DDTableModel.h; sourceTree = "<group>"; };
+		98AD0B561FCE5A56006C3EE8 /* DDTableModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DDTableModel.m; sourceTree = "<group>"; };
+		98AD0B581FCE8905006C3EE8 /* DDBannerModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DDBannerModel.h; sourceTree = "<group>"; };
+		98AD0B591FCE8905006C3EE8 /* DDBannerModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DDBannerModel.m; sourceTree = "<group>"; };
 		98B54A131FB4458A0071567E /* LSSortingView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LSSortingView.m; sourceTree = "<group>"; };
 		98B54A141FB4458B0071567E /* LSSortingView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LSSortingView.h; sourceTree = "<group>"; };
 		98BD9F111F74BBAB0080A6FE /* UIButton+DDEvent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIButton+DDEvent.h"; sourceTree = "<group>"; };
@@ -939,6 +995,10 @@
 		981BAEBC1FA9CBB100909F28 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				981E5A661FCD488E001B6448 /* DDLoveDeskView.h */,
+				981E5A671FCD488E001B6448 /* DDLoveDeskView.m */,
+				981E5A691FCD48C5001B6448 /* DDDeskMatchView.h */,
+				981E5A6A1FCD48C5001B6448 /* DDDeskMatchView.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -1022,9 +1082,8 @@
 		983742B11F96F90700200B7E /* CreateDesk */ = {
 			isa = PBXGroup;
 			children = (
-				988D23B71FC2CEE7002C5D2C /* Model */,
-				983742B31F96F91700200B7E /* Controller */,
-				983742B21F96F91300200B7E /* View */,
+				984522271FD1580B00097143 /* Shop */,
+				984522261FD157FF00097143 /* Main */,
 			);
 			name = CreateDesk;
 			sourceTree = "<group>";
@@ -1052,6 +1111,90 @@
 				986E59E21FAABC4900FD391C /* LSManageAddressVC.m */,
 				986E59DF1FAABC4900FD391C /* LSRecommendAddressVC.h */,
 				986E59DD1FAABC4900FD391C /* LSRecommendAddressVC.m */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		9840E6611FCC162500F0E570 /* Message(消息) */ = {
+			isa = PBXGroup;
+			children = (
+				9840E6641FCC163F00F0E570 /* View */,
+				9840E6631FCC163900F0E570 /* Controller */,
+				9840E6621FCC163400F0E570 /* Model */,
+			);
+			name = "Message(消息)";
+			sourceTree = "<group>";
+		};
+		9840E6621FCC163400F0E570 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		9840E6631FCC163900F0E570 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				9840E6651FCC1A4500F0E570 /* DDMessageViewController.h */,
+				9840E6661FCC1A4500F0E570 /* DDMessageViewController.m */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		9840E6641FCC163F00F0E570 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				981E5A601FCD0344001B6448 /* DDJoinDeskMessageCell.h */,
+				981E5A611FCD0344001B6448 /* DDJoinDeskMessageCell.m */,
+				981E5A631FCD0371001B6448 /* DDNoticeMessageCell.h */,
+				981E5A641FCD0371001B6448 /* DDNoticeMessageCell.m */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		984522261FD157FF00097143 /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				988D23B71FC2CEE7002C5D2C /* Model */,
+				983742B31F96F91700200B7E /* Controller */,
+				983742B21F96F91300200B7E /* View */,
+			);
+			name = Main;
+			sourceTree = "<group>";
+		};
+		984522271FD1580B00097143 /* Shop */ = {
+			isa = PBXGroup;
+			children = (
+				9845222A1FD1584900097143 /* Controller */,
+				984522291FD1584400097143 /* View */,
+				984522281FD1583E00097143 /* Model */,
+			);
+			name = Shop;
+			sourceTree = "<group>";
+		};
+		984522281FD1583E00097143 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		984522291FD1584400097143 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				9845222E1FD158B100097143 /* DDShopView.h */,
+				9845222F1FD158B100097143 /* DDShopView.m */,
+				984522311FD15B3000097143 /* DDShopTableView.h */,
+				984522321FD15B3000097143 /* DDShopTableView.m */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		9845222A1FD1584900097143 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				9845222B1FD1586B00097143 /* DDShopDetailViewController.h */,
+				9845222C1FD1586B00097143 /* DDShopDetailViewController.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -1099,6 +1242,12 @@
 				98F675B71F711E5E0038E372 /* NHHomeNeiHanShareView.m */,
 				98B54A141FB4458B0071567E /* LSSortingView.h */,
 				98B54A131FB4458A0071567E /* LSSortingView.m */,
+				9840E6531FCBBF0600F0E570 /* LSContentSortView.h */,
+				9840E6561FCBBF0A00F0E570 /* LSContentSortView.m */,
+				9840E6541FCBBF0700F0E570 /* LSMapContentSortCell.h */,
+				9840E6521FCBBF0400F0E570 /* LSMapContentSortCell.m */,
+				9840E6511FCBBF0400F0E570 /* LSRegionDumpsView.h */,
+				9840E6551FCBBF0800F0E570 /* LSRegionDumpsView.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -1108,6 +1257,14 @@
 			children = (
 				985308F81F6BD5B4003B475C /* NHDiscoverModel.h */,
 				985308F91F6BD5B4003B475C /* NHDiscoverModel.m */,
+				9840E65D1FCBBF7800F0E570 /* LSContentSortModel.h */,
+				9840E65B1FCBBF7700F0E570 /* LSContentSortModel.m */,
+				9840E65C1FCBBF7700F0E570 /* LSMapAnnotationModel.h */,
+				9840E65A1FCBBF7600F0E570 /* LSMapAnnotationModel.m */,
+				98AD0B551FCE5A56006C3EE8 /* DDTableModel.h */,
+				98AD0B561FCE5A56006C3EE8 /* DDTableModel.m */,
+				98AD0B581FCE8905006C3EE8 /* DDBannerModel.h */,
+				98AD0B591FCE8905006C3EE8 /* DDBannerModel.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -1115,6 +1272,7 @@
 		985308EE1F6BCE91003B475C /* Request */ = {
 			isa = PBXGroup;
 			children = (
+				988E16BB1FD4FF2E003FFC72 /* region_dumps.json */,
 				985308FB1F6BD6FD003B475C /* DDHomeListRequest.h */,
 				985308FC1F6BD6FD003B475C /* DDHomeListRequest.m */,
 			);
@@ -1277,6 +1435,8 @@
 		98578E191F8B65AB00FEF64D /* Tools */ = {
 			isa = PBXGroup;
 			children = (
+				988E169A1FD4F666003FFC72 /* LSUpLoadImageManager.h */,
+				988E169B1FD4F666003FFC72 /* LSUpLoadImageManager.m */,
 				989931B61F69252A00E4BCAA /* DDDefaultHeader.h */,
 				98DEFF3B1F78B8D3007F73D1 /* DDBasicViewMacro.h */,
 				98F589B21F6A7912005E674A /* DDUtils.h */,
@@ -1455,22 +1615,24 @@
 		986E5A091FAAC5D700FD391C /* CreateDesk */ = {
 			isa = PBXGroup;
 			children = (
-				986E59F71FAABC7000FD391C /* LSCreateDeskTableViewCell.h */,
-				986E59F51FAABC7000FD391C /* LSCreateDeskTableViewCell.m */,
-				4B05AD0D1FB83B7C007583E9 /* LSCreateDeskChildLabelCell.h */,
-				4B05AD0E1FB83B7C007583E9 /* LSCreateDeskChildLabelCell.m */,
-				986E59ED1FAABC6F00FD391C /* LSCDTitleItemView.h */,
-				986E59F11FAABC7000FD391C /* LSCDTitleItemView.m */,
-				986E59F31FAABC7000FD391C /* LSCreateDeskActionCellView.h */,
-				986E59F01FAABC6F00FD391C /* LSCreateDeskActionCellView.m */,
-				986E59EE1FAABC6F00FD391C /* LSCDTimeAddressView.h */,
-				986E59EF1FAABC6F00FD391C /* LSCDTimeAddressView.m */,
-				986E59EB1FAABC6F00FD391C /* LSCDMembersCellView.h */,
-				986E59F21FAABC7000FD391C /* LSCDMembersCellView.m */,
-				986E59F81FAABC7100FD391C /* LSCDDescriptionCellView.h */,
-				986E59F61FAABC7000FD391C /* LSCDDescriptionCellView.m */,
-				986E59EC1FAABC6F00FD391C /* LSCDJoinDeskCellView.h */,
-				986E59F41FAABC7000FD391C /* LSCDJoinDeskCellView.m */,
+				988E16AB1FD4F7F5003FFC72 /* LSCreateDeskTableViewCell.h */,
+				988E16AF1FD4F7F6003FFC72 /* LSCreateDeskTableViewCell.m */,
+				988E16A11FD4F7F4003FFC72 /* LSCreateDeskChildLabelCell.h */,
+				988E16AD1FD4F7F5003FFC72 /* LSCreateDeskChildLabelCell.m */,
+				988E16A81FD4F7F5003FFC72 /* LSCDTitleItemView.h */,
+				988E16AA1FD4F7F5003FFC72 /* LSCDTitleItemView.m */,
+				988E16A61FD4F7F5003FFC72 /* LSCreateDeskActionCellView.h */,
+				988E16AC1FD4F7F5003FFC72 /* LSCreateDeskActionCellView.m */,
+				988E16B01FD4F7F6003FFC72 /* LSCDTimeAddressView.h */,
+				988E16A21FD4F7F4003FFC72 /* LSCDTimeAddressView.m */,
+				988E16A71FD4F7F5003FFC72 /* LSCDMembersCellView.h */,
+				988E16A01FD4F7F4003FFC72 /* LSCDMembersCellView.m */,
+				988E16A31FD4F7F4003FFC72 /* LSCDDescriptionCellView.h */,
+				988E16B11FD4F7F6003FFC72 /* LSCDDescriptionCellView.m */,
+				988E16A41FD4F7F4003FFC72 /* LSCDJoinDeskCellView.h */,
+				988E16A51FD4F7F4003FFC72 /* LSCDJoinDeskCellView.m */,
+				988E16A91FD4F7F5003FFC72 /* LSCDPhotoIV.h */,
+				988E16AE1FD4F7F5003FFC72 /* LSCDPhotoIV.m */,
 			);
 			name = CreateDesk;
 			sourceTree = "<group>";
@@ -1538,6 +1700,8 @@
 		988D23B71FC2CEE7002C5D2C /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				988E16971FD4F5AA003FFC72 /* LSCreatDeskEntity.h */,
+				988E16981FD4F5AA003FFC72 /* LSCreatDeskEntity.m */,
 				988D23B81FC2CF05002C5D2C /* DDAddressModel.h */,
 				988D23B91FC2CF05002C5D2C /* DDAddressModel.m */,
 			);
@@ -1650,13 +1814,6 @@
 			name = "Login(登录)";
 			sourceTree = "<group>";
 		};
-		9899318C1F6919CF00E4BCAA /* Message(消息) */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = "Message(消息)";
-			sourceTree = "<group>";
-		};
 		9899318D1F6919D900E4BCAA /* PersonalCenter(个人) */ = {
 			isa = PBXGroup;
 			children = (
@@ -1691,12 +1848,12 @@
 		989931901F691A0A00E4BCAA /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				9840E6611FCC162500F0E570 /* Message(消息) */,
 				983742B01F96F8D800200B7E /* Plus(发布) */,
 				9800938B1F73956700FE0FE9 /* Desk(桌子) */,
 				9899318F1F6919EF00E4BCAA /* Discover(发现) */,
 				9899318E1F6919E800E4BCAA /* Home(首页) */,
 				9899318D1F6919D900E4BCAA /* PersonalCenter(个人) */,
-				9899318C1F6919CF00E4BCAA /* Message(消息) */,
 				9899318B1F69199100E4BCAA /* Login(登录) */,
 			);
 			name = Main;
@@ -2670,6 +2827,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				988E16BD1FD5013B003FFC72 /* region_dumps.json in Resources */,
 				989931A31F6921C700E4BCAA /* 4.jpg in Resources */,
 				989931A11F6921C700E4BCAA /* 2.jpg in Resources */,
 				989931681F69160800E4BCAA /* LaunchScreen.storyboard in Resources */,
@@ -2750,6 +2908,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				988E16B21FD4F83A003FFC72 /* LSCreateDeskTableViewCell.m in Sources */,
+				988E16B31FD4F83A003FFC72 /* LSCreateDeskChildLabelCell.m in Sources */,
+				988E16B41FD4F83A003FFC72 /* LSCDTitleItemView.m in Sources */,
+				988E16B51FD4F83A003FFC72 /* LSCreateDeskActionCellView.m in Sources */,
+				988E16B61FD4F83A003FFC72 /* LSCDTimeAddressView.m in Sources */,
+				988E16B71FD4F83A003FFC72 /* LSCDMembersCellView.m in Sources */,
+				988E16B81FD4F83A003FFC72 /* LSCDDescriptionCellView.m in Sources */,
+				988E16B91FD4F83A003FFC72 /* LSCDJoinDeskCellView.m in Sources */,
+				988E16BA1FD4F83A003FFC72 /* LSCDPhotoIV.m in Sources */,
 				988663E21FBD8ADB00B6F24D /* UITabBarItem+BadgeColor.m in Sources */,
 				988663E31FBD8ADB00B6F24D /* UIWindow+SIUtils.m in Sources */,
 				988663E11FBD8ACC00B6F24D /* TSActionAlertView.m in Sources */,
@@ -2770,10 +2937,10 @@
 				9853D73D1FA02CA6004AD6BF /* CYTabBarController.m in Sources */,
 				985746C21FA872BD0017E5D1 /* FDDMenuItem.m in Sources */,
 				985746731FA717690017E5D1 /* DDUserSingleton.m in Sources */,
+				981E5A621FCD0344001B6448 /* DDJoinDeskMessageCell.m in Sources */,
 				9853D7371FA02C9A004AD6BF /* PlusAnimate.m in Sources */,
 				989441471F9DC87C000BA3E9 /* NSCalendar+DDPlus.m in Sources */,
 				98578E5E1F909B2000FEF64D /* CCDraggableContainer.m in Sources */,
-				4B05AD0F1FB83B7C007583E9 /* LSCreateDeskChildLabelCell.m in Sources */,
 				98578E5D1F909B1B00FEF64D /* CCDraggableCardView.m in Sources */,
 				98578E5C1F909B1400FEF64D /* CustomCardView.m in Sources */,
 				98578E491F905E8B00FEF64D /* YLButton.m in Sources */,
@@ -2785,7 +2952,6 @@
 				98BF20461F7A28CA00E94394 /* DDPersonInfoTableViewCell.m in Sources */,
 				985308FD1F6BD6FD003B475C /* DDHomeListRequest.m in Sources */,
 				989931F01F69307700E4BCAA /* UILabel+CountDown.m in Sources */,
-				986E59FF1FAABC7100FD391C /* LSCDDescriptionCellView.m in Sources */,
 				989931B51F69246600E4BCAA /* UIViewController+Loading.m in Sources */,
 				989931FE1F69377000E4BCAA /* DDMainHelper.m in Sources */,
 				98BF20431F7A288400E94394 /* DDPersonInfoVc.m in Sources */,
@@ -2813,6 +2979,7 @@
 				989932361F693A0C00E4BCAA /* NSString+Size.m in Sources */,
 				989931FF1F69377000E4BCAA /* DDLogManager.m in Sources */,
 				98F5899F1F6A72F0005E674A /* DDCustomCommonEmptyView.m in Sources */,
+				988E16991FD4F5AA003FFC72 /* LSCreatDeskEntity.m in Sources */,
 				985308ED1F6BC97A003B475C /* DDHomeListViewController.m in Sources */,
 				98DEFF451F78F094007F73D1 /* DDNumbersTextView.m in Sources */,
 				989931E91F69306900E4BCAA /* UIImage+ImageEffects.m in Sources */,
@@ -2823,6 +2990,7 @@
 				981CA9781FC676AE0007AFBA /* DDTagButton.m in Sources */,
 				98DEFF421F78EDA2007F73D1 /* DDUsercenterTableViewCell.m in Sources */,
 				9800939B1F739A1600FE0FE9 /* DDInterestedVc.m in Sources */,
+				984522301FD158B100097143 /* DDShopView.m in Sources */,
 				985308E01F6BA6DF003B475C /* DDBaseTableViewController.m in Sources */,
 				98752B3C1FACC07500B94996 /* DDStatusAvatar.m in Sources */,
 				985746661FA6E2150017E5D1 /* DDTJHttpRequest.m in Sources */,
@@ -2830,14 +2998,14 @@
 				9857466C1FA6E5BA0017E5D1 /* DDValidateManager.m in Sources */,
 				989931EC1F69306900E4BCAA /* UIImage+Cut.m in Sources */,
 				98BD9F131F74BBAB0080A6FE /* UIButton+DDEvent.m in Sources */,
-				986E59F91FAABC7100FD391C /* LSCDTimeAddressView.m in Sources */,
 				982F01621F7CD116008061CF /* DDTitletxtFieldView.m in Sources */,
 				98578E261F8DCFD200FEF64D /* NSString+DDAdd.m in Sources */,
 				9857466F1FA7168F0017E5D1 /* DDLoginManager.m in Sources */,
 				985308F41F6BD461003B475C /* DDBannerPageControl.m in Sources */,
+				9840E6571FCBBF0A00F0E570 /* LSMapContentSortCell.m in Sources */,
 				98DEFF4B1F790FF3007F73D1 /* DDRewardCellView.m in Sources */,
-				986E59FD1FAABC7100FD391C /* LSCDJoinDeskCellView.m in Sources */,
 				989932431F693A1800E4BCAA /* NSObject+AppInfo.m in Sources */,
+				981E5A681FCD488E001B6448 /* DDLoveDeskView.m in Sources */,
 				98C6AE4F1F7B94C6001AAA47 /* DDFriendsTableViewCell.m in Sources */,
 				985746791FA81FF80017E5D1 /* DDSexInfoView.m in Sources */,
 				98D558061F7E2967006124C5 /* DDBlackListViewController.m in Sources */,
@@ -2856,6 +3024,7 @@
 				98D557F81F7E234E006124C5 /* DDHelpViewController.m in Sources */,
 				98F589BC1F6A7A35005E674A /* DDFileCacheManager.m in Sources */,
 				98F675A61F70F0D60038E372 /* PYSearchSuggestionViewController.m in Sources */,
+				984522331FD15B3000097143 /* DDShopTableView.m in Sources */,
 				98F5899A1F6A700E005E674A /* DDBaseViewController.m in Sources */,
 				989932351F693A0C00E4BCAA /* NSString+Extension.m in Sources */,
 				986E59E81FAABC4900FD391C /* LSCreateDeskVC.m in Sources */,
@@ -2863,6 +3032,7 @@
 				98F589DA1F6A8223005E674A /* DDTJShareManager.m in Sources */,
 				98578E321F8F571400FEF64D /* DDCountDownLabel.m in Sources */,
 				981CA97B1FC676C30007AFBA /* DDTagView.m in Sources */,
+				9840E6591FCBBF0A00F0E570 /* LSContentSortView.m in Sources */,
 				98BD9F161F74BBC10080A6FE /* UIButton+DDImagePosition.m in Sources */,
 				98F589AE1F6A76E2005E674A /* DDCustomLoadingAnimationView.m in Sources */,
 				98F589BF1F6A7ACD005E674A /* DDTJUserInfoModel.m in Sources */,
@@ -2871,13 +3041,12 @@
 				98F589CE1F6A8079005E674A /* DDAnimationManager.m in Sources */,
 				989932461F693A1800E4BCAA /* NSObject+Runtime.m in Sources */,
 				98578E611F90A4F900FEF64D /* DDBigDeskView.m in Sources */,
+				98AD0B571FCE5A56006C3EE8 /* DDTableModel.m in Sources */,
 				98F589A21F6A73AD005E674A /* DDCustomPlaceHolderTextView.m in Sources */,
 				98F589EC1F6A8948005E674A /* DDBaseTableViewCell.m in Sources */,
 				981CA97E1FC678320007AFBA /* HexColors.m in Sources */,
 				98F675AC1F70FB220038E372 /* DDHomeMapViewController.m in Sources */,
-				986E59FC1FAABC7100FD391C /* LSCDMembersCellView.m in Sources */,
 				98F589D11F6A80D9005E674A /* DDCustomGifImageView.m in Sources */,
-				986E59FB1FAABC7100FD391C /* LSCDTitleItemView.m in Sources */,
 				98F589B91F6A79BA005E674A /* DDBaseModel.m in Sources */,
 				98F589E31F6A83FB005E674A /* DDRequestManager.m in Sources */,
 				98D263BD1F7EA05900D77744 /* DDBlindPhoneViewController.m in Sources */,
@@ -2889,7 +3058,6 @@
 				981BAEC21FA9CD7C00909F28 /* DDDeskMatchViewController.m in Sources */,
 				98D51B7A1FA42C250095BC8F /* DDLoginViewController.m in Sources */,
 				989932551F693A5100E4BCAA /* NSNotificationCenter+Addition.m in Sources */,
-				986E59FA1FAABC7100FD391C /* LSCreateDeskActionCellView.m in Sources */,
 				980093921F73975600FE0FE9 /* DDDeskViewController.m in Sources */,
 				98D51B7D1FA59A330095BC8F /* FXDAnimationField.m in Sources */,
 				989420611F70C1A500AFF310 /* UIView+RedPoint.m in Sources */,
@@ -2914,16 +3082,20 @@
 				9899315A1F69160800E4BCAA /* main.m in Sources */,
 				985308F11F6BCFE8003B475C /* DDBannerViewCell.m in Sources */,
 				989931B41F69246600E4BCAA /* UIViewController+Addition.m in Sources */,
+				9840E65E1FCBBF7900F0E570 /* LSMapAnnotationModel.m in Sources */,
 				989441321F9DC423000BA3E9 /* DDRadioButton.m in Sources */,
 				985746621FA6D86C0017E5D1 /* DDResponseBaseHttp.m in Sources */,
 				988663E61FBD8B9900B6F24D /* TSActionDemoView.m in Sources */,
+				9845222D1FD1586B00097143 /* DDShopDetailViewController.m in Sources */,
 				98F589C51F6A7BA7005E674A /* DDCommonConstant.m in Sources */,
 				98D557FC1F7E2462006124C5 /* DDAboutViewController.m in Sources */,
 				986E5A081FAABC8D00FD391C /* LSRecommendAddressCell.m in Sources */,
 				98F40AF81FAC3F12002B06B6 /* DDUserInfoModel.m in Sources */,
 				98578E2F1F8F206B00FEF64D /* DDDeskView.m in Sources */,
 				989931ED1F69306900E4BCAA /* UIImageView+Addition.m in Sources */,
+				9840E65F1FCBBF7900F0E570 /* LSContentSortModel.m in Sources */,
 				98DEFF3E1F78B91D007F73D1 /* DDLabelView.m in Sources */,
+				98AD0B5A1FCE8905006C3EE8 /* DDBannerModel.m in Sources */,
 				98D51B801FA5CC510095BC8F /* DDRegisterViewController.m in Sources */,
 				98578E4C1F906B4400FEF64D /* UIImage+ATWatermark.m in Sources */,
 				985309001F6BD772003B475C /* DDHomeListTableCell.m in Sources */,
@@ -2942,6 +3114,7 @@
 				986E59E51FAABC4900FD391C /* LSRecommendAddressVC.m in Sources */,
 				985746691FA6E57B0017E5D1 /* DDLoginModel.m in Sources */,
 				98F589E01F6A836E005E674A /* DDLocationManager.m in Sources */,
+				9840E6671FCC1A4500F0E570 /* DDMessageViewController.m in Sources */,
 				98D263C01F7EA45200D77744 /* UIImage+Color.m in Sources */,
 				98F589A81F6A764B005E674A /* DDCustomTopImageButton.m in Sources */,
 				989931C41F6925C300E4BCAA /* UIView+Tap.m in Sources */,
@@ -2960,14 +3133,16 @@
 				980093A21F73A4D900FE0FE9 /* DDDiscoverViewController.m in Sources */,
 				98F1BE711F6FB7A90034EDA5 /* DOPDropDownMenu.m in Sources */,
 				98578E011F8B504D00FEF64D /* DDAlbumViewController.m in Sources */,
+				9840E6581FCBBF0A00F0E570 /* LSRegionDumpsView.m in Sources */,
 				98F589AB1F6A7682005E674A /* DDCustomNoNetworkEmptyView.m in Sources */,
 				989932321F693A0C00E4BCAA /* NSAttributedString+Size.m in Sources */,
 				989931D81F69302700E4BCAA /* DDNavViewController.m in Sources */,
 				989931CB1F69264800E4BCAA /* AppDelegate+AppLocation.m in Sources */,
 				98F589A51F6A75B6005E674A /* DDCustomSegmentView.m in Sources */,
 				982F01541F7C9C3C008061CF /* DDPersonAuthTableViewCell.m in Sources */,
+				988E169C1FD4F667003FFC72 /* LSUpLoadImageManager.m in Sources */,
+				981E5A651FCD0371001B6448 /* DDNoticeMessageCell.m in Sources */,
 				985746C51FA873300017E5D1 /* FDDMenu.m in Sources */,
-				986E59FE1FAABC7100FD391C /* LSCreateDeskTableViewCell.m in Sources */,
 				98F675B81F711E5E0038E372 /* NHHomeNeiHanShareView.m in Sources */,
 				989931A71F69231300E4BCAA /* DDTabbar.m in Sources */,
 				98578E2C1F8DF5F500FEF64D /* DDChairView.m in Sources */,
@@ -2982,6 +3157,7 @@
 				989931C51F6925C300E4BCAA /* MBProgressHUD+NHAddition.m in Sources */,
 				980093B41F73C06800FE0FE9 /* DDUsercenterVc.m in Sources */,
 				98F589C21F6A7B05005E674A /* DDUserInfoManager.m in Sources */,
+				981E5A6B1FCD48C5001B6448 /* DDDeskMatchView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

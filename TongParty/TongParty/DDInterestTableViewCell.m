@@ -21,6 +21,7 @@
 @property (nonatomic, strong) UILabel *horizontalLine;
 @property (nonatomic, strong) UIButton*storeBtn;
 @property (nonatomic, strong) UIButton *addressBtn;
+@property (nonatomic, strong) UIButton *joinedBtn;
 @end
 
 @implementation DDInterestTableViewCell
@@ -45,19 +46,18 @@
         make.left.mas_equalTo(10);
         make.width.and.height.mas_equalTo(80);
     }];
-    _sAvatar.avatarstring  = @"avatar_default";
-    _sAvatar.statusstring  = @"desklist_status_host";
-    
+//    _sAvatar.avatarstring  = @"avatar_default";
+//    _sAvatar.statusstring  = @"desklist_status_host";
     
     _titleLabel = [UILabel new];
     [self.contentView addSubview:_titleLabel];
     [_titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(_sAvatar);
-        make.left.mas_equalTo(_sAvatar.right).mas_equalTo(10);
+        make.left.mas_equalTo(_sAvatar.mas_right).offset(10);
         make.height.mas_equalTo(20);
         make.right.mas_equalTo(-5);
     }];
-    _titleLabel.text = @"狼人杀";
+//    _titleLabel.text = @"狼人杀";
     _titleLabel.textAlignment = NSTextAlignmentLeft;
     _titleLabel.font = kFont(15);
     
@@ -69,7 +69,8 @@
         make.right.mas_equalTo(-5);
         make.height.mas_equalTo(20);
     }];
-    _subjectLabel.text = @"主题：大家一起嗨，祖居懒跟啥";
+//    _subjectLabel.text = @"主题：大家一起嗨，祖居懒跟啥";
+    _subjectLabel.textColor = kGrayColor;
     _subjectLabel.font = kFont(13);
     
     _timeBtn = [UIButton new];
@@ -77,35 +78,42 @@
     [_timeBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(_subjectLabel.mas_bottom).offset(5);
         make.left.mas_equalTo(_subjectLabel);
-        make.width.mas_equalTo(80);
+//        make.width.mas_equalTo(50);
         make.height.mas_equalTo(20);
     }];
-    [_timeBtn setTitle:@"09:00" forState:UIControlStateNormal];
-    [_timeBtn setBackgroundImage:kImage(@"desklist_clock") forState:UIControlStateNormal];
-    [_timeBtn layoutButtonWithEdgeInsetsStyle:DDButtonEdgeInsetsStyleLeft imageTitleSpace:5];
+//    [_timeBtn setTitle:@"09:00" forState:UIControlStateNormal];
+    [_timeBtn setTitleColor:kGrayColor forState:UIControlStateNormal];
+    _timeBtn.titleLabel.font = kFont(12);
+    [_timeBtn setImage:kImage(@"desklist_clock") forState:UIControlStateNormal];
+    [_timeBtn layoutButtonWithEdgeInsetsStyle:DDButtonEdgeInsetsStyleLeft imageTitleSpace:6];
     
     _numPerople = [UIButton new];
     [self.contentView addSubview:_numPerople];
     [_numPerople mas_makeConstraints:^(MASConstraintMaker *make) {
-       make.top.mas_equalTo(_timeBtn.mas_bottom).offset(5);
-        make.left.mas_equalTo(_subjectLabel.mas_right).offset(5);
-        make.width.mas_equalTo(80);
+       make.top.mas_equalTo(_timeBtn);
+        make.left.mas_equalTo(_timeBtn.mas_right).offset(5);
+//        make.width.mas_equalTo(50);
         make.height.mas_equalTo(20);
     }];
-    [_numPerople setTitle:@"10人" forState:UIControlStateNormal];
-    [_numPerople setBackgroundImage:kImage(@"desklist_people") forState:UIControlStateNormal];
-    [_numPerople layoutButtonWithEdgeInsetsStyle:DDButtonEdgeInsetsStyleLeft imageTitleSpace:5];
+//    [_numPerople setTitle:@"10人" forState:UIControlStateNormal];
+    [_numPerople setTitleColor:kGrayColor forState:UIControlStateNormal];
+    _numPerople.titleLabel.font = kFont(12);
+    [_numPerople setImage:kImage(@"desklist_people") forState:UIControlStateNormal];
+    [_numPerople layoutButtonWithEdgeInsetsStyle:DDButtonEdgeInsetsStyleLeft imageTitleSpace:6];
+    
     
     _distanceLabel = [UILabel new];
     [self.contentView addSubview:_distanceLabel];
     [_distanceLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(_numPerople);
-        make.left.mas_equalTo(_numPerople.mas_right).offset(10);
+        make.top.mas_equalTo(_numPerople.mas_top);
+        make.left.mas_equalTo(_numPerople.mas_right).offset(5);
         make.right.mas_equalTo(-5);
         make.height.mas_equalTo(20);
     }];
     _distanceLabel.textAlignment = NSTextAlignmentRight;
-    _distanceLabel.text = @"198m | 10人已参加";
+    _distanceLabel.font = kFont(12);
+    _distanceLabel.textColor = kGrayColor;
+//    _distanceLabel.text = @"198m | 10人已参加";
     
     _horizontalLine = [UILabel new];
     [self.contentView addSubview:_horizontalLine];
@@ -115,34 +123,79 @@
         make.right.mas_equalTo(-5);
         make.height.mas_equalTo(1);
     }];
-    _horizontalLine.backgroundColor = kGrayColor;
-    
+    _horizontalLine.backgroundColor = kSeperatorColor;
+
     _storeBtn = [UIButton new];
     [self.contentView addSubview:_storeBtn];
     [_storeBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(_horizontalLine.mas_bottom).offset(5);
         make.left.mas_equalTo(_titleLabel);
-        make.width.mas_equalTo(100);
+        make.width.mas_equalTo(200);
         make.height.mas_equalTo(20);
     }];
-    [_storeBtn setTitle:@"望京咖啡厅" forState:UIControlStateNormal];
-    [_storeBtn setBackgroundImage:kImage(@"merchant_store") forState:UIControlStateNormal];
-    [_storeBtn layoutButtonWithEdgeInsetsStyle:DDButtonEdgeInsetsStyleLeft imageTitleSpace:5];
-    
-    
+//    [_storeBtn setTitle:@"望京咖啡厅" forState:UIControlStateNormal];
+    [_storeBtn setTitleColor:kBlackColor forState:UIControlStateNormal];
+    _storeBtn.titleLabel.font = kFont(13);
+    [_storeBtn setImage:kImage(@"merchant_store") forState:UIControlStateNormal];
+    [_storeBtn layoutButtonWithEdgeInsetsStyle:DDButtonEdgeInsetsStyleLeft imageTitleSpace:2];
+    _storeBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+    _storeBtn.titleEdgeInsets = UIEdgeInsetsMake(0, 10, 0, 0);
+
     _addressBtn = [UIButton new];
     [self.contentView addSubview:_addressBtn];
     [_addressBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(_storeBtn.mas_bottom).offset(5);
-        make.left.mas_equalTo(_subjectLabel);
-        make.width.mas_equalTo(80);
+        make.left.mas_equalTo(_titleLabel);
+        make.width.mas_equalTo(200);
         make.height.mas_equalTo(20);
     }];
-    [_addressBtn setTitle:@"北京市海淀区中关村" forState:UIControlStateNormal];
-    [_addressBtn setBackgroundImage:kImage(@"desklist_address") forState:UIControlStateNormal];
-    [_addressBtn layoutButtonWithEdgeInsetsStyle:DDButtonEdgeInsetsStyleLeft imageTitleSpace:5];
+//    [_addressBtn setTitle:@"北京市海淀区中关村" forState:UIControlStateNormal];
+    [_addressBtn setTitleColor:kBlackColor forState:UIControlStateNormal];
+    _addressBtn.titleLabel.font = kFont(13);
+    [_addressBtn setImage:kImage(@"desklist_address") forState:UIControlStateNormal];
+    [_addressBtn layoutButtonWithEdgeInsetsStyle:DDButtonEdgeInsetsStyleLeft imageTitleSpace:2];
+    _addressBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+    _addressBtn.titleEdgeInsets = UIEdgeInsetsMake(0, 10, 0, 0);
+    
+    _joinedBtn = [UIButton new];
+    [self.contentView addSubview:_joinedBtn];
+    [_joinedBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.mas_equalTo(-10);
+        make.bottom.mas_equalTo(-10);
+        make.width.mas_equalTo(50);
+        make.height.mas_equalTo(20);
+    }];
+    _joinedBtn.layerCornerRadius = 5;
+    _joinedBtn.layerBorderWidth = 1;
+    _joinedBtn.layerBorderColor = kBgGreenColor;
+//    [_joinedBtn setTitle:@"加入" forState:UIControlStateNormal];
+    [_joinedBtn setTitleColor:kBgGreenColor forState:UIControlStateNormal];
+    _joinedBtn.titleLabel.font = kFont(13);
+    [_joinedBtn setImage:kImage(@"finger_join") forState:UIControlStateNormal];
+    [_joinedBtn layoutButtonWithEdgeInsetsStyle:DDButtonEdgeInsetsStyleLeft imageTitleSpace:2];
 }
 
+- (void)updateWithModel:(DDTableModel *)model{
+    
+    _sAvatar.avatarstring  = model.image;
+    _titleLabel.text = model.title;
+    _subjectLabel.text = [NSString stringWithFormat:@"主题：%@",model.custom];
+    [_timeBtn setTitle:model.begin_time forState:UIControlStateNormal];
+    [_numPerople setTitle:model.person_num forState:UIControlStateNormal];
+    _distanceLabel.text = @"198m | 10人已参加";
+     [_storeBtn setTitle:model.place forState:UIControlStateNormal];
+    [_addressBtn setTitle:@"北京市海淀区中关村" forState:UIControlStateNormal];
+}
+
+
+//重新设置的UITableViewCellframe,---->改变row之间的间距。
+- (void)setFrame:(CGRect)frame{
+    frame.origin.x += 5;
+    frame.origin.y += 5;
+    frame.size.height -= 5;
+    frame.size.width -= 10;
+    [super setFrame:frame];
+}
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];

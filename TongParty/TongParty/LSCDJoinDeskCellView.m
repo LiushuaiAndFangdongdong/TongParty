@@ -10,6 +10,7 @@
 #import "LSCDTitleItemView.h"
 #import "DDRadioButton.h"
 
+
 @interface LSCDJoinDeskCellView ()<DDRadioButtonDelegate>
 @property (nonatomic, strong)LSCDTitleItemView *ti_isJoinDesk;
 @property (nonatomic, strong)UIImageView       *iv_isJoinDesk;

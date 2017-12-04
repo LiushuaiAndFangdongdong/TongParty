@@ -70,7 +70,7 @@
     }
     
     UIViewController *vc = self.childViewControllers[index];
-    vc.view.frame = CGRectMake(index * self.contentView.width, 0, self.contentView.width, self.contentView.height);
+    vc.view.frame = CGRectMake(index * self.contentView.width, kNavigationBarHeight, self.contentView.width, self.contentView.height - kNavigationBarHeight - 10);
     [self.contentView addSubview:vc.view];
     
     // 滑动到对应位置

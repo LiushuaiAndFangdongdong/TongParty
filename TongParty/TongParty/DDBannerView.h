@@ -9,11 +9,11 @@
 
 #import <UIKit/UIKit.h>
 
-@class DDBannerViewCell, NHDiscoverRotate_bannerElementBanner_url_URL, NHDiscoverRotate_bannerElement;
+@class DDBannerViewCell, DDBannerModel;
 
 @interface DDBannerView : UIView
 /** 数据源*/
-@property (nonatomic, strong) NSArray <NHDiscoverRotate_bannerElement *>*modelArray;
+@property (nonatomic, strong) NSArray <DDBannerModel *>*modelArray;
 /** 点击回调*/
-@property (nonatomic, copy) void(^bannerViewGoToPageHandle)(DDBannerViewCell *cell, NHDiscoverRotate_bannerElement *bannerUrlModel);
+@property (nonatomic, copy) void(^bannerViewGoToPageHandle)(DDBannerViewCell *cell, DDBannerModel *bannerUrlModel);
 @end

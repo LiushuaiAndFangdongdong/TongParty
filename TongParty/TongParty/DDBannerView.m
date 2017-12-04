@@ -8,7 +8,8 @@
 
 #import "DDBannerView.h"
 #import "DDBannerViewCell.h"
-#import "NHDiscoverModel.h"
+//#import "NHDiscoverModel.h"
+#import "DDBannerModel.h"
 #import "DDBannerPageControl.h"
 
 #define kCellIdentifier @"news"
@@ -92,7 +93,6 @@
     }
     self.pageControl.numberOfItems = _modelArray.count;
     
-    
     // 添加定时器
     [self addTimer];
     
@@ -172,10 +172,14 @@
     DDBannerViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kCellIdentifier forIndexPath:indexPath];
     
     // 2. 设置数据模型和索引
-    NHDiscoverRotate_bannerElement *element = self.modelArray[indexPath.row];
-    NHDiscoverRotate_bannerElementBanner_url_URL *urlModel =  element.banner_url.url_list.firstObject;
-    cell.url = urlModel.url;
-    cell.title = element.banner_url.title;
+    DDBannerModel *bannerModel = self.modelArray[indexPath.row];
+    cell.url= bannerModel.image;
+    cell.title = bannerModel.title;
+    
+//    NHDiscoverRotate_bannerElement *element = self.modelArray[indexPath.row];
+//    NHDiscoverRotate_bannerElementBanner_url_URL *urlModel =  element.banner_url.url_list.firstObject;
+//    cell.url = urlModel.url;
+//    cell.title = element.banner_url.title;
     
     // 3. 返回cell
     return cell;
@@ -221,12 +225,16 @@
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     
     DDBannerViewCell *cell = (DDBannerViewCell *)[collectionView cellForItemAtIndexPath:indexPath];
-    
-    NHDiscoverRotate_bannerElement *element = self.modelArray[indexPath.row];
-    
+
+    DDBannerModel *model = self.modelArray[indexPath.row];
     if (self.bannerViewGoToPageHandle) {
-        self.bannerViewGoToPageHandle(cell, element);
+        self.bannerViewGoToPageHandle(cell, model);
     }
+//    NHDiscoverRotate_bannerElement *element = self.modelArray[indexPath.row];
+//
+//    if (self.bannerViewGoToPageHandle) {
+//        self.bannerViewGoToPageHandle(cell, element);
+//    }
     
 }
 

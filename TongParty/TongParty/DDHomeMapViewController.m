@@ -9,9 +9,10 @@
 #import "DDHomeMapViewController.h"
 #import "DDMAAnnotationView.h"
 #import "LSSortingView.h"
+#import <pop/pop.h>
 
 @interface DDHomeMapViewController ()<MAMapViewDelegate>
-
+@property (nonatomic, strong)UIImageView *iv_mark;
 @property (nonatomic, strong)MAMapView *mapView;
 @property (nonatomic, strong)LSSortingView *sortingView;
 @end
@@ -22,6 +23,7 @@
     [super viewDidLoad];
     [AMapServices sharedServices].enableHTTPS = YES;
     [self.view addSubview:self.mapView];
+    [self.view addSubview:self.iv_mark];
     [self.view addSubview:self.sortingView];
 }
 
@@ -34,6 +36,15 @@
         };
         _sortingView.onClickBlcok = ^(UIButton *sender) {
             NSLog(@"%@",sender.titleLabel.text);
+        };
+        _sortingView.onAddressSelected = ^(NSString *addString) {
+            // 根据商圈搜索数据后回调
+            // 模拟请求需要一秒钟
+            dispatch_time_t delayTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0* NSEC_PER_SEC));
+            dispatch_after(delayTime, dispatch_get_main_queue(), ^{
+                [weakSelf.sortingView showSecondaryViewWithTag:2 onView:weakSelf.view];
+            });
+            NSLog(@"选择～～～%@",addString);
         };
     }
     return _sortingView;
@@ -50,66 +61,41 @@
         _mapView.showsScale = NO;
         //后台定位
         _mapView.pausesLocationUpdatesAutomatically = NO;
-        _mapView.allowsBackgroundLocationUpdates = NO;//iOS9以上系统必须配置(若YES，则plist中Privacy - Location When In Use Usage Description)
+        _mapView.allowsBackgroundLocationUpdates = NO;
         // 开启蓝点定位
         _mapView.showsUserLocation = YES;
-        _mapView.userTrackingMode = MAUserTrackingModeFollow;
+        //_mapView.userTrackingMode = MAUserTrackingModeFollow;
         _mapView.delegate = self;
         
         CLLocationCoordinate2D coor ;
-        coor.latitude = 22.529252;
-        coor.longitude = 113.871265;
-        
-        CLLocationCoordinate2D coor1 ;
-        coor1.latitude = 22.539961;
-        coor1.longitude = 113.871469;
-        
-        CLLocationCoordinate2D coor2 ;
-        coor2.latitude = 22.549073;
-        coor2.longitude = 113.871372;
-        
-        CLLocationCoordinate2D coor3 ;
-        coor3.latitude = 22.589550;
-        coor3.longitude = 113.851783;
-        
-        CLLocationCoordinate2D coor4 ;
-        coor4.latitude = 22.589349;
-        coor4.longitude = 113.861634;
-        
-        
-        MAPointAnnotation *pointAnnotation1 = [[MAPointAnnotation alloc] init];
-        pointAnnotation1.coordinate = coor1;
-        
-        MAPointAnnotation *pointAnnotation2 = [[MAPointAnnotation alloc] init];
-        pointAnnotation2.coordinate = coor2;
-        
-        MAPointAnnotation *pointAnnotation3 = [[MAPointAnnotation alloc] init];
-        pointAnnotation3.coordinate = coor3;
-        
-        MAPointAnnotation *pointAnnotation4 = [[MAPointAnnotation alloc] init];
-        pointAnnotation4.coordinate = coor4;
-        
+        coor.latitude = 39.923924;
+        coor.longitude = 116.325767;
         MAPointAnnotation *pointAnnotation = [[MAPointAnnotation alloc] init];
         pointAnnotation.coordinate = coor;
         
-        //        //设置地图的定位中心点坐标
-        //        self.mapView.centerCoordinate = coor;
-        //将点添加到地图上，即所谓的大头针
-        [self.mapView addAnnotations:@[pointAnnotation,pointAnnotation1,pointAnnotation2,pointAnnotation3,pointAnnotation4]];
+        //设置地图的定位中心点坐标
+        _mapView.centerCoordinate = coor;
+        [_mapView addAnnotation:pointAnnotation];
     }
     
     return _mapView;
 }
 
-
+- (UIImageView *)iv_mark {
+    if (!_iv_mark) {
+        _iv_mark = [[UIImageView alloc] initWithFrame:CGRectMake(kScreenWidth/2 - DDFitWidth(7.5f), kScreenHeight/2 - DDFitHeight(150.f), DDFitWidth(15.f), DDFitHeight(30.f))];
+        _iv_mark.image = kImage(@"map_mark");
+    }
+    return _iv_mark;
+}
 #pragma mark - MAMapViewDelegate
 
 - (MAAnnotationView *)mapView:(MAMapView *)mapView viewForAnnotation:(id <MAAnnotation>)annotation {
-    
     static NSString* kPin = @"pin";
     DDMAAnnotationView* pinView = (DDMAAnnotationView *)
     [mapView dequeueReusableAnnotationViewWithIdentifier:kPin];
-    if ([annotation isKindOfClass:[MAPointAnnotation class]]) {//判断是否是自己的定位气泡，如果是自己的定位气泡，不做任何设置，显示为蓝点，如果不是自己的定位气泡，比如大头针就会进入
+    //判断是否是自己的定位气泡，如果是自己的定位气泡，不做任何设置，显示为蓝点，如果不是自己的定位气泡，比如大头针就会进入
+    if ([annotation isKindOfClass:[MAPointAnnotation class]]) {
         if (!pinView) {
             pinView = [[DDMAAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:kPin];
             [pinView setDraggable:YES];
@@ -118,9 +104,31 @@
     return pinView;
 }
 
+- (void)mapView:(MAMapView *)mapView regionDidChangeAnimated:(BOOL)animated {
+    // 根据屏幕位置转换地图坐标经纬度
+    CLLocationCoordinate2D markCoordinate = [self.mapView convertPoint:_iv_mark.frame.origin toCoordinateFromView:self.view];
+    [self addMarkAnimation];
+}
+
+// 给棒棒糖加动画
+- (void)addMarkAnimation{
+    POPSpringAnimation *scaleAnim3 = [POPSpringAnimation animationWithPropertyNamed:kPOPLayerScaleXY];
+    scaleAnim3.beginTime = CACurrentMediaTime();
+    scaleAnim3.toValue = [NSValue valueWithCGPoint:CGPointMake(1.3, 1.3)];
+    scaleAnim3.springSpeed = 20;
+    scaleAnim3.springBounciness = 16;
+    [self.iv_mark.layer pop_addAnimation:scaleAnim3 forKey:@"scaleAnim3"];
+    POPSpringAnimation *scaleAnim33 = [POPSpringAnimation animationWithPropertyNamed:kPOPLayerScaleXY];
+    scaleAnim33.beginTime = CACurrentMediaTime()+0.1;
+    scaleAnim33.toValue = [NSValue valueWithCGPoint:CGPointMake(1.0, 1.0)];
+    scaleAnim33.springSpeed = 20;
+    scaleAnim33.springBounciness = 16;
+    [self.iv_mark.layer pop_addAnimation:scaleAnim33 forKey:@"scaleAnim33"];
+}
+
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 @end

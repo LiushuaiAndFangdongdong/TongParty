@@ -10,6 +10,8 @@
 #import "LSRecommendAddressCell.h"
 #import "DOPDropDownMenu.h"
 #import "LSSortingView.h"
+#import "DDShopDetailViewController.h"
+
 @interface LSRecommendAddressVC ()<UISearchBarDelegate>
 @property (nonatomic, strong) UISearchBar *searchBar;
 @property (nonatomic, strong) LSSortingView *sortingView;
@@ -38,7 +40,7 @@
     
     // 数据
     self.classifys = @[@"内容",@"人均",@"位置",@"其他"];
-
+    
 }
 // 设置子视图
 - (void)setUpViews {
@@ -103,7 +105,7 @@
 
 - (DDBaseTableViewCell *)tj_cellAtIndexPath:(NSIndexPath *)indexPath {
     LSRecommendAddressCell *cell = [LSRecommendAddressCell cellWithTableView:self.tableView];
-
+    
     return cell;
 }
 
@@ -116,14 +118,16 @@
 }
 
 - (void)tj_didSelectCellAtIndexPath:(NSIndexPath *)indexPath cell:(DDBaseTableViewCell *)cell {
-    if (_selectedAddressResult) {
-        _selectedAddressResult(@"阜北社区8号楼41单元9号");
-    }
-    [self pop];
+//    if (_selectedAddressResult) {
+//        _selectedAddressResult(@"阜北社区8号楼41单元9号");
+//    }
+//    [self pop];
+    DDShopDetailViewController *shopVC = [[DDShopDetailViewController alloc] init];
+    [self.navigationController pushViewController:shopVC animated:YES];
 }
 
 - (UIView *)tj_headerAtSection:(NSInteger)section {
-
+    
     return self.sortingView;
 }
 
@@ -146,8 +150,9 @@
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-
+    
 }
 
 
 @end
+

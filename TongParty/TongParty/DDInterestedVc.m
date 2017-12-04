@@ -70,7 +70,6 @@
 - (DDBaseTableViewCell *)tj_cellAtIndexPath:(NSIndexPath *)indexPath {
     
     DDInterestTableViewCell *cell = [DDInterestTableViewCell cellWithTableView:self.tableView];
-    cell.backgroundColor = kGrayColor;
     return cell;
 //    DDHomeListTableCell *cell = [DDHomeListTableCell cellWithTableView:self.tableView];
 //    cell.elementModel = self.dataArray[indexPath.row];
@@ -78,7 +77,7 @@
 }
 
 - (CGFloat)tj_cellheightAtIndexPath:(NSIndexPath *)indexPath {
-    return 135;
+    return 145;
 }
 - (void)tj_didSelectCellAtIndexPath:(NSIndexPath *)indexPath cell:(DDBaseTableViewCell *)cell {
     DDDeskShowViewController *deskShowVC = [[DDDeskShowViewController alloc] init];

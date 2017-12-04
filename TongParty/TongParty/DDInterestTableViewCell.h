@@ -7,7 +7,8 @@
 //
 
 #import "DDBaseTableViewCell.h"
+#import "DDTableModel.h"
 
 @interface DDInterestTableViewCell : DDBaseTableViewCell
-
+-(void)updateWithModel:(DDTableModel *)model;
 @end

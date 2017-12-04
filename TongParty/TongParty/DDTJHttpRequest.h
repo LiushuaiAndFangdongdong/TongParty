@@ -20,11 +20,16 @@
 /**用户详情页*/
 + (void)getUserDetailInfoWithToken:(NSString *)token block:(void(^)(NSDictionary *dict))dict failure:(void(^)())failure;
 
+/**上传相册*/
++ (void)uploadUserAlbumWithToken:(NSString *)token images:(NSArray *)images block:(void(^)(NSDictionary *dict))dict failure:(void(^)())failure;
+
+
 #pragma mark  ------------- 桌子 -- - ----
 
 /**创建桌子
  * @token  用户token
- * @activity 桌子分类id
+ * @activity 活动id
+ * @custom   活动名称 ---->若为自定义，为0
  * @title   桌子标题
  * @place  桌子地点
  * @begin_time  开始时间
@@ -39,6 +44,7 @@
  */
 + (void)createDeskWithToken:(NSString *)token
                    activity:(NSString *)activity
+                     custom:(NSString *)custom
                       title:(NSString *)title
                       place:(NSString *)place
                  begin_time:(NSString *)begin_time
@@ -49,9 +55,195 @@
                    is_heart:(NSString *)is_heart
                    latitude:(NSString *)latitude
                   longitude:(NSString *)longitude
-                      image:(NSString *)image
+                      image:(NSArray *)image
                       block:(void(^)(NSDictionary *dict))dict
                     failure:(void(^)())failure;
+
+/**获取桌子列表
+ * @token  用户token
+ * @lon  自己的经度
+ * @lat  自己的纬度
+ * @position_lon  筛选位置的经度
+ * @position_lat  筛选位置的纬度
+ * @activity 活动id
+ * @begin_time  开始时间
+ * @position   地址id
+ * @page 页数
+ */
++ (void)getDeskListsWithToken:(NSString *)token
+                   activity:(NSString *)activity
+                       page:(NSInteger)page
+                         lat:(NSString *)lat
+                         lon:(NSString *)lon
+                 position_lat:(NSString *)position_lat
+                 position_lon:(NSString *)position_lon
+                 begin_time:(NSString *)begin_time
+                      block:(void(^)(NSDictionary *dict))dict
+                    failure:(void(^)())failure;
+
+/**获取要参加的桌子列表（参加）
+ * @token  用户token
+ * @lat 纬度
+ * @lon  经度
+ * @page 页数
+ */
++ (void)getJoinedDeskWithToken:(NSString *)token
+                         lat:(NSString *)lat
+                         lon:(NSString *)lon
+                        block:(void(^)(NSDictionary *dict))dict
+                      failure:(void(^)())failure;
+/**获取关注的桌子列表（感兴趣）
+ * @token  用户token
+ * @lat 纬度
+ * @lon  经度
+ * @page 页数
+ */
++ (void)getInterestedDeskWithToken:(NSString *)token
+                          lat:(NSString *)lat
+                          lon:(NSString *)lon
+                         block:(void(^)(NSDictionary *dict))dict
+                       failure:(void(^)())failure;
+
+/**获取banner
+ * @token  用户token
+ */
++ (void)headerBannerWithToken:(NSString *)token
+                        block:(void(^)(NSDictionary *dict))dict
+                      failure:(void(^)())failure;
+
+/**获取桌子地图
+ * @token  用户token
+ * @lat 经度
+ * @lon 纬度
+ * @range   范围（米）
+ */
++ (void)getDeskMapRangeWithToken:(NSString *)token
+                             lat:(NSString *)lat
+                             lon:(NSString *)lon
+                           range:(NSString *)range
+                           block:(void(^)(NSDictionary *dict))dict
+                         failure:(void(^)())failure;
+
+/**获取桌子详情
+ * @token  用户token
+ * @tid 桌子id
+ */
++ (void)getDeskDetailInfoWithToken:(NSString *)token
+                               tid:(NSString *)tid
+                             block:(void(^)(NSDictionary *dict))dict
+                           failure:(void(^)())failure;
+
+/**桌主签到桌子
+ * @token  用户token
+ * @tid 桌子id
+ * @lat
+ * @lon
+ */
++ (void)hosterSigninDeskWithToken:(NSString *)token
+                              tid:(NSString *)tid
+                              lat:(NSString *)lat
+                              lon:(NSString *)lon
+                             block:(void(^)(NSDictionary *dict))dict
+                           failure:(void(^)())failure;
+
+/**申请加入桌子
+ * @token  用户token
+ * @tid 桌子id
+ * @t_uid  桌子创建人id
+ */
++ (void)applyJoinDeskWithToken:(NSString *)token
+                              tid:(NSString *)tid
+                              t_uid:(NSString *)t_uid
+                            block:(void(^)(NSDictionary *dict))dict
+                          failure:(void(^)())failure;
+
+/**用户通过加入桌子
+ * @token  用户token
+ * @tid 桌子id
+ * @t_uid  桌子创建人id
+ */
++ (void)userAcceptJoinDeskWithToken:(NSString *)token
+                           tid:(NSString *)tid
+                         t_uid:(NSString *)t_uid
+                         block:(void(^)(NSDictionary *dict))dict
+                       failure:(void(^)())failure;
+/**参与者签到桌子
+ * @token  用户token
+ * @tid 桌子id
+ * @t_uid  桌子创建人id
+ */
++ (void)othersSigninDeskWithToken:(NSString *)token
+                                tid:(NSString *)tid
+                              t_uid:(NSString *)t_uid
+                              block:(void(^)(NSDictionary *dict))dict
+                            failure:(void(^)())failure;
+
+#pragma mark  ------------- 消息 -- - ----
+/** 获取用户未读消息条数
+ * @token
+ */
++ (void)getMessageNumWithToken:(NSString *)token
+                         block:(void(^)(NSDictionary *dict))dict
+                       failure:(void(^)())failure;
+
+/** 获取用户消息列表
+ * @token
+ */
++ (void)getMessageListsWithToken:(NSString *)token
+                         block:(void(^)(NSDictionary *dict))dict
+                       failure:(void(^)())failure;
+
+/** 获取用户具体的消息
+ * @token
+ * @mid 消息类型id
+ * @tid 桌子id
+ */
++ (void)getMessageContentWithToken:(NSString *)token
+                              mid:(NSString *)mid
+                               tid:(NSString *)tid
+                         block:(void(^)(NSDictionary *dict))dict
+                       failure:(void(^)())failure;
+
+/** 用户删除消息
+ * @token
+ */
++ (void)deleteMessageWithToken:(NSString *)token
+                           mid:(NSString *)mid
+                         block:(void(^)(NSDictionary *dict))dict
+                       failure:(void(^)())failure;
+
+/** 获取用户充值信息
+ * @token
+ */
++ (void)getUserRechargeInfoWithToken:(NSString *)token
+                         block:(void(^)(NSDictionary *dict))dict
+                       failure:(void(^)())failure;
+
+
+/** 获取打赏记录
+ * @token
+ */
++ (void)getRewardRecordWithToken:(NSString *)token
+                               block:(void(^)(NSDictionary *dict))dict
+                             failure:(void(^)())failure;
+
+/** 获取他人打赏记录
+ * @token
+ * @fid
+ */
++ (void)getOthersRewardRecordWithToken:(NSString *)token
+                                   fid:(NSString *)fid
+                           block:(void(^)(NSDictionary *dict))dict
+                         failure:(void(^)())failure;
+
+/** 获取标签列表
+ * @token
+ */
++ (void)getUserLabelListsWithToken:(NSString *)token
+                                 block:(void(^)(NSDictionary *dict))dict
+                               failure:(void(^)())failure;
+
+
 
 #pragma mark  ------------- 地址 -- - ----
 

@@ -10,16 +10,21 @@
 #import "LSCreateDeskTableViewCell.h"
 #import "LSManageAddressVC.h"
 #import "LSRecommendAddressVC.h"
+//#import "DDEditAddrViewController.h"
+#import "LSCreatDeskEntity.h"
 
-@interface LSCreateDeskVC ()<UITableViewDelegate,UITableViewDataSource>
+@interface LSCreateDeskVC ()<UITableViewDelegate,UITableViewDataSource,LSUpLoadImageManagerDelegate>{
+    BOOL isExpandPhotoCell;
+}
 @property (nonatomic, strong)UITableView    *tableview;
 @property (nonatomic, strong)UIButton       *btn_createDesk;
 @property (nonatomic, strong)NSMutableArray *label_array;
 @property (nonatomic, strong)LSRecommendAddressVC *recommendVC;
 @property (nonatomic, strong)LSManageAddressVC    *manageAddressVC;
-
+@property (nonatomic, strong)NSMutableArray *photosArray;
+@property (nonatomic, strong)LSCreatDeskEntity  *requestEntity;
 @end
-
+static NSString *cellId = @"cellId";
 @implementation LSCreateDeskVC
 
 -(void)viewWillAppear:(BOOL)animated{
@@ -35,9 +40,12 @@
 }
 
 - (void)loadData {
+    _photosArray = [NSMutableArray array];
     
+    //创建数据
+    _requestEntity = [[LSCreatDeskEntity alloc] init];
     NSArray *labelArr = @[@"KTV",@"咖啡厅",@"家",@"公司",@"酒吧",@"球场",@"夜店",@"餐厅",@"夜总会",@"公园",@"水吧",@"俱乐部",@"茶馆"];
-    _label_array = [NSMutableArray arrayWithArray:labelArr];
+    _requestEntity.labels = labelArr;
     [self.tableview reloadData];
 }
 
@@ -52,7 +60,7 @@
 
 - (void)setupViews {
     WeakSelf(weakSelf);
-
+    
     [self.view addSubview:self.tableview];
     [self.view addSubview:self.btn_createDesk];
     [_btn_createDesk mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -76,6 +84,7 @@
         _tableview.estimatedSectionFooterHeight = 0;
         _tableview.showsVerticalScrollIndicator = NO;
         _tableview.separatorStyle = UITableViewCellSeparatorStyleNone;
+        [_tableview registerClass:[LSCreateDeskTableViewCell class] forCellReuseIdentifier:cellId];
     }
     return _tableview;
 }
@@ -111,7 +120,7 @@
 
 // 创建桌子
 - (void)didSelectedToCreateDesk:(UIButton *)sender {
-    
+
 }
 
 
@@ -134,19 +143,26 @@
             if (testHeight || testHeight != 0) {
                 return testHeight;
             }
-            if (_label_array.count <= 4) {
+            if (_requestEntity.labels.count <= 4) {
                 return DDFitHeight(210.f);
             }
-            if (_label_array.count > 4) {
+            if (_requestEntity.labels.count > 4) {
                 return DDFitHeight(270.f);
             }
-
+            
         } break;
         case 2:{
             return DDFitHeight(210.f);
         } break;
         case 3:{
-            return DDFitHeight(190.f);
+            
+            if (_requestEntity.Images.count < 4) {
+                return DDFitHeight(190.f);
+            }
+            else {
+                return DDFitHeight(275.f);
+            }
+            
         } break;
         case 4:{
             return DDFitHeight(70.f);
@@ -160,7 +176,7 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     
     if (section== 0 || section == 1 || section == 2 || section == 3 || section == 4) {
-        return DDFitHeight(5.f);
+        return DDFitHeight(10.f);
     }
     return 0.000001;
 }
@@ -168,13 +184,14 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
     
     if (section == 4) {
-        return DDFitHeight(5.f);
+        return DDFitHeight(10.f);
     }
     return 0.000001;
 }
 static CGFloat testHeight;
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *cellId = @"cell";
+    
     LSCreateDeskTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellId];
     if (!cell) {
         cell = [[LSCreateDeskTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellId];
@@ -185,8 +202,6 @@ static CGFloat testHeight;
         } break;
         case 1:{
             cell.style = LSCreateCellSytleTimeAndAddress;
-            // 造标签数据
-            [cell updateWithObj:_label_array];
         } break;
         case 2:{
             cell.style = LSCreateCellSytleMembersEstimatePerCapita;
@@ -200,6 +215,9 @@ static CGFloat testHeight;
         default:
             break;
     }
+    
+    [cell updateWithObj:_requestEntity];
+    
     __block LSCreateDeskTableViewCell *blockCell = cell;
     cell.onClickBlcok = ^(NSInteger index) {
         switch (index) {
@@ -221,9 +239,16 @@ static CGFloat testHeight;
     
     cell.expandMoreBlcok = ^(CGFloat final_height) {
         // 根据 final_height 展开全部标签
-
         testHeight = final_height;
         [self.tableview reloadSections:[[NSIndexSet alloc] initWithIndex:1] withRowAnimation:UITableViewRowAnimationAutomatic];
+    };
+
+    cell.selectPhotos = ^(LSCDPhotoIV *iv_photo) {
+        [LSUPLOAD_IMAGE showActionSheetInFatherViewController:self delegate:self];
+    };
+    cell.deleteUpdate = ^(NSInteger index) {
+        [_requestEntity.Images removeObjectAtIndex:index];
+        [self.tableview reloadSections:[[NSIndexSet alloc] initWithIndex:3] withRowAnimation:UITableViewRowAnimationAutomatic];
     };
     return cell;
 }
@@ -233,11 +258,19 @@ static CGFloat testHeight;
 }
 
 
+#pragma mark - LSUpLoadImageManagerDelegate
+- (void)uploadImageToServerWithImage:(UIImage *)image {
+    [_requestEntity.Images addObject:image];
+    [self.tableview reloadSections:[[NSIndexSet alloc] initWithIndex:3] withRowAnimation:UITableViewRowAnimationAutomatic];
+    
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-
+    
 }
 
 
 
 @end
+

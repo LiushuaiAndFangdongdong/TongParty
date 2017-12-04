@@ -68,6 +68,26 @@
         failure();
     }];
 }
+
+/**上传相册*/
++ (void)uploadUserAlbumWithToken:(NSString *)token images:(NSArray *)images block:(void(^)(NSDictionary *dict))dict failure:(void(^)())failure{
+    
+    NSMutableDictionary *md = [NSMutableDictionary dictionary];
+    [self setWithMutableDict:md key:@"token" value:token];
+    
+    [self uploadMultiImageWithAction:kTJUserUploadAlbumAPI params:md images:images success:^(DDResponseModel *result) {
+        if (result.status.integerValue == kDDResponseStateSuccess) {
+            dict(result.data);
+        } else {
+            failure();
+        }
+        [MBProgressHUD showMessage:result.msg_cn toView:[UIApplication sharedApplication].keyWindow];
+    } fail:^{
+        //
+    }];
+    
+}
+
 //用户详情页
 + (void)getUserDetailInfoWithToken:(NSString *)token block:(void(^)(NSDictionary *dict))dict failure:(void(^)())failure{
     NSMutableDictionary *md = [NSMutableDictionary dictionary];
@@ -203,6 +223,7 @@
 /**创建桌子*/
 + (void)createDeskWithToken:(NSString *)token
                    activity:(NSString *)activity
+                    custom:(NSString *)custom
                       title:(NSString *)title
                       place:(NSString *)place
                  begin_time:(NSString *)begin_time
@@ -213,13 +234,14 @@
                    is_heart:(NSString *)is_heart
                    latitude:(NSString *)latitude
                   longitude:(NSString *)longitude
-                      image:(NSString *)image
+                      image:(NSArray *)image
                       block:(void(^)(NSDictionary *dict))dict
                     failure:(void(^)())failure{
     
     NSMutableDictionary *md = [NSMutableDictionary dictionary];
     [self setWithMutableDict:md key:@"token" value:token];
     [self setWithMutableDict:md key:@"activity" value:activity];
+    [self setWithMutableDict:md key:@"custom" value:custom];
     [self setWithMutableDict:md key:@"title" value:title];
     [self setWithMutableDict:md key:@"place" value:place];
     [self setWithMutableDict:md key:@"begin_time" value:begin_time];
@@ -230,9 +252,261 @@
     [self setWithMutableDict:md key:@"is_heart" value:is_heart];
     [self setWithMutableDict:md key:@"latitude" value:latitude];
     [self setWithMutableDict:md key:@"longitude" value:longitude];
-    [self setWithMutableDict:md key:@"image" value:image];
     
-    [self postWithAction:kTJCreateDeskAPI params:md type:kDDHttpResponseTypeJson block:^(DDResponseModel *result) {
+//    UIImage *image1 = [
+    
+//    NSArray *images =
+    
+    [self uploadMultiImageWithAction:kTJCreateDeskAPI params:md images:image success:^(DDResponseModel *result) {
+        if (result.status.integerValue == kDDResponseStateSuccess) {
+            dict(result.data);
+        } else {
+            failure();
+        }
+        [MBProgressHUD showMessage:result.msg_cn toView:[UIApplication sharedApplication].keyWindow];
+    } fail:^{
+        //
+    }];
+    
+}
+
+/**获取桌子列表*/
++ (void)getDeskListsWithToken:(NSString *)token
+                     activity:(NSString *)activity
+                         page:(NSInteger)page
+                          lat:(NSString *)lat
+                          lon:(NSString *)lon
+                 position_lat:(NSString *)position_lat
+                 position_lon:(NSString *)position_lon
+                   begin_time:(NSString *)begin_time
+                        block:(void(^)(NSDictionary *dict))dict
+                      failure:(void(^)())failure;{
+    
+    NSMutableDictionary *md = [NSMutableDictionary dictionary];
+    [self setWithMutableDict:md key:@"token" value:token];
+    [self setWithMutableDict:md key:@"activity" value:activity];
+    [self setWithMutableDict:md key:@"lat" value:lat];
+    [self setWithMutableDict:md key:@"lon" value:lon];
+    [self setWithMutableDict:md key:@"position_lat" value:position_lat];
+    [self setWithMutableDict:md key:@"position_lon" value:position_lon];
+    [self setWithMutableDict:md key:@"begin_time" value:begin_time];
+    [self setWithMutableDict:md key:@"page" value:@(page)];
+    
+    [self postWithAction:kTJGetDeskListsAPI params:md type:kDDHttpResponseTypeJson block:^(DDResponseModel *result) {
+        if (result.status.integerValue == kDDResponseStateSuccess) {
+            dict(result.data);
+        } else {
+            failure();
+        }
+        [MBProgressHUD showMessage:result.msg_cn toView:[UIApplication sharedApplication].keyWindow];
+    } failure:^{
+        //
+    }];
+}
+
+/**获取要参加的桌子列表（参加）
+ * @token  用户token
+ * @lat 纬度
+ * @lon  经度
+ * @page 页数
+ */
++ (void)getJoinedDeskWithToken:(NSString *)token
+                           lat:(NSString *)lat
+                           lon:(NSString *)lon
+                         block:(void(^)(NSDictionary *dict))dict
+                       failure:(void(^)())failure{
+    NSMutableDictionary *md = [NSMutableDictionary dictionary];
+    [self setWithMutableDict:md key:@"token" value:token];
+    [self setWithMutableDict:md key:@"lat" value:lat];
+    [self setWithMutableDict:md key:@"lon" value:lon];
+    
+    [self postWithAction:kTJGetJoinedDeskListsAPI params:md type:kDDHttpResponseTypeJson block:^(DDResponseModel *result) {
+        if (result.status.integerValue == kDDResponseStateSuccess) {
+            dict(result.data);
+        } else {
+            failure();
+        }
+        [MBProgressHUD showMessage:result.msg_cn toView:[UIApplication sharedApplication].keyWindow];
+    } failure:^{
+        //
+    }];
+}
+
+/**获取关注的桌子列表（感兴趣）
+ * @token  用户token
+ * @lat 纬度
+ * @lon  经度
+ * @page 页数
+ */
++ (void)getInterestedDeskWithToken:(NSString *)token
+                               lat:(NSString *)lat
+                               lon:(NSString *)lon
+                             block:(void(^)(NSDictionary *dict))dict
+                           failure:(void(^)())failure{
+    NSMutableDictionary *md = [NSMutableDictionary dictionary];
+    [self setWithMutableDict:md key:@"token" value:token];
+    [self setWithMutableDict:md key:@"lat" value:lat];
+    [self setWithMutableDict:md key:@"lon" value:lon];
+    
+    [self postWithAction:kTJGetInterestedDeskListsAPI params:md type:kDDHttpResponseTypeJson block:^(DDResponseModel *result) {
+        if (result.status.integerValue == kDDResponseStateSuccess) {
+            dict(result.data);
+        } else {
+            failure();
+        }
+        [MBProgressHUD showMessage:result.msg_cn toView:[UIApplication sharedApplication].keyWindow];
+    } failure:^{
+        //
+    }];
+}
+
+/**获取banner
+ * @token  用户token
+ */
++ (void)headerBannerWithToken:(NSString *)token
+                        block:(void(^)(NSDictionary *dict))dict
+                      failure:(void(^)())failure{
+    NSMutableDictionary *md = [NSMutableDictionary dictionary];
+    [self setWithMutableDict:md key:@"token" value:token];
+    [self postWithAction:kTJHeaderBannerAPI params:md type:kDDHttpResponseTypeJson block:^(DDResponseModel *result) {
+        if (result.status.integerValue == kDDResponseStateSuccess) {
+            dict(result.data);
+        } else {
+            failure();
+        }
+        [MBProgressHUD showMessage:result.msg_cn toView:[UIApplication sharedApplication].keyWindow];
+    } failure:^{
+        //
+    }];
+}
+
+/**获取桌子地图
+ * @token  用户token
+ * @lat 经度
+ * @lon 纬度
+ * @range   范围（米）
+ */
++ (void)getDeskMapRangeWithToken:(NSString *)token
+                             lat:(NSString *)lat
+                             lon:(NSString *)lon
+                           range:(NSString *)range
+                           block:(void(^)(NSDictionary *dict))dict
+                         failure:(void(^)())failure{
+    NSMutableDictionary *md = [NSMutableDictionary dictionary];
+    [self setWithMutableDict:md key:@"token" value:token];
+    [self setWithMutableDict:md key:@"lat" value:lat];
+    [self setWithMutableDict:md key:@"lon" value:lon];
+    [self setWithMutableDict:md key:@"range" value:range];
+    
+    [self postWithAction:kTJGetMapRangeDesksAPI params:md type:kDDHttpResponseTypeJson block:^(DDResponseModel *result) {
+        if (result.status.integerValue == kDDResponseStateSuccess) {
+            dict(result.data);
+        } else {
+            failure();
+        }
+        [MBProgressHUD showMessage:result.msg_cn toView:[UIApplication sharedApplication].keyWindow];
+    } failure:^{
+        //
+    }];
+}
+
+/**获取桌子详情
+ * @token  用户token
+ * @tid 桌子id
+ */
++ (void)getDeskDetailInfoWithToken:(NSString *)token
+                               tid:(NSString *)tid
+                             block:(void(^)(NSDictionary *dict))dict
+                           failure:(void(^)())failure{
+    NSMutableDictionary *md = [NSMutableDictionary dictionary];
+    [self setWithMutableDict:md key:@"token" value:token];
+    [self setWithMutableDict:md key:@"tid" value:tid];
+    
+    [self postWithAction:kTJDetailDeskInfoAPI params:md type:kDDHttpResponseTypeJson block:^(DDResponseModel *result) {
+        if (result.status.integerValue == kDDResponseStateSuccess) {
+            dict(result.data);
+        } else {
+            failure();
+        }
+        [MBProgressHUD showMessage:result.msg_cn toView:[UIApplication sharedApplication].keyWindow];
+    } failure:^{
+        //
+    }];
+}
+
+/**桌主签到桌子
+ * @token  用户token
+ * @tid 桌子id
+ * @lat
+ * @lon
+ */
++ (void)hosterSigninDeskWithToken:(NSString *)token
+                              tid:(NSString *)tid
+                              lat:(NSString *)lat
+                              lon:(NSString *)lon
+                            block:(void(^)(NSDictionary *dict))dict
+                          failure:(void(^)())failure{
+    NSMutableDictionary *md = [NSMutableDictionary dictionary];
+    [self setWithMutableDict:md key:@"token" value:token];
+    [self setWithMutableDict:md key:@"tid" value:tid];
+    [self setWithMutableDict:md key:@"lat" value:lat];
+    [self setWithMutableDict:md key:@"lon" value:lon];
+    
+    [self postWithAction:kTJHosterSignInAPI params:md type:kDDHttpResponseTypeJson block:^(DDResponseModel *result) {
+        if (result.status.integerValue == kDDResponseStateSuccess) {
+            dict(result.data);
+        } else {
+            failure();
+        }
+        [MBProgressHUD showMessage:result.msg_cn toView:[UIApplication sharedApplication].keyWindow];
+    } failure:^{
+        //
+    }];
+}
+
+/**申请加入桌子
+ * @token  用户token
+ * @tid 桌子id
+ * @t_uid  桌子创建人id
+ */
++ (void)applyJoinDeskWithToken:(NSString *)token
+                           tid:(NSString *)tid
+                         t_uid:(NSString *)t_uid
+                         block:(void(^)(NSDictionary *dict))dict
+                       failure:(void(^)())failure{
+    NSMutableDictionary *md = [NSMutableDictionary dictionary];
+    [self setWithMutableDict:md key:@"token" value:token];
+    [self setWithMutableDict:md key:@"tid" value:tid];
+    [self setWithMutableDict:md key:@"t_uid" value:t_uid];
+    
+    [self postWithAction:kTJApplyJoinInDeskAPI params:md type:kDDHttpResponseTypeJson block:^(DDResponseModel *result) {
+        if (result.status.integerValue == kDDResponseStateSuccess) {
+            dict(result.data);
+        } else {
+            failure();
+        }
+        [MBProgressHUD showMessage:result.msg_cn toView:[UIApplication sharedApplication].keyWindow];
+    } failure:^{
+        //
+    }];
+}
+
+/**用户通过加入桌子
+ * @token  用户token
+ * @tid 桌子id
+ * @t_uid  桌子创建人id
+ */
++ (void)userAcceptJoinDeskWithToken:(NSString *)token
+                                tid:(NSString *)tid
+                              t_uid:(NSString *)t_uid
+                              block:(void(^)(NSDictionary *dict))dict
+                            failure:(void(^)())failure{
+    NSMutableDictionary *md = [NSMutableDictionary dictionary];
+    [self setWithMutableDict:md key:@"token" value:token];
+    [self setWithMutableDict:md key:@"tid" value:tid];
+    [self setWithMutableDict:md key:@"t_uid" value:t_uid];
+    
+    [self postWithAction:kTJUserAcceptJoinDeskAPI params:md type:kDDHttpResponseTypeJson block:^(DDResponseModel *result) {
         if (result.status.integerValue == kDDResponseStateSuccess) {
             dict(result.data);
         } else {
@@ -243,6 +517,208 @@
         //
     }];
     
+}
+
+/**参与者签到桌子
+ * @token  用户token
+ * @tid 桌子id
+ * @t_uid  桌子创建人id
+ */
++ (void)othersSigninDeskWithToken:(NSString *)token
+                              tid:(NSString *)tid
+                            t_uid:(NSString *)t_uid
+                            block:(void(^)(NSDictionary *dict))dict
+                          failure:(void(^)())failure{
+    
+    NSMutableDictionary *md = [NSMutableDictionary dictionary];
+    [self setWithMutableDict:md key:@"token" value:token];
+    [self setWithMutableDict:md key:@"tid" value:tid];
+    [self setWithMutableDict:md key:@"t_uid" value:t_uid];
+    
+    [self postWithAction:kTJUserSignInDeskAPI params:md type:kDDHttpResponseTypeJson block:^(DDResponseModel *result) {
+        if (result.status.integerValue == kDDResponseStateSuccess) {
+            dict(result.data);
+        } else {
+            failure();
+        }
+        [MBProgressHUD showMessage:result.msg_cn toView:[UIApplication sharedApplication].keyWindow];
+    } failure:^{
+        //
+    }];
+}
+
+
+#pragma mark ---------------  消息  ------------
+
+/** 获取用户未读消息数量
+ * @token
+ */
++ (void)getMessageNumWithToken:(NSString *)token
+                         block:(void(^)(NSDictionary *dict))dict
+                       failure:(void(^)())failure{
+    NSMutableDictionary *md = [NSMutableDictionary dictionary];
+    [self setWithMutableDict:md key:@"token" value:token];
+    [self postWithAction:kTJUserMessageNumAPI params:md type:kDDHttpResponseTypeJson block:^(DDResponseModel *result) {
+        if (result.status.integerValue == kDDResponseStateSuccess) {
+            dict(result.data);
+        } else {
+            failure();
+        }
+        [MBProgressHUD showMessage:result.msg_cn toView:[UIApplication sharedApplication].keyWindow];
+    } failure:^{
+        //
+    }];
+}
+
+/** 获取用户消息列表
+ * @token
+ */
++ (void)getMessageListsWithToken:(NSString *)token
+                           block:(void(^)(NSDictionary *dict))dict
+                         failure:(void(^)())failure{
+    NSMutableDictionary *md = [NSMutableDictionary dictionary];
+    [self setWithMutableDict:md key:@"token" value:token];
+    [self postWithAction:kTJUserMessageListsAPI params:md type:kDDHttpResponseTypeJson block:^(DDResponseModel *result) {
+        if (result.status.integerValue == kDDResponseStateSuccess) {
+            dict(result.data);
+        } else {
+            failure();
+        }
+        [MBProgressHUD showMessage:result.msg_cn toView:[UIApplication sharedApplication].keyWindow];
+    } failure:^{
+        //
+    }];
+}
+
+/** 获取用户具体的消息
+ * @token
+ * @mid 消息类型id
+ * @tid 桌子id
+ */
++ (void)getMessageContentWithToken:(NSString *)token
+                               mid:(NSString *)mid
+                               tid:(NSString *)tid
+                             block:(void(^)(NSDictionary *dict))dict
+                           failure:(void(^)())failure{
+    NSMutableDictionary *md = [NSMutableDictionary dictionary];
+    [self setWithMutableDict:md key:@"token" value:token];
+    [self setWithMutableDict:md key:@"mid" value:mid];
+    [self setWithMutableDict:md key:@"tid" value:tid];
+    [self postWithAction:kTJUserMessageContentAPI params:md type:kDDHttpResponseTypeText block:^(DDResponseModel *result) {
+        if (result.status.integerValue == kDDResponseStateSuccess) {
+            dict(result.data);
+        } else {
+            failure();
+        }
+        [MBProgressHUD showMessage:result.msg_cn toView:[UIApplication sharedApplication].keyWindow];
+    } failure:^{
+        //
+    }];
+}
+
+/** 用户删除消息
+ * @token
+ */
++ (void)deleteMessageWithToken:(NSString *)token
+                           mid:(NSString *)mid
+                         block:(void(^)(NSDictionary *dict))dict
+                       failure:(void(^)())failure{
+    NSMutableDictionary *md = [NSMutableDictionary dictionary];
+    [self setWithMutableDict:md key:@"token" value:token];
+    [self setWithMutableDict:md key:@"mid" value:mid];
+    [self postWithAction:kTJUserDeleteMessageAPI params:md type:kDDHttpResponseTypeJson block:^(DDResponseModel *result) {
+        if (result.status.integerValue == kDDResponseStateSuccess) {
+            dict(result.data);
+        } else {
+            failure();
+        }
+        [MBProgressHUD showMessage:result.msg_cn toView:[UIApplication sharedApplication].keyWindow];
+    } failure:^{
+        //
+    }];
+}
+
+/** 获取用户充值信息
+ * @token
+ */
++ (void)getUserRechargeInfoWithToken:(NSString *)token
+                               block:(void(^)(NSDictionary *dict))dict
+                             failure:(void(^)())failure{
+    NSMutableDictionary *md = [NSMutableDictionary dictionary];
+    [self setWithMutableDict:md key:@"token" value:token];
+    [self postWithAction:kTJUserRechargeMessageAPI params:md type:kDDHttpResponseTypeJson block:^(DDResponseModel *result) {
+        if (result.status.integerValue == kDDResponseStateSuccess) {
+            dict(result.data);
+        } else {
+            failure();
+        }
+        [MBProgressHUD showMessage:result.msg_cn toView:[UIApplication sharedApplication].keyWindow];
+    } failure:^{
+        //
+    }];
+}
+
+/** 获取打赏记录
+ * @token
+ */
++ (void)getRewardRecordWithToken:(NSString *)token
+                           block:(void(^)(NSDictionary *dict))dict
+                         failure:(void(^)())failure{
+    NSMutableDictionary *md = [NSMutableDictionary dictionary];
+    [self setWithMutableDict:md key:@"token" value:token];
+    [self postWithAction:kTJUserRewardRecordAPI params:md type:kDDHttpResponseTypeJson block:^(DDResponseModel *result) {
+        if (result.status.integerValue == kDDResponseStateSuccess) {
+            dict(result.data);
+        } else {
+            failure();
+        }
+        [MBProgressHUD showMessage:result.msg_cn toView:[UIApplication sharedApplication].keyWindow];
+    } failure:^{
+        //
+    }];
+}
+
+/** 获取他人打赏记录
+ * @token
+ * @fid
+ */
++ (void)getOthersRewardRecordWithToken:(NSString *)token
+                                   fid:(NSString *)fid
+                                 block:(void(^)(NSDictionary *dict))dict
+                               failure:(void(^)())failure{
+    NSMutableDictionary *md = [NSMutableDictionary dictionary];
+    [self setWithMutableDict:md key:@"token" value:token];
+    [self setWithMutableDict:md key:@"fid" value:fid];
+    [self postWithAction:kTJUserRewardOthersRecordAPI params:md type:kDDHttpResponseTypeJson block:^(DDResponseModel *result) {
+        if (result.status.integerValue == kDDResponseStateSuccess) {
+            dict(result.data);
+        } else {
+            failure();
+        }
+        [MBProgressHUD showMessage:result.msg_cn toView:[UIApplication sharedApplication].keyWindow];
+    } failure:^{
+        //
+    }];
+}
+
+/** 获取标签列表
+ * @token
+ */
++ (void)getUserLabelListsWithToken:(NSString *)token
+                             block:(void(^)(NSDictionary *dict))dict
+                           failure:(void(^)())failure{
+    NSMutableDictionary *md = [NSMutableDictionary dictionary];
+    [self setWithMutableDict:md key:@"token" value:token];
+    [self postWithAction:kTJUserLabelListsAPI params:md type:kDDHttpResponseTypeJson block:^(DDResponseModel *result) {
+        if (result.status.integerValue == kDDResponseStateSuccess) {
+            dict(result.data);
+        } else {
+            failure();
+        }
+        [MBProgressHUD showMessage:result.msg_cn toView:[UIApplication sharedApplication].keyWindow];
+    } failure:^{
+        //
+    }];
 }
 
 @end

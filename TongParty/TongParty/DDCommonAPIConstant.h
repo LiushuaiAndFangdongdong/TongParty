@@ -29,6 +29,8 @@ UIKIT_EXTERN NSString *const kTJUserChangePasswordAPI;
 /** 忘记密码*/
 UIKIT_EXTERN NSString *const kTJUserFindPasswordAPI;
 
+/** 上传相册 */
+UIKIT_EXTERN NSString *const kTJUserUploadAlbumAPI;
 
 
 /** 添加地址*/
@@ -45,6 +47,65 @@ UIKIT_EXTERN NSString *const kTJSetDefaultAddressAPI;
 
 /** 创建桌子*/
 UIKIT_EXTERN NSString *const kTJCreateDeskAPI;
+/** 获取桌子列表*/
+UIKIT_EXTERN NSString *const kTJGetDeskListsAPI;
+/** 获取要参加的桌子列表（参加）*/
+UIKIT_EXTERN NSString *const kTJGetJoinedDeskListsAPI;
+/** 获取关注的桌子列表（感兴趣）*/
+UIKIT_EXTERN NSString *const kTJGetInterestedDeskListsAPI;
+/** banner*/
+UIKIT_EXTERN NSString *const kTJHeaderBannerAPI;
+/** 获取桌子地图(即一定范围内的活动)*/
+UIKIT_EXTERN NSString *const kTJGetMapRangeDesksAPI;
+/** 获取桌子详情*/
+UIKIT_EXTERN NSString *const kTJDetailDeskInfoAPI;
+/** 桌主签到桌子*/
+UIKIT_EXTERN NSString *const kTJHosterSignInAPI;
+/** 申请加入桌子*/
+UIKIT_EXTERN NSString *const kTJApplyJoinInDeskAPI;
+/** 用户通过加入桌子*/
+UIKIT_EXTERN NSString *const kTJUserAcceptJoinDeskAPI;
+/** 参与者签到桌子*/
+UIKIT_EXTERN NSString *const kTJUserSignInDeskAPI;
+/** 参与者退出桌子*/
+UIKIT_EXTERN NSString *const kTJUserSignOutDeskAPI;
+/** 桌主审核参与者*/
+UIKIT_EXTERN NSString *const kTJHosterVerifyOthersAPI;
+/** 用户关注桌子*/
+UIKIT_EXTERN NSString *const kTJUserCaredDeskAPI;
+/** 用户取消关注桌子*/
+UIKIT_EXTERN NSString *const kTJUserUncaredDeskAPI;
+/** 用户关注桌子列表*/
+UIKIT_EXTERN NSString *const kTJUserCaredDeskListsAPI;
+/** 桌子感兴趣的人*/
+UIKIT_EXTERN NSString *const kTJDeskInterestedPeopleAPI;
+/** 桌子申请的用户*/
+UIKIT_EXTERN NSString *const kTJDeskApplyPeopleAPI;
+/** 邀请好友页面*/
+UIKIT_EXTERN NSString *const kTJDeskInviteFriedAPI;
+/** 邀请好友加入桌子*/
+UIKIT_EXTERN NSString *const kTJInviteFriedsJoinDeskAPI;
+/** 桌主发送公告*/
+UIKIT_EXTERN NSString *const kTJHosterSendNoticeAPI;
+
+
+
+/** 获取用户未读消息条数*/
+UIKIT_EXTERN NSString *const kTJUserMessageNumAPI;
+/** 获取用户消息列表*/
+UIKIT_EXTERN NSString *const kTJUserMessageListsAPI;
+/** 获取用户消息具体内容*/
+UIKIT_EXTERN NSString *const kTJUserMessageContentAPI;
+/** 获取删除消息*/
+UIKIT_EXTERN NSString *const kTJUserDeleteMessageAPI;
+/** 获取用户充值消息*/
+UIKIT_EXTERN NSString *const kTJUserRechargeMessageAPI;
+/** 获取打赏记录*/
+UIKIT_EXTERN NSString *const kTJUserRewardRecordAPI;
+/** 获取他人打赏记录*/
+UIKIT_EXTERN NSString *const kTJUserRewardOthersRecordAPI;
+/** 获取标签列表*/
+UIKIT_EXTERN NSString *const kTJUserLabelListsAPI;
 
 
 

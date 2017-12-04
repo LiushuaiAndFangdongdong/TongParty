@@ -22,8 +22,6 @@ typedef NS_ENUM(NSInteger, DDHttpResponseType) {
 
 +(void)postWithUrl:(NSString *)url action:(NSString *)action params:(NSDictionary *)params type:(DDHttpResponseType)type block:(void (^)(id))block failure:(void(^)())failure;
 
-+(void)postWithUrlByself:(NSString *)url params:(NSDictionary *)params type:(DDHttpResponseType)type block:(void (^)(id))block failure:(void(^)())failure;
-
 + (void)uploadImageWithUrl:(NSString *)url action:(NSString *)action params:(NSDictionary *)params image:(UIImage *)image success:(void (^)(id responseObject))success fail:(void (^)())fail;
 
 //多图上传

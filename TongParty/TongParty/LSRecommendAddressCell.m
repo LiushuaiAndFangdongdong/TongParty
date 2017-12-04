@@ -12,8 +12,16 @@
 
 @property (nonatomic, strong)UIImageView      *iv_header;
 @property (nonatomic, strong)UILabel          *lbl_addressType;
-@property (nonatomic, strong)UIImageView      *iv_star_highLight;
-@property (nonatomic, strong)UIImageView      *iv_star_normal;
+@property (nonatomic, strong)UIImageView      *iv_star_highLight1;
+@property (nonatomic, strong)UIImageView      *iv_star_highLight2;
+@property (nonatomic, strong)UIImageView      *iv_star_highLight3;
+@property (nonatomic, strong)UIImageView      *iv_star_highLight4;
+@property (nonatomic, strong)UIImageView      *iv_star_highLight5;
+@property (nonatomic, strong)UIImageView      *iv_star_normal1;
+@property (nonatomic, strong)UIImageView      *iv_star_normal2;
+@property (nonatomic, strong)UIImageView      *iv_star_normal3;
+@property (nonatomic, strong)UIImageView      *iv_star_normal4;
+@property (nonatomic, strong)UIImageView      *iv_star_normal5;
 @property (nonatomic, strong)UILabel          *lbl_line;
 @property (nonatomic, strong)UILabel          *lbl_pricePer;
 @property (nonatomic, strong)UILabel          *lbl_road_distance;
@@ -54,28 +62,88 @@
     _lbl_addressType.textColor = kBlackColor;
     _lbl_addressType.font = DDFitFont(15.f);
     
-    _iv_star_normal = [UIImageView new];
-    [self.contentView addSubview:self.iv_star_normal];
-    [_iv_star_normal mas_makeConstraints:^(MASConstraintMaker *make) {
+    _iv_star_normal1 = [UIImageView new];
+    [self.contentView addSubview:self.iv_star_normal1];
+    [_iv_star_normal1 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.height.mas_equalTo(DDFitHeight(10.f));
         make.left.equalTo(_lbl_addressType);
         make.top.equalTo(_lbl_addressType.mas_bottom).offset(DDFitHeight(5.f));
-        make.width.mas_equalTo(DDFitWidth(60.f));
+        make.width.mas_equalTo(DDFitHeight(10.f));
     }];
-    _iv_star_normal.backgroundColor = kBlackColor;
+    _iv_star_normal1.image = kImage(@"merchant_star_unlight");
     
-    _iv_star_highLight = [UIImageView new];
-    [self.contentView addSubview:self.iv_star_highLight];
-    [_iv_star_highLight mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.equalTo(_iv_star_normal);
+    _iv_star_normal2 = [UIImageView new];
+    [self.contentView addSubview:self.iv_star_normal2];
+    [_iv_star_normal2 mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.height.width.top.equalTo(_iv_star_normal1);
+        make.left.equalTo(_iv_star_normal1.mas_right).offset(2.f);
     }];
-    _iv_star_highLight.backgroundColor = kBlackColor;
+    _iv_star_normal2.image = kImage(@"merchant_star_unlight");
+    
+    _iv_star_normal3 = [UIImageView new];
+    [self.contentView addSubview:self.iv_star_normal3];
+    [_iv_star_normal3 mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.height.width.top.equalTo(_iv_star_normal2);
+        make.left.equalTo(_iv_star_normal2.mas_right).offset(2.f);
+    }];
+    _iv_star_normal3.image = kImage(@"merchant_star_unlight");
+    
+    _iv_star_normal4 = [UIImageView new];
+    [self.contentView addSubview:self.iv_star_normal4];
+    [_iv_star_normal4 mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.height.width.top.equalTo(_iv_star_normal3);
+        make.left.equalTo(_iv_star_normal3.mas_right).offset(2.f);
+    }];
+    _iv_star_normal4.image = kImage(@"merchant_star_unlight");
+    
+    _iv_star_normal5 = [UIImageView new];
+    [self.contentView addSubview:self.iv_star_normal5];
+    [_iv_star_normal5 mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.height.width.top.equalTo(_iv_star_normal4);
+        make.left.equalTo(_iv_star_normal4.mas_right).offset(2.f);
+    }];
+    _iv_star_normal5.image = kImage(@"merchant_star_unlight");
+    
+    _iv_star_highLight1 = [UIImageView new];
+    [self.contentView addSubview:self.iv_star_highLight1];
+    [_iv_star_highLight1 mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo(_iv_star_normal1);
+    }];
+    _iv_star_highLight1.image = kImage(@"merchant_star_light");
+    
+    _iv_star_highLight2 = [UIImageView new];
+    [self.contentView addSubview:self.iv_star_highLight2];
+    [_iv_star_highLight2 mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo(_iv_star_normal2);
+    }];
+    _iv_star_highLight2.image = kImage(@"merchant_star_light");
+    
+    _iv_star_highLight3 = [UIImageView new];
+    [self.contentView addSubview:self.iv_star_highLight3];
+    [_iv_star_highLight3 mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo(_iv_star_normal3);
+    }];
+    _iv_star_highLight3.image = kImage(@"merchant_star_light");
+    
+    _iv_star_highLight4 = [UIImageView new];
+    [self.contentView addSubview:self.iv_star_highLight4];
+    [_iv_star_highLight4 mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo(_iv_star_normal4);
+    }];
+    _iv_star_highLight4.image = kImage(@"merchant_star_light");
+    
+    _iv_star_highLight5 = [UIImageView new];
+    [self.contentView addSubview:self.iv_star_highLight5];
+    [_iv_star_highLight5 mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo(_iv_star_normal5);
+    }];
+    _iv_star_highLight5.image = kImage(@"merchant_star_light");
     
     _lbl_pricePer = [UILabel new];
     [self.contentView addSubview:self.lbl_pricePer];
     [_lbl_pricePer mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.height.equalTo(_iv_star_highLight);
-        make.top.equalTo(_iv_star_highLight.mas_bottom).offset(5.f);
+        make.left.height.equalTo(_iv_star_highLight1);
+        make.top.equalTo(_iv_star_highLight1.mas_bottom).offset(5.f);
     }];
     _lbl_pricePer.textColor = kCommonGrayTextColor;
     _lbl_pricePer.text = @"¥ 96/人";
@@ -109,7 +177,7 @@
         make.left.equalTo(_lbl_line);
         make.height.width.mas_equalTo(DDFitHeight(10.f));
     }];
-    _iv_BusinessHours.backgroundColor = kBlueColor;
+    _iv_BusinessHours.image = kImage(@"merchant_store");
     
     _lbl_BusinessHours = [UILabel new];
     [self.contentView addSubview:self.lbl_BusinessHours];
@@ -120,6 +188,21 @@
     _lbl_BusinessHours.text = @"营业时间10:00-22:00";
     _lbl_BusinessHours.textColor = kCommonGrayTextColor;
     _lbl_BusinessHours.font = DDFitFont(12.f);
+    
+    
+    //NSArray *normal_star_array = @[_iv_star_normal1,_iv_star_normal2,_iv_star_normal3,_iv_star_normal4,_iv_star_normal5];
+    NSArray *hightlight_star_array = @[_iv_star_highLight1,_iv_star_highLight2,_iv_star_highLight3,_iv_star_highLight4,_iv_star_highLight5];
+    for (UIImageView *iv_star in hightlight_star_array) {
+        iv_star.hidden = YES;
+    }
+    
+    // starCount -- 评分对应点亮星星个数
+    for (int starCount = 0; starCount < hightlight_star_array.count; starCount ++) {
+        if (starCount <= 3) {
+            UIImageView *iv = hightlight_star_array[starCount];
+            iv.hidden = NO;
+        }
+    }
 }
 
 
@@ -162,7 +245,8 @@
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
-
+    
 }
 
 @end
+

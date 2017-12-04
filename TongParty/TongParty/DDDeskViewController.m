@@ -54,7 +54,7 @@
     
     // 4  配置基本设置  可采用链式编程模式进行设置
     [self.segmentVC.segmentBar updateWithConfig:^(LLSegmentBarConfig *config) {
-        config.itemNormalColor([UIColor blackColor]).itemSelectColor([UIColor redColor]).indicatorColor([UIColor greenColor]);
+        config.itemNormalColor([UIColor blackColor]).itemSelectColor(kBgGreenColor).indicatorColor(kBgGreenColor);
     }];
 }
 
@@ -64,7 +64,7 @@
         [joinVC willMoveToParentViewController:self];
         [self addChildViewController:joinVC];
         [self.view addSubview:joinVC.view];
-        joinVC.view.frame = CGRectMake(0, kNavigationBarHeight, kScreenWidth, kScreenHeight - kNavigationBarHeight - kTabBarHeight);
+        joinVC.view.frame = CGRectMake(0, 0, kScreenWidth, kScreenHeight - kTabBarHeight);
         _joinedVc = joinVC;
     }
     return _joinedVc;
@@ -76,7 +76,7 @@
         [intertedVC willMoveToParentViewController:self];
         [self addChildViewController:intertedVC];
         [self.view addSubview:intertedVC.view];
-        intertedVC.view.frame = CGRectMake(0, kNavigationBarHeight, kScreenWidth, kScreenHeight - kNavigationBarHeight- kTabBarHeight);
+        intertedVC.view.frame = CGRectMake(0, 0, kScreenWidth, kScreenHeight - kTabBarHeight);
         _interestedVc = intertedVC;
     }
     return _interestedVc;

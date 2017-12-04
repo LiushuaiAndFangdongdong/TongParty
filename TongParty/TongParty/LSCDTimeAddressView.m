@@ -8,7 +8,7 @@
 
 #import "LSCDTimeAddressView.h"
 #import "LSCDTitleItemView.h"
-
+#import "LSCreatDeskEntity.h"
 
 @interface LSCDTimeAddressView ()
 @property (nonatomic, strong)LSCDTitleItemView *ti_startTime;
@@ -28,6 +28,7 @@
 @property (nonatomic, assign)CGFloat           final_height;
 @property (nonatomic, assign)CGFloat           min_height;
 @property (nonatomic, strong)NSMutableArray    *array_btns; // 标签按钮容器
+@property (nonatomic, strong)LSCreatDeskEntity    *entity; // 标签按钮容器
 @end
 static BOOL isShowAllLabels = NO;
 static NSInteger baseTag = 88888;
@@ -199,16 +200,20 @@ static NSInteger label_baseTag = 99999;
 }
 
 - (void)expandMore:(UITapGestureRecognizer *)tap {
+    _entity.begin_time = _tf_startTime_content.text;
+    _entity.place = _tf_address_content.text;
     
     if (isShowAllLabels) {
         isShowAllLabels = NO;
         _lbl_expandMore.text = @"收起全部";
+        _iv_expandMore.image = kImage(@"desk_addr_less");
         if (_expandMoreBlcok) {
             _expandMoreBlcok(self.min_height);
         }
     } else {
         isShowAllLabels = YES;
         _lbl_expandMore.text = @"展开全部";
+        _iv_expandMore.image = kImage(@"desk_addr_more");
         if (_expandMoreBlcok) {
             _expandMoreBlcok(self.final_height);
         }
@@ -216,8 +221,10 @@ static NSInteger label_baseTag = 99999;
 }
 
 - (void)putDataToViewWith:(id)obj returnHeight:(void (^)(CGFloat))height{
-    
-    NSArray *array = (NSArray *)obj;
+    self.entity = (LSCreatDeskEntity *)obj;
+    _tf_startTime_content.text = _entity.begin_time;
+    _tf_address_content.text = _entity.place;
+    NSArray *array = _entity.labels;
     if (array.count <= 4) {
         self.min_height = DDFitHeight(210.f);
     }
@@ -238,9 +245,9 @@ static NSInteger label_baseTag = 99999;
     }
     CGFloat btn_lableH = DDFitHeight(25.f);
     CGFloat btn_lableW = (kScreenWidth - DDFitWidth(70.f))/4.f;
-    NSArray *lableArr = (NSArray *)obj;
-    if (lableArr.count > 0) {
-        for (int btn_count = 0; btn_count < lableArr.count; btn_count++) {
+
+    if (array.count > 0) {
+        for (int btn_count = 0; btn_count < array.count; btn_count++) {
             UIButton *btn_label = [UIButton new];
             if (btn_count < 4) {
                 btn_label.frame = CGRectMake(DDFitWidth(20.f) + (btn_lableW + DDFitWidth(10.f))  * btn_count, DDFitHeight(170.f), btn_lableW, btn_lableH);
@@ -252,7 +259,7 @@ static NSInteger label_baseTag = 99999;
             btn_label.layer.borderColor = kCommonGrayTextColor.CGColor;
             btn_label.layer.borderWidth = kLineHeight;
             btn_label.layer.cornerRadius = 3.f;
-            [btn_label setTitle:lableArr[btn_count] forState:UIControlStateNormal];
+            [btn_label setTitle:array[btn_count] forState:UIControlStateNormal];
             [btn_label setTitleColor:kCommonGrayTextColor forState:UIControlStateNormal];
             btn_label.titleLabel.font = DDFitFont(12.f);
             btn_label.tag = label_baseTag + btn_count;
@@ -285,6 +292,10 @@ static NSInteger label_baseTag = 99999;
             self.final_height = btn.bottom + DDFitWidth(30.f);
         }
     }
+}
+
+- (void)setEntity:(LSCreatDeskEntity *)entity {
+    _entity = entity;
 }
 
 - (void)chooseLabel:(UIButton *)sender {
