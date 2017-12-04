@@ -7,12 +7,8 @@
 //
 
 #import "DDInterestedVc.h"
-//#import "DDHomeListRequest.h"  //request
-//#import "DDHomeListTableCell.h"//cell
-//#import "NHDiscoverModel.h"    //model
 #import "DDCustomCommonEmptyView.h"
 #import "DDDeskShowViewController.h"  //桌子页面
-
 #import "DDInterestTableViewCell.h"
 
 @interface DDInterestedVc ()
@@ -24,7 +20,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setUpViews];
-//    [self loadData];
+    [self loadData];
 }
 // 设置子视图
 - (void)setUpViews {
@@ -32,23 +28,23 @@
     self.refreshType = DDBaseTableVcRefreshTypeRefreshAndLoadMore;
 }
 
-//#pragma mark  -  请求数据
-//- (void)loadData {
-//    [self showLoadingView];
-//    [super loadData];
-//    DDHomeListRequest *request = [DDHomeListRequest tj_request];
-//    request.tj_url = kNHDiscoverHotListAPI;
-//    [request tj_sendRequestWithCompletion:^(id response, BOOL success, NSString *message) {
-//        [self hideLoadingView];
-//        if (success) {
-//            NHDiscoverModel *discoverModel = [NHDiscoverModel modelWithDictionary:response];
-//            self.dataArray = discoverModel.categories.category_list;
-//            [self.tableView reloadData];
-//        }else{
-//            [self.emptyView showInView:self.view];
-//        }
-//    }];
-//}
+#pragma mark  -  请求数据
+- (void)loadData {
+    [super loadData];
+    [self showLoadingView];
+    [DDTJHttpRequest getInterestedDeskWithToken:TOKEN lat:@"" lon:@"" block:^(NSDictionary *dict) {
+        [self hideLoadingView];
+        _dataArray = [DDTableModel mj_objectArrayWithKeyValuesArray:dict];
+        if (_dataArray.count == 0) {
+            [self.emptyView showInView:self.view];
+        }else{
+            [self.tableView reloadData];
+        }
+    } failure:^{
+        //
+    }];
+}
+
 - (DDCustomCommonEmptyView *)emptyView {
     if (!_emptyView) {
         DDCustomCommonEmptyView *empty = [[DDCustomCommonEmptyView alloc] initWithTitle:@"" secondTitle:@"" iconname:@"nocontent"];
@@ -63,17 +59,13 @@
 }
 
 - (NSInteger)tj_numberOfRowsInSection:(NSInteger)section {
-//    return self.dataArray.count;
-    return 10;
+    return self.dataArray.count;
 }
 
 - (DDBaseTableViewCell *)tj_cellAtIndexPath:(NSIndexPath *)indexPath {
-    
     DDInterestTableViewCell *cell = [DDInterestTableViewCell cellWithTableView:self.tableView];
+    [cell updateWithModel:_dataArray[indexPath.row]];
     return cell;
-//    DDHomeListTableCell *cell = [DDHomeListTableCell cellWithTableView:self.tableView];
-//    cell.elementModel = self.dataArray[indexPath.row];
-//    return cell;
 }
 
 - (CGFloat)tj_cellheightAtIndexPath:(NSIndexPath *)indexPath {
@@ -86,7 +78,13 @@
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 @end
+
+
+
+
+
+
+

@@ -7,12 +7,10 @@
 //
 
 #import "DDJoinedVc.h"
-#import "DDHomeListRequest.h"  //request
-//#import "DDHomeListTableCell.h"//cell
 #import "DDInterestTableViewCell.h"
-//#import "NHDiscoverModel.h"    //model
 #import "DDTableModel.h"
 #import "DDCustomCommonEmptyView.h"
+#import "DDDeskShowViewController.h"  //桌子页面
 
 @interface DDJoinedVc ()
 @property (nonatomic, weak) DDCustomCommonEmptyView *emptyView;
@@ -33,31 +31,19 @@
 
 #pragma mark  -  请求数据
 - (void)loadData {
-// [self showLoadingAnimation];
     [super loadData];
-    
-    
+     [self showLoadingAnimation];
     [DDTJHttpRequest getJoinedDeskWithToken:TOKEN lat:@"" lon:@"" block:^(NSDictionary *dict) {
-        NSLog(@"参加的桌子列表");
-    } failure:^{
-        //
-    }];
-    
-
-    
-    
-//    DDHomeListRequest *request = [DDHomeListRequest tj_request];
-//    request.tj_url = kNHDiscoverHotListAPI;
-//    [request tj_sendRequestWithCompletion:^(id response, BOOL success, NSString *message) {
-//        [self hideLoadingAnimation];
-//        if (success) {
-//            NHDiscoverModel *discoverModel = [NHDiscoverModel modelWithDictionary:response];
-//            self.dataArray = discoverModel.categories.category_list;
-//            [self.tableView reloadData];
-//        }else{
+        [self hideLoadingAnimation];
+        _dataArray = [DDTableModel mj_objectArrayWithKeyValuesArray:dict];
+        if (_dataArray.count == 0) {
             [self.emptyView showInView:self.view];
-//        }
-//    }];
+        }else{
+            [self.tableView reloadData];
+        }
+    } failure:^{
+        [self.emptyView showInView:self.view];
+    }];
 }
 - (DDCustomCommonEmptyView *)emptyView {
     if (!_emptyView) {
@@ -78,7 +64,7 @@
 
 - (DDBaseTableViewCell *)tj_cellAtIndexPath:(NSIndexPath *)indexPath {
     DDInterestTableViewCell *cell = [DDInterestTableViewCell cellWithTableView:self.tableView];
-//    cell.elementModel = self.dataArray[indexPath.row];
+    [cell updateWithModel:_dataArray[indexPath.row]];
     return cell;
 }
 
@@ -86,6 +72,8 @@
     return 145;
 }
 - (void)tj_didSelectCellAtIndexPath:(NSIndexPath *)indexPath cell:(DDBaseTableViewCell *)cell {
+    DDDeskShowViewController *deskShowVC = [[DDDeskShowViewController alloc] init];
+    [self.navigationController pushViewController:deskShowVC animated:YES];
 }
 
 - (void)didReceiveMemoryWarning {
