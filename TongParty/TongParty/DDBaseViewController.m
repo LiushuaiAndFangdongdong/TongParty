@@ -277,13 +277,12 @@
 //设置控制器的导航标题title
 - (void)navigationWithTitle:(NSString *)title
 {
-    UILabel *titlelabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth - 100, 49)];
+    UILabel *titlelabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth/2.f, 49)];
     titlelabel.text = title;
     titlelabel.font = [UIFont systemFontOfSize:15];
     titlelabel.textColor = [UIColor blackColor];
     titlelabel.textAlignment = NSTextAlignmentCenter;
     self.navigationItem.titleView = titlelabel;
-//        self.navigationItem.title = title;
     self.navigationItem.leftBarButtonItem = [self backButtonForNavigationBarWithAction:@selector(popViewController)];
 }
 

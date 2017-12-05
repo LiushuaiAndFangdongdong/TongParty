@@ -10,5 +10,5 @@
 #import "DDBaseViewController.h"
 
 @interface DDAlbumViewController : DDBaseViewController
-
+@property(nonatomic,strong)NSMutableArray *urls; //数据源
 @end

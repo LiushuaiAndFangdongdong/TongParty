@@ -171,7 +171,7 @@
     
     [UIApplication sharedApplication].shortcutItems = arrShortcutItem;
     
-    NSLog(@"%u", [UIApplication sharedApplication].shortcutItems.count);
+    NSLog(@"%lu", [UIApplication sharedApplication].shortcutItems.count);
 }
 
 @end

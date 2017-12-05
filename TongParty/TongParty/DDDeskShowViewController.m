@@ -96,6 +96,7 @@
 }
 #pragma mark - 分享
 -(void)share{
+    
     [UMSocialUIManager setPreDefinePlatforms:@[@(UMSocialPlatformType_Sina),@(UMSocialPlatformType_QQ),@(UMSocialPlatformType_WechatSession),@(UMSocialPlatformType_WechatTimeLine)]];
     [UMSocialUIManager showShareMenuViewInWindowWithPlatformSelectionBlock:^(UMSocialPlatformType platformType, NSDictionary *userInfo) {
         // 根据获取的platformType确定所选平台进行下一步操作
@@ -103,6 +104,8 @@
         [[DDTJShareManager sharedManager] manageShareWithSharedType:platformType title:@"今晚8点西直门撸串拉" desc:@"15个人用的杯,碟(一次性纸制品),烤炉,烧烤叉15个,两至三斤碳.保鲜袋和垃圾袋适量.扫调料用的扫子三个以上.两卷纸.两瓶汽水(可乐,新期士,雪碧),王老吉或清凉茶(清热解火,现在是夏天),除了楼主的备用外,还可以加些别的,如茄瓜,通菜,番茄(切片),鱼类,生豪,鱿雨,冬姑(先泡好,挑大的才好烤),可以备一个西瓜.调料：盐、酱油、辣椒、烤酱等外可备蜂蜜,番茄汁,别忘了带没了这个可不行.大概每人100-150元啦,请记得要搞好防火工作哦,安全第一嘛!" image:@"refreshjoke_loading_16" shareUrl:@"http://www.itexamprep.com/cn/microsoft/exam/" controller:weakSelf];
     }];
 }
+
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 }

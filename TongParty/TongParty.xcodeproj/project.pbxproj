@@ -8,6 +8,17 @@
 
 /* Begin PBXBuildFile section */
 		4B05AD121FB88D57007583E9 /* area.plist in Sources */ = {isa = PBXBuildFile; fileRef = 98578E181F8B635100FEF64D /* area.plist */; };
+		4B537A001FD55F7A00A7844A /* PhotoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B5379FF1FD55F7A00A7844A /* PhotoViewController.m */; };
+		4B537A041FD55FB500A7844A /* LSAlbumEtity.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B537A031FD55FB500A7844A /* LSAlbumEtity.m */; };
+		4B537A141FD55FF100A7844A /* BJCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4B537A051FD55FEE00A7844A /* BJCell.xib */; };
+		4B537A151FD55FF100A7844A /* xiangceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B537A071FD55FEE00A7844A /* xiangceCell.m */; };
+		4B537A161FD55FF100A7844A /* ManagerReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B537A0B1FD55FEF00A7844A /* ManagerReusableView.m */; };
+		4B537A171FD55FF100A7844A /* BJCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B537A0C1FD55FEF00A7844A /* BJCell.m */; };
+		4B537A181FD55FF100A7844A /* BJtableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B537A0D1FD55FEF00A7844A /* BJtableView.m */; };
+		4B537A191FD55FF100A7844A /* PhotoCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B537A101FD55FF000A7844A /* PhotoCollectionView.m */; };
+		4B537A1A1FD55FF100A7844A /* xiangceCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4B537A111FD55FF000A7844A /* xiangceCell.xib */; };
+		4B537A1B1FD55FF100A7844A /* PhotoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B537A121FD55FF000A7844A /* PhotoCell.m */; };
+		4B537A1C1FD55FF100A7844A /* ManagerReusableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4B537A131FD55FF000A7844A /* ManagerReusableView.xib */; };
 		7FE31485F55A2C72A2918B02 /* Pods_TongParty.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B59ADC9FAFDF929FDA97EB90 /* Pods_TongParty.framework */; };
 		980093921F73975600FE0FE9 /* DDDeskViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 980093911F73975600FE0FE9 /* DDDeskViewController.m */; };
 		980093951F73979C00FE0FE9 /* DDJoinedVc.m in Sources */ = {isa = PBXBuildFile; fileRef = 980093941F73979C00FE0FE9 /* DDJoinedVc.m */; };
@@ -289,6 +300,25 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4B5379FE1FD55F7A00A7844A /* PhotoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoViewController.h; sourceTree = "<group>"; };
+		4B5379FF1FD55F7A00A7844A /* PhotoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoViewController.m; sourceTree = "<group>"; };
+		4B537A021FD55FB500A7844A /* LSAlbumEtity.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LSAlbumEtity.h; sourceTree = "<group>"; };
+		4B537A031FD55FB500A7844A /* LSAlbumEtity.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LSAlbumEtity.m; sourceTree = "<group>"; };
+		4B537A051FD55FEE00A7844A /* BJCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BJCell.xib; sourceTree = "<group>"; };
+		4B537A061FD55FEE00A7844A /* PhotoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoCell.h; sourceTree = "<group>"; };
+		4B537A071FD55FEE00A7844A /* xiangceCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = xiangceCell.m; sourceTree = "<group>"; };
+		4B537A081FD55FEE00A7844A /* BJCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BJCell.h; sourceTree = "<group>"; };
+		4B537A091FD55FEE00A7844A /* BJtableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BJtableView.h; sourceTree = "<group>"; };
+		4B537A0A1FD55FEF00A7844A /* ManagerReusableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ManagerReusableView.h; sourceTree = "<group>"; };
+		4B537A0B1FD55FEF00A7844A /* ManagerReusableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ManagerReusableView.m; sourceTree = "<group>"; };
+		4B537A0C1FD55FEF00A7844A /* BJCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BJCell.m; sourceTree = "<group>"; };
+		4B537A0D1FD55FEF00A7844A /* BJtableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BJtableView.m; sourceTree = "<group>"; };
+		4B537A0E1FD55FF000A7844A /* xiangceCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = xiangceCell.h; sourceTree = "<group>"; };
+		4B537A0F1FD55FF000A7844A /* PhotoCollectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoCollectionView.h; sourceTree = "<group>"; };
+		4B537A101FD55FF000A7844A /* PhotoCollectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoCollectionView.m; sourceTree = "<group>"; };
+		4B537A111FD55FF000A7844A /* xiangceCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = xiangceCell.xib; sourceTree = "<group>"; };
+		4B537A121FD55FF000A7844A /* PhotoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoCell.m; sourceTree = "<group>"; };
+		4B537A131FD55FF000A7844A /* ManagerReusableView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ManagerReusableView.xib; sourceTree = "<group>"; };
 		75A4C4B7BBFC3961C6B13BE9 /* Pods-TongParty.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TongParty.release.xcconfig"; path = "Pods/Target Support Files/Pods-TongParty/Pods-TongParty.release.xcconfig"; sourceTree = "<group>"; };
 		980093901F73975600FE0FE9 /* DDDeskViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DDDeskViewController.h; sourceTree = "<group>"; };
 		980093911F73975600FE0FE9 /* DDDeskViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DDDeskViewController.m; sourceTree = "<group>"; };
@@ -841,6 +871,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4B537A011FD55F9600A7844A /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				4B537A021FD55FB500A7844A /* LSAlbumEtity.h */,
+				4B537A031FD55FB500A7844A /* LSAlbumEtity.m */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
 		8F0BEDA8DF29B7F3DF1985AE /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -1368,6 +1407,7 @@
 		98578DFB1F8B4FD600FEF64D /* Album */ = {
 			isa = PBXGroup;
 			children = (
+				4B537A011FD55F9600A7844A /* Model */,
 				98578DFE1F8B4FF000FEF64D /* Controller */,
 				98578DFD1F8B4FE800FEF64D /* View */,
 			);
@@ -1377,6 +1417,21 @@
 		98578DFD1F8B4FE800FEF64D /* View */ = {
 			isa = PBXGroup;
 			children = (
+				4B537A081FD55FEE00A7844A /* BJCell.h */,
+				4B537A0C1FD55FEF00A7844A /* BJCell.m */,
+				4B537A051FD55FEE00A7844A /* BJCell.xib */,
+				4B537A091FD55FEE00A7844A /* BJtableView.h */,
+				4B537A0D1FD55FEF00A7844A /* BJtableView.m */,
+				4B537A0A1FD55FEF00A7844A /* ManagerReusableView.h */,
+				4B537A0B1FD55FEF00A7844A /* ManagerReusableView.m */,
+				4B537A131FD55FF000A7844A /* ManagerReusableView.xib */,
+				4B537A061FD55FEE00A7844A /* PhotoCell.h */,
+				4B537A121FD55FF000A7844A /* PhotoCell.m */,
+				4B537A0F1FD55FF000A7844A /* PhotoCollectionView.h */,
+				4B537A101FD55FF000A7844A /* PhotoCollectionView.m */,
+				4B537A0E1FD55FF000A7844A /* xiangceCell.h */,
+				4B537A071FD55FEE00A7844A /* xiangceCell.m */,
+				4B537A111FD55FF000A7844A /* xiangceCell.xib */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -1386,6 +1441,8 @@
 			children = (
 				98578DFF1F8B504D00FEF64D /* DDAlbumViewController.h */,
 				98578E001F8B504D00FEF64D /* DDAlbumViewController.m */,
+				4B5379FE1FD55F7A00A7844A /* PhotoViewController.h */,
+				4B5379FF1FD55F7A00A7844A /* PhotoViewController.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -2828,12 +2885,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				988E16BD1FD5013B003FFC72 /* region_dumps.json in Resources */,
+				4B537A141FD55FF100A7844A /* BJCell.xib in Resources */,
 				989931A31F6921C700E4BCAA /* 4.jpg in Resources */,
 				989931A11F6921C700E4BCAA /* 2.jpg in Resources */,
 				989931681F69160800E4BCAA /* LaunchScreen.storyboard in Resources */,
+				4B537A1C1FD55FF100A7844A /* ManagerReusableView.xib in Resources */,
 				989931651F69160800E4BCAA /* Assets.xcassets in Resources */,
 				989931631F69160800E4BCAA /* Main.storyboard in Resources */,
 				989931A21F6921C700E4BCAA /* 3.jpg in Resources */,
+				4B537A1A1FD55FF100A7844A /* xiangceCell.xib in Resources */,
 				98F675A41F70F0D60038E372 /* PYSearch.bundle in Resources */,
 				989931A01F6921C700E4BCAA /* 1.jpg in Resources */,
 			);
@@ -2939,6 +2999,7 @@
 				985746731FA717690017E5D1 /* DDUserSingleton.m in Sources */,
 				981E5A621FCD0344001B6448 /* DDJoinDeskMessageCell.m in Sources */,
 				9853D7371FA02C9A004AD6BF /* PlusAnimate.m in Sources */,
+				4B537A001FD55F7A00A7844A /* PhotoViewController.m in Sources */,
 				989441471F9DC87C000BA3E9 /* NSCalendar+DDPlus.m in Sources */,
 				98578E5E1F909B2000FEF64D /* CCDraggableContainer.m in Sources */,
 				98578E5D1F909B1B00FEF64D /* CCDraggableCardView.m in Sources */,
@@ -2972,6 +3033,7 @@
 				98BF202E1F794D8D00E94394 /* DDAlbumCellView.m in Sources */,
 				98578E3E1F8F6F9900FEF64D /* DDBottomView.m in Sources */,
 				980093951F73979C00FE0FE9 /* DDJoinedVc.m in Sources */,
+				4B537A161FD55FF100A7844A /* ManagerReusableView.m in Sources */,
 				982F01591F7CCED1008061CF /* DDSesameAuthVc.m in Sources */,
 				98F589C81F6A7E77005E674A /* DDRefreshFooter.m in Sources */,
 				989931D41F692F5400E4BCAA /* DDTabbarViewController.m in Sources */,
@@ -2984,6 +3046,7 @@
 				98DEFF451F78F094007F73D1 /* DDNumbersTextView.m in Sources */,
 				989931E91F69306900E4BCAA /* UIImage+ImageEffects.m in Sources */,
 				988663DB1FBC79E900B6F24D /* DDLocationAddressVC.m in Sources */,
+				4B537A1B1FD55FF100A7844A /* PhotoCell.m in Sources */,
 				98752B391FACBF8F00B94996 /* DDInterestTableViewCell.m in Sources */,
 				989931DD1F69305F00E4BCAA /* UINavigationBar+Addition.m in Sources */,
 				98F675A31F70F0D60038E372 /* NSBundle+PYSearchExtension.m in Sources */,
@@ -2991,6 +3054,7 @@
 				98DEFF421F78EDA2007F73D1 /* DDUsercenterTableViewCell.m in Sources */,
 				9800939B1F739A1600FE0FE9 /* DDInterestedVc.m in Sources */,
 				984522301FD158B100097143 /* DDShopView.m in Sources */,
+				4B537A041FD55FB500A7844A /* LSAlbumEtity.m in Sources */,
 				985308E01F6BA6DF003B475C /* DDBaseTableViewController.m in Sources */,
 				98752B3C1FACC07500B94996 /* DDStatusAvatar.m in Sources */,
 				985746661FA6E2150017E5D1 /* DDTJHttpRequest.m in Sources */,
@@ -3000,6 +3064,7 @@
 				98BD9F131F74BBAB0080A6FE /* UIButton+DDEvent.m in Sources */,
 				982F01621F7CD116008061CF /* DDTitletxtFieldView.m in Sources */,
 				98578E261F8DCFD200FEF64D /* NSString+DDAdd.m in Sources */,
+				4B537A191FD55FF100A7844A /* PhotoCollectionView.m in Sources */,
 				9857466F1FA7168F0017E5D1 /* DDLoginManager.m in Sources */,
 				985308F41F6BD461003B475C /* DDBannerPageControl.m in Sources */,
 				9840E6571FCBBF0A00F0E570 /* LSMapContentSortCell.m in Sources */,
@@ -3018,6 +3083,7 @@
 				989932371F693A0C00E4BCAA /* NSString+URL.m in Sources */,
 				989931EB1F69306900E4BCAA /* UIImage+Addition.m in Sources */,
 				98F675B51F7105170038E372 /* DDHomeMainVC.m in Sources */,
+				4B537A171FD55FF100A7844A /* BJCell.m in Sources */,
 				9857465F1FA6D5CC0017E5D1 /* DDResponseModel.m in Sources */,
 				98F589D71F6A816F005E674A /* DDDownloadImageManager.m in Sources */,
 				98BF20491F7A4DFC00E94394 /* DDEditInfoVC.m in Sources */,
@@ -3063,6 +3129,7 @@
 				989420611F70C1A500AFF310 /* UIView+RedPoint.m in Sources */,
 				989931C11F6925C300E4BCAA /* UILabel+Addition.m in Sources */,
 				98F589B11F6A77D6005E674A /* DDCustomActionSheet.m in Sources */,
+				4B537A151FD55FF100A7844A /* xiangceCell.m in Sources */,
 				989931EA1F69306900E4BCAA /* UIImageView+LBBlurredImage.m in Sources */,
 				982F015C1F7CCEFA008061CF /* DDRealNameAuthVc.m in Sources */,
 				98F589E61F6A8658005E674A /* DDBaseTableView.m in Sources */,
@@ -3118,6 +3185,7 @@
 				98D263C01F7EA45200D77744 /* UIImage+Color.m in Sources */,
 				98F589A81F6A764B005E674A /* DDCustomTopImageButton.m in Sources */,
 				989931C41F6925C300E4BCAA /* UIView+Tap.m in Sources */,
+				4B537A181FD55FF100A7844A /* BJtableView.m in Sources */,
 				986E5A061FAABC8D00FD391C /* LSAddressTableViewCell.m in Sources */,
 				98D557EC1F7DF72F006124C5 /* DDPsdSettingVc.m in Sources */,
 				98F675A71F70F0D60038E372 /* PYSearchViewController.m in Sources */,

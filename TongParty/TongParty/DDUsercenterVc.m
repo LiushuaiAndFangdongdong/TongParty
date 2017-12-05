@@ -22,6 +22,8 @@
 #import "DDUserInfoModel.h"             //用户详情model
 
 #import "DDHisHerViewController.h"
+#import "LSAlbumEtity.h"
+
 
 #define kAvatarWidth   50
 #define kMarginGapWidth 18
@@ -386,9 +388,33 @@ height=305;\
         [self.navigationController pushViewController:fVc animated:YES];
     }];
 }
+
+// 建议使用懒加载，避免每次进入加载图片
 -(void)pushAlbumVC{
-    DDAlbumViewController *albumVC = [[DDAlbumViewController alloc] init];
-    [self.navigationController pushViewController:albumVC animated:YES];
+    
+    /*网络图片*/ NSArray *imageURLs = @[@"http://img.sccnn.com/bimg/311/011.jpg",
+                                    @"http://pic9.nipic.com/20100826/4376639_180752159879_2.jpg",
+                                    @"http://pic21.nipic.com/20120425/7156172_111847620387_2.jpg",
+                                    @"http://pic8.nipic.com/20100722/2194093_140126005826_2.jpg",
+                                    @"http://img3.redocn.com/20110418/20110415_9e86967f4b28360e5afbHmybhr1LpDJ5.jpg",
+                                    @"http://pic10.nipic.com/20101026/4690416_135348005709_2.jpg",
+                                    ];
+    
+    //    /*本地图片*/ NSArray *imageURLs = @[@"",@"",@"",@"",@""]; //图片名字
+    
+    
+    NSMutableArray *urls = [NSMutableArray new];
+    
+    for (int a= 0; a<imageURLs.count; a++) {
+        
+        LSAlbumEtity *album = [[LSAlbumEtity alloc]init];
+        album.picture_year = @"2017-03-06"; //时间
+        album.picture_path = imageURLs[a];
+        [urls addObject:album];
+    }
+    DDAlbumViewController *photo = [[DDAlbumViewController alloc]init];
+    photo.urls = urls;
+    [self.navigationController pushViewController:photo animated:YES];
 }
 -(void)messageAction{
     NSLog(@"消息");
