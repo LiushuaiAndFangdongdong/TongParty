@@ -32,7 +32,7 @@
  * @custom   活动名称 ---->若为自定义，为0
  * @title   桌子标题
  * @place  桌子地点
- * @begin_time  开始时间
+ * @begin_time  开始时间  ----目前只能创建当天的(距离当前时间24小时以内)
  * @person_num   限制人数
  * @time_range   限制时长
  * @average_price  人均消费
@@ -80,6 +80,7 @@
                  begin_time:(NSString *)begin_time
                       block:(void(^)(NSDictionary *dict))dict
                     failure:(void(^)())failure;
+
 
 /**获取要参加的桌子列表（参加）
  * @token  用户token
@@ -177,6 +178,17 @@
                               t_uid:(NSString *)t_uid
                               block:(void(^)(NSDictionary *dict))dict
                             failure:(void(^)())failure;
+
+/**桌主发送公告
+ * @token  用户token
+ * @tid 桌子id
+ * @nid  公告id
+ */
++ (void)masterSendNoticeWithToken:(NSString *)token
+                              tid:(NSString *)tid
+                              nid:(NSString *)nid
+                            block:(void(^)(NSDictionary *dict))dict
+                          failure:(void(^)())failure;
 
 #pragma mark  ------------- 消息 -- - ----
 /** 获取用户未读消息条数

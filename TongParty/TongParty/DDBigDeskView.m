@@ -95,9 +95,11 @@
         make.right.mas_equalTo(-50);
     }];
     
+    
+#pragma mark - 左边滚动的椅子 --------------------------
     [self.leftChairScrollview mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(0);
-        make.width.mas_equalTo(60);
+        make.width.mas_equalTo(65);
         make.height.mas_equalTo(kLeftScrollViewHight);
         if (self.noticeView.hidden == NO) {
             make.top.mas_equalTo(self.noticeView.mas_bottom);
@@ -105,39 +107,14 @@
             make.top.mas_equalTo(self.holderView.mas_bottom);
         }
     }];
-    
-    for (int i = 0; i < 7; i ++ ) {
-        DDChairView *leftChair = [DDChairView new];
-        [self.leftChairScrollview addSubview:leftChair];
-        [leftChair mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.height.mas_equalTo(kLeftChairWidth);
-            make.width.mas_equalTo(kLeftChairWidth);
-            make.centerX.mas_equalTo(self.leftChairScrollview.centerX).offset(5);
-            make.top.mas_equalTo(kLeftChairMargin*(i+1)+i*kLeftChairWidth);
-        }];
-        leftChair.type = DDChairTypeLeft;
-        self.leftChairScrollview.contentSize = CGSizeMake(0, kLeftChairMargin*(i+2)+(i+1)*kLeftChairWidth);
-    }
+
+#pragma mark - 右边滚动的椅子 --------------------------
     [self.rightChairScrollview mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self.leftChairScrollview.mas_top);
-        make.width.mas_equalTo(60);
+        make.width.mas_equalTo(65);
         make.right.mas_equalTo(0);
         make.height.mas_equalTo(kLeftScrollViewHight);
     }];
-    
-    for (int i = 0; i < 7; i ++ ) {
-        DDChairView *leftChair = [DDChairView new];
-        [self.rightChairScrollview addSubview:leftChair];
-        [leftChair mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.height.mas_equalTo(kLeftChairWidth);
-            make.width.mas_equalTo(kLeftChairWidth);
-//            make.left.mas_equalTo(50-kLeftChairWidth);
-            make.centerX.mas_equalTo(self.rightChairScrollview.centerX);
-            make.top.mas_equalTo(kLeftChairMargin*(i+1)+i*kLeftChairWidth);
-        }];
-        leftChair.type = DDChairTypeRight;
-        self.rightChairScrollview.contentSize = CGSizeMake(0, kLeftChairMargin*(i+2)+(i+1)*kLeftChairWidth);
-    }
     
     [self.deskView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(50);
@@ -188,4 +165,70 @@
     }
 }
 
+#pragma mark - 更新参与者椅子信息
+- (void)updatePartsWithArray:(NSArray <DDParticipantModel*>*)array{
+    //左边椅子数
+    int leftChairs = 0;
+    //右边椅子数
+    int rightChairs = 0;
+
+    if (array.count % 2 == 0) {//如果是偶数
+        
+        //偶数左右椅子数相等
+        leftChairs = rightChairs = (int)array.count /2;
+        
+    }else{//如果是奇数
+        
+        //奇数左边数量是取余加上取商，右边取商，即左比右多一
+        leftChairs = (int)array.count/2 + (int)array.count % 2;
+        rightChairs = (int)array.count/2;
+    }
+    
+    for (int i = 0; i < leftChairs; i ++ ) {
+        DDChairView *leftChair = [DDChairView new];
+        [self.leftChairScrollview addSubview:leftChair];
+        [leftChair mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.height.mas_equalTo(kLeftChairWidth);
+            make.width.mas_equalTo(kLeftChairWidth);
+            make.centerX.mas_equalTo(self.leftChairScrollview.centerX).offset(5);
+            make.top.mas_equalTo(kLeftChairMargin*(i+1)+i*kLeftChairWidth);
+        }];
+        leftChair.type = DDChairTypeLeft;
+        self.leftChairScrollview.contentSize = CGSizeMake(0, kLeftChairMargin*(i+2)+(i+1)*kLeftChairWidth);
+        
+        DDParticipantModel *model = array[i];
+        [leftChair updateAvatarWithImage:model.image];
+    }
+    
+    for (int i = 0; i < rightChairs; i ++ ) {
+        DDChairView *rightChair = [DDChairView new];
+        [self.rightChairScrollview addSubview:rightChair];
+        [rightChair mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.height.mas_equalTo(kLeftChairWidth);
+            make.width.mas_equalTo(kLeftChairWidth);
+            make.centerX.mas_equalTo(self.rightChairScrollview.centerX).offset(0);
+            make.top.mas_equalTo(kLeftChairMargin*(i+1)+i*kLeftChairWidth);
+        }];
+        rightChair.type = DDChairTypeRight;
+        self.rightChairScrollview.contentSize = CGSizeMake(0, kLeftChairMargin*(i+2)+(i+1)*kLeftChairWidth);
+        
+        DDParticipantModel *model = array[i + leftChairs];
+        [rightChair updateAvatarWithImage:model.image];
+    }
+
+}
+
+#pragma mark - 更新桌子信息以及桌主信息
+- (void)updateDeskInfoModel:(DDTableInfoModel *)model{
+    [_holderView updateAvatarWithImage:model.image];
+    [_deskView updateDeskInfoWithModel:model];
+}
+#pragma mark - 更新桌子公告
+- (void)updateNoticeWith:(NSString *)notice{
+    _noticeView.noticeString = notice;
+}
 @end
+
+
+
+

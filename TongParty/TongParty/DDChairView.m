@@ -49,7 +49,6 @@
                 make.height.mas_equalTo(self.width);
             }];
             self.avatarView.layerCornerRadius = self.width/2;
-            self.avatarView.backgroundColor = kRedColor;
         }
             break;
         case DDChairTypeLeft:
@@ -137,6 +136,11 @@
     NSString *randomstr = [NSString stringWithFormat:@"desk_chair_right%@",array[arc4random() % array.count]];
     return randomstr;
 }
+
+-(void)updateAvatarWithImage:(NSString *)imagestr{
+    [self.avatarView sd_setImageWithURL:[NSURL URLWithString:imagestr] placeholderImage:kDefaultAvatar];
+}
+
 @end
 
 

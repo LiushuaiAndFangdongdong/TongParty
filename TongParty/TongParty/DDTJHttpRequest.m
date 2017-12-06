@@ -546,7 +546,32 @@
         //
     }];
 }
-
+/**桌主发送公告
+ * @token  用户token
+ * @tid 桌子id
+ * @nid  公告id
+ */
++ (void)masterSendNoticeWithToken:(NSString *)token
+                              tid:(NSString *)tid
+                              nid:(NSString *)nid
+                            block:(void(^)(NSDictionary *dict))dict
+                          failure:(void(^)())failure{
+    NSMutableDictionary *md = [NSMutableDictionary dictionary];
+    [self setWithMutableDict:md key:@"token" value:token];
+    [self setWithMutableDict:md key:@"tid" value:tid];
+    [self setWithMutableDict:md key:@"nid" value:nid];
+    
+    [self postWithAction:kTJHosterSendNoticeAPI params:md type:kDDHttpResponseTypeJson block:^(DDResponseModel *result) {
+        if (result.status.integerValue == kDDResponseStateSuccess) {
+            dict(result.data);
+        } else {
+            failure();
+        }
+        [MBProgressHUD showMessage:result.msg_cn toView:[UIApplication sharedApplication].keyWindow];
+    } failure:^{
+        //
+    }];
+}
 
 #pragma mark ---------------  消息  ------------
 

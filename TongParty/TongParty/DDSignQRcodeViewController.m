@@ -52,12 +52,14 @@
         make.right.mas_equalTo(-80);
         make.height.mas_equalTo(kScreenWidth - 160);
     }];
-    self.QRView.image = kImage(@"QR_fdd");
+//    self.QRView.image = kImage(@"QR_fdd");
     self.QRView.layerBorderWidth = 1;
     self.QRView.layerBorderColor = kBlackColor;
-    
-    
 }
+-(void)setHosterAvatar:(NSString *)hosterAvatar{
+    [self.QRView sd_setImageWithURL:[NSURL URLWithString:hosterAvatar] placeholderImage:kDefaultAvatar];
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 }

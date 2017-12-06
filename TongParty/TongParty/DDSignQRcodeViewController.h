@@ -10,5 +10,5 @@
 #import "DDBaseViewController.h"
 
 @interface DDSignQRcodeViewController : DDBaseViewController
-
+@property (nonatomic, copy) NSString *hosterAvatar;
 @end

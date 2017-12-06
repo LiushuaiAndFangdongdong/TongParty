@@ -21,7 +21,7 @@ typedef void(^DDCustomActionSheetItemClickHandle)(DDCustomActionSheet *actionShe
  *  @param alertTitle  提示文字
  *  @param title       子控件文本
  */
-+ (instancetype)actionSheetWithCancelTitle:(NSString *)cancelTitle alertTitle:(NSString *)alertTitle SubTitles:(NSString *)title,...NS_REQUIRES_NIL_TERMINATION;
++ (instancetype)actionSheetWithCancelTitle:(NSString *)cancelTitle alertTitle:(NSString *)alertTitle SubTitles:(NSArray *)title,...NS_REQUIRES_NIL_TERMINATION;
 
 - (void)setCustomActionSheetItemClickHandle:(DDCustomActionSheetItemClickHandle)itemClickHandle;
 

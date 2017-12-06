@@ -13,6 +13,8 @@
 #define kBtnMargin  (kScreenWidth - 4*kBtnItemWidth)/5
 
 @interface DDBottomView()
+@property (nonatomic, strong) NSArray *imageArr;
+@property (nonatomic, strong) NSArray *titleArr;
 @end
 
 @implementation DDBottomView
@@ -25,9 +27,30 @@
     return self;
 }
 -(void)initViews{
-    NSArray *imageArr = @[@"desk_share",@"notice_notes",@"desk_sign",@"desk_invite"];
-    NSArray *titleArr = @[@"分享",@"发送公告",@"签到",@"邀请"];
-    for (int i = 0; i< 4; i++) {
+}
+-(void)functionAction:(UIButton *)sender{
+    if (_bottomFunctionClickBlcok) {
+        _bottomFunctionClickBlcok(sender.tag - 10);
+    }
+}
+
+- (void)updateBtnImageWithType:(NSString *)type{
+    if ([type intValue] == 1) {
+        //桌主
+        _imageArr = @[@"desk_share",@"notice_notes",@"desk_sign",@"desk_invite"];
+        _titleArr = @[@"分享",@"发送公告",@"签到",@"邀请"];
+    }else if ([type intValue] == 2){
+        //参加者
+        _imageArr = @[@"desk_share",@"desk_callHolder",@"desk_interest_default",@"desk_invite"];
+        _titleArr = @[@"分享",@"联系桌主",@"感兴趣",@"邀请"];
+    }else if ([type intValue] == 3){
+        //未参与
+        _imageArr = @[@"desk_share",@"desk_join",@"desk_interest_default",@"desk_invite"];
+        _titleArr = @[@"分享",@"加入",@"感兴趣",@"邀请"];
+    }else{
+    }
+
+    for (int i = 0; i< _imageArr.count; i++) {
         UIButton *functionBtn = [[UIButton alloc] init];
         [self addSubview:functionBtn];
         [functionBtn mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -37,20 +60,17 @@
             make.width.mas_equalTo(kBtnItemWidth);
         }];
         functionBtn.tag = i+10;
-        [functionBtn setImage:[UIImage imageNamed:imageArr[i]] forState:UIControlStateNormal];
-        [functionBtn setTitle:titleArr[i] forState:UIControlStateNormal];
+        [functionBtn setImage:[UIImage imageNamed:_imageArr[i]] forState:UIControlStateNormal];
+        [functionBtn setTitle:_titleArr[i] forState:UIControlStateNormal];
         [functionBtn setTitleColor:kBlackColor forState:UIControlStateNormal];
         functionBtn.titleLabel.font = kFont(12);
-        [functionBtn layoutButtonWithEdgeInsetsStyle:DDButtonEdgeInsetsStyleTop imageTitleSpace:30];
+        [functionBtn layoutButtonWithEdgeInsetsStyle:DDButtonEdgeInsetsStyleTop imageTitleSpace:10];
         [functionBtn addTarget:self action:@selector(functionAction:) forControlEvents:UIControlEventTouchUpInside];
     }
 }
--(void)functionAction:(UIButton *)sender{
-    if (_bottomFunctionClickBlcok) {
-        _bottomFunctionClickBlcok(sender.tag - 10);
-    }
-}
 @end
+
+
 
 
 

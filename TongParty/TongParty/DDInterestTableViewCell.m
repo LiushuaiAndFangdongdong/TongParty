@@ -185,6 +185,14 @@
     _distanceLabel.text = @"198m | 10人已参加";
      [_storeBtn setTitle:model.place forState:UIControlStateNormal];
     [_addressBtn setTitle:@"北京市海淀区中关村" forState:UIControlStateNormal];
+    if ([model.type intValue] == 1) {
+        _sAvatar.statusstring  = @"desklist_status_host";
+    }else if ([model.type intValue] == 2){
+        _sAvatar.statusstring  = @"desklist_status_join";
+    }else if ([model.type intValue] == 3){
+        _sAvatar.statusstring  = @"desklist_status_apply";
+    }else{
+    }
 }
 
 

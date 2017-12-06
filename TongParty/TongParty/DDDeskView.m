@@ -112,7 +112,7 @@
         make.top.mas_equalTo(kSignBoardHeight*48/87);
         make.bottom.mas_equalTo(-kSignBoardHeight*13/87);
     }];
-    [self createLabel:self.titleLbl text:@"狼人杀" TextColor:kWhiteColor font:kBoldFont(18) textAlignment:NSTextAlignmentCenter];
+//    [self createLabel:self.titleLbl text:@"狼人杀" TextColor:kWhiteColor font:kBoldFont(18) textAlignment:NSTextAlignmentCenter];
   //
     
 
@@ -129,7 +129,7 @@
         make.left.and.right.mas_equalTo(0);
         make.height.mas_equalTo(kDataItemHeight/2);
     }];
-     [self createLabel:self.startTimeVlaue text:@"10-20 20：08" TextColor:kBlackColor font:kFont(13) textAlignment:NSTextAlignmentCenter];
+//     [self createLabel:self.startTimeVlaue text:@"10-20 20：08" TextColor:kBlackColor font:kFont(13) textAlignment:NSTextAlignmentCenter];
     
 
     [self.lineView0 mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -155,10 +155,10 @@
         make.left.and.right.mas_equalTo(0);
         make.height.mas_equalTo(kDataItemHeight/2);
     }];
-    [self createLabel:self.countDownValue text:nil TextColor:kRedColor font:kFont(13) textAlignment:NSTextAlignmentCenter];
-    self.countDownValue.hour = 2;
-    self.countDownValue.minute = 11;
-    self.countDownValue.second = 30;
+//    [self createLabel:self.countDownValue text:nil TextColor:kRedColor font:kFont(13) textAlignment:NSTextAlignmentCenter];
+//    self.countDownValue.hour = 2;
+//    self.countDownValue.minute = 11;
+//    self.countDownValue.second = 30;
     
 
     [self.lineView1 mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -170,10 +170,6 @@
     self.lineView1.image = kImage(@"desk_itemsLine_green");
     
 
-    
-    
-    
-    
     [self.numbersPeopleKey mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self.lineView1.mas_bottom);
         make.left.and.right.mas_equalTo(0);
@@ -187,7 +183,7 @@
         make.left.and.right.mas_equalTo(0);
         make.height.mas_equalTo(kDataItemHeight/2);
     }];
-       [self createLabel:self.numbersPeopleValue text:@"16" TextColor:kBlackColor font:kFont(13) textAlignment:NSTextAlignmentCenter];
+//       [self createLabel:self.numbersPeopleValue text:@"16" TextColor:kBlackColor font:kFont(13) textAlignment:NSTextAlignmentCenter];
 
     [self.lineView2 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self.numbersPeopleValue.mas_bottom);
@@ -211,7 +207,7 @@
         make.left.and.right.mas_equalTo(0);
         make.height.mas_equalTo(kDataItemHeight/2);
     }];
-     [self createLabel:self.averagePriceValue text:@"16元/人" TextColor:kBlackColor font:kFont(13) textAlignment:NSTextAlignmentCenter];
+//     [self createLabel:self.averagePriceValue text:@"16元/人" TextColor:kBlackColor font:kFont(13) textAlignment:NSTextAlignmentCenter];
     
 
     [self.lineView3 mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -238,7 +234,7 @@
         make.height.mas_equalTo(kDataItemHeight/2);
     }];
     self.addressValue.numberOfLines = 2;
-      [self createLabel:self.addressValue text:@"北京市海淀区阜成路北8号楼" TextColor:kBlackColor font:kFont(11) textAlignment:NSTextAlignmentCenter];
+//      [self createLabel:self.addressValue text:@"北京市海淀区阜成路北8号楼" TextColor:kBlackColor font:kFont(11) textAlignment:NSTextAlignmentCenter];
     
 
     [self.lineView4 mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -264,7 +260,7 @@
         make.height.mas_equalTo(kDataItemHeight/2);
     }];
     self.descrValue.numberOfLines = 2;
-       [self createLabel:self.descrValue text:@"玩的开心就好" TextColor:kBlackColor font:kFont(13) textAlignment:NSTextAlignmentCenter];
+//       [self createLabel:self.descrValue text:@"玩的开心就好" TextColor:kBlackColor font:kFont(13) textAlignment:NSTextAlignmentCenter];
 }
 
 
@@ -274,6 +270,54 @@
     label.font = font;
     label.textAlignment = textAlignment;
 }
+
+-(NSString *)getCountDownStringWithEndTime:(NSString *)endTime {
+    
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm"];
+    
+    NSDate *now = [NSDate date];
+    
+    NSTimeZone *zone = [NSTimeZone systemTimeZone];//设置时区
+    NSInteger interval = [zone secondsFromGMTForDate: now];
+    NSDate *localDate = [now  dateByAddingTimeInterval: interval];
+    
+    endTime = [NSString stringWithFormat:@"%@ 23:59", endTime];
+    
+    NSDate *endDate = [dateFormatter dateFromString:endTime];
+    
+    NSInteger endInterval = [zone secondsFromGMTForDate: endDate];
+    NSDate *end = [endDate dateByAddingTimeInterval: endInterval];
+    NSUInteger voteCountTime = ([end timeIntervalSinceDate:localDate]) / 3600 / 24;
+    
+    NSString *timeStr = [NSString stringWithFormat:@"%d", voteCountTime];
+    
+    return timeStr;
+}
+
+#pragma mark - update
+- (void)updateDeskInfoWithModel:(DDTableInfoModel *)model{
+    
+    [self createLabel:self.titleLbl text:model.title TextColor:kWhiteColor font:kBoldFont(18) textAlignment:NSTextAlignmentCenter];
+    
+    [self createLabel:self.startTimeVlaue text:model.begin_time TextColor:kBlackColor font:kFont(13) textAlignment:NSTextAlignmentCenter];
+    
+    [self createLabel:self.countDownValue text:nil TextColor:kRedColor font:kFont(13) textAlignment:NSTextAlignmentCenter];
+    self.countDownValue.hour = 2;
+    self.countDownValue.minute = 11;
+    self.countDownValue.second = 30;
+    
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm"];
+    NSDate *begin_timeDate = [dateFormatter dateFromString:model.begin_time];
+    
+    
+   [self createLabel:self.numbersPeopleValue text:model.person_num TextColor:kBlackColor font:kFont(13) textAlignment:NSTextAlignmentCenter];
+   [self createLabel:self.averagePriceValue text:model.average_price TextColor:kBlackColor font:kFont(13) textAlignment:NSTextAlignmentCenter];
+   [self createLabel:self.addressValue text:model.place TextColor:kBlackColor font:kFont(11) textAlignment:NSTextAlignmentCenter];
+   [self createLabel:self.descrValue text:model.desc TextColor:kBlackColor font:kFont(13) textAlignment:NSTextAlignmentCenter];
+}
+
 @end
 
 

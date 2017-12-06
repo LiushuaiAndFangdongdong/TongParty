@@ -22,4 +22,5 @@ typedef NS_ENUM(NSUInteger, DDChairType) {
 
 @interface DDChairView : UIView
 @property (nonatomic, assign) DDChairType type;
+- (void)updateAvatarWithImage:(NSString *)imagestr;
 @end

@@ -12,6 +12,7 @@
 #import "LLSegmentBarVC.h"
 
 @interface DDDeskViewController ()
+@property (nonatomic, strong) DDLoginManager *loginManager;
 @property (nonatomic, strong) DDJoinedVc  *joinedVc;
 @property (nonatomic, strong) DDInterestedVc *interestedVc;
 @property (nonatomic, weak) LLSegmentBarVC * segmentVC;
@@ -37,6 +38,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 //    [self setupNavi];
+    [self.loginManager pushCheckedLoginWithPopToRoot:NO block:^{
+        [self configSegement];
+    }];
+}
+
+- (void)configSegement{
     // 1 设置segmentBar的frame
     self.segmentVC.segmentBar.frame = CGRectMake(0, 0, kScreenWidth, 35);
     self.navigationItem.titleView = self.segmentVC.segmentBar;
@@ -57,6 +64,16 @@
         config.itemNormalColor([UIColor blackColor]).itemSelectColor(kBgGreenColor).indicatorColor(kBgGreenColor);
     }];
 }
+
+
+-(DDLoginManager *)loginManager
+{
+    if(!_loginManager) {
+        _loginManager = [[DDLoginManager alloc]initWithController:self];
+    }
+    return _loginManager;
+}
+
 
 - (DDJoinedVc *)joinedVc {
     if (!_joinedVc) {

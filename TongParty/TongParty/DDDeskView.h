@@ -8,7 +8,8 @@
 //桌子
 
 #import <UIKit/UIKit.h>
+#import "DDTableInfoModel.h"
 
 @interface DDDeskView : UIView
-
+- (void)updateDeskInfoWithModel:(DDTableInfoModel *)model;
 @end

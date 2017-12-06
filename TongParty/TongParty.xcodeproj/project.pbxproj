@@ -139,6 +139,10 @@
 		988E16B91FD4F83A003FFC72 /* LSCDJoinDeskCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 988E16A51FD4F7F4003FFC72 /* LSCDJoinDeskCellView.m */; };
 		988E16BA1FD4F83A003FFC72 /* LSCDPhotoIV.m in Sources */ = {isa = PBXBuildFile; fileRef = 988E16AE1FD4F7F5003FFC72 /* LSCDPhotoIV.m */; };
 		988E16BD1FD5013B003FFC72 /* region_dumps.json in Resources */ = {isa = PBXBuildFile; fileRef = 988E16BB1FD4FF2E003FFC72 /* region_dumps.json */; };
+		988E16C01FD63988003FFC72 /* DDCaptchaTimerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 988E16BF1FD63988003FFC72 /* DDCaptchaTimerManager.m */; };
+		988E16C41FD67F74003FFC72 /* DDTableInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 988E16C31FD67F74003FFC72 /* DDTableInfoModel.m */; };
+		988E16C71FD68207003FFC72 /* DDParticipantModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 988E16C61FD68207003FFC72 /* DDParticipantModel.m */; };
+		988E16CA1FD790E2003FFC72 /* DDNoticeModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 988E16C91FD790E2003FFC72 /* DDNoticeModel.m */; };
 		989420611F70C1A500AFF310 /* UIView+RedPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = 989420601F70C1A500AFF310 /* UIView+RedPoint.m */; };
 		989441321F9DC423000BA3E9 /* DDRadioButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 989441311F9DC423000BA3E9 /* DDRadioButton.m */; };
 		989441471F9DC87C000BA3E9 /* NSCalendar+DDPlus.m in Sources */ = {isa = PBXBuildFile; fileRef = 98578E0A1F8B58CC00FEF64D /* NSCalendar+DDPlus.m */; };
@@ -562,6 +566,14 @@
 		988E16B01FD4F7F6003FFC72 /* LSCDTimeAddressView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LSCDTimeAddressView.h; sourceTree = "<group>"; };
 		988E16B11FD4F7F6003FFC72 /* LSCDDescriptionCellView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LSCDDescriptionCellView.m; sourceTree = "<group>"; };
 		988E16BB1FD4FF2E003FFC72 /* region_dumps.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = region_dumps.json; sourceTree = "<group>"; };
+		988E16BE1FD63988003FFC72 /* DDCaptchaTimerManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DDCaptchaTimerManager.h; sourceTree = "<group>"; };
+		988E16BF1FD63988003FFC72 /* DDCaptchaTimerManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DDCaptchaTimerManager.m; sourceTree = "<group>"; };
+		988E16C21FD67F74003FFC72 /* DDTableInfoModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DDTableInfoModel.h; sourceTree = "<group>"; };
+		988E16C31FD67F74003FFC72 /* DDTableInfoModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DDTableInfoModel.m; sourceTree = "<group>"; };
+		988E16C51FD68207003FFC72 /* DDParticipantModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DDParticipantModel.h; sourceTree = "<group>"; };
+		988E16C61FD68207003FFC72 /* DDParticipantModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DDParticipantModel.m; sourceTree = "<group>"; };
+		988E16C81FD790E2003FFC72 /* DDNoticeModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DDNoticeModel.h; sourceTree = "<group>"; };
+		988E16C91FD790E2003FFC72 /* DDNoticeModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DDNoticeModel.m; sourceTree = "<group>"; };
 		9894205F1F70C1A500AFF310 /* UIView+RedPoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+RedPoint.h"; sourceTree = "<group>"; };
 		989420601F70C1A500AFF310 /* UIView+RedPoint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+RedPoint.m"; sourceTree = "<group>"; };
 		989441301F9DC422000BA3E9 /* DDRadioButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DDRadioButton.h; sourceTree = "<group>"; };
@@ -1540,6 +1552,7 @@
 		98578E1B1F8CAC3500FEF64D /* Desk */ = {
 			isa = PBXGroup;
 			children = (
+				988E16C11FD67F5C003FFC72 /* Model */,
 				98578E1D1F8CAC4100FEF64D /* Controller */,
 				98578E1C1F8CAC3C00FEF64D /* View */,
 			);
@@ -1761,6 +1774,19 @@
 				988E16981FD4F5AA003FFC72 /* LSCreatDeskEntity.m */,
 				988D23B81FC2CF05002C5D2C /* DDAddressModel.h */,
 				988D23B91FC2CF05002C5D2C /* DDAddressModel.m */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		988E16C11FD67F5C003FFC72 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				988E16C21FD67F74003FFC72 /* DDTableInfoModel.h */,
+				988E16C31FD67F74003FFC72 /* DDTableInfoModel.m */,
+				988E16C51FD68207003FFC72 /* DDParticipantModel.h */,
+				988E16C61FD68207003FFC72 /* DDParticipantModel.m */,
+				988E16C81FD790E2003FFC72 /* DDNoticeModel.h */,
+				988E16C91FD790E2003FFC72 /* DDNoticeModel.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -2162,6 +2188,8 @@
 				9857466B1FA6E5B90017E5D1 /* DDValidateManager.m */,
 				9857466D1FA7168F0017E5D1 /* DDLoginManager.h */,
 				9857466E1FA7168F0017E5D1 /* DDLoginManager.m */,
+				988E16BE1FD63988003FFC72 /* DDCaptchaTimerManager.h */,
+				988E16BF1FD63988003FFC72 /* DDCaptchaTimerManager.m */,
 			);
 			name = Manager;
 			sourceTree = "<group>";
@@ -3022,6 +3050,7 @@
 				98578E381F8F61DC00FEF64D /* DDSignQRcodeViewController.m in Sources */,
 				980093AE1F73B07B00FE0FE9 /* DDCompassView.m in Sources */,
 				98BF20311F794FA200E94394 /* DDActivitiesHisCellView.m in Sources */,
+				988E16C71FD68207003FFC72 /* DDParticipantModel.m in Sources */,
 				98F675AF1F70FB6A0038E372 /* DDMAAnnotationView.m in Sources */,
 				98F589E91F6A88F7005E674A /* DDBaseTableHeaderFooterView.m in Sources */,
 				98F675A81F70F0D60038E372 /* UIColor+PYSearchExtension.m in Sources */,
@@ -3042,6 +3071,7 @@
 				989931FF1F69377000E4BCAA /* DDLogManager.m in Sources */,
 				98F5899F1F6A72F0005E674A /* DDCustomCommonEmptyView.m in Sources */,
 				988E16991FD4F5AA003FFC72 /* LSCreatDeskEntity.m in Sources */,
+				988E16CA1FD790E2003FFC72 /* DDNoticeModel.m in Sources */,
 				985308ED1F6BC97A003B475C /* DDHomeListViewController.m in Sources */,
 				98DEFF451F78F094007F73D1 /* DDNumbersTextView.m in Sources */,
 				989931E91F69306900E4BCAA /* UIImage+ImageEffects.m in Sources */,
@@ -3165,6 +3195,7 @@
 				98AD0B5A1FCE8905006C3EE8 /* DDBannerModel.m in Sources */,
 				98D51B801FA5CC510095BC8F /* DDRegisterViewController.m in Sources */,
 				98578E4C1F906B4400FEF64D /* UIImage+ATWatermark.m in Sources */,
+				988E16C41FD67F74003FFC72 /* DDTableInfoModel.m in Sources */,
 				985309001F6BD772003B475C /* DDHomeListTableCell.m in Sources */,
 				985308FA1F6BD5B4003B475C /* NHDiscoverModel.m in Sources */,
 				989931F61F69308300E4BCAA /* UIButton+Addition.m in Sources */,
@@ -3224,6 +3255,7 @@
 				989932421F693A1800E4BCAA /* NSObject+AddProperty.m in Sources */,
 				989931C51F6925C300E4BCAA /* MBProgressHUD+NHAddition.m in Sources */,
 				980093B41F73C06800FE0FE9 /* DDUsercenterVc.m in Sources */,
+				988E16C01FD63988003FFC72 /* DDCaptchaTimerManager.m in Sources */,
 				98F589C21F6A7B05005E674A /* DDUserInfoManager.m in Sources */,
 				981E5A6B1FCD48C5001B6448 /* DDDeskMatchView.m in Sources */,
 			);

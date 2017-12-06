@@ -8,6 +8,7 @@
 //
 
 #import "DDCustomActionSheet.h"
+#import "DDNoticeModel.h"
 
 #define kTag 111112
 @interface DDCustomActionSheet() <UITableViewDelegate, UITableViewDataSource>
@@ -29,14 +30,19 @@
     DDCustomActionSheetItemClickHandle _clickHandle;
     DDCustomActionSheetItemClickHandle _dismissHandle;
 }
-+ (instancetype)actionSheetWithCancelTitle:(NSString *)cancelTitle alertTitle:(NSString *)alertTitle SubTitles:(NSString *)title,...NS_REQUIRES_NIL_TERMINATION {
++ (instancetype)actionSheetWithCancelTitle:(NSString *)cancelTitle alertTitle:(NSString *)alertTitle SubTitles:(NSArray *)title,...NS_REQUIRES_NIL_TERMINATION {
     DDCustomActionSheet *sheet = [[DDCustomActionSheet alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight)];
     sheet.cancelTitle = cancelTitle;
     sheet.alertTitle = alertTitle;
     NSString *subTitle;
     va_list argumentList;
     if(title) {
-        [sheet.subTitlesArray addObject:title];
+        NSMutableArray *nArr = [NSMutableArray array];
+        for (DDNoticeModel *model in title) {
+            [nArr addObject:model.text];
+        }
+        [sheet.subTitlesArray addObjectsFromArray:nArr];
+//        [sheet.subTitlesArray addObject:title];
         va_start(argumentList, title);
         while((subTitle = va_arg(argumentList, id))) {
             NSString *tit = [subTitle copy];

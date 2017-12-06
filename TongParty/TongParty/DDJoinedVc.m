@@ -72,7 +72,9 @@
     return 145;
 }
 - (void)tj_didSelectCellAtIndexPath:(NSIndexPath *)indexPath cell:(DDBaseTableViewCell *)cell {
+    DDTableModel *model = _dataArray[indexPath.row];
     DDDeskShowViewController *deskShowVC = [[DDDeskShowViewController alloc] init];
+    deskShowVC.tmpModel   = model;
     [self.navigationController pushViewController:deskShowVC animated:YES];
 }
 

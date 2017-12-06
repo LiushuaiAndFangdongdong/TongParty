@@ -12,11 +12,10 @@
 #import "DDScrollLabelView.h"
 #import "UIView+Layer.h"
 
-
-
 @interface DDNoticeView()<DDScrollLabelViewDelegate>
 
 @property (nonatomic, strong) UIImageView *hornView;  //喇叭
+@property (nonatomic, copy) NSString *notice;
 @end
 //喇叭宽高比：26/21
 
@@ -30,6 +29,7 @@
     return self;
 }
 -(void)initViews{
+
     self.backgroundColor = kBgGrayColor;
     self.layerCornerRadius = 15;
     self.hornView = [[UIImageView alloc] init];
@@ -52,13 +52,17 @@
     }];
     drawMarqueeView.delegate          = self;
     drawMarqueeView.marqueeDirection  = FromLeftType;
-    [drawMarqueeView addContentView:[self createLabelWithText:@"公告：桌子开始时间为10月11日上午11:37分，请大家务必准时到达。"
+    [drawMarqueeView addContentView:[self createLabelWithText:_notice
                                                      textColor:kWhiteColor]];
     [drawMarqueeView startAnimation];
 }
-//-(void)setNoticeString:(NSString *)noticeString{
-//    self.noticeLabel.text = noticeString;
-//}
+-(void)setNoticeString:(NSString *)noticeString{
+    if (noticeString == NULL || noticeString == nil) {
+       self.notice = @"欢迎来到桐聚！志不同，不桐聚，祝大家玩的开心！";
+    }else{
+       self.notice = noticeString;
+    }
+}
 #pragma mark -
 - (UILabel *)createLabelWithText:(NSString *)text textColor:(UIColor *)textColor {
     
@@ -97,7 +101,7 @@
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
 //        [drawMarqueeView addContentView:[self createLabelWithText:[self randomString]
 //                                                        textColor:[self randomColor]]];
-        [drawMarqueeView addContentView:[self createLabelWithText:@"公告：桌子开始时间为10月11日上午11:37分，请大家务必准时到达。"
+        [drawMarqueeView addContentView:[self createLabelWithText:_notice
                                                         textColor:kWhiteColor]];
         [drawMarqueeView startAnimation];
     });

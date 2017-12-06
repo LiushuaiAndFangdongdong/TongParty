@@ -88,7 +88,7 @@ NSString *const kTJDeskInviteFriedAPI = @"/tongju/api/invitation_friend.php";
 /** 邀请好友加入桌子*/
 NSString *const kTJInviteFriedsJoinDeskAPI = @"/tongju/api/send_invitation.php?m=join";
 /** 桌主发送公告*/
-NSString *const kTJHosterSendNoticeAPI = @"/tongju/api/send_notice.php?m=join";
+NSString *const kTJHosterSendNoticeAPI = @"/tongju/api/send_notice.php";
 
 
 

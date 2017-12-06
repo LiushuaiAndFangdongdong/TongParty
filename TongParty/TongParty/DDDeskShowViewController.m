@@ -9,19 +9,26 @@
 //
 
 #import "DDDeskShowViewController.h"
-#import <UShareUI/UShareUI.h>
-#import "DDTJShareManager.h"
-#import "DDCustomActionSheet.h"
-#import "DDSignQRcodeViewController.h"
-//#import "DDDeskShowView.h"
-#import "DDBottomView.h"
-#import "DDBigDeskView.h"
+#import <UShareUI/UShareUI.h>           //分享
+#import "DDTJShareManager.h"            //分享
+#import "DDCustomActionSheet.h"         //弹窗
+#import "DDSignQRcodeViewController.h"  //二维码签到页面
+#import "DDBottomView.h"                //底部视图
+#import "DDBigDeskView.h"               //桌子视图
+#import "DDTableInfoModel.h"            //桌子信息model
+#import "DDParticipantModel.h"          //参与者model
+#import "DDNoticeModel.h"               //公告model
 
 @interface DDDeskShowViewController ()
-
+@property (nonatomic, strong) DDTableInfoModel *tModel;         //桌子信息model
+@property (nonatomic, strong) DDBottomView *bottomView;         //底部视图
+@property (nonatomic, strong) DDBigDeskView *deskShowView;      //桌子view
+@property (nonatomic, strong) DDParticipantModel *vistorModel;  //游客
+@property (nonatomic, strong) NSArray *noticeArr;               //公告数组
 @end
 
 @implementation DDDeskShowViewController
+@synthesize tmpModel;
 
 //桌主98.5/749  桌主的高宽比815/443
 -(void)viewWillAppear:(BOOL)animated{
@@ -35,63 +42,110 @@
     [super viewWillDisappear:animated];
     self.navigationController.navigationBar.translucent = NO;
 }
+
+- (DDBottomView *)bottomView{
+    if (!_bottomView) {
+        _bottomView = [[DDBottomView alloc] initWithFrame:CGRectMake(0, kScreenHeight - 60, kScreenWidth, 60)];
+        WeakSelf(weakSelf);
+        _bottomView.bottomFunctionClickBlcok = ^(NSInteger index) {
+            if (index == 0) {
+                //分享
+                [weakSelf share];
+            }
+            if (index == 1) {
+                if ([_tModel.type intValue] == 1) {
+                    //桌子----公告
+                    [weakSelf popNotice];
+                }else if ([_tModel.type intValue] == 2){
+                    //参加者----联系桌主
+                    [weakSelf callMaster];
+                }else if ([_tModel.type intValue] == 3){
+                    //未参加者----申请加入
+                }else{}
+            }
+            if (index == 2) {
+                if ([_tModel.type intValue] == 1) {
+                    //---桌主签到
+                    [weakSelf holderShowSign];
+                }else if ([_tModel.type intValue] == 2){
+                    //参加者----签到
+                }else if ([_tModel.type intValue] == 3){
+                    //未参加者----感兴趣
+                }else{}
+            }
+            if (index == 3) {
+                //邀请
+            }
+        };
+    }
+    return _bottomView;
+}
+
+- (DDBigDeskView *)deskShowView{
+    if (!_deskShowView) {
+        _deskShowView = [[DDBigDeskView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight - 60)];
+        _deskShowView.type = DDDeskShowTypeNormal;
+    }
+    return _deskShowView;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self setupUI];
-}
--(void)setupUI{
-
     self.view.backgroundColor = kWhiteColor;
-    DDBigDeskView *deskShowView = [[DDBigDeskView alloc] init];
-    [self.view addSubview:deskShowView];
-    [deskShowView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.and.right.mas_equalTo(0);
-        make.top.mas_equalTo(0);
-        make.bottom.mas_equalTo(-55);
-    }];
-    deskShowView.type = DDDeskShowTypeNormal;
-    
-    DDBottomView *bottomView = [[DDBottomView alloc] init];
-    [self.view addSubview:bottomView];
-    bottomView.bottomFunctionClickBlcok = ^(NSInteger index) {
-        if (index == 0) {
-            //分享
-            [self share];
-        }
-        if (index == 1) {
-            //发送公告
-            [self popNotice];
-        }
-        if (index == 2) {
-            //签到
-            [self holderShowSign];
-            NSLog(@"2");
-        }
-        if (index == 3) {
-            //邀请
-            
-        }
-    };
-    [bottomView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(deskShowView.mas_bottom);
-        make.left.and.bottom.and.right.mas_equalTo(0);
-    }];
+    [self.view addSubview:self.deskShowView];
+    [self.view addSubview:self.bottomView];
+    [self loadData];
 }
 
+- (void)loadData{
+    [super loadData];
+    [self showLoadingView];
+    [DDTJHttpRequest getDeskDetailInfoWithToken:TOKEN tid:tmpModel.id  block:^(NSDictionary *dict) {
+        [self hideLoadingView];
+        NSLog(@"桌子信息----->%@",dict);
+        _tModel = [DDTableInfoModel mj_objectWithKeyValues:dict[@"info"]];
+        self.noticeArr = [DDNoticeModel mj_objectArrayWithKeyValuesArray:dict[@"info"][@"notice"]];
+        NSArray *partsArr = [DDParticipantModel mj_objectArrayWithKeyValuesArray:dict[@"users"]];
+        [self.deskShowView updateDeskInfoModel:_tModel];
+        [self.deskShowView updateNoticeWith:_tModel.text];
+        [self.deskShowView updatePartsWithArray:partsArr];
+        [_bottomView updateBtnImageWithType:_tModel.type];
+        
+    } failure:^{
+        //
+    }];
+}
 //签到
 -(void)holderShowSign{
     DDSignQRcodeViewController *showSignVc = [[DDSignQRcodeViewController alloc] init];
+    showSignVc.hosterAvatar = _tModel.image;
     [self.navigationController pushViewController:showSignVc animated:YES];
 }
+
+//联系桌主
+-(void)callMaster{
+    if (_tModel.mobile == nil || _tModel.mobile == NULL) {
+        [MBProgressHUD showError:@"桌主的联系方式为空" toView:self.view];
+    }else{
+        NSString *mobilestr=[[NSMutableString alloc] initWithFormat:@"tel:%@",_tModel.mobile];
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:mobilestr]];
+    }
+}
+
 //发布公告
 -(void)popNotice{
-    DDCustomActionSheet *actionSheet = [DDCustomActionSheet actionSheetWithCancelTitle:@"取消" alertTitle:nil SubTitles:@"我马上到！！！",@"餐桌的朋友麻烦都电联一下我！！！",@"ok",@"你是MM还是GG",@"dsadsa", nil];
+    
+    DDCustomActionSheet *actionSheet = [DDCustomActionSheet actionSheetWithCancelTitle:@"取消" alertTitle:nil SubTitles:self.noticeArr, nil];
     [actionSheet show];
-    //            WeakSelf(weakSelf);
     [actionSheet setCustomActionSheetItemClickHandle:^(DDCustomActionSheet *actionSheet, NSInteger currentIndex, NSString *title) {
-        if (currentIndex == 0) {
-            NSLog(@"相机");
-        }
+        //发送公告
+        DDNoticeModel *nmodel = self.noticeArr[currentIndex];
+        [DDTJHttpRequest masterSendNoticeWithToken:TOKEN tid:tmpModel.id nid:nmodel.nid block:^(NSDictionary *dict) {
+            
+            [self.deskShowView updateNoticeWith:title];
+        } failure:^{
+            //
+        }];
     }];
 }
 #pragma mark - 分享
@@ -101,7 +155,7 @@
     [UMSocialUIManager showShareMenuViewInWindowWithPlatformSelectionBlock:^(UMSocialPlatformType platformType, NSDictionary *userInfo) {
         // 根据获取的platformType确定所选平台进行下一步操作
         WeakSelf(weakSelf);
-        [[DDTJShareManager sharedManager] manageShareWithSharedType:platformType title:@"今晚8点西直门撸串拉" desc:@"15个人用的杯,碟(一次性纸制品),烤炉,烧烤叉15个,两至三斤碳.保鲜袋和垃圾袋适量.扫调料用的扫子三个以上.两卷纸.两瓶汽水(可乐,新期士,雪碧),王老吉或清凉茶(清热解火,现在是夏天),除了楼主的备用外,还可以加些别的,如茄瓜,通菜,番茄(切片),鱼类,生豪,鱿雨,冬姑(先泡好,挑大的才好烤),可以备一个西瓜.调料：盐、酱油、辣椒、烤酱等外可备蜂蜜,番茄汁,别忘了带没了这个可不行.大概每人100-150元啦,请记得要搞好防火工作哦,安全第一嘛!" image:@"refreshjoke_loading_16" shareUrl:@"http://www.itexamprep.com/cn/microsoft/exam/" controller:weakSelf];
+        [[DDTJShareManager sharedManager] manageShareWithSharedType:platformType title:@"双12从头做起" desc:@"就在长安街某理发店个人哦，均价只要800元。" image:@"AppIcon" shareUrl:@"http://www.itexamprep.com/cn/microsoft/exam/" controller:weakSelf];
     }];
 }
 
