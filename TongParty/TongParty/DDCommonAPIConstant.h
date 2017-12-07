@@ -61,6 +61,8 @@ UIKIT_EXTERN NSString *const kTJGetMapRangeDesksAPI;
 UIKIT_EXTERN NSString *const kTJDetailDeskInfoAPI;
 /** 桌主签到桌子*/
 UIKIT_EXTERN NSString *const kTJHosterSignInAPI;
+/** 参与者签到桌子的二维码*/
+UIKIT_EXTERN NSString *const kTJPartintsSignQRAPI;
 /** 申请加入桌子*/
 UIKIT_EXTERN NSString *const kTJApplyJoinInDeskAPI;
 /** 用户通过加入桌子*/
@@ -81,6 +83,8 @@ UIKIT_EXTERN NSString *const kTJUserCaredDeskListsAPI;
 UIKIT_EXTERN NSString *const kTJDeskInterestedPeopleAPI;
 /** 桌子申请的用户*/
 UIKIT_EXTERN NSString *const kTJDeskApplyPeopleAPI;
+/** 收到的桌子邀请*/
+UIKIT_EXTERN NSString *const kTJReceiveDeskInviteListAPI;
 /** 邀请好友页面*/
 UIKIT_EXTERN NSString *const kTJDeskInviteFriedAPI;
 /** 邀请好友加入桌子*/

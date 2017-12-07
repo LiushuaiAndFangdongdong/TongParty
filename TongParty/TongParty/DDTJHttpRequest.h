@@ -147,6 +147,15 @@
                              block:(void(^)(NSDictionary *dict))dict
                            failure:(void(^)())failure;
 
+/**参与者签到需要扫的的二维码
+ * @token  用户token
+ * @tid 桌子id
+ */
++ (void)paraintsSignQRWithToken:(NSString *)token
+                            tid:(NSString *)tid
+                          block:(void(^)(NSDictionary *dict))dict
+                        failure:(void(^)())failure;
+
 /**申请加入桌子
  * @token  用户token
  * @tid 桌子id
@@ -178,6 +187,107 @@
                               t_uid:(NSString *)t_uid
                               block:(void(^)(NSDictionary *dict))dict
                             failure:(void(^)())failure;
+
+/**参与者退出桌子
+ * @token  用户token
+ * @tid 桌子id
+ * @t_uid  桌子创建人id
+ */
++ (void)parintsQuitDeskWithToken:(NSString *)token
+                              tid:(NSString *)tid
+                            t_uid:(NSString *)t_uid
+                            block:(void(^)(NSDictionary *dict))dict
+                          failure:(void(^)())failure;
+
+/**桌主审核申请者
+ * @token  用户token
+ * @tid 桌子id
+ * @sid  被审核用户id
+ * @m   1--同意，2--拒绝
+ */
++ (void)masterCheckApplicantWithToken:(NSString *)token
+                             tid:(NSString *)tid
+                             sid:(NSString *)sid
+                               m:(NSString *)m
+                           block:(void(^)(NSDictionary *dict))dict
+                         failure:(void(^)())failure;
+
+/**游客关注桌子
+ * @token  用户token
+ * @tid 桌子id
+ */
++ (void)vistorCaredDeskWithToken:(NSString *)token
+                                  tid:(NSString *)tid
+                                block:(void(^)(NSDictionary *dict))dict
+                         failure:(void(^)())failure;
+
+/**游客取消关注桌子
+ * @token  用户token
+ * @tid 桌子id
+ */
++ (void)vistorCancelCaredDeskWithToken:(NSString *)token
+                             tid:(NSString *)tid
+                           block:(void(^)(NSDictionary *dict))dict
+                         failure:(void(^)())failure;
+
+/**用户关注的桌子列表
+ * @token  用户token
+ * @tid 桌子id
+ */
++ (void)userCaredDeskListWithToken:(NSString *)token
+                                 block:(void(^)(NSDictionary *dict))dict
+                               failure:(void(^)())failure;
+
+/**桌子感兴趣的用户
+ * @token  用户token
+ * @tid 桌子id
+ * @lon 经度
+ * @lat 纬度
+ */
++ (void)deskCaredUserListWithToken:(NSString *)token
+                               tid:(NSString *)tid
+                               lon:(NSString *)lon
+                               lat:(NSString *)lat
+                             block:(void(^)(NSDictionary *dict))dict
+                           failure:(void(^)())failure;
+
+/**桌子申请的用户
+ * @token  用户token
+ * @tid 桌子id
+ * @lon 经度
+ * @lat 纬度
+ */
++ (void)deskApplyUserListWithToken:(NSString *)token
+                               tid:(NSString *)tid
+                               lon:(NSString *)lon
+                               lat:(NSString *)lat
+                             block:(void(^)(NSDictionary *dict))dict
+                           failure:(void(^)())failure;
+
+/** 获取收到的桌子邀请
+ * @token  用户token
+ */
++ (void)getDeskInviteListsWithToken:(NSString *)token
+                             block:(void(^)(NSDictionary *dict))dict
+                           failure:(void(^)())failure;
+
+/**邀请好友页面
+ * @token  用户token
+ */
++ (void)inviteFriendsListsWithToken:(NSString *)token
+                             block:(void(^)(NSDictionary *dict))dict
+                           failure:(void(^)())failure;
+
+/**邀请好友加入桌子
+ * @token  用户token
+ * @tid 桌子id
+ * @fid 被邀请人id
+ */
++ (void)inviteFriendJoinDeskWithToken:(NSString *)token
+                               tid:(NSString *)tid
+                               fid:(NSString *)fid
+                             block:(void(^)(NSDictionary *dict))dict
+                           failure:(void(^)())failure;
 
 /**桌主发送公告
  * @token  用户token

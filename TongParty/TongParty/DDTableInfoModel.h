@@ -14,7 +14,7 @@
 @property (nonatomic, copy) NSString *begin_time;  //开始时间
 @property (nonatomic, copy) NSString *custom;   //自定义活动
 @property (nonatomic, copy) NSString *id;     //id
-@property (nonatomic, copy) NSString *image;  //图片
+@property (nonatomic, copy) NSString *image;  //桌主头像
 @property (nonatomic, copy) NSString *person_num; //限制的人数
 @property (nonatomic, copy) NSString *place;      //地点
 @property (nonatomic, copy) NSString *text;       //公告

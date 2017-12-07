@@ -63,6 +63,8 @@ NSString *const kTJGetMapRangeDesksAPI = @"/tongju/api/get_table_map.php";
 NSString *const kTJDetailDeskInfoAPI = @"/tongju/api/get_table_info.php";
 /** 桌主签到桌子*/
 NSString *const kTJHosterSignInAPI = @"/tongju/api/table_sign.php";
+/** 参与者签到桌子的二维码*/
+NSString *const kTJPartintsSignQRAPI = @"/tongju/api/get_sign_code.php";
 /** 申请加入桌子*/
 NSString *const kTJApplyJoinInDeskAPI = @"/tongju/api/user_in_table.php?m=apply";
 /** 用户通过加入桌子*/
@@ -78,11 +80,13 @@ NSString *const kTJUserCaredDeskAPI = @"/tongju/api/set_like_table.php";
 /** 用户取消关注桌子*/
 NSString *const kTJUserUncaredDeskAPI = @"/tongju/api/delete_like_table.php";
 /** 用户关注桌子列表*/
-NSString *const kTJUserCaredListsAPI = @"/tongju/api/get_like_table.php";
+NSString *const kTJUserCaredDeskListsAPI = @"/tongju/api/get_like_table.php";
 /** 桌子感兴趣的人*/
 NSString *const kTJDeskInterestedPeopleAPI = @"/tongju/api/get_table_like.php";
 /** 桌子申请的用户*/
 NSString *const kTJDeskApplyPeopleAPI = @"/tongju/api/get_table_wait.php";
+/** 收到的桌子邀请*/
+NSString *const kTJReceiveDeskInviteListAPI = @"/tongju/api/get_table_invite.php";
 /** 邀请好友页面*/
 NSString *const kTJDeskInviteFriedAPI = @"/tongju/api/invitation_friend.php";
 /** 邀请好友加入桌子*/

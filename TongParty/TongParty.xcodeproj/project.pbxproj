@@ -242,6 +242,10 @@
 		98DEFF421F78EDA2007F73D1 /* DDUsercenterTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 98DEFF411F78EDA2007F73D1 /* DDUsercenterTableViewCell.m */; };
 		98DEFF451F78F094007F73D1 /* DDNumbersTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 98DEFF441F78F094007F73D1 /* DDNumbersTextView.m */; };
 		98DEFF4B1F790FF3007F73D1 /* DDRewardCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 98DEFF4A1F790FF3007F73D1 /* DDRewardCellView.m */; };
+		98E2C6FD1FD920890050653E /* DDInviteFriedsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98E2C6FC1FD920890050653E /* DDInviteFriedsViewController.m */; };
+		98E2C7001FD928A80050653E /* DDInviteFriendCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 98E2C6FF1FD928A80050653E /* DDInviteFriendCell.m */; };
+		98E2C7031FD92E130050653E /* DDInviteFriendModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 98E2C7021FD92E130050653E /* DDInviteFriendModel.m */; };
+		98E2C7061FD948A90050653E /* LSCouponView.m in Sources */ = {isa = PBXBuildFile; fileRef = 98E2C7051FD948A90050653E /* LSCouponView.m */; };
 		98F1BE711F6FB7A90034EDA5 /* DOPDropDownMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 98F1BE701F6FB7A90034EDA5 /* DOPDropDownMenu.m */; };
 		98F40AF41FAC16F1002B06B6 /* DDStretchableTableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 98F40AF21FAC1436002B06B6 /* DDStretchableTableHeaderView.m */; };
 		98F40AF81FAC3F12002B06B6 /* DDUserInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 98F40AF71FAC3F12002B06B6 /* DDUserInfoModel.m */; };
@@ -769,6 +773,14 @@
 		98DEFF441F78F094007F73D1 /* DDNumbersTextView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DDNumbersTextView.m; sourceTree = "<group>"; };
 		98DEFF491F790FF3007F73D1 /* DDRewardCellView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DDRewardCellView.h; sourceTree = "<group>"; };
 		98DEFF4A1F790FF3007F73D1 /* DDRewardCellView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DDRewardCellView.m; sourceTree = "<group>"; };
+		98E2C6FB1FD920890050653E /* DDInviteFriedsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DDInviteFriedsViewController.h; sourceTree = "<group>"; };
+		98E2C6FC1FD920890050653E /* DDInviteFriedsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DDInviteFriedsViewController.m; sourceTree = "<group>"; };
+		98E2C6FE1FD928A80050653E /* DDInviteFriendCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DDInviteFriendCell.h; sourceTree = "<group>"; };
+		98E2C6FF1FD928A80050653E /* DDInviteFriendCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DDInviteFriendCell.m; sourceTree = "<group>"; };
+		98E2C7011FD92E130050653E /* DDInviteFriendModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DDInviteFriendModel.h; sourceTree = "<group>"; };
+		98E2C7021FD92E130050653E /* DDInviteFriendModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DDInviteFriendModel.m; sourceTree = "<group>"; };
+		98E2C7041FD948A80050653E /* LSCouponView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LSCouponView.h; sourceTree = "<group>"; };
+		98E2C7051FD948A90050653E /* LSCouponView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LSCouponView.m; sourceTree = "<group>"; };
 		98F1BE6F1F6FB7A90034EDA5 /* DOPDropDownMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DOPDropDownMenu.h; sourceTree = "<group>"; };
 		98F1BE701F6FB7A90034EDA5 /* DOPDropDownMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DOPDropDownMenu.m; sourceTree = "<group>"; };
 		98F40AF21FAC1436002B06B6 /* DDStretchableTableHeaderView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DDStretchableTableHeaderView.m; sourceTree = "<group>"; };
@@ -904,6 +916,7 @@
 		9800938B1F73956700FE0FE9 /* Desk(桌子) */ = {
 			isa = PBXGroup;
 			children = (
+				98E2C6F71FD91FD30050653E /* Invite */,
 				98578E331F8F616600FEF64D /* Sign */,
 				98578E1B1F8CAC3500FEF64D /* Desk */,
 				98578E1A1F8CAC2B00FEF64D /* Main */,
@@ -1574,6 +1587,8 @@
 				98578E601F90A4F900FEF64D /* DDBigDeskView.m */,
 				98578E3C1F8F6F9900FEF64D /* DDBottomView.h */,
 				98578E3D1F8F6F9900FEF64D /* DDBottomView.m */,
+				98E2C7041FD948A80050653E /* LSCouponView.h */,
+				98E2C7051FD948A90050653E /* LSCouponView.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -2676,6 +2691,43 @@
 			name = Blind;
 			sourceTree = "<group>";
 		};
+		98E2C6F71FD91FD30050653E /* Invite */ = {
+			isa = PBXGroup;
+			children = (
+				98E2C6FA1FD91FF30050653E /* Controller */,
+				98E2C6F91FD91FEF0050653E /* Model */,
+				98E2C6F81FD91FEA0050653E /* View */,
+			);
+			name = Invite;
+			sourceTree = "<group>";
+		};
+		98E2C6F81FD91FEA0050653E /* View */ = {
+			isa = PBXGroup;
+			children = (
+				98E2C6FE1FD928A80050653E /* DDInviteFriendCell.h */,
+				98E2C6FF1FD928A80050653E /* DDInviteFriendCell.m */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		98E2C6F91FD91FEF0050653E /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				98E2C7011FD92E130050653E /* DDInviteFriendModel.h */,
+				98E2C7021FD92E130050653E /* DDInviteFriendModel.m */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		98E2C6FA1FD91FF30050653E /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				98E2C6FB1FD920890050653E /* DDInviteFriedsViewController.h */,
+				98E2C6FC1FD920890050653E /* DDInviteFriedsViewController.m */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
 		98F40AF11FAC1429002B06B6 /* StrechHeaderView */ = {
 			isa = PBXGroup;
 			children = (
@@ -3106,6 +3158,7 @@
 				98D558061F7E2967006124C5 /* DDBlackListViewController.m in Sources */,
 				98D558011F7E25E9006124C5 /* DDContactViewController.m in Sources */,
 				9857465C1FA6D59D0017E5D1 /* DDModel.m in Sources */,
+				98E2C7001FD928A80050653E /* DDInviteFriendCell.m in Sources */,
 				989932101F6938FB00E4BCAA /* WebViewJavascriptBridge.m in Sources */,
 				9899324C1F693A3600E4BCAA /* NSDictionary+Addition.m in Sources */,
 				9899315D1F69160800E4BCAA /* AppDelegate.m in Sources */,
@@ -3132,6 +3185,7 @@
 				98BD9F161F74BBC10080A6FE /* UIButton+DDImagePosition.m in Sources */,
 				98F589AE1F6A76E2005E674A /* DDCustomLoadingAnimationView.m in Sources */,
 				98F589BF1F6A7ACD005E674A /* DDTJUserInfoModel.m in Sources */,
+				98E2C7061FD948A90050653E /* LSCouponView.m in Sources */,
 				98BF20391F7A112A00E94394 /* DDSettingVc.m in Sources */,
 				989932341F693A0C00E4BCAA /* NSString+Encrypt.m in Sources */,
 				98F589CE1F6A8079005E674A /* DDAnimationManager.m in Sources */,
@@ -3186,6 +3240,7 @@
 				9845222D1FD1586B00097143 /* DDShopDetailViewController.m in Sources */,
 				98F589C51F6A7BA7005E674A /* DDCommonConstant.m in Sources */,
 				98D557FC1F7E2462006124C5 /* DDAboutViewController.m in Sources */,
+				98E2C7031FD92E130050653E /* DDInviteFriendModel.m in Sources */,
 				986E5A081FAABC8D00FD391C /* LSRecommendAddressCell.m in Sources */,
 				98F40AF81FAC3F12002B06B6 /* DDUserInfoModel.m in Sources */,
 				98578E2F1F8F206B00FEF64D /* DDDeskView.m in Sources */,
@@ -3255,6 +3310,7 @@
 				989932421F693A1800E4BCAA /* NSObject+AddProperty.m in Sources */,
 				989931C51F6925C300E4BCAA /* MBProgressHUD+NHAddition.m in Sources */,
 				980093B41F73C06800FE0FE9 /* DDUsercenterVc.m in Sources */,
+				98E2C6FD1FD920890050653E /* DDInviteFriedsViewController.m in Sources */,
 				988E16C01FD63988003FFC72 /* DDCaptchaTimerManager.m in Sources */,
 				98F589C21F6A7B05005E674A /* DDUserInfoManager.m in Sources */,
 				981E5A6B1FCD48C5001B6448 /* DDDeskMatchView.m in Sources */,

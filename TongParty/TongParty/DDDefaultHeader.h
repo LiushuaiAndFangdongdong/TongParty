@@ -70,6 +70,7 @@ typedef NS_ENUM(NSUInteger, DDHomeAttentionListType) {
 //随机色
 #define kDDRandColor kRGBColor(arc4random_uniform(255), arc4random_uniform(255), arc4random_uniform(255))
 
+#define KEY_WINDOW [UIApplication sharedApplication].keyWindow
 /***  当前屏幕宽度 */
 #define kScreenWidth  [[UIScreen mainScreen] bounds].size.width
 /***  当前屏幕高度 */
