@@ -1386,6 +1386,29 @@
 }
 
 /**
+ 选择活动
+ 
+ @param dict 成功
+ @param failure 失败
+ */
++ (void)getActivitiesListblock:(void(^)(NSDictionary *dict))dict
+                       failure:(void(^)())failure  {
+    NSMutableDictionary *md = [NSMutableDictionary dictionary];
+    [self setWithMutableDict:md key:@"token" value:TOKEN];
+    
+    [self postWithAction:@"/tongju/api/selective_activity.php" params:md type:kDDHttpResponseTypeJson block:^(DDResponseModel *result) {
+        if (result.status.integerValue == kDDResponseStateSuccess) {
+            dict(result.data);
+        } else {
+            failure();
+        }
+        [MBProgressHUD showMessage:result.msg_cn toView:[UIApplication sharedApplication].keyWindow];
+    } failure:^{
+        //
+    }];
+}
+
+/**
  通讯录好友
  
  @param token token

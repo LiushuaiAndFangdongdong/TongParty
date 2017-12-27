@@ -88,6 +88,8 @@ height=305;\
         make.top.mas_equalTo(topOriginY);
     }];
     _avatar.layerCornerRadius = kAvatarWidth/2;
+    _avatar.userInteractionEnabled = YES;
+    [_avatar addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(avatarViewClick)]];
     //名称
     _nameLbl = [UILabel new];
     [_loginedView addSubview:_nameLbl];
@@ -310,6 +312,12 @@ height=305;\
 -(void)enterLoginVC:(UIButton *)sender{
     if (_loginRegisterClickBlcok) {
         _loginRegisterClickBlcok(sender.tag - 20);
+    }
+}
+
+-(void)avatarViewClick{
+    if (_scanBigAvatarBlcok) {
+        _scanBigAvatarBlcok();
     }
 }
 @end

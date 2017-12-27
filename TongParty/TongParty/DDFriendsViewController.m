@@ -13,6 +13,7 @@
 #import "LSFriendEntity.h"
 #import "DDHisHerViewController.h"
 #import "LSCareEntity.h"
+
 @interface DDFriendsViewController ()
 @property (nonatomic, strong)LSAddFriendVC  *addFriendVC;
 @end
@@ -53,6 +54,7 @@
                 }];
             } else {
                 // 他人关注列表
+                [MBProgressHUD showMessage:@"暂无权限查看他人关注"];
             }
             
         }break;

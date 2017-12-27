@@ -21,5 +21,7 @@ typedef NS_ENUM(NSUInteger, DDHeaderViewType) {
 -(void)updateUserInfoWith:(DDUserInfoModel *)model;
 
 @property (nonatomic, copy) void(^loginRegisterClickBlcok)(NSInteger index);
+
+@property (nonatomic, copy) void(^scanBigAvatarBlcok)();
 @end
 

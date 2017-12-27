@@ -558,6 +558,15 @@
                            block:(void(^)(NSDictionary *dict))dict
                          failure:(void(^)())failure;
 
+/**
+ 选择活动
+ 
+ @param dict 成功
+ @param failure 失败
+ */
++ (void)getActivitiesListblock:(void(^)(NSDictionary *dict))dict
+                       failure:(void(^)())failure;
+
 #pragma mark  ------------- 地址 -- - ----
 
 /**添加地址*/

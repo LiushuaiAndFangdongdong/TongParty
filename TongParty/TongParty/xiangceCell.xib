@@ -1,49 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="xiangceCell">
-            <rect key="frame" x="0.0" y="0.0" width="141" height="234"/>
+            <rect key="frame" x="0.0" y="0.0" width="246" height="246"/>
             <autoresizingMask key="autoresizingMask"/>
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                <rect key="frame" x="0.0" y="0.0" width="141" height="234"/>
+                <rect key="frame" x="0.0" y="0.0" width="246" height="246"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
                     <imageView multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Dlf-J3-RD6">
-                        <rect key="frame" x="0.0" y="0.0" width="141" height="234"/>
+                        <rect key="frame" x="0.0" y="10" width="246" height="236"/>
                     </imageView>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jbM-gZ-F6h">
-                        <rect key="frame" x="111" y="204" width="30" height="30"/>
+                        <rect key="frame" x="228" y="0.0" width="20" height="20"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="30" id="e6r-6x-A5j"/>
-                            <constraint firstAttribute="height" constant="30" id="ort-n6-UrZ"/>
+                            <constraint firstAttribute="width" constant="20" id="e6r-6x-A5j"/>
+                            <constraint firstAttribute="height" constant="20" id="ort-n6-UrZ"/>
                         </constraints>
                     </button>
                 </subviews>
             </view>
             <constraints>
-                <constraint firstItem="Dlf-J3-RD6" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="0hk-M9-o4x"/>
-                <constraint firstAttribute="trailing" secondItem="jbM-gZ-F6h" secondAttribute="trailing" id="3xr-o8-Edi"/>
+                <constraint firstItem="Dlf-J3-RD6" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="10" id="0hk-M9-o4x"/>
+                <constraint firstAttribute="trailing" secondItem="jbM-gZ-F6h" secondAttribute="trailing" constant="-2" id="89b-4r-mtk"/>
                 <constraint firstAttribute="trailing" secondItem="Dlf-J3-RD6" secondAttribute="trailing" id="8vX-Pb-LEI"/>
                 <constraint firstItem="Dlf-J3-RD6" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="IpK-Dy-Z4Y"/>
-                <constraint firstAttribute="bottom" secondItem="jbM-gZ-F6h" secondAttribute="bottom" id="Nje-Rm-hiD"/>
                 <constraint firstAttribute="bottom" secondItem="Dlf-J3-RD6" secondAttribute="bottom" id="dhM-iy-XIM"/>
+                <constraint firstItem="jbM-gZ-F6h" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="uTP-4y-Mjb"/>
             </constraints>
-            <size key="customSize" width="141" height="234"/>
+            <size key="customSize" width="246" height="246"/>
             <connections>
                 <outlet property="imgview" destination="Dlf-J3-RD6" id="kMN-dk-GBZ"/>
                 <outlet property="sele_button" destination="jbM-gZ-F6h" id="R6b-LM-I6l"/>
             </connections>
-            <point key="canvasLocation" x="-329" y="6"/>
+            <point key="canvasLocation" x="-277" y="12"/>
         </collectionViewCell>
     </objects>
 </document>

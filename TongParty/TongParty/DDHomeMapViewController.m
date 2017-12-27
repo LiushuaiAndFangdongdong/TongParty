@@ -10,11 +10,16 @@
 #import "DDMAAnnotationView.h"
 #import "LSSortingView.h"
 #import <pop/pop.h>
-
+#import "LSContenSortVC.h"
+#import "LSRegionDumpsVC.h"
+#import "LSTimeSortVC.h"
 @interface DDHomeMapViewController ()<MAMapViewDelegate>
 @property (nonatomic, strong)UIImageView *iv_mark;
 @property (nonatomic, strong)MAMapView *mapView;
 @property (nonatomic, strong)LSSortingView *sortingView;
+@property (nonatomic, strong)LSContenSortVC *contentsortVc;
+@property (nonatomic, strong)LSRegionDumpsVC *regionDumpsVc;
+@property (nonatomic, strong)LSTimeSortVC *timesortVc;
 @end
 
 @implementation DDHomeMapViewController
@@ -32,23 +37,64 @@
     if (!_sortingView) {
         _sortingView = [[LSSortingView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, 40)];
         _sortingView.onTapBlcok = ^(NSInteger index) {
-            [weakSelf.sortingView showSecondaryViewWithTag:index onView:weakSelf.view];
-        };
-        _sortingView.onClickBlcok = ^(UIButton *sender) {
-            NSLog(@"%@",sender.titleLabel.text);
-        };
-        _sortingView.onAddressSelected = ^(NSString *addString) {
-            // 根据商圈搜索数据后回调
-            // 模拟请求需要一秒钟
-            dispatch_time_t delayTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0* NSEC_PER_SEC));
-            dispatch_after(delayTime, dispatch_get_main_queue(), ^{
-                [weakSelf.sortingView showSecondaryViewWithTag:2 onView:weakSelf.view];
-            });
-            NSLog(@"选择～～～%@",addString);
+            switch (index) {
+                case 0:{
+                    weakSelf.regionDumpsVc.view.hidden = YES;
+                    weakSelf.timesortVc.view.hidden = YES;
+                    weakSelf.contentsortVc.view.hidden = !weakSelf.contentsortVc.view.isHidden;
+                }break;
+                case 1:{
+                    weakSelf.contentsortVc.view.hidden = YES;
+                    weakSelf.regionDumpsVc.view.hidden = YES;
+                    weakSelf.timesortVc.view.hidden = !weakSelf.timesortVc.view.isHidden;;
+                }break;
+                case 2:{
+                    weakSelf.contentsortVc.view.hidden = YES;
+                    weakSelf.timesortVc.view.hidden = YES;
+                    weakSelf.regionDumpsVc.view.hidden = !weakSelf.regionDumpsVc.view.isHidden;;
+                }break;
+                default:
+                    break;
+            }
+
         };
     }
     return _sortingView;
 }
+
+- (LSContenSortVC *)contentsortVc {
+    if (!_contentsortVc) {
+        _contentsortVc = [[LSContenSortVC alloc] init];
+        [self addChildVc:_contentsortVc];
+        _contentsortVc.view.frame = CGRectMake(0, self.sortingView.bottom, self.view.frame.size.width, kScreenHeight);
+        [self.view addSubview:_contentsortVc.view];
+        _contentsortVc.view.hidden = YES;
+    }
+    return _contentsortVc;
+}
+
+- (LSRegionDumpsVC *)regionDumpsVc {
+    if (!_regionDumpsVc) {
+        _regionDumpsVc = [[LSRegionDumpsVC alloc] init];
+        [self addChildVc:_regionDumpsVc];
+        _regionDumpsVc.view.frame = CGRectMake(0, self.sortingView.bottom, self.view.frame.size.width, kScreenHeight);
+        [self.view addSubview:_contentsortVc.view];
+        _regionDumpsVc.view.hidden = YES;
+    }
+    return _regionDumpsVc;
+}
+
+- (LSTimeSortVC *)timesortVc {
+    if (!_timesortVc) {
+        _timesortVc = [[LSTimeSortVC alloc] init];
+        [self addChildVc:_timesortVc];
+        _timesortVc.view.frame = CGRectMake(0, self.sortingView.bottom, self.view.frame.size.width, 40.f);
+        [self.view addSubview:_timesortVc.view];
+        _timesortVc.view.hidden = YES;
+    }
+    return _timesortVc;
+}
+
 
 - (MAMapView *)mapView {
     

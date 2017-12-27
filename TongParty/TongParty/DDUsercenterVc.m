@@ -20,6 +20,7 @@
 #import "DDStretchableTableHeaderView.h"//果冻下拉
 #import "DDUsercenterHeaderView.h"      //头部信息
 #import "DDUserInfoModel.h"             //用户详情model
+#import "DDScanAvatarViewController.h"  //查看大头像
 
 #import "DDHisHerViewController.h"
 #import "LSAlbumEtity.h"
@@ -79,6 +80,10 @@ height=305;\
             }else if (index == 1){
                 [weakSelf enterRegisterVC];
             }else{}
+        };
+        _headerView.scanBigAvatarBlcok = ^{
+            //查看头像大图
+            [weakSelf pushBigAvatarVC];
         };
     }
     return _headerView;
@@ -389,6 +394,12 @@ height=305;\
         vc.style = style;
         [self.navigationController pushViewController:vc animated:YES];
     }];
+}
+
+
+- (void)pushBigAvatarVC{
+    DDScanAvatarViewController *scanAvatarVC = [[DDScanAvatarViewController alloc] init];
+    [self.navigationController pushViewController:scanAvatarVC animated:YES];
 }
 
 
