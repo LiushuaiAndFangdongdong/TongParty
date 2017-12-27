@@ -17,6 +17,7 @@
 @interface DDActivitiesHisCellView()
 @property (nonatomic, strong) UIImageView *iconView;
 @property (nonatomic, strong) UILabel     *nameLabel;
+@property (nonatomic, strong) UIScrollView *scrollView;
 @end
 
 @implementation DDActivitiesHisCellView
@@ -41,7 +42,7 @@
     self.nameLabel = [UILabel new];
     [self addSubview:self.nameLabel];
     [self.nameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.top.mas_equalTo(12.5);
+        //        make.top.mas_equalTo(12.5);
         make.centerY.mas_equalTo(self.iconView);
         make.left.mas_equalTo(self.iconView.mas_right).offset(5);
         make.width.mas_equalTo(60);
@@ -52,14 +53,18 @@
 }
 - (void)updateWithModel:(DDUserInfoModel *)model;{
     
+    if (_scrollView) {
+        [_scrollView removeFromSuperview];
+    }
+    
     //表示未登录
     if (![DDUserDefault objectForKey:@"token"])return;
     
     if (model.ct_num || model.jt_num) {
         
-        UIScrollView *scrollView = [UIScrollView new];
-        [self addSubview:scrollView];
-        [scrollView mas_makeConstraints:^(MASConstraintMaker *make) {
+        _scrollView = [UIScrollView new];
+        [self addSubview:_scrollView];
+        [_scrollView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.top.mas_equalTo(self.iconView.mas_bottom).offset(10);
             make.bottom.mas_equalTo(-5);
             make.left.and.right.mas_equalTo(0);
@@ -69,7 +74,7 @@
         for (int i=0; i<n; i++) {
             //圆形活动
             DDLabelView *labelView = [DDLabelView new];
-            [scrollView addSubview:labelView];
+            [_scrollView addSubview:labelView];
             [labelView mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.width.and.height.mas_equalTo(kActivityItemWidth);
                 make.top.mas_equalTo(5);
@@ -83,7 +88,7 @@
             
             //中间的连线
             UILabel *linkline = [UILabel new];
-            [scrollView addSubview:linkline];
+            [_scrollView addSubview:linkline];
             [linkline mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.height.mas_equalTo(1);
                 make.left.mas_equalTo(labelView.mas_right).offset(1);
@@ -97,7 +102,7 @@
             
             //时间
             UILabel *timeLbl  =[UILabel new];
-            [scrollView addSubview:timeLbl];
+            [_scrollView addSubview:timeLbl];
             [timeLbl mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.top.mas_equalTo(labelView.mas_bottom).offset(5);
                 make.width.mas_equalTo(kActivityItemWidth);
@@ -109,12 +114,12 @@
             timeLbl.textAlignment = NSTextAlignmentCenter;
             timeLbl.textColor = kGrayColor ;
             
-            scrollView.contentSize = CGSizeMake((i+1)*kActivityItemWidth + kMarginGapWidth * (i+2), 0);
+            _scrollView.contentSize = CGSizeMake((i+1)*kActivityItemWidth + kMarginGapWidth * (i+2), 0);
         }
     }
 }
 -(void)activitiesItemClick:(UITapGestureRecognizer *)tap{
-    NSLog(@"%d",[tap view].tag);
+    NSLog(@"%ld",[tap view].tag);
     if (_activityHistoryClickBlcok) {
         _activityHistoryClickBlcok([tap view].tag - 100);
     }

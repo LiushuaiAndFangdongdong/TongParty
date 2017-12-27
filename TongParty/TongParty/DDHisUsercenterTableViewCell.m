@@ -46,6 +46,9 @@
                 _variousNumberClickBlcok(index);
             }
         };
+        weakSelf.ntView.careBtnClickBlcok = ^(BOOL isCare) {
+            weakSelf.careBtnClickBlcok(isCare);
+        };
     }
     return _ntView;
 }
@@ -109,6 +112,11 @@
         default:
             break;
     }
+}
+
+- (void)updateValueWith:(id)model {
+    [_infoView updateValueWithModel:model];
+    [_ntView updateWithModel:model withType:DDNumbersTextViewTypeOthers];
 }
 
 @end

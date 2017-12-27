@@ -8,6 +8,7 @@
 
 #import "DDNumbersTextView.h"
 #import "UIView+Layer.h"
+#import "LSHisUserInfoModel.h"
 
 #define kSplitLineWidth  1
 #define kItemWidth   (kScreenWidth - 3)/4
@@ -146,11 +147,8 @@
         make.height.mas_equalTo(30);
     }];
     _careBtn.layerCornerRadius = 12;
-    [_careBtn setTitle:@"关注" forState:UIControlStateNormal];
     [_careBtn setTitleColor:kWhiteColor forState:UIControlStateNormal];
-    _careBtn.backgroundColor = kBgGreenColor;
     _careBtn.titleLabel.font = kFont(12);
-    [_careBtn addTarget:self action:@selector(careAction:) forControlEvents:UIControlEventTouchUpInside];
     
     float itemW = (kScreenWidth - 55 - 55 - 20 -10)/3;
     [self.itemViewCoin mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -243,20 +241,61 @@
         _variousNumbersClickBlcok([tap view].tag - 100);
     }
 }
-- (void)updateWithModel:(DDUserInfoModel *)model{
-    if (model.coin) {
-        self.itemViewCoin.itemNumbers  = model.coin;
-    }
-    if (model.bl_num) {
-        self.itemViewCare.itemNumbers  = model.bl_num;
-    }
-    if (model.tl_num) {
-        self.itemViewCared.itemNumbers  = model.tl_num;
-    }
-    if (model.f_num) {
-        self.itemViewFriends.itemNumbers  = model.f_num;
+- (void)updateWithModel:(id)model withType:(DDNumbersTextViewType)style{
+    
+    switch (style) {
+        case DDNumbersTextViewTypeNormal:{
+            DDUserInfoModel *uModel = (DDUserInfoModel *)model;
+            if (uModel.coin) {
+                self.itemViewCoin.itemNumbers  = uModel.coin;
+            }
+            if (uModel.bl_num) {
+                self.itemViewCare.itemNumbers  = uModel.bl_num;
+            }
+            if (uModel.tl_num) {
+                self.itemViewCared.itemNumbers  = uModel.tl_num;
+            }
+            if (uModel.f_num) {
+                self.itemViewFriends.itemNumbers  = uModel.f_num;
+            }
+        }break;
+        case DDNumbersTextViewTypeOthers:{
+            LSHisUserInfoModel *hModel = (LSHisUserInfoModel *)model;
+            self.itemViewCoin.itemNumbers = hModel.coin;
+            self.itemViewCare.itemNumbers  = hModel.bl_num;
+            self.itemViewCared.itemNumbers  = hModel.tl_num;
+            self.itemViewFriends.itemNumbers  = hModel.f_num;
+            if (hModel.is_like.integerValue == YES) {
+                [_careBtn setTitle:@"已关注" forState:UIControlStateNormal];
+                [_careBtn setTitleColor:kBgGreenColor forState:UIControlStateNormal];
+                _careBtn.backgroundColor = kWhiteColor;
+                _careBtn.layerBorderColor = kBgGreenColor;
+                _careBtn.layerBorderWidth = 1;
+                [_careBtn addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(cancelCareAtction:)]];
+            } else {
+                [_careBtn setTitle:@"关注" forState:UIControlStateNormal];
+                [_careBtn setTitleColor:kWhiteColor forState:UIControlStateNormal];
+                _careBtn.backgroundColor = kBgGreenColor;
+                [_careBtn addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(careAtction:)]];
+            }
+        }break;
+        default:
+            break;
     }
 }
+
+- (void)careAtction:(UIButton *)sender {
+    if (_careBtnClickBlcok) {
+        _careBtnClickBlcok(YES);
+    }
+}
+
+- (void)cancelCareAtction:(UIButton *)sender {
+    if (_careBtnClickBlcok) {
+        _careBtnClickBlcok(NO);
+    }
+}
+
 @end
 
 

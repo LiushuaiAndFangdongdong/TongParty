@@ -18,7 +18,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = @"芝麻认证";
+    [self navigationWithTitle:@"芝麻认证"];
+    self.navigationItem.leftBarButtonItem = [self backButtonForNavigationBarWithAction:@selector(pop)];
     [self setupViews];
 }
 -(void)setupViews{

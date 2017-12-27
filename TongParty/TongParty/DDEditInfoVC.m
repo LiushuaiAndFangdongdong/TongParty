@@ -18,11 +18,13 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = @"修改昵称";
     [self setupViews];
 }
 
 -(void)setupViews{
+    [self navigationWithTitle:self.title];
+    self.navigationItem.rightBarButtonItem = [self customTitleButtonForNavigationWithAction:@selector(confirm:) title:@"完成" CGSize:CGSizeMake(DDFitWidth(50.f), DDFitHeight(50.f))];
+    self.navigationItem.leftBarButtonItem = [self backButtonForNavigationBarWithAction:@selector(pop)];
     self.txtFieldView = [[DDTitletxtFieldView alloc] init];
     [self.view addSubview:self.txtFieldView];
     [self.txtFieldView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -32,8 +34,16 @@
     }];
     self.txtFieldView.style = DDTextFieldStyleNormal;
     self.txtFieldView.ploceholderstr = @"修改昵称";
-    
 }
+
+
+- (void)confirm:(UIBarButtonItem *)sender {
+    if (_editResult) {
+        _editResult(_txtFieldView.textView.text);
+        [self pop];
+    }
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

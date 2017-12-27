@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "DDCustomPlaceHolderTextView.h"
 typedef NS_ENUM(NSUInteger, DDTextFieldStyle) {
     /** 常规*/
     DDTextFieldStyleNormal,
@@ -23,4 +23,6 @@ typedef NS_ENUM(NSUInteger, DDTextFieldStyle) {
 @property (nonatomic, copy)  NSString  *titlestring;
 @property (nonatomic, copy)  NSString *ploceholderstr;
 @property (nonatomic, copy)  NSString *titleImagestr;
+@property (nonatomic, strong) DDCustomPlaceHolderTextView  *textView;
 @end
+

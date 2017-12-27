@@ -17,7 +17,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.navItemTitle = @"设置隐私";
+    [self navigationWithTitle:@"设置隐私"];
+    self.navLeftItem = [self backButtonForNavigationBarWithAction:@selector(pop)];
     [self setUpViews];
 }
 // 设置子视图
@@ -36,16 +37,33 @@
 - (DDBaseTableViewCell *)tj_cellAtIndexPath:(NSIndexPath *)indexPath {
     DDSettingTableViewCell *cell = [DDSettingTableViewCell cellWithTableView:self.tableView];
     cell.accessoryType = UITableViewCellAccessoryNone;
+    cell.style = DDSingleSelectStyleSelectImg;
     if (indexPath.row == 0) {
+        if (_statu.integerValue == 0) {
+            cell.ra_btn.checked = YES;
+        }
         cell.namestring = @"公开所有人";
     }
     if (indexPath.row == 1) {
+        if (_statu.integerValue == 1) {
+            cell.ra_btn.checked = YES;
+        }
         cell.namestring = @"仅好友可见";
     }
     if (indexPath.row == 2) {
+        if (_statu.integerValue == 2) {
+            cell.ra_btn.checked = YES;
+        }
         cell.namestring = @"所有人都不可见";
-    }else{
     }
+    cell.setPrivacy = ^(NSString *statu) {
+        
+        [DDTJHttpRequest editUserPrivacyName:_name status:statu block:^(NSDictionary *dict) {
+            
+        } failure:^{
+            
+        }];
+    };
     return cell;
 }
 
@@ -54,8 +72,10 @@
 }
 
 - (void)tj_didSelectCellAtIndexPath:(NSIndexPath *)indexPath cell:(DDBaseTableViewCell *)cell {
-  
+    
 }
+
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 }

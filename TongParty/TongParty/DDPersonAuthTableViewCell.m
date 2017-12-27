@@ -11,6 +11,7 @@
 @interface DDPersonAuthTableViewCell ()
 @property (nonatomic, strong) UIImageView *iconView;
 @property (nonatomic, strong) UILabel *nameLabel;
+@property (nonatomic, strong) UILabel *statuLabel;
 @end
 
 @implementation DDPersonAuthTableViewCell
@@ -36,9 +37,7 @@
         _nameLabel = [[UILabel alloc] init];
         [self.contentView addSubview:self.nameLabel];
         [self.nameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-//            make.top.mas_equalTo(5);
             make.left.mas_equalTo(self.iconView.mas_right).offset(10);
-//            make.bottom.mas_equalTo(-5);
             make.centerY.mas_equalTo(self.iconView.centerY);
         }];
         _nameLabel.font = kFont(13);
@@ -47,11 +46,29 @@
     }
     return _nameLabel;
 }
+
+-(UILabel *)statuLabel{
+    if (!_statuLabel) {
+        _statuLabel = [[UILabel alloc] init];
+        [self.contentView addSubview:self.statuLabel];
+        [self.statuLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.right.mas_equalTo(self.contentView.mas_right).offset(-5);
+            make.centerY.mas_equalTo(self.iconView.centerY);
+        }];
+        _statuLabel.font = kFont(13);
+        _statuLabel.textAlignment = NSTextAlignmentLeft;
+        _statuLabel.textColor = kBlackColor;
+    }
+    return _statuLabel;
+}
 -(void)setIconstring:(NSString *)iconstring{
     self.iconView.image = kImage(iconstring);
 }
 -(void)setNamestring:(NSString *)namestring{
     self.nameLabel.text = namestring;
+}
+-(void)setStatustring:(NSString *)statustring {
+    self.statuLabel.text = statustring;
 }
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];

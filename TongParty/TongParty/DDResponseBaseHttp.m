@@ -21,12 +21,12 @@
 
 
 +(void)getWithAction:(NSString *)action params:(NSDictionary *)params type:(DDHttpResponseType)type block:(void (^)(DDResponseModel *result))block failure:(void(^)())failure{
-
+    
     [super getWithUrl:kTJHostAPI action:action params:params type:type block:^(id responseObject) {
         DDResponseModel *result = [DDResponseModel mj_objectWithKeyValues:responseObject];
         block(result);
     } failure:^{
-       failure();
+        failure();
     }];
 }
 
@@ -63,4 +63,17 @@
     }];
 }
 
+
++ (void)uploadInfoContainImageWithAction:(NSString *)action params:(NSDictionary *)params images:(NSArray *)images  success:(void (^)(DDResponseModel *result))success fail:(void (^)())fail {
+    
+    [super uploadInfoContainImageWithUrl:kTJHostAPI action:action params:params image:images success:^(id responseObject) {
+        DDResponseModel *result = [DDResponseModel mj_objectWithKeyValues:responseObject];
+        success(result);
+    } fail:^{
+        fail();
+    }];
+}
+
+
 @end
+

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="50" id="KGk-i7-Jjw" customClass="LSFriendCommonCell">
+            <rect key="frame" x="0.0" y="0.0" width="252" height="50"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="252" height="49.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="contacts_add" translatesAutoresizingMaskIntoConstraints="NO" id="UGe-Be-oed">
+                        <rect key="frame" x="15" y="15" width="20" height="20"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="20" id="Wgu-NP-4cO"/>
+                            <constraint firstAttribute="height" constant="20" id="vUX-ev-HwO"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="添加通讯录好友" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="x8L-gd-9Rr">
+                        <rect key="frame" x="43" y="16" width="107.5" height="18"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="UGe-Be-oed" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="HaO-Ia-wdD"/>
+                    <constraint firstItem="x8L-gd-9Rr" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="bWo-BU-Cnj"/>
+                    <constraint firstItem="UGe-Be-oed" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="ety-qv-Tyf"/>
+                    <constraint firstItem="x8L-gd-9Rr" firstAttribute="leading" secondItem="UGe-Be-oed" secondAttribute="trailing" constant="8" id="xWW-Pn-INR"/>
+                </constraints>
+            </tableViewCellContentView>
+            <point key="canvasLocation" x="-139" y="5"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="contacts_add" width="24" height="21"/>
+    </resources>
+</document>

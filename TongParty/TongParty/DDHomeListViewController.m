@@ -9,9 +9,7 @@
 #import "DDHomeListViewController.h"
 #import "DDBannerView.h"       //banner
 #import "DDHomeListRequest.h"  //request
-//#import "DDHomeListTableCell.h"//cell
 #import "DDInterestTableViewCell.h"
-//#import "NHDiscoverModel.h"    //model
 #import "DDTableModel.h"
 #import "DDBannerModel.h"
 #import "DOPDropDownMenu.h"    //下拉筛选菜单

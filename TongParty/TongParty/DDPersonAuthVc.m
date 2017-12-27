@@ -19,7 +19,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.navItemTitle = @"个人认证";
+    [self navigationWithTitle:@"个人认证"];
+    self.navigationItem.leftBarButtonItem = [self backButtonForNavigationBarWithAction:@selector(pop)];
     [self setUpViews];
 }
 // 设置子视图
@@ -46,6 +47,9 @@
     if (indexPath.row == 1) {
         cell.iconstring = @"personAuth_real_avatar";
         cell.namestring = @"实名认证";
+        if (_currentModel.is_valid.integerValue == 1) {
+            cell.statustring = @"已认证";
+        }
     }else{
     }
     return cell;
@@ -60,6 +64,9 @@
         [self pushSesameAuthVC];
     }
     if (indexPath.row == 1) {
+        if (_currentModel.is_valid.integerValue == 1) {
+            return;
+        }
         //实名认证
         [self pushRealNameAuthVC];
     }

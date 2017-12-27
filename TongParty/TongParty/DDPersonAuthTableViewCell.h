@@ -11,4 +11,6 @@
 @interface DDPersonAuthTableViewCell : DDBaseTableViewCell
 @property (nonatomic, copy) NSString *iconstring;
 @property (nonatomic, copy) NSString *namestring;
+@property (nonatomic, copy) NSString *statustring;
 @end
+

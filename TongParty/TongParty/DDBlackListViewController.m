@@ -9,7 +9,7 @@
 
 #import "DDBlackListViewController.h"
 #import "DDFriendsTableViewCell.h"
-
+#import "LSBlacklistEntity.h"
 @interface DDBlackListViewController ()
 
 @end
@@ -18,13 +18,31 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.navItemTitle = @"黑名单";
+    [self loadData];
     [self setUpViews];
 }
+
+- (void)loadData {
+    [super loadData];
+    [DDTJHttpRequest getblacklistblock:^(NSDictionary *dict) {
+        self.dataArray = [LSBlacklistEntity mj_objectArrayWithKeyValuesArray:dict];
+        [self tj_reloadData];
+    } failure:^{
+        
+    }];
+}
+
+-(void)tj_refresh {
+    [self tj_endRefresh];
+    [self loadData];
+}
+
 // 设置子视图
 - (void)setUpViews {
+    [self navigationWithTitle:@"黑名单"];
     self.sepLineColor = kSeperatorColor;
     self.refreshType = DDBaseTableVcRefreshTypeRefreshAndLoadMore;
+    self.navLeftItem = [self backButtonForNavigationBarWithAction:@selector(pop)];
 }
 #pragma mark - UITableViewDelegate
 - (NSInteger)tj_numberOfSections {
@@ -32,31 +50,43 @@
 }
 
 - (NSInteger)tj_numberOfRowsInSection:(NSInteger)section {
-    return 5;
+    return self.dataArray.count;
 }
 - (DDBaseTableViewCell *)tj_cellAtIndexPath:(NSIndexPath *)indexPath {
     DDFriendsTableViewCell *cell = [DDFriendsTableViewCell cellWithTableView:self.tableView];
     cell.accessoryType = UITableViewCellAccessoryNone;
     cell.style = DDFriendsCellStyleBlackList;
+    [cell updateWithEntity:self.dataArray[indexPath.row]];
+    
     return cell;
 }
 
 - (CGFloat)tj_cellheightAtIndexPath:(NSIndexPath *)indexPath {
-    return 50;
+    return DDFitHeight(70.f);
 }
 
 - (void)tj_didSelectCellAtIndexPath:(NSIndexPath *)indexPath cell:(DDBaseTableViewCell *)cell {
 }
--(void)tj_commitEditForRowAtIndexPath:(NSIndexPath *)indexPath{
-    NSLog(@"删除");
-//    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"提示" message:@"确定要删除吗？" preferredStyle:UIAlertControllerStyleAlert];
-//    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
-//    UIAlertAction *otherAction = [UIAlertAction actionWithTitle:@"删除"style:UIAlertActionStyleDestructive handler:^(UIAlertAction*action) {
-//        NSLog(@"删除");
-//    }];
-//    [alertController addAction:cancelAction];
-//    [alertController addAction:otherAction];
+
+- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
+    return YES;
 }
+
+-(NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return @"移出黑名单";
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    LSBlacklistEntity *entity = self.dataArray[indexPath.row];
+    if (entity) {
+        [DDTJHttpRequest deleteBlacklistByfid:entity.id block:^(NSDictionary *dict) {
+            [self loadData];
+        } failure:^{
+            
+        }];
+    }
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 }

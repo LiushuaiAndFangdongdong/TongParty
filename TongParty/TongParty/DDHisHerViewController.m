@@ -16,7 +16,8 @@
 #import "DDAlbumViewController.h"
 #import "DDDeskShowViewController.h"
 #import "FDDMenu.h"
-
+#import "LSHisUserInfoModel.h"
+#import "TSActionDemoView.h"
 #define kAvatarWidth   50
 #define kMarginGapWidth 18
 #define kActivityItemWidth (kScreenWidth - kMarginGapWidth*6)/5
@@ -40,6 +41,17 @@ height=305;\
 @property (nonatomic ,strong) UITableView *tableView;
 @property (nonatomic ,strong) UIImageView *heagderImageV;
 @property (nonatomic , strong) NSMutableArray *menusTitles;  //下拉菜单数组
+@property (nonatomic, strong) LSHisUserInfoModel *model;
+
+// UI
+@property (nonatomic, strong)UIImageView *avatar;
+@property (nonatomic, strong)UILabel *nameLbl;
+@property (nonatomic, strong)DDLabelView *labelView;
+@property (nonatomic, strong)DDLabelView *labelView1;
+@property (nonatomic, strong)DDLabelView *labelView2;
+@property (nonatomic, strong)DDLabelView *labelView3;
+@property (nonatomic, strong)UILabel *creditLbl;
+@property (nonatomic, strong)UILabel *joinRateLbl;
 @end
 
 @implementation DDHisHerViewController
@@ -86,6 +98,7 @@ height=305;\
     [super viewDidLoad];
     [self customNavi];
     [self setupViews];
+    [self getUserdetailInfo];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(menuWillAppear) name:DDMenuWillAppearNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(menuDidAppear) name:DDMenuDidAppearNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(menuWillDisappear) name:DDMenuWillDisappearNotification object:nil];
@@ -93,6 +106,43 @@ height=305;\
 }
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void)getUserdetailInfo{
+    //开启异步并行线程请求用户详情数据
+    [DDTJHttpRequest getOtherUserDetailInfoWithToken:[DDUserSingleton shareInstance].token fid:_fid block:^(NSDictionary *dict) {
+        self.model = [LSHisUserInfoModel mj_objectWithKeyValues:dict];
+        [self.tableView reloadData];
+    } failure:^{
+        
+    }];
+    
+}
+
+- (void)setModel:(LSHisUserInfoModel *)model {
+    
+    _model = model;
+    [_avatar sd_setImageWithURL:[NSURL URLWithString:_model.image] placeholderImage:kDefaultAvatar];
+    _nameLbl.text = _model.name;
+    NSArray *label_arr = [model.label componentsSeparatedByString:@","];
+    NSArray *lbl_labels = @[_labelView,_labelView1,_labelView2,_labelView3];
+    if (label_arr) {
+        for (int l = 0 ; l < label_arr.count; l++) {
+            DDLabelView *lblView = lbl_labels[l];
+            lblView.textstring = label_arr[l];
+        }
+    }
+    NSString *string = [NSString stringWithFormat:@"完成%@/%@创建       实到%@/%@参与",_model.cft_num,_model.ct_num,_model.jft_num,_model.jt_num];
+    NSMutableAttributedString *str = [[NSMutableAttributedString alloc] initWithString:string];
+    NSRange strRange = {2,3};
+    NSRange strRange1 = {16,3};
+    [str addAttributes:@{
+                         NSFontAttributeName:kFont(17)
+                         } range:strRange];
+    [str addAttributes:@{
+                         NSFontAttributeName:kFont(15)
+                         } range:strRange1];
+    _joinRateLbl.attributedText  = str;
 }
 #pragma mark - Notification
 
@@ -114,10 +164,8 @@ height=305;\
 
 -(void)customNavi{
     
-    //左边消息按钮
-    UIBarButtonItem *leftBtn = [self customButtonForNavigationBarWithAction:@selector(messageAction) imageNamed:@"usercenter_message" isRedPoint:YES pointValue:@"9" CGSizeMake:CGSizeMake(26, 18)];
+    UIBarButtonItem *leftBtn = [self backButtonForNavigationBarWithAction:@selector(pop)];
     self.navigationItem.leftBarButtonItem = leftBtn;
-    //右边更多按钮
     UIBarButtonItem *rightBtn = [self customTitleButtonForNavigationWithAction:@selector(moreAction:) title:@"更多" CGSize:CGSizeMake(35,20)];
     self.navigationItem.rightBarButtonItem = rightBtn;
     
@@ -145,6 +193,9 @@ height=305;\
     return headView;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    if (!self.model.photo || section == 3) {
+        return 0.00000000001;
+    }
     return 10;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
@@ -153,6 +204,9 @@ height=305;\
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     
     if (indexPath.section == 3) {
+        if (!self.model.photo) {
+            return 0.00000000001;
+        }
         return 120;
     }else if (indexPath.section == 4){
         return 60+kActivityItemWidth+20;
@@ -169,58 +223,58 @@ height=305;\
     }
     cell.variousNumberClickBlcok = ^(NSInteger index) {
         if (index == 0) {
-            //桐币
+            // 桐币
             [self pushTongCoinVC];
         }
         if (index == 1) {
-            //关注
-            NSLog(@"1");
+            // 关注
             [self pushFriendsVCWithStyle:DDFriendsStyleCare];
         }
         if (index == 2) {
-            //被关注
+            // 被关注
             [self pushFriendsVCWithStyle:DDFriendsStyleCared];
-            NSLog(@"2");
         }
         if (index == 3) {
-            //好友
-            NSLog(@"3");
+            // 好友
             [self pushFriendsVCWithStyle:DDFriendsStyleNormal];
         }
     };
     cell.activityHistoryClickBlcok = ^(NSInteger index) {
         [self pushDeskVC];
     };
+    cell.careBtnClickBlcok = ^(BOOL isCare) {
+        [self careFriendBy:isCare];
+    };
     switch (indexPath.section) {
-        case 0:
-        {
+        case 0: {
             cell.style = DDHisUserCellStyleUserInfo;
         }
             break;
-        case 1:
-        {
+        case 1: {
             cell.style = DDHisUserCellStyleVariousNumbers;
         }
             break;
-        case 2:
-        {
+        case 2: {
             cell.style = DDHisUserCellStyleTongCoin;
         }
             break;
-        case 3:
-        {
-            cell.style = DDHisUserCellStyleAlbum;
+        case 3: {
+            if (self.model.photo) {
+                cell.style = DDHisUserCellStyleAlbum;
+            }
         }
             break;
-        case 4:
-        {
+        case 4: {
+            if (self.model.photo) {
+                cell.style = DDHisUserCellStyleAlbum;
+            }
             cell.style = DDHisUserCellStyleActivities;
         }
             break;
         default:
             break;
     }
-    //    cell.textLabel.text = [NSString stringWithFormat:@"测试%ld行",indexPath.row];
+    [cell updateValueWith:_model];
     //单元格内容动画
     static CGFloat initialDelay = 0.2f;
     static CGFloat stutter = 0.06f;
@@ -243,11 +297,16 @@ height=305;\
         }break;
         case 2:
         {
-            //我的相册
-            [self pushAlbumVC];
+            
         }break;
-        case 3:
-        {}break;
+        case 3: {//我的相册
+            if (self.model.photo) {
+                [self pushAlbumVC];
+            }
+        }break;
+        case 4: {//活动历史
+            
+        }break;
         default:
             break;
     }
@@ -278,10 +337,38 @@ height=305;\
     }
 }
 
+#pragma mark - 关注 或者 取关
+- (void)careFriendBy:(BOOL)isCare {
+    if (isCare) {
+        [DDTJHttpRequest careOtherUserByfid:_fid is_special:@"1" block:^(NSDictionary *dict) {
+            [self reFreshUserdetailInfoOnSection:1];
+        } failure:^{
+            
+        }];
+    } else {
+        [DDTJHttpRequest cancelCareOtherUserByfid:_fid block:^(NSDictionary *dict) {
+            [self reFreshUserdetailInfoOnSection:1];
+        } failure:^{
+            
+        }];
+    }
+}
+
+- (void)reFreshUserdetailInfoOnSection:(NSInteger)section{
+    //开启异步并行线程请求用户详情数据
+    [DDTJHttpRequest getOtherUserDetailInfoWithToken:[DDUserSingleton shareInstance].token fid:_fid block:^(NSDictionary *dict) {
+        self.model = [LSHisUserInfoModel mj_objectWithKeyValues:dict];
+        [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:section] withRowAnimation:UITableViewRowAnimationFade];
+    } failure:^{
+        
+    }];
+    
+}
+
 #pragma mark - UI
 //背景图切换
 -(void)changeBgClick:(UITapGestureRecognizer *)tap{
-    DDCustomActionSheet *actionSheet = [DDCustomActionSheet actionSheetWithCancelTitle:@"取消" alertTitle:@"选择个人中心背景图" SubTitles:@"相机",@"相册", nil];
+    DDCustomActionSheet *actionSheet = [DDCustomActionSheet actionSheetWithCancelTitle:@"取消" alertTitle:@"选择个人中心背景图" SubTitles:@[@"相机",@"相册"]];
     [actionSheet show];
     //    WeakSelf(weakSelf);
     [actionSheet setCustomActionSheetItemClickHandle:^(DDCustomActionSheet *actionSheet, NSInteger currentIndex, NSString *title) {
@@ -312,7 +399,7 @@ height=305;\
     }
     [self.view addSubview:self.tableView];
     //头像
-    UIImageView *_avatar = [UIImageView new];
+    _avatar = [UIImageView new];
     [self.tableView addSubview:_avatar];
     [_avatar mas_makeConstraints:^(MASConstraintMaker *make) {
         make.width.and.height.mas_equalTo(kAvatarWidth);
@@ -322,114 +409,103 @@ height=305;\
     _avatar.layerCornerRadius = 25;
     _avatar.image = [UIImage imageNamed:@"AppIcon"];
     //名称
-    UILabel *nameLbl = [UILabel new];
-    [self.tableView addSubview:nameLbl];
-    [nameLbl mas_makeConstraints:^(MASConstraintMaker *make) {
+    _nameLbl = [UILabel new];
+    [self.tableView addSubview:_nameLbl];
+    [_nameLbl mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(_avatar.mas_left).offset(-10);
         make.width.mas_equalTo(kAvatarWidth + 20);
         make.height.mas_equalTo(20);
         make.top.mas_equalTo(_avatar.mas_bottom).offset(5);
     }];
-    nameLbl.textAlignment = NSTextAlignmentCenter;
-    nameLbl.text = @"方习冬";
-    nameLbl.textColor = kWhiteColor;
-    nameLbl.font = [UIFont systemFontOfSize:14];
+    _nameLbl.textAlignment = NSTextAlignmentCenter;
+    _nameLbl.text = @"方习冬";
+    _nameLbl.textColor = kWhiteColor;
+    _nameLbl.font = [UIFont systemFontOfSize:14];
     
     //标签
-    DDLabelView *labelView = [DDLabelView new];
-    [self.tableView addSubview:labelView];
-    [labelView mas_makeConstraints:^(MASConstraintMaker *make) {
+    _labelView = [DDLabelView new];
+    [self.tableView addSubview:_labelView];
+    [_labelView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(_avatar.mas_left).offset(-70);
         make.width.and.height.mas_equalTo(40);
         make.top.mas_equalTo(_avatar);
     }];
-    labelView.textstring = @"爱生活";
-    labelView.layerCornerRadius = 20;
-    labelView.bgColor = kLabelBgBlackColor;
-    [self ImageSpringWithLabel:labelView];
+    _labelView.textstring = @"爱生活";
+    _labelView.layerCornerRadius = 20;
+    _labelView.bgColor = kLabelBgBlackColor;
+    [self ImageSpringWithLabel:_labelView];
     
     //标签
-    DDLabelView *labelView1 = [DDLabelView new];
-    [self.tableView addSubview:labelView1];
-    [labelView1 mas_makeConstraints:^(MASConstraintMaker *make) {
+    _labelView1 = [DDLabelView new];
+    [self.tableView addSubview:_labelView1];
+    [_labelView1 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(_avatar.mas_right).offset(30);
         make.width.and.height.mas_equalTo(40);
         make.top.mas_equalTo(_avatar);
     }];
-    labelView1.textstring = @"爱网购";
-    labelView1.layerCornerRadius = 20;
-    labelView1.bgColor = kLabelBgBlackColor;
-    [self ImageSpringWithLabel:labelView1];
+    _labelView1.textstring = @"爱网购";
+    _labelView1.layerCornerRadius = 20;
+    _labelView1.bgColor = kLabelBgBlackColor;
+    [self ImageSpringWithLabel:_labelView1];
     //标签
-    DDLabelView *labelView2 = [DDLabelView new];
-    [self.tableView addSubview:labelView2];
-    [labelView2 mas_makeConstraints:^(MASConstraintMaker *make) {
+    _labelView2 = [DDLabelView new];
+    [self.tableView addSubview:_labelView2];
+    [_labelView2 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(30);
         make.width.and.height.mas_equalTo(40);
-        make.top.mas_equalTo(labelView.mas_bottom).offset(30);
+        make.top.mas_equalTo(_labelView.mas_bottom).offset(30);
     }];
-    labelView2.textstring = @"喜欢开黑";
-    labelView2.layerCornerRadius = 20;
-    labelView2.bgColor = kLabelBgBlackColor;
-    [self ImageSpringWithLabel:labelView2];
+    _labelView2.textstring = @"喜欢开黑";
+    _labelView2.layerCornerRadius = 20;
+    _labelView2.bgColor = kLabelBgBlackColor;
+    [self ImageSpringWithLabel:_labelView2];
     //标签
-    DDLabelView *labelView3 = [DDLabelView new];
-    [self.tableView addSubview:labelView3];
-    [labelView3 mas_makeConstraints:^(MASConstraintMaker *make) {
+    _labelView3 = [DDLabelView new];
+    [self.tableView addSubview:_labelView3];
+    [_labelView3 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(kScreenWidth-70);
         make.width.and.height.mas_equalTo(40);
-        make.top.mas_equalTo(labelView1.mas_bottom).offset(30);
+        make.top.mas_equalTo(_labelView1.mas_bottom).offset(30);
     }];
-    labelView3.textstring = @"神秘人";
-    labelView3.layerCornerRadius = 20;
-    labelView3.bgColor = kLabelBgBlackColor;
-    [self ImageSpringWithLabel:labelView3];
+    _labelView3.textstring = @"神秘人";
+    _labelView3.layerCornerRadius = 20;
+    _labelView3.bgColor = kLabelBgBlackColor;
+    [self ImageSpringWithLabel:_labelView3];
     //信用度&活跃值
-    UILabel *creditLbl = [UILabel new];
-    [self.tableView addSubview:creditLbl];
-    [creditLbl mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(nameLbl.mas_bottom).offset(10);
+    _creditLbl = [UILabel new];
+    [self.tableView addSubview:_creditLbl];
+    [_creditLbl mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(_nameLbl.mas_bottom).offset(10);
         make.width.mas_equalTo(kAvatarWidth *3);
-        make.centerX.mas_equalTo(nameLbl.centerX);
+        make.centerX.mas_equalTo(_nameLbl.centerX);
         make.height.mas_equalTo(20);
     }];
-    creditLbl.text = @"信用度:50 | 活跃值:50";
-    creditLbl.textAlignment = NSTextAlignmentCenter;
-    creditLbl.textColor = kWhiteColor;
-    creditLbl.font = kFont(12);
+    _creditLbl.text = @"信用度:50 | 活跃值:50";
+    _creditLbl.textAlignment = NSTextAlignmentCenter;
+    _creditLbl.textColor = kWhiteColor;
+    _creditLbl.font = kFont(12);
     //活动参加率
-    UILabel *joinRateLbl = [UILabel new];
-    [self.tableView addSubview:joinRateLbl];
-    [joinRateLbl mas_makeConstraints:^(MASConstraintMaker *make) {
+    _joinRateLbl = [UILabel new];
+    [self.tableView addSubview:_joinRateLbl];
+    [_joinRateLbl mas_makeConstraints:^(MASConstraintMaker *make) {
         make.width.mas_equalTo(kAvatarWidth * 4);
-        make.top.mas_equalTo(creditLbl.mas_bottom).offset(lastLabelMargin);
-        make.centerX.mas_equalTo(creditLbl.centerX);
+        make.top.mas_equalTo(_creditLbl.mas_bottom).offset(lastLabelMargin);
+        make.centerX.mas_equalTo(_creditLbl.centerX);
     }];
     //    joinRateLbl.text = @"实到6/7创建       实到7/9参与";
-    joinRateLbl.textAlignment = NSTextAlignmentCenter;
-    joinRateLbl.textColor = kWhiteColor;
-    joinRateLbl.font = kFont(12);
-    
-    NSMutableAttributedString *str = [[NSMutableAttributedString alloc] initWithString:@"实到6/7创建       实到7/9参与"];
-    NSRange strRange = {2,3};
-    NSRange strRange1 = {16,3};
-    [str addAttributes:@{
-                         NSFontAttributeName:kFont(17)
-                         } range:strRange];
-    [str addAttributes:@{
-                         NSFontAttributeName:kFont(15)
-                         } range:strRange1];
-    joinRateLbl.attributedText  = str;
+    _joinRateLbl.textAlignment = NSTextAlignmentCenter;
+    _joinRateLbl.textColor = kWhiteColor;
+    _joinRateLbl.font = kFont(12);
 }
 - (void)ImageSpringWithLabel:(DDLabelView *)label{
-//    [UIView animateWithDuration:1.5 animations:^{
-//        label.frame = CGRectMake(label.frame.origin.x, label.frame.origin.y+10, label.frame.size.width, label.frame.size.height);
-//    }];
-//    [UIView animateWithDuration:1.5 delay:1.5 options:UIViewAnimationOptionCurveEaseInOut animations:^{
-//        label.frame = CGRectMake(label.frame.origin.x, label.frame.origin.y-10, label.frame.size.width, label.frame.size.height);
-//    } completion:^(BOOL finished) {
-//        [self ImageSpringWithLabel:label];
-//    }];
+    //    [UIView animateWithDuration:1.5 animations:^{
+    //        label.frame = CGRectMake(label.frame.origin.x, label.frame.origin.y+10, label.frame.size.width, label.frame.size.height);
+    //    }];
+    //    [UIView animateWithDuration:1.5 delay:1.5 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+    //        label.frame = CGRectMake(label.frame.origin.x, label.frame.origin.y-10, label.frame.size.width, label.frame.size.height);
+    //    } completion:^(BOOL finished) {
+    //        [self ImageSpringWithLabel:label];
+    //    }];
 }
 #pragma mark - push
 -(void)pushDeskVC{
@@ -439,15 +515,59 @@ height=305;\
 //更多
 -(void)moreAction:(UIBarButtonItem *)sender{
     // 通过NavigationBarItem显示Menu
-//        [FDDMenu setTintColor:kWhiteColor];
-        [FDDMenu setSelectedColor:kBgGreenColor];
-        if ([FDDMenu isShow]){
-            [FDDMenu dismissMenu];
-        } else {
-            [FDDMenu showMenuInView:self.view fromRect:CGRectMake(self.view.frame.size.width - 50, kNavigationBarHeight -10, 50, 0) menuItems:self.menusTitles selected:^(NSInteger index, FDDMenuItem *item) {
-                NSLog(@"%@",item);
-            }];
-        }
+    //        [FDDMenu setTintColor:kWhiteColor];
+    [FDDMenu setSelectedColor:kBgGreenColor];
+    if ([FDDMenu isShow]){
+        [FDDMenu dismissMenu];
+    } else {
+        [FDDMenu showMenuInView:self.view fromRect:CGRectMake(self.view.frame.size.width - 50, kNavigationBarHeight -10, 50, 0) menuItems:self.menusTitles selected:^(NSInteger index, FDDMenuItem *item) {
+            if (item.tag == 101) {
+                // 拉黑
+                [DDTJHttpRequest addBlacklistByfid:_fid block:^(NSDictionary *dict) {
+                    
+                } failure:^{
+                    
+                }];
+            }
+            if (item.tag == 100) {
+                // 举报
+                TSActionDemoView * demoAlertView  = [TSActionDemoView actionAlertViewWithAnimationStyle:TSActionAlertViewTransitionStyleBounce];
+                demoAlertView.backgroundStyle = TSActionAlertViewBackgroundStyleSolid;;
+                demoAlertView.isAutoHidden = YES;
+                demoAlertView.titleString = @"举报内容";
+                demoAlertView.ploceHolderString = @"请输入举报内容";
+                typeof(TSActionDemoView) __weak *weakView = demoAlertView;
+                [demoAlertView setStringHandler:^(TSActionAlertView *alertView,NSString * string){
+                    typeof(TSActionDemoView) __strong *strongView = weakView;
+                    [DDTJHttpRequest reportUserBybid:_fid text:string block:^(NSDictionary *dict) {
+                        
+                    } failure:^{
+                        
+                    }];
+                    [strongView dismissAnimated:YES];
+                }];
+                [demoAlertView show];
+            }
+            if (item.tag == 102) {
+                // 设置备注名
+                TSActionDemoView * demoAlertView  = [TSActionDemoView actionAlertViewWithAnimationStyle:TSActionAlertViewTransitionStyleBounce];
+                demoAlertView.backgroundStyle = TSActionAlertViewBackgroundStyleSolid;;
+                demoAlertView.isAutoHidden = YES;
+                demoAlertView.titleString = @"好友备注";
+                demoAlertView.ploceHolderString = @"请输入备注名";
+                typeof(TSActionDemoView) __weak *weakView = demoAlertView;
+                [demoAlertView setStringHandler:^(TSActionAlertView *alertView,NSString * string){
+                    typeof(TSActionDemoView) __strong *strongView = weakView;
+                    [DDTJHttpRequest setUserRemark:string fid:_fid block:^(NSDictionary *dict) {
+                    } failure:^{
+                        
+                    }];
+                    [strongView dismissAnimated:YES];
+                }];
+                [demoAlertView show];
+            }
+        }];
+    }
 }
 -(void)pushTongCoinVC{
     DDTongCoinVC *tcoinVC = [[DDTongCoinVC alloc] init];
@@ -456,10 +576,14 @@ height=305;\
 -(void)pushFriendsVCWithStyle:(DDFriendsStyle)style{
     DDFriendsViewController *fVc = [[DDFriendsViewController alloc] init];
     fVc.style = style;
+    fVc.type = DDFriendOtherUserStyle;
+    fVc.fid = _fid;
     [self.navigationController pushViewController:fVc animated:YES];
 }
 -(void)pushAlbumVC{
     DDAlbumViewController *albumVC = [[DDAlbumViewController alloc] init];
+    albumVC.style = DDAlbumOtherUserStyle;
+    albumVC.fid = _fid;
     [self.navigationController pushViewController:albumVC animated:YES];
 }
 -(void)messageAction{
@@ -470,35 +594,35 @@ height=305;\
     if (!_menusTitles) {
         
         // set title
-//        FDDMenuItem *menuTitle = [FDDMenuItem menuTitle:@"menu" WithIcon:nil];
-//        menuTitle.foreColor = [UIColor whiteColor];
-//        menuTitle.titleFont = [UIFont boldSystemFontOfSize:20.0f];
+        //        FDDMenuItem *menuTitle = [FDDMenuItem menuTitle:@"menu" WithIcon:nil];
+        //        menuTitle.foreColor = [UIColor whiteColor];
+        //        menuTitle.titleFont = [UIFont boldSystemFontOfSize:20.0f];
         
         //set logout button
-//        FDDMenuItem *logoutItem = [FDDMenuItem menuItem:@"退出" image:nil target:self action:@selector(logout:)];
-//        logoutItem.foreColor = [UIColor redColor];
-//        logoutItem.alignment = NSTextAlignmentCenter;
+        //        FDDMenuItem *logoutItem = [FDDMenuItem menuItem:@"退出" image:nil target:self action:@selector(logout:)];
+        //        logoutItem.foreColor = [UIColor redColor];
+        //        logoutItem.alignment = NSTextAlignmentCenter;
         
         //set item
         _menusTitles = [@[
-                    [FDDMenuItem menuItem:@"举报"
-                                    image:nil
-                                      tag:100
-                                 userInfo:@{@"title":@"Menu"}],
-                    [FDDMenuItem menuItem:@"拉黑"
-                                    image:nil
-                                      tag:101
-                                 userInfo:@{@"title":@"Menu"}],
-                    [FDDMenuItem menuItem:@"设置备注名"
-                                    image:nil
-                                      tag:102
-                                 userInfo:@{@"title":@"Menu"}],
-                  [FDDMenuItem menuItem:@"查看更多资料"
-                                  image:nil
-                                    tag:103
-                               userInfo:@{@"title":@"Menu"}],
-                  
-                    ] mutableCopy];
+                          [FDDMenuItem menuItem:@"举报"
+                                          image:nil
+                                            tag:100
+                                       userInfo:@{@"title":@"Menu"}],
+                          [FDDMenuItem menuItem:@"拉黑"
+                                          image:nil
+                                            tag:101
+                                       userInfo:@{@"title":@"Menu"}],
+                          [FDDMenuItem menuItem:@"设置备注名"
+                                          image:nil
+                                            tag:102
+                                       userInfo:@{@"title":@"Menu"}],
+                          [FDDMenuItem menuItem:@"查看更多资料"
+                                          image:nil
+                                            tag:103
+                                       userInfo:@{@"title":@"Menu"}],
+                          
+                          ] mutableCopy];
     }
     return _menusTitles;
 }

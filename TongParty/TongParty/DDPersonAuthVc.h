@@ -8,7 +8,9 @@
 //个人认证
 
 #import "DDBaseTableViewController.h"
+#import "DDUserInfoModel.h"
 
 @interface DDPersonAuthVc : DDBaseTableViewController
-
+@property (nonatomic, strong)DDUserInfoModel  *currentModel;
 @end
+

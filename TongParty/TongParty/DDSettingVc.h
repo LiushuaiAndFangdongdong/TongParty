@@ -8,7 +8,8 @@
 //设置页
 
 #import "DDBaseTableViewController.h"
+#import "DDUserInfoModel.h"
 
 @interface DDSettingVc : DDBaseTableViewController
-
+@property (nonatomic, strong)DDUserInfoModel *userModel;
 @end

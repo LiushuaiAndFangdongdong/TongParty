@@ -24,7 +24,9 @@ typedef NS_ENUM(NSUInteger, DDHisUserCellStyle) {
 @interface DDHisUsercenterTableViewCell : DDBaseTableViewCell
 @property (nonatomic, copy) void(^variousNumberClickBlcok)(NSInteger index);
 @property (nonatomic, copy) void(^activityHistoryClickBlcok)(NSInteger index);
+@property (nonatomic, copy) void(^careBtnClickBlcok)(BOOL isCare);
 @property (nonatomic, assign) DDHisUserCellStyle style;
+- (void)updateValueWith:(id)model;
 @end
 
 

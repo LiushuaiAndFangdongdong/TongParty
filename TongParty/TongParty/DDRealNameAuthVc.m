@@ -12,7 +12,7 @@
 #define kIdCardGap   20
 #define kIdCardWidth (kScreenWidth/2 - 1.5*kIdCardGap)
 
-@interface DDRealNameAuthVc ()
+@interface DDRealNameAuthVc ()<LSUpLoadImageManagerDelegate>
 @property (nonatomic, strong) DDTitletxtFieldView *nameField;  //姓名
 @property (nonatomic, strong) DDTitletxtFieldView *idcardField;//身份证号
 @property (nonatomic, strong) DDTitletxtFieldView *phoneField; //手机号码
@@ -24,14 +24,15 @@
 @property (nonatomic, strong) UIImageView *backCardView; //反面图
 @property (nonatomic, strong) UILabel *alertLabel;       //提示语
 @property (nonatomic, strong) UIButton *submitBtn;        //提交按钮
-
+@property (nonatomic, strong) UIImageView *temp_iv;
 @end
 
 @implementation DDRealNameAuthVc
 //身份证宽高之比：321/208 = 1.54
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = @"实名认证";
+    [self navigationWithTitle:@"实名认证"];
+    self.navigationItem.leftBarButtonItem = [self backButtonForNavigationBarWithAction:@selector(pop)];
     [self setupViews];
 }
 -(void)setupViews{
@@ -116,6 +117,8 @@
         make.height.mas_equalTo(kIdCardWidth/1.54);
     }];
     self.frontCardView.image = kImage(@"person_idcard_zheng");
+    self.frontCardView.userInteractionEnabled = YES;
+    [self.frontCardView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(uploadImage:)]];
     
     self.backCardView = [[UIImageView alloc] init];
     [self.bgView addSubview:self.backCardView];
@@ -126,6 +129,8 @@
         make.height.mas_equalTo(self.frontCardView);
     }];
     self.backCardView.image = kImage(@"person_idcard_fan");
+    self.backCardView.userInteractionEnabled = YES;
+    [self.backCardView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(uploadImage:)]];
     
     self.alertLabel = [[UILabel alloc] init];
     [self.bgView addSubview:self.alertLabel];
@@ -152,7 +157,7 @@
     self.submitBtn.backgroundColor = kLightGreenColor;
     [self.submitBtn setTitleColor:kWhiteColor forState:UIControlStateNormal];
     self.submitBtn.layerCornerRadius = (kScreenWidth - DDFitWidth(110)*2)/7.75;
-    
+    [self.submitBtn addTarget:self action:@selector(releaseRealName:) forControlEvents:UIControlEventTouchUpInside];
     
     [self.bgView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self.messageLabel.mas_bottom).offset(5);
@@ -161,8 +166,86 @@
     }];
     
 }
+
+
+- (void)releaseRealName:(UIButton *)sender {
+    // 这里做些信息提交时候的判断
+    if (![self judgeIdentityStringValid:_idcardField.textView.text]) {
+        [MBProgressHUD showError:@"请输入正确身份号码！" toView:KEY_WINDOW];
+        return;
+    }
+    NSString *stringName = [_nameField.textView.text stringByReplacingOccurrencesOfString:@"" withString:@" "];
+    if ([stringName isEqualToString:@""]) {
+        [MBProgressHUD showError:@"姓名不能为空！" toView:KEY_WINDOW];
+        return;
+    }
+    if (!_frontCardView.image || !_backCardView.image) {
+        [MBProgressHUD showError:@"照片信息不能为空！" toView:KEY_WINDOW];
+        return;
+    }
+    [DDTJHttpRequest realnameAuthWithToken:TOKEN real_name:_nameField.textView.text id_number:_idcardField.textView.text positive:_frontCardView.image negative:_backCardView.image block:^(NSDictionary *dict) {} failure:^{
+    }];
+}
+
+- (void)uploadImage:(UITapGestureRecognizer *)tap {
+    _temp_iv = (UIImageView *)[tap view];
+    [LSUPLOAD_IMAGE showActionSheetInFatherViewController:self delegate:self];
+}
+
+#pragma mark - LSUpLoadImageManagerDelegate
+- (void)uploadImageToServerWithImage:(UIImage *)image {
+    _temp_iv.image = image;
+}
+
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
+}
+
+// 判断身份证号是否合法
+- (BOOL)judgeIdentityStringValid:(NSString *)identityString {
+    NSString *idCarNum = [identityString uppercaseString];
+    if (idCarNum.length != 18) return NO;
+    // 正则表达式判断基本 身份证号是否满足格式
+    NSString *regex = @"^[1-9]\\d{5}[1-9]\\d{3}((0\\d)|(1[0-2]))(([0|1|2]\\d)|3[0-1])\\d{3}([0-9]|X)$";
+    //  NSString *regex = @"^(^[1-9]\\d{7}((0\\d)|(1[0-2]))(([0|1|2]\\d)|3[0-1])\\d{3}$)|(^[1-9]\\d{5}[1-9]\\d{3}((0\\d)|(1[0-2]))(([0|1|2]\\d)|3[0-1])((\\d{4})|\\d{3}[Xx])$)$";
+    NSPredicate *identityStringPredicate = [NSPredicate predicateWithFormat:@"SELF MATCHES %@",regex];
+    //如果通过该验证，说明身份证格式正确，但准确性还需计算
+    if(![identityStringPredicate evaluateWithObject:idCarNum]) return NO;
+    
+    //** 开始进行校验 *//
+    
+    //将前17位加权因子保存在数组里
+    NSArray *idCardWiArray = @[@"7", @"9", @"10", @"5", @"8", @"4", @"2", @"1", @"6", @"3", @"7", @"9", @"10", @"5", @"8", @"4", @"2"];
+    
+    //这是除以11后，可能产生的11位余数、验证码，也保存成数组
+    NSArray *idCardYArray = @[@"1", @"0", @"10", @"9", @"8", @"7", @"6", @"5", @"4", @"3", @"2"];
+    
+    //用来保存前17位各自乖以加权因子后的总和
+    NSInteger idCardWiSum = 0;
+    for(int i = 0;i < 17;i++) {
+        NSInteger subStrIndex = [[idCarNum substringWithRange:NSMakeRange(i, 1)] integerValue];
+        NSInteger idCardWiIndex = [[idCardWiArray objectAtIndex:i] integerValue];
+        idCardWiSum+= subStrIndex * idCardWiIndex;
+    }
+    
+    //计算出校验码所在数组的位置
+    NSInteger idCardMod=idCardWiSum%11;
+    //得到最后一位身份证号码
+    NSString *idCardLast= [idCarNum substringWithRange:NSMakeRange(17, 1)];
+    //如果等于2，则说明校验码是10，身份证号码最后一位应该是X
+    if(idCardMod==2) {
+        if(![idCardLast isEqualToString:@"X"]||[idCardLast isEqualToString:@"x"]) {
+            return NO;
+        }
+    }
+    else{
+        //用计算出的验证码与最后一位身份证号码匹配，如果一致，说明通过，否则是无效的身份证号码
+        if(![idCardLast isEqualToString: [idCardYArray objectAtIndex:idCardMod]]) {
+            return NO;
+        }
+    }
+    return YES;
 }
 
 @end

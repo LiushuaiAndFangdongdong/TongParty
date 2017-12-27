@@ -12,14 +12,14 @@
 
 @interface DDRadioButton : UIButton
 {
-//    NSString                        *_groupId;
-//    BOOL                            _checked;
-//    id<DDRadioButtonDelegate>       _delegate;
+    //    NSString                        *_groupId;
+    //    BOOL                            _checked;
+    //    id<DDRadioButtonDelegate>       _delegate;
 }
 @property(nonatomic, assign) id<DDRadioButtonDelegate>   delegate;
 @property(nonatomic, copy)   NSString            *groupId;
 @property(nonatomic, assign) BOOL checked;
-
+@property(nonatomic, copy)   NSString            *nameString;
 - (id)initWithDelegate:(id)delegate groupId:(NSString*)groupId;
 
 @end
@@ -31,3 +31,4 @@
 - (void)didSelectedRadioButton:(DDRadioButton *)radio groupId:(NSString *)groupId;
 
 @end
+

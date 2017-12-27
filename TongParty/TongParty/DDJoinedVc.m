@@ -9,7 +9,7 @@
 #import "DDJoinedVc.h"
 #import "DDInterestTableViewCell.h"
 #import "DDTableModel.h"
-#import "DDCustomCommonEmptyView.h"
+//#import "DDCustomCommonEmptyView.h"
 #import "DDDeskShowViewController.h"  //桌子页面
 
 @interface DDJoinedVc ()

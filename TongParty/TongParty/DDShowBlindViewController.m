@@ -21,6 +21,7 @@
 //图标宽 182/(182+284*2) = 0.24  高 182/(248+182+904)   顶点 248/(248+182+904)=0.186
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.navigationItem.leftBarButtonItem = [self backButtonForNavigationBarWithAction:@selector(pop)];
     [self setupViews];
 }
 -(void)setupViews{
@@ -67,27 +68,27 @@
         case DDSocialBlindTypePhone:
         {
             _img = @"personAuth_blind_phone";
-            _name = @"手机号码";
-            _des = @"已绑定成功，现在你可以通过手机号码登录桐聚";
+            _name = [NSString stringWithFormat:@"手机号码：%@",_userModel.mobile];
+            _des = @"已绑定成功，现在您可以通过手机号码登录桐聚";
         }
             break;
         case DDSocialBlindTypeWx:
         {
             _img =@"personAuth_blind_wx";
             _name = @"微信";
-            _des = @"已绑定成功，现在你可以通过微信登录桐聚";
+            _des = @"已绑定成功，现在您可以通过微信登录桐聚";
         }break;
         case DDSocialBlindTypeQQ:
         {
             _img =@"personAuth_blind_QQ";
             _name = @"QQ";
-            _des = @"已绑定成功，现在你可以通过QQ登录桐聚";
+            _des = @"已绑定成功，现在您可以通过QQ登录桐聚";
         }break;
         case DDSocialBlindTypeWeibo:
         {
             _img =@"personAuth_blind_weibo";
             _name = @"新浪微博";
-            _des = @"已绑定成功，现在你可以通过微博登录桐聚";
+            _des = @"已绑定成功，现在您可以通过微博登录桐聚";
         }break;
         default:
             break;

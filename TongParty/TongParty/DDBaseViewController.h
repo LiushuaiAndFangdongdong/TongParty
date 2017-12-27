@@ -46,8 +46,12 @@ typedef void(^DDBaseViewControllerHandle)();
 
 //获取导航返回按钮
 -(UIBarButtonItem *)backButtonForNavigationBarWithAction:(SEL)action;
+//获取白色导航返回按钮
+- (UIBarButtonItem *)whiteBackButtonForNavigationBarWithAction:(SEL)action;
 //标题
 - (void)navigationWithTitle:(NSString *)title;
+//标题，白色返回按钮
+- (void)WhiteBackNavigationWithTitle:(NSString *)title;
 //导航栏左右是标题
 - (UIBarButtonItem *)customTitleButtonForNavigationWithAction:(SEL)action title:(NSString *)title CGSize:(CGSize)size;
 //导航栏左右边的item

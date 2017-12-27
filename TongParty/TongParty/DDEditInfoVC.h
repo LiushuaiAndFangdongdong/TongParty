@@ -10,5 +10,6 @@
 #import "DDBaseViewController.h"
 
 @interface DDEditInfoVC : DDBaseViewController
-
+@property (nonatomic, copy) void(^editResult)(NSString *result);
 @end
+

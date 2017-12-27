@@ -50,6 +50,8 @@ height=305;\
 @property (nonatomic, strong) DDLoginManager *loginManager;
 @property (nonatomic, strong) DDUsercenterHeaderView *headerView;
 @property (nonatomic, strong) DDStretchableTableHeaderView *stretchHeaderView;
+@property (nonatomic, strong) DDFriendsViewController *friendVC;
+@property (nonatomic, strong) DDAlbumViewController *photo;
 @end
 
 @implementation DDUsercenterVc
@@ -100,8 +102,7 @@ height=305;\
     [kNotificationCenter addObserver:self selector:@selector(updateUserInfo) name:kUpdateUserInfoNotification object:nil];
 }
 
--(void)dealloc
-{
+-(void)dealloc {
     [kNotificationCenter removeObserver:self name:kUpdateUserInfoNotification object:nil];
 }
 
@@ -118,7 +119,7 @@ height=305;\
     [self customNavi];
     [self.view addSubview:self.tableView];
     if ([DDUserDefault objectForKey:@"token"]){
-       [self getUserdetailInfo];
+        [self getUserdetailInfo];
     }
     [self initStretchHeader];
 }
@@ -141,10 +142,8 @@ height=305;\
             //
         }];
     });
-
 }
-- (void)initStretchHeader
-{
+- (void)initStretchHeader {
     //背景
     UIImageView *bgImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, kTopViewHeight(SCREEN_MAX_LENGTH))];
     bgImageView.contentMode = UIViewContentModeScaleAspectFill;
@@ -160,12 +159,12 @@ height=305;\
     self.stretchHeaderView = [DDStretchableTableHeaderView new];
     [self.stretchHeaderView stretchHeaderForTableView:self.tableView withView:bgImageView subViews:contentView];
     
-//    [self.headerView updateUserInfoWith:_model];
+    //    [self.headerView updateUserInfoWith:_model];
 }
 
 -(void)customNavi{
     //左边消息按钮
-    UIBarButtonItem *leftBtn = [self customButtonForNavigationBarWithAction:@selector(messageAction) imageNamed:@"usercenter_message" isRedPoint:YES pointValue:@"9" CGSizeMake:CGSizeMake(26, 18)];
+    UIBarButtonItem *leftBtn = [self customButtonForNavigationBarWithAction:@selector(messageAction) imageNamed:@"usercenter_message" isRedPoint:YES pointValue:@"" CGSizeMake:CGSizeMake(26, 18)];
     self.navigationItem.leftBarButtonItem = leftBtn;
     //右边设置按钮
     UIBarButtonItem *rightBtn = [self customButtonForNavigationBarWithAction:@selector(settingAction) imageNamed:@"usercenter_setting" isRedPoint:NO pointValue:nil CGSizeMake:CGSizeMake(22, 22)];
@@ -205,24 +204,24 @@ height=305;\
     if (![DDUserDefault objectForKey:@"token"]){
         return 60;
     }else{
-    if (indexPath.section == 2) {
-        //相册
-        if (_model.photo) {
-            return 120;
+        if (indexPath.section == 2) {
+            //相册
+            if (_model.photo) {
+                return 120;
+            }else{
+                return 60;
+            }
+        }else if (indexPath.section == 3){
+            //活动历史
+            if (!_model.ct_num && !_model.jt_num) {
+                return 60;
+            }else{
+                return 60+kActivityItemWidth+20;
+            }
         }else{
+            //数字cell和打赏cell
             return 60;
-        }
-    }else if (indexPath.section == 3){
-        //活动历史
-        if (!_model.ct_num && !_model.jt_num) {
-            return 60;
-        }else{
-            return 60+kActivityItemWidth+20;
-        }
-    }else{
-        //数字cell和打赏cell
-        return 60;
-    }}
+        }}
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     static NSString *identifier = @"cell";
@@ -248,8 +247,10 @@ height=305;\
         }
         if (index == 3) {
             //好友
-            NSLog(@"3");
-            [self pushFriendsVCWithStyle:DDFriendsStyleNormal];
+            [self.loginManager pushCheckedLoginWithPopToRoot:NO block:^{
+                self.friendVC.style = DDFriendsStyleNormal;
+                [self.navigationController pushViewController:self.friendVC animated:YES];
+            }];
         }
     };
     cell.activityHistoryClickBlcok = ^(NSInteger index) {
@@ -280,7 +281,7 @@ height=305;\
             break;
     }
     [cell updateWithModel:_model];
-//    cell.textLabel.text = [NSString stringWithFormat:@"测试%ld行",indexPath.row];
+    //    cell.textLabel.text = [NSString stringWithFormat:@"测试%ld行",indexPath.row];
     //单元格内容动画
     static CGFloat initialDelay = 0.2f;
     static CGFloat stutter = 0.06f;
@@ -292,18 +293,18 @@ height=305;\
     return cell;
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-
+    
     switch (indexPath.section) {
         case 0:
         {}break;
         case 1:
         {
-        //打赏明细
+            //打赏明细
             [self pushFriendsVCWithStyle:DDFriendsStyleReward];
         }break;
         case 2:
         {
-        //我的相册
+            //我的相册
             [self pushAlbumVC];
         }break;
         case 3:
@@ -328,7 +329,7 @@ height=305;\
             barView.alpha = offsetY/(kTopViewHeight(SCREEN_MAX_LENGTH) -2*kNavigationBarHeight);
         }
     }
-  
+    
     [self.stretchHeaderView scrollViewDidScroll:scrollView];
 }
 
@@ -343,7 +344,7 @@ height=305;\
 -(void)changeBgClick:(UITapGestureRecognizer *)tap{
     DDCustomActionSheet *actionSheet = [DDCustomActionSheet actionSheetWithCancelTitle:@"取消" alertTitle:@"选择个人中心背景图" SubTitles:@"相机",@"相册", nil];
     [actionSheet show];
-//    WeakSelf(weakSelf);
+    //    WeakSelf(weakSelf);
     [actionSheet setCustomActionSheetItemClickHandle:^(DDCustomActionSheet *actionSheet, NSInteger currentIndex, NSString *title) {
         if (currentIndex == 0) {
             NSLog(@"相机");
@@ -371,6 +372,7 @@ height=305;\
 -(void)settingAction{
     [self.loginManager pushCheckedLoginWithPopToRoot:NO block:^{
         DDSettingVc *settingVC =[[DDSettingVc alloc]init];
+        settingVC.userModel = _model;
         [self.navigationController pushViewController:settingVC animated:YES];
     }];
 }
@@ -383,44 +385,36 @@ height=305;\
 }
 -(void)pushFriendsVCWithStyle:(DDFriendsStyle)style{
     [self.loginManager pushCheckedLoginWithPopToRoot:NO block:^{
-        DDFriendsViewController *fVc = [[DDFriendsViewController alloc] init];
-        fVc.style = style;
-        [self.navigationController pushViewController:fVc animated:YES];
+        DDFriendsViewController *vc = [[DDFriendsViewController alloc] init];
+        vc.style = style;
+        [self.navigationController pushViewController:vc animated:YES];
     }];
 }
 
+
+-(DDFriendsViewController *)friendVC {
+    if (!_friendVC) {
+        _friendVC = [[DDFriendsViewController alloc] init];
+    }
+    return _friendVC;
+}
+
+
 // 建议使用懒加载，避免每次进入加载图片
 -(void)pushAlbumVC{
-    
-    /*网络图片*/ NSArray *imageURLs = @[@"http://img.sccnn.com/bimg/311/011.jpg",
-                                    @"http://pic9.nipic.com/20100826/4376639_180752159879_2.jpg",
-                                    @"http://pic21.nipic.com/20120425/7156172_111847620387_2.jpg",
-                                    @"http://pic8.nipic.com/20100722/2194093_140126005826_2.jpg",
-                                    @"http://img3.redocn.com/20110418/20110415_9e86967f4b28360e5afbHmybhr1LpDJ5.jpg",
-                                    @"http://pic10.nipic.com/20101026/4690416_135348005709_2.jpg",
-                                    ];
-    
-    //    /*本地图片*/ NSArray *imageURLs = @[@"",@"",@"",@"",@""]; //图片名字
-    
-    
-    NSMutableArray *urls = [NSMutableArray new];
-    
-    for (int a= 0; a<imageURLs.count; a++) {
-        
-        LSAlbumEtity *album = [[LSAlbumEtity alloc]init];
-        album.picture_year = @"2017-03-06"; //时间
-        album.picture_path = imageURLs[a];
-        [urls addObject:album];
-    }
-    DDAlbumViewController *photo = [[DDAlbumViewController alloc]init];
-    photo.urls = urls;
-    [self.navigationController pushViewController:photo animated:YES];
+    [self.navigationController pushViewController:self.photo animated:YES];
 }
+
+-(DDAlbumViewController *)photo {
+    if(!_photo){
+        _photo = [[DDAlbumViewController alloc]init];
+    }
+    return _photo;
+}
+
 -(void)messageAction{
-    NSLog(@"消息");
-    
-    DDHisHerViewController *hisVC = [[DDHisHerViewController alloc] init];
-    [self.navigationController pushViewController:hisVC animated:YES];
+    //    DDHisHerViewController *hisVC = [[DDHisHerViewController alloc] init];
+    //    [self.navigationController pushViewController:hisVC animated:YES];
 }
 -(void)enterLoginVC{
     DDLoginViewController *loginVC = [[DDLoginViewController alloc] init];

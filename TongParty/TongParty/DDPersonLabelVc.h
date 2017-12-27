@@ -10,5 +10,7 @@
 #import "DDBaseViewController.h"
 
 @interface DDPersonLabelVc : DDBaseViewController
-
+@property (nonatomic, copy) void(^chosseLabelResult)(NSString *result);
+@property (nonatomic, strong) NSMutableArray *selectedArray;
 @end
+

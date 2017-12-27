@@ -22,3 +22,4 @@ typedef NS_ENUM(NSUInteger, DDHeaderViewType) {
 
 @property (nonatomic, copy) void(^loginRegisterClickBlcok)(NSInteger index);
 @end
+

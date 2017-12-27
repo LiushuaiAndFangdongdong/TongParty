@@ -27,6 +27,10 @@ typedef NS_ENUM(NSInteger, DDHttpResponseType) {
 //多图上传
 + (void)uploadMultiImageWithUrl:(NSString *)url action:(NSString *)action params:(NSDictionary *)params image:(NSArray *)imageDatas success:(void (^)(id responseObject))success fail:(void (^)())fail;
 
+// 上传带图信息
++ (void)uploadInfoContainImageWithUrl:(NSString *)url action:(NSString *)action params:(NSDictionary *)params image:(NSArray *)imageDatas success:(void (^)(id responseObject))success fail:(void (^)())fail;
+
 + (void)setWithMutableDict:(NSMutableDictionary *)dict key:(NSString *)key value:(id)value;
 
 @end
+

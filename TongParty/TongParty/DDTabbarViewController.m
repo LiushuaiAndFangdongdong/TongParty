@@ -13,7 +13,7 @@
 #import "DDDiscoverViewController.h"//发现页面
 #import "DDUsercenterVc.h"         //个人中心
 #import "PlusAnimate.h"
-#import "LSCreateDeskVC.h"    //创建桌子页面
+#import "LSCreateDeskViewController.h" //创建桌子页面
 #import "DDLoveDeskViewController.h" //心跳桌页
 
 @interface DDTabbarViewController ()<CYTabBarDelegate>
@@ -57,7 +57,9 @@
     NSLog(@"-----------%ld",(long)btn.tag);
     switch (btn.tag) {
         case 0:{
-            DDNavViewController   *nav = [[DDNavViewController alloc]initWithRootViewController:[LSCreateDeskVC new]];
+            //            DDNavViewController   *nav = [[DDNavViewController alloc]initWithRootViewController:[LSCreateDeskVC new]];
+            DDNavViewController   *nav = [[DDNavViewController alloc]initWithRootViewController:[LSCreateDeskViewController new]];
+            
             [self presentViewController:nav animated:YES completion:nil];
         }break;
         case 1:{

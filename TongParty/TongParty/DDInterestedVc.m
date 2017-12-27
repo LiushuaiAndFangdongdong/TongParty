@@ -7,7 +7,7 @@
 //
 
 #import "DDInterestedVc.h"
-#import "DDCustomCommonEmptyView.h"
+//#import "DDCustomCommonEmptyView.h"
 #import "DDDeskShowViewController.h"  //桌子页面
 #import "DDInterestTableViewCell.h"
 

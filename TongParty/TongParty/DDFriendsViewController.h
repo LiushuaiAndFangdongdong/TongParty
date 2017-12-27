@@ -9,6 +9,13 @@
 
 #import "DDBaseTableViewController.h"
 
+typedef NS_ENUM(NSUInteger, DDFriendsViewControllerStyle) {
+    /** 个人相册*/
+    DDFriendCurrentUserStyle = 0,
+    /** 他人相册*/
+    DDFriendOtherUserStyle,
+};
+
 typedef NS_ENUM(NSUInteger, DDFriendsStyle) {
     /** 常规好友列表*/
     DDFriendsStyleNormal = 0,
@@ -25,4 +32,7 @@ typedef NS_ENUM(NSUInteger, DDFriendsStyle) {
 
 @interface DDFriendsViewController : DDBaseTableViewController
 @property (nonatomic, assign) DDFriendsStyle style;
+@property (nonatomic, assign) DDFriendsViewControllerStyle type;
+@property (nonatomic, copy) NSString *fid;
 @end
+

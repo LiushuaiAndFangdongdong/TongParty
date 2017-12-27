@@ -8,8 +8,9 @@
 //我的相册
 
 #import <UIKit/UIKit.h>
-#import "DDUserInfoModel.h"
+#import "LSHisUserInfoModel.h"
 
 @interface DDAlbumCellView : UIView
-- (void)updateWithModel:(DDUserInfoModel *)model;
+- (void)updateWithModel:(LSHisUserInfoModel *)model;
 @end
+

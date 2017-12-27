@@ -7,7 +7,7 @@
 //
 
 #import "DDAlbumCellView.h"
-
+#import "LSAlbumEtity.h"
 #define kIconWidth  15
 #define kMarginWidth 10
 #define kPicWidth  (kScreenWidth - kMarginWidth*5)/4
@@ -40,7 +40,7 @@
     self.nameLabel = [UILabel new];
     [self addSubview:self.nameLabel];
     [self.nameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.top.mas_equalTo(12.5);
+        //        make.top.mas_equalTo(12.5);
         make.centerY.mas_equalTo(self.iconView);
         make.left.mas_equalTo(self.iconView.mas_right).offset(5);
         make.width.mas_equalTo(60);
@@ -60,7 +60,7 @@
     }];
     self.accessView.image = [UIImage imageNamed:@"usercenter_access"];
 }
-- (void)updateWithModel:(DDUserInfoModel *)model{
+- (void)updateWithModel:(LSHisUserInfoModel *)model{
     //表示未登录
     if (![DDUserDefault objectForKey:@"token"]){
         self.accessView.hidden = YES;
@@ -77,7 +77,8 @@
                     make.bottom.mas_equalTo(-5);
                     make.left.mas_equalTo(kMarginWidth * (i+1) + kPicWidth * i);
                 }];
-                picView.image = [UIImage imageNamed:@"person_bg_image"];
+                LSAlbumEtity *entity = [LSAlbumEtity mj_objectWithKeyValues:model.photo[i]];
+                [picView sd_setImageWithURL:[NSURL URLWithString:entity.image]];
             }
         }
     }

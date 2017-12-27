@@ -7,7 +7,8 @@
 //
 
 #import "DDBaseTableViewCell.h"
+#import "DDMessageModel.h"
 
 @interface DDJoinDeskMessageCell : DDBaseTableViewCell
-
+-(void)updateMessageCellWithModel:(DDMessageModel *)model;
 @end

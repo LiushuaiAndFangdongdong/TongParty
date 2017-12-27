@@ -14,5 +14,5 @@
 @property (nonatomic, copy) NSString *name;      //好友昵称
 @property (nonatomic, copy) NSString *image;     //好友头像
 @property (nonatomic, copy) NSString *score;     //好友积分
-
+@property (nonatomic, copy) NSString *is_send;   //是否发送过邀请：0-未邀请，1-已邀请
 @end

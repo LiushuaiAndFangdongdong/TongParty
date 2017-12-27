@@ -19,7 +19,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.navItemTitle = @"帮助";
+    [self navigationWithTitle:@"帮助"];
+    self.navigationItem.leftBarButtonItem = [self backButtonForNavigationBarWithAction:@selector(pop)];
     [self setUpViews];
 }
 // 设置子视图
@@ -47,9 +48,9 @@
     cell.style = DDSettingCellStyleNormal;
     if (indexPath.section == 0) {
         if (indexPath.row == 0) {
-          cell.namestring = @"用户条款";
+            cell.namestring = @"用户条款";
         }else{
-          cell.namestring = @"行为规范";
+            cell.namestring = @"行为规范";
         }
     }else if (indexPath.section == 1)
     {

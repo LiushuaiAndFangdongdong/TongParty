@@ -18,6 +18,7 @@
 
 @interface DDSexInfoView : UIView
 //@property (nonatomic, assign) DDSexInfoStyle style;
+- (void)updateValueWithModel:(id)model;
 @end
 
 

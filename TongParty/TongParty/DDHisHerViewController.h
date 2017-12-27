@@ -10,5 +10,7 @@
 #import "DDBaseViewController.h"
 
 @interface DDHisHerViewController : DDBaseViewController
+@property (nonatomic, copy)NSString *fid;
 
 @end
+

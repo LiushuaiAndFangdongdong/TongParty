@@ -11,18 +11,20 @@
 #import "DDSettingTableViewCell.h"
 #import "DDBlackListViewController.h"
 #import "DDPermissonViewController.h"
-
+#import "LSPrivateEntity.h"
 @interface DDPrivateViewController ()
-
 @end
 
 @implementation DDPrivateViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.navItemTitle = @"隐私";
+    [self navigationWithTitle:@"隐私"];
+    self.navigationItem.leftBarButtonItem = [self backButtonForNavigationBarWithAction:@selector(pop)];
     [self setUpViews];
 }
+
+
 // 设置子视图
 - (void)setUpViews {
     self.sepLineColor = kSeperatorColor;
@@ -44,7 +46,7 @@
 }
 -(UIView *)tj_headerAtSection:(NSInteger)section{
     UIView *headerView = [[UIView alloc] init];
-//    headerView.backgroundColor = kLightGrayColor;
+    //    headerView.backgroundColor = kLightGrayColor;
     if (section == 1) {
         UILabel *privateLabel = [[UILabel alloc] init];
         [headerView addSubview:privateLabel];
@@ -66,6 +68,7 @@
         cell.style = DDSettingCellStyleNormal;
         cell.namestring = @"黑名单";
     }else if (indexPath.section == 1){
+        
         cell.style = DDSettingCellStyleNormal;
         if (indexPath.row ==0) {
             cell.namestring = @"电话";
@@ -102,21 +105,17 @@
         //黑名单
         [self pushBlackListVC];
     }else if (indexPath.section == 1){
-        
-        
-        [self pushPermissonVC];
         if (indexPath.row == 0) {
-            
+            [self pushPermissonVCWith:@"phone"];
         }
         if (indexPath.row == 1) {
-            
+            [self pushPermissonVCWith:@"addr"];
         }
         if (indexPath.row == 2) {
-            
+            [self pushPermissonVCWith:@"desk"];
         }
         if (indexPath.row == 3) {
-            
-        }else{
+            [self pushPermissonVCWith:@"photo"];
         }
         
     }else{
@@ -126,9 +125,17 @@
     DDBlackListViewController *blist = [[DDBlackListViewController alloc] init];
     [self.navigationController pushViewController:blist animated:YES];
 }
--(void)pushPermissonVC{
-    DDPermissonViewController *permissonVC =[[DDPermissonViewController alloc] init];
-    [self.navigationController pushViewController:permissonVC animated:YES];
+-(void)pushPermissonVCWith:(NSString *)name{
+    [DDTJHttpRequest getPrivacyblock:^(NSDictionary *dict) {
+        NSString *status = dict[name];
+        DDPermissonViewController *permissonVC =[[DDPermissonViewController alloc] init];
+        permissonVC.name = name;
+        permissonVC.statu = status;
+        [self.navigationController pushViewController:permissonVC animated:YES];
+    } failure:^{
+        
+    }];
+    
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

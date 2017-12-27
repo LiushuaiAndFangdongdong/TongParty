@@ -21,5 +21,7 @@
 + (void)uploadImageWithAction:(NSString *)action params:(NSDictionary *)params image:(UIImage *)image  success:(void (^)(DDResponseModel *result))success fail:(void (^)())fail;
 //post文字
 +(void)postTextWithAction:(NSString *)action params:(NSDictionary *)params type:(DDHttpResponseType)type block:(void (^)(NSString *text))block failure:(void(^)())failure;
++ (void)uploadInfoContainImageWithAction:(NSString *)action params:(NSDictionary *)params images:(NSArray *)images  success:(void (^)(DDResponseModel *result))success fail:(void (^)())fail;
 
 @end
+

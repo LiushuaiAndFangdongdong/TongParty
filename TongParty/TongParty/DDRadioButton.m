@@ -108,7 +108,7 @@ static NSMutableDictionary *_groupRadioDic = nil;
 
 - (CGRect)imageRectForContentRect:(CGRect)contentRect {
     return CGRectMake(0, (CGRectGetHeight(contentRect) - Q_RADIO_ICON_WH)/2.0, Q_RADIO_ICON_WH, Q_RADIO_ICON_WH);
-//    return CGRectMake(0, 0, CGRectGetHeight(contentRect), CGRectGetHeight(contentRect));
+    //    return CGRectMake(0, 0, CGRectGetHeight(contentRect), CGRectGetHeight(contentRect));
 }
 
 - (CGRect)titleRectForContentRect:(CGRect)contentRect {
@@ -116,8 +116,9 @@ static NSMutableDictionary *_groupRadioDic = nil;
                       CGRectGetWidth(contentRect) - Q_RADIO_ICON_WH - Q_ICON_TITLE_MARGIN,
                       CGRectGetHeight(contentRect));
     
-//    return CGRectMake(CGRectGetHeight(contentRect), 0, CGRectGetWidth(contentRect)-CGRectGetHeight(contentRect), CGRectGetHeight(contentRect));
+    //    return CGRectMake(CGRectGetHeight(contentRect), 0, CGRectGetWidth(contentRect)-CGRectGetHeight(contentRect), CGRectGetHeight(contentRect));
 }
 
 
 @end
+

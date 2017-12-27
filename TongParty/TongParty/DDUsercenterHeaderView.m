@@ -10,7 +10,7 @@
 #import "DDLabelView.h"
 #import "UIView+Layer.h"
 
-#define kAvatarWidth   50
+#define kAvatarWidth   60
 #define kMarginGapWidth 18
 #define kActivityItemWidth (kScreenWidth - kMarginGapWidth*6)/5
 
@@ -87,12 +87,12 @@ height=305;\
         make.centerX.mas_equalTo(self);
         make.top.mas_equalTo(topOriginY);
     }];
-    _avatar.layerCornerRadius = 25;
+    _avatar.layerCornerRadius = kAvatarWidth/2;
     //名称
     _nameLbl = [UILabel new];
     [_loginedView addSubview:_nameLbl];
     [_nameLbl mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.left.mas_equalTo(_avatar.mas_left).offset(-10);
+        //        make.left.mas_equalTo(_avatar.mas_left).offset(-10);
         make.width.mas_equalTo(4*kAvatarWidth);
         make.height.mas_equalTo(20);
         make.centerX.mas_equalTo(_avatar);
@@ -101,7 +101,7 @@ height=305;\
     _nameLbl.textAlignment = NSTextAlignmentCenter;
     _nameLbl.textColor = kWhiteColor;
     _nameLbl.font = [UIFont systemFontOfSize:14];
-    
+    _nameLbl.hidden = YES;
     //标签
     _labelView = [DDLabelView new];
     [_loginedView addSubview:_labelView];
@@ -110,7 +110,7 @@ height=305;\
         make.width.and.height.mas_equalTo(40);
         make.top.mas_equalTo(_avatar);
     }];
-    _labelView.textstring = @"爱生活";
+    
     _labelView.layerCornerRadius = 20;
     _labelView.bgColor = kLabelBgBlackColor;
     //        [self ImageSpringWithLabel:labelView];
@@ -122,7 +122,7 @@ height=305;\
         make.width.and.height.mas_equalTo(40);
         make.top.mas_equalTo(_avatar);
     }];
-    _labelView1.textstring = @"爱网购";
+    
     _labelView1.layerCornerRadius = 20;
     _labelView1.bgColor = kLabelBgBlackColor;
     //        [self ImageSpringWithLabel:labelView1];
@@ -134,7 +134,7 @@ height=305;\
         make.width.and.height.mas_equalTo(40);
         make.top.mas_equalTo(_labelView.mas_bottom).offset(30);
     }];
-    _labelView2.textstring = @"喜欢开黑";
+    
     _labelView2.layerCornerRadius = 20;
     _labelView2.bgColor = kLabelBgBlackColor;
     //        [self ImageSpringWithLabel:labelView2];
@@ -146,9 +146,15 @@ height=305;\
         make.width.and.height.mas_equalTo(40);
         make.top.mas_equalTo(_labelView1.mas_bottom).offset(30);
     }];
-    _labelView3.textstring = @"神秘人";
+    
     _labelView3.layerCornerRadius = 20;
     _labelView3.bgColor = kLabelBgBlackColor;
+    NSArray *lbl_labels = @[_labelView,_labelView1,_labelView2,_labelView3];
+    for (int l = 0 ; l < lbl_labels.count; l++) {
+        DDLabelView *lblView = lbl_labels[l];
+        lblView.hidden = YES;
+    }
+    
     //        [self ImageSpringWithLabel:labelView3];
     //信用度&活跃值
     _creditLbl = [UILabel new];
@@ -163,12 +169,13 @@ height=305;\
     _creditLbl.textAlignment = NSTextAlignmentCenter;
     _creditLbl.textColor = kWhiteColor;
     _creditLbl.font = kFont(13);
+    _creditLbl.hidden = YES;
     //活动参加率
     _joinRateLbl = [UILabel new];
     [_loginedView addSubview:_joinRateLbl];
     [_joinRateLbl mas_makeConstraints:^(MASConstraintMaker *make) {
         make.width.mas_equalTo(kAvatarWidth * 4);
-        make.top.mas_equalTo(_creditLbl.mas_bottom).offset(lastLabelMargin);
+        make.top.mas_equalTo(_creditLbl.mas_bottom).offset(lastLabelMargin*0.8f);
         make.centerX.mas_equalTo(_creditLbl.centerX);
     }];
     //    joinRateLbl.text = @"实到6/7创建       实到7/9参与";
@@ -180,6 +187,7 @@ height=305;\
     NSRange strRange1 = {16,3};
     _joinString = @"实到0/0创建       实到0/0参与";
     _joinRateLbl.attributedText = [self string:_joinString NSRange:strRange font1:kFont(17) ran2:strRange1 font2:kFont(15)];
+    _joinRateLbl.hidden = YES;
     
     //--------------------- 未登录 ------------------
     _unloginedView = [UIView new];
@@ -200,7 +208,7 @@ height=305;\
     UILabel *lineUn = [UILabel new];
     [_unloginedView addSubview:lineUn];
     [lineUn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(_avatar.mas_bottom).offset(45);
+        make.top.mas_equalTo(_avatar.mas_bottom).offset(40);
         make.width.mas_equalTo(1);
         make.height.mas_equalTo(10);
         make.centerX.mas_equalTo(self);
@@ -211,7 +219,7 @@ height=305;\
     UIButton *loginBtn = [UIButton new];
     [_unloginedView addSubview:loginBtn];
     [loginBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(_avatar.mas_bottom).offset(35);
+        make.top.mas_equalTo(_avatar.mas_bottom).offset(30);
         make.width.mas_equalTo(70);
         make.height.mas_equalTo(30);
         make.right.mas_equalTo(lineUn.mas_left).offset(-5);
@@ -226,7 +234,7 @@ height=305;\
     UIButton *registerBtn = [UIButton new];
     [_unloginedView addSubview:registerBtn];
     [registerBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(_avatar.mas_bottom).offset(35);
+        make.top.mas_equalTo(_avatar.mas_bottom).offset(30);
         make.width.mas_equalTo(70);
         make.height.mas_equalTo(30);
         make.left.mas_equalTo(lineUn.mas_right).offset(5);
@@ -246,7 +254,7 @@ height=305;\
         make.top.mas_equalTo(loginBtn.mas_bottom).offset(lastLabelMargin);
         make.centerX.mas_equalTo(self);
     }];
-
+    _joinRateLblUn.hidden = YES;
     _joinRateLblUn.textAlignment = NSTextAlignmentCenter;
     _joinRateLblUn.textColor = kWhiteColor;
     _joinRateLblUn.font = kFont(12);
@@ -257,11 +265,11 @@ height=305;\
     
     NSMutableAttributedString *sr = [[NSMutableAttributedString alloc] initWithString:string];
     [sr addAttributes:@{
-                         NSFontAttributeName:font1
-                         } range:ran1];
+                        NSFontAttributeName:font1
+                        } range:ran1];
     [sr addAttributes:@{
-                         NSFontAttributeName:font2
-                         } range:ran2];
+                        NSFontAttributeName:font2
+                        } range:ran2];
     return sr;
 }
 //更新用户信息
@@ -271,16 +279,29 @@ height=305;\
     DDUserSingleton *user = [DDUserSingleton shareInstance];
     if (user.token) {
         //已登录
+        _creditLbl.hidden = NO;
+        _joinRateLbl.hidden = NO;
         _unloginedView.hidden = YES;
         _loginedView.hidden = NO;
+        _joinRateLblUn.hidden = NO;
         [_avatar sd_setImageWithURL:[NSURL URLWithString:model.image] placeholderImage:kDefaultAvatar];
         _nameLbl.text = model.name;
-//        _creditLbl.text
-//        _joinString = [NSString stringWithFormat:@"实到%@/%@创建       实到%@/%@参与",];
+        _nameLbl.hidden = NO;
+        NSArray *label_arr = [model.label componentsSeparatedByString:@","];
+        NSArray *lbl_labels = @[_labelView,_labelView1,_labelView2,_labelView3];
+        if (label_arr) {
+            for (int l = 0 ; l < label_arr.count; l++) {
+                DDLabelView *lblView = lbl_labels[l];
+                lblView.hidden = NO;
+                lblView.textstring = label_arr[l];
+            }
+        }
     }else{
         //未登录
         _unloginedView.hidden = NO;
         _loginedView.hidden = YES;
+        _joinRateLbl.hidden = YES;
+        _joinRateLblUn.hidden = YES;
         _avatarUn.image = kDefaultAvatar;
         
     }

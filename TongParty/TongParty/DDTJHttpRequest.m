@@ -7,7 +7,7 @@
 //
 
 #import "DDTJHttpRequest.h"
-
+#import "DDUserInfoModel.h"
 @implementation DDTJHttpRequest
 
 
@@ -22,7 +22,7 @@
         } else {
             failure();
         }
-            [MBProgressHUD showMessage:result.msg_cn toView:[UIApplication sharedApplication].keyWindow];
+        [MBProgressHUD showMessage:result.msg_cn toView:[UIApplication sharedApplication].keyWindow];
     } failure:^{
         failure();
     }];
@@ -88,6 +88,121 @@
     
 }
 
+// 他人用户详情
++ (void)getOtherUserDetailInfoWithToken:(NSString *)token fid:(NSString *)fid block:(void(^)(NSDictionary *dict))dict failure:(void(^)())failure {
+    NSMutableDictionary *md = [NSMutableDictionary dictionary];
+    [self setWithMutableDict:md key:@"token" value:token];
+    [self setWithMutableDict:md key:@"fid" value:fid];
+    
+    [self postWithAction:kTJOtherUserInfoDetailAPI params:md type:kDDHttpResponseTypeJson block:^(DDResponseModel *result) {
+        
+        if (result.status.integerValue == kDDResponseStateSuccess) {
+            dict(result.data);
+        } else {
+            failure();
+        }
+    } failure:^{
+        failure();
+    }];
+}
+
+/**关注用户*/
++ (void)careOtherUserByfid:(NSString *)fid is_special:(NSString *)is_special block:(void(^)(NSDictionary *dict))dict failure:(void(^)())failure {
+    NSMutableDictionary *md = [NSMutableDictionary dictionary];
+    [self setWithMutableDict:md key:@"token" value:[DDUserSingleton shareInstance].token];
+    [self setWithMutableDict:md key:@"fid" value:fid];
+    [self setWithMutableDict:md key:@"is_special" value:is_special];
+    
+    [self postWithAction:kTJCareOtherUserAPI params:md type:kDDHttpResponseTypeJson block:^(DDResponseModel *result) {
+        if (result.status.integerValue == kDDResponseStateSuccess) {
+            dict(result.data);
+        } else {
+            failure();
+        }
+    } failure:^{
+        failure();
+    }];
+}
+
+/**取消关注用户*/
++ (void)cancelCareOtherUserByfid:(NSString *)fid block:(void(^)(NSDictionary *dict))dict failure:(void(^)())failure  {
+    NSMutableDictionary *md = [NSMutableDictionary dictionary];
+    [self setWithMutableDict:md key:@"token" value:[DDUserSingleton shareInstance].token];
+    [self setWithMutableDict:md key:@"fid" value:fid];
+    
+    [self postWithAction:kTJCancelcareOtherUserAPI params:md type:kDDHttpResponseTypeJson block:^(DDResponseModel *result) {
+        if (result.status.integerValue == kDDResponseStateSuccess) {
+            dict(result.data);
+        } else {
+            failure();
+        }
+    } failure:^{
+        failure();
+    }];
+}
+
+/**获取我关注列表*/
++ (void)getCareListblock:(void(^)(NSDictionary *dict))dict failure:(void(^)())failure {
+    NSMutableDictionary *md = [NSMutableDictionary dictionary];
+    [self setWithMutableDict:md key:@"token" value:[DDUserSingleton shareInstance].token];
+    [self postWithAction:kTJCareListAPI params:md type:kDDHttpResponseTypeJson block:^(DDResponseModel *result) {
+        if (result.status.integerValue == kDDResponseStateSuccess) {
+            dict(result.data);
+        } else {
+            failure();
+        }
+    } failure:^{
+        failure();
+    }];
+}
+
+/**获取关注我列表*/
++ (void)getCaredListblock:(void(^)(NSDictionary *dict))dict failure:(void(^)())failure {
+    NSMutableDictionary *md = [NSMutableDictionary dictionary];
+    [self setWithMutableDict:md key:@"token" value:[DDUserSingleton shareInstance].token];
+    [self postWithAction:kTJCaredListAPI params:md type:kDDHttpResponseTypeJson block:^(DDResponseModel *result) {
+        if (result.status.integerValue == kDDResponseStateSuccess) {
+            dict(result.data);
+        } else {
+            failure();
+        }
+    } failure:^{
+        failure();
+    }];
+}
+
+/**获取他人关注列表*/
++ (void)getOhterCareListByFid:(NSString *)fid block:(void(^)(NSDictionary *dict))dict failure:(void(^)())failure {
+    NSMutableDictionary *md = [NSMutableDictionary dictionary];
+    [self setWithMutableDict:md key:@"token" value:[DDUserSingleton shareInstance].token];
+    [self setWithMutableDict:md key:@"fid" value:fid];
+    [self postWithAction:kTJCaredListAPI params:md type:kDDHttpResponseTypeJson block:^(DDResponseModel *result) {
+        if (result.status.integerValue == kDDResponseStateSuccess) {
+            dict(result.data);
+        } else {
+            failure();
+        }
+    } failure:^{
+        failure();
+    }];
+}
+
+/**获取他人被关注列表*/
++ (void)getOhterCaredListByFid:(NSString *)fid block:(void(^)(NSDictionary *dict))dict failure:(void(^)())failure {
+    NSMutableDictionary *md = [NSMutableDictionary dictionary];
+    [self setWithMutableDict:md key:@"token" value:[DDUserSingleton shareInstance].token];
+    [self setWithMutableDict:md key:@"fid" value:fid];
+    [self postWithAction:kTJOtherCaredListAPI params:md type:kDDHttpResponseTypeJson block:^(DDResponseModel *result) {
+        if (result.status.integerValue == kDDResponseStateSuccess) {
+            dict(result.data);
+        } else {
+            failure();
+        }
+    } failure:^{
+        failure();
+    }];
+}
+
 //用户详情页
 + (void)getUserDetailInfoWithToken:(NSString *)token block:(void(^)(NSDictionary *dict))dict failure:(void(^)())failure{
     NSMutableDictionary *md = [NSMutableDictionary dictionary];
@@ -96,15 +211,15 @@
         if (result.status.integerValue == kDDResponseStateSuccess) {
             NSDictionary *d = result.data;
             NSLog(@"%@",d);
-//            DDUserSingleton *user = [DDUserSingleton shareInstance];
-//            user = [DDUserSingleton mj_objectWithKeyValues:d];
-//            [kNotificationCenter postNotificationName:kUpdateUserInfoNotification object:nil];
-//            [kNotificationCenter postNotificationName:kUpdateUserInfoNotification object:nil];
+            //            DDUserSingleton *user = [DDUserSingleton shareInstance];
+            //            user = [DDUserSingleton mj_objectWithKeyValues:d];
+            //            [kNotificationCenter postNotificationName:kUpdateUserInfoNotification object:nil];
+            //            [kNotificationCenter postNotificationName:kUpdateUserInfoNotification object:nil];
             dict(result.data);
         } else {
             failure();
         }
-        [MBProgressHUD showMessage:result.msg_cn toView:[UIApplication sharedApplication].keyWindow];
+        // [MBProgressHUD showMessage:result.msg_cn toView:[UIApplication sharedApplication].keyWindow];
     } failure:^{
         failure();
     }];
@@ -127,10 +242,10 @@
     [self setWithMutableDict:md key:@"label" value:label];
     [self setWithMutableDict:md key:@"addr" value:addr];
     [self setWithMutableDict:md key:@"detail" value:detail];
-
+    
     [self postWithAction:kTJAddAddressAPI params:md type:kDDHttpResponseTypeJson block:^(DDResponseModel *result) {
         if (result.status.integerValue == kDDResponseStateSuccess) {
-        dict(result.data);
+            dict(result.data);
         } else {
             failure();
         }
@@ -220,10 +335,32 @@
     }];
 }
 
+/**
+ 获取地址标签
+ 
+ @param dict 成功
+ @param failure 失败
+ */
++ (void)getAddrLabelsblock:(void(^)(NSDictionary *dict))dict failure:(void(^)())failure {
+    NSMutableDictionary *md = [NSMutableDictionary dictionary];
+    [self setWithMutableDict:md key:@"token" value:TOKEN];
+    [self postWithAction:@"/tongju/api/get_addr_label.php" params:md type:kDDHttpResponseTypeJson block:^(DDResponseModel *result) {
+        
+        if (result.status.integerValue == kDDResponseStateSuccess) {
+            dict(result.data);
+        } else {
+            failure();
+        }
+        //[MBProgressHUD showMessage:result.msg_cn toView:[UIApplication sharedApplication].keyWindow];
+    } failure:^{
+        //
+    }];
+}
+
 /**创建桌子*/
 + (void)createDeskWithToken:(NSString *)token
                    activity:(NSString *)activity
-                    custom:(NSString *)custom
+                     custom:(NSString *)custom
                       title:(NSString *)title
                       place:(NSString *)place
                  begin_time:(NSString *)begin_time
@@ -253,9 +390,9 @@
     [self setWithMutableDict:md key:@"latitude" value:latitude];
     [self setWithMutableDict:md key:@"longitude" value:longitude];
     
-//    UIImage *image1 = [
+    //    UIImage *image1 = [
     
-//    NSArray *images =
+    //    NSArray *images =
     
     [self uploadMultiImageWithAction:kTJCreateDeskAPI params:md images:image success:^(DDResponseModel *result) {
         if (result.status.integerValue == kDDResponseStateSuccess) {
@@ -490,17 +627,19 @@
  * @token  用户token
  * @tid 桌子id
  * @t_uid  桌子创建人id
+ * @prop 加入券数量
  */
 + (void)applyJoinDeskWithToken:(NSString *)token
                            tid:(NSString *)tid
                          t_uid:(NSString *)t_uid
+                          prop:(NSString *)prop
                          block:(void(^)(NSDictionary *dict))dict
                        failure:(void(^)())failure{
     NSMutableDictionary *md = [NSMutableDictionary dictionary];
     [self setWithMutableDict:md key:@"token" value:token];
     [self setWithMutableDict:md key:@"tid" value:tid];
     [self setWithMutableDict:md key:@"t_uid" value:t_uid];
-    
+    [self setWithMutableDict:md key:@"prop" value:prop];
     [self postWithAction:kTJApplyJoinInDeskAPI params:md type:kDDHttpResponseTypeJson block:^(DDResponseModel *result) {
         if (result.status.integerValue == kDDResponseStateSuccess) {
             dict(result.data);
@@ -633,7 +772,7 @@
     NSMutableDictionary *md = [NSMutableDictionary dictionary];
     [self setWithMutableDict:md key:@"token" value:token];
     [self setWithMutableDict:md key:@"tid" value:tid];
-
+    
     [self postWithAction:kTJUserCaredDeskAPI params:md type:kDDHttpResponseTypeJson block:^(DDResponseModel *result) {
         if (result.status.integerValue == kDDResponseStateSuccess) {
             dict(result.data);
@@ -751,8 +890,8 @@
  * @token  用户token
  */
 + (void)getDeskInviteListsWithToken:(NSString *)token
-                         block:(void(^)(NSDictionary *dict))dict
-                       failure:(void(^)())failure{
+                              block:(void(^)(NSDictionary *dict))dict
+                            failure:(void(^)())failure{
     NSMutableDictionary *md = [NSMutableDictionary dictionary];
     [self setWithMutableDict:md key:@"token" value:token];
     
@@ -828,6 +967,30 @@
     [self setWithMutableDict:md key:@"nid" value:nid];
     
     [self postWithAction:kTJHosterSendNoticeAPI params:md type:kDDHttpResponseTypeJson block:^(DDResponseModel *result) {
+        if (result.status.integerValue == kDDResponseStateSuccess) {
+            dict(result.data);
+        } else {
+            failure();
+        }
+        [MBProgressHUD showMessage:result.msg_cn toView:[UIApplication sharedApplication].keyWindow];
+    } failure:^{
+        //
+    }];
+}
+
+/**获取券的信息
+ * @token  用户token
+ * @m 1.邀请券   2加入券
+ */
++ (void)getTicketsInfoWithToken:(NSString *)token
+                              m:(NSString *)m
+                          block:(void(^)(NSDictionary *dict))dict
+                        failure:(void(^)())failure{
+    NSMutableDictionary *md = [NSMutableDictionary dictionary];
+    [self setWithMutableDict:md key:@"token" value:token];
+    [self setWithMutableDict:md key:@"m" value:m];
+    
+    [self postWithAction:kTJTicketsInfoAPI params:md type:kDDHttpResponseTypeJson block:^(DDResponseModel *result) {
         if (result.status.integerValue == kDDResponseStateSuccess) {
             dict(result.data);
         } else {
@@ -1001,6 +1164,504 @@
     NSMutableDictionary *md = [NSMutableDictionary dictionary];
     [self setWithMutableDict:md key:@"token" value:token];
     [self postWithAction:kTJUserLabelListsAPI params:md type:kDDHttpResponseTypeJson block:^(DDResponseModel *result) {
+        if (result.status.integerValue == kDDResponseStateSuccess) {
+            dict(result.data);
+        } else {
+            failure();
+        }
+        //[MBProgressHUD showMessage:result.msg_cn toView:[UIApplication sharedApplication].keyWindow];
+    } failure:^{
+        //
+    }];
+}
+
+/**
+ 获取好友列表
+ @param token 参数token
+ */
++ (void)getFriendsListWithToken:(NSString *)token
+                          block:(void(^)(NSDictionary *dict))dict
+                        failure:(void(^)())failure {
+    NSMutableDictionary *md = [NSMutableDictionary dictionary];
+    [self setWithMutableDict:md key:@"token" value:token];
+    [self postWithAction:@"/tongju/api/get_friend_list.php" params:md type:kDDHttpResponseTypeJson block:^(DDResponseModel *result) {
+        if (result.status.integerValue == kDDResponseStateSuccess) {
+            dict(result.data);
+        } else {
+            failure();
+        }
+        // [MBProgressHUD showMessage:result.msg_cn toView:[UIApplication sharedApplication].keyWindow];
+    } failure:^{
+        //
+    }];
+}
+
+/**
+ 获取他人好友列表
+ @param fid 参数fid
+ */
++ (void)getFriendsListWithFid:(NSString *)fid
+                        block:(void(^)(NSDictionary *dict))dict
+                      failure:(void(^)())failure {
+    NSMutableDictionary *md = [NSMutableDictionary dictionary];
+    [self setWithMutableDict:md key:@"token" value:[DDUserSingleton shareInstance].token];
+    [self setWithMutableDict:md key:@"fid" value:fid];
+    [self postWithAction:@"/tongju/api/get_friend_list.php" params:md type:kDDHttpResponseTypeJson block:^(DDResponseModel *result) {
+        if (result.status.integerValue == kDDResponseStateSuccess) {
+            dict(result.data);
+        } else {
+            failure();
+        }
+        // [MBProgressHUD showMessage:result.msg_cn toView:[UIApplication sharedApplication].keyWindow];
+    } failure:^{
+        //
+    }];
+}
+
+/**
+ 添加好友
+ 
+ @param token token
+ @param fid 好友id
+ @param dict 成功回调
+ @param failure 失败回调
+ */
++ (void)addFriendsToListWithToken:(NSString *)token
+                              fid:(NSString *)fid
+                            block:(void(^)(NSDictionary *dict))dict
+                          failure:(void(^)())failure {
+    NSMutableDictionary *md = [NSMutableDictionary dictionary];
+    [self setWithMutableDict:md key:@"token" value:token];
+    [self setWithMutableDict:md key:@"fid" value:fid];
+    [self postWithAction:@"/tongju/api/set_user_friend.php" params:md type:kDDHttpResponseTypeJson block:^(DDResponseModel *result) {
+        
+        if (result.status.integerValue == kDDResponseStateSuccess) {
+            dict(result.data);
+        } else {
+            failure();
+        }
+        [MBProgressHUD showMessage:result.msg_cn toView:[UIApplication sharedApplication].keyWindow];
+    } failure:^{
+        //
+    }];
+}
+
+/**
+ 删除好友
+ 
+ @param token token
+ @param fid 好友id
+ @param dict 成功回调
+ @param failure 失败回调
+ */
++ (void)deleteFriendWithToken:(NSString *)token
+                          fid:(NSString *)fid
+                        block:(void(^)(NSDictionary *dict))dict
+                      failure:(void(^)())failure {
+    NSMutableDictionary *md = [NSMutableDictionary dictionary];
+    [self setWithMutableDict:md key:@"token" value:token];
+    [self setWithMutableDict:md key:@"fid" value:fid];
+    [self postWithAction:@"/tongju/api/delete_user_friend.php" params:md type:kDDHttpResponseTypeJson block:^(DDResponseModel *result) {
+        
+        if (result.status.integerValue == kDDResponseStateSuccess) {
+            dict(result.data);
+        } else {
+            failure();
+        }
+        [MBProgressHUD showMessage:result.msg_cn toView:[UIApplication sharedApplication].keyWindow];
+    } failure:^{
+        //
+    }];
+}
+
+/**
+ 邀请添加好友
+ 
+ @param token token
+ @param fid 好友id
+ @param dict 成功回调
+ @param failure 失败回调
+ */
++ (void)inviteFriendsToListWithToken:(NSString *)token
+                                 fid:(NSString *)fid
+                               block:(void(^)(NSDictionary *dict))dict
+                             failure:(void(^)())failure {
+    NSMutableDictionary *md = [NSMutableDictionary dictionary];
+    [self setWithMutableDict:md key:@"token" value:token];
+    [self setWithMutableDict:md key:@"fid" value:fid];
+    [self postWithAction:@"/tongju/api/send_invitation.php?m=friend" params:md type:kDDHttpResponseTypeJson block:^(DDResponseModel *result) {
+        
+        if (result.status.integerValue == kDDResponseStateSuccess) {
+            dict(result.data);
+        } else {
+            failure();
+        }
+        [MBProgressHUD showMessage:result.msg_cn toView:[UIApplication sharedApplication].keyWindow];
+    } failure:^{
+        //
+    }];
+}
+
+/**
+ 获取个人相册
+ 
+ @param token 参数token
+ @param dict 成功
+ @param failure 失败
+ */
++ (void)getUserAlbumWithToken:(NSString *)token
+                        block:(void(^)(NSDictionary *dict))dict
+                      failure:(void(^)())failure {
+    
+    NSMutableDictionary *md = [NSMutableDictionary dictionary];
+    [self setWithMutableDict:md key:@"token" value:token];
+    [self getWithAction:@"/tongju/api/get_user_photo.php" params:md type:kDDHttpResponseTypeJson block:^(DDResponseModel *result) {
+        
+        if (result.status.integerValue == kDDResponseStateSuccess) {
+            dict(result.data);
+        } else {
+            failure();
+        }
+        //  [MBProgressHUD showMessage:result.msg_cn toView:[UIApplication sharedApplication].keyWindow];
+    } failure:^{
+        //
+    }];
+}
+
+/**
+ 查看他人相册
+ 
+ @param fid id
+ @param dict 成功
+ @param failure 失败
+ */
++ (void)getOtherUserAlbumByFid:(NSString *)fid
+                         block:(void(^)(NSDictionary *dict))dict
+                       failure:(void(^)())failure {
+    
+    NSMutableDictionary *md = [NSMutableDictionary dictionary];
+    [self setWithMutableDict:md key:@"token" value:[DDUserSingleton shareInstance].token];
+    [self setWithMutableDict:md key:@"fid" value:fid];
+    
+    [self postWithAction:@"/tongju/api/get_other_photo.php" params:md type:kDDHttpResponseTypeJson block:^(DDResponseModel *result) {
+        
+        if (result.status.integerValue == kDDResponseStateSuccess) {
+            dict(result.data);
+        } else {
+            failure();
+        }
+        //  [MBProgressHUD showMessage:result.msg_cn toView:[UIApplication sharedApplication].keyWindow];
+    } failure:^{
+        //
+    }];
+}
+
+/**
+ 删除照片
+ 
+ @param token 参数token
+ @param photoId 照片id
+ @param dict 成功
+ @param failure 失败
+ */
++ (void)deleteUserAlbumWithToken:(NSString *)token
+                         photoId:(NSString *)photoId
+                           block:(void(^)(NSDictionary *dict))dict
+                         failure:(void(^)())failure {
+    NSMutableDictionary *md = [NSMutableDictionary dictionary];
+    [self setWithMutableDict:md key:@"token" value:token];
+    [self setWithMutableDict:md key:@"pid" value:photoId];
+    
+    [self postWithAction:@"/tongju/api/delete_user_photo.php" params:md type:kDDHttpResponseTypeJson block:^(DDResponseModel *result) {
+        
+        if (result.status.integerValue == kDDResponseStateSuccess) {
+            dict(result.data);
+        } else {
+            failure();
+        }
+        [MBProgressHUD showMessage:result.msg_cn toView:[UIApplication sharedApplication].keyWindow];
+    } failure:^{
+        //
+    }];
+}
+
+/**
+ 通讯录好友
+ 
+ @param token token
+ @param phones 参数
+ @param dict 成功回调
+ @param failure 失败回调
+ */
++ (void)getContactsListWithToken:(NSString *)token
+                           phone:(NSString *)phones
+                           block:(void(^)(NSDictionary *dict))dict
+                         failure:(void(^)())failure {
+    NSMutableDictionary *md = [NSMutableDictionary dictionary];
+    [self setWithMutableDict:md key:@"token" value:token];
+    NSString *headerStr = @"[122334";
+    NSString *endStr = @"122233]";
+    [self setWithMutableDict:md key:@"phones" value:[NSString stringWithFormat:@"%@,%@%@",headerStr,phones,endStr]];
+    NSLog(@"%@",[NSString stringWithFormat:@"%@,%@%@",headerStr,phones,endStr]);
+    [self postWithAction:@"/tongju/api/get_phone_friend.php" params:md type:kDDHttpResponseTypeJson block:^(DDResponseModel *result) {
+        
+        if (result.status.integerValue == kDDResponseStateSuccess) {
+            dict(result.data);
+        } else {
+            failure();
+        }
+        // [MBProgressHUD showMessage:result.msg_cn toView:[UIApplication sharedApplication].keyWindow];
+    } failure:^{
+        //
+    }];
+}
+
+/**上传用户头像*/
++ (void)upUserHeaderImage:(UIImage *)image block:(void(^)(NSDictionary *dict))dict failure:(void(^)())failure {
+    NSMutableDictionary *md = [NSMutableDictionary dictionary];
+    [self setWithMutableDict:md key:@"token" value:[DDUserSingleton shareInstance].token];
+    NSMutableArray *images = [NSMutableArray array];
+    NSDictionary *imagedict = @{@"name":@"image",@"image":image};
+    [images addObject:imagedict];
+    [self uploadInfoContainImageWithAction:kTJUpUserHeaderAPI params:md images:images success:^(DDResponseModel *result) {
+        if (result.status.integerValue == kDDResponseStateSuccess) {
+            dict(result.data);
+        } else {
+            failure();
+        }
+        //[MBProgressHUD showMessage:result.msg_cn toView:[UIApplication sharedApplication].keyWindow];
+    } fail:^{
+        
+    }];
+}
+
+/**用户信息完善*/
++ (void)upUserInfoWith:(id)model block:(void(^)(NSDictionary *dict))dict failure:(void(^)())failure {
+    NSMutableDictionary *md = [NSMutableDictionary dictionary];
+    DDUserInfoModel *uModel = (DDUserInfoModel *)model;
+    md = uModel.mj_keyValues;
+    [self setWithMutableDict:md key:@"token" value:[DDUserSingleton shareInstance].token];
+    
+    [self postWithAction:@"/tongju/api/set_user_info.php" params:md type:kDDHttpResponseTypeJson block:^(DDResponseModel *result) {
+        if (result.status.integerValue == kDDResponseStateSuccess) {
+            dict(result.data);
+        } else {
+            failure();
+        }
+        [MBProgressHUD showMessage:result.msg_cn toView:[UIApplication sharedApplication].keyWindow];
+    } failure:^{
+        //
+    }];
+}
+
+/**获取用户标签*/
++ (void)getUserLabelsblock:(void(^)(NSDictionary *dict))dict failure:(void(^)())failure {
+    NSMutableDictionary *md = [NSMutableDictionary dictionary];
+    [self setWithMutableDict:md key:@"token" value:[DDUserSingleton shareInstance].token];
+    [self postWithAction:@"/tongju/api/get_user_label.php" params:md type:kDDHttpResponseTypeJson block:^(DDResponseModel *result) {
+        if (result.status.integerValue == kDDResponseStateSuccess) {
+            dict(result.data);
+        } else {
+            failure();
+        }
+        //[MBProgressHUD showMessage:result.msg_cn toView:[UIApplication sharedApplication].keyWindow];
+    } failure:^{
+        //
+    }];
+}
+
+/**添加用户标签*/
++ (void)addUserLabels:(NSString *)label block:(void(^)(NSDictionary *dict))dict failure:(void(^)())failure {
+    NSMutableDictionary *md = [NSMutableDictionary dictionary];
+    [self setWithMutableDict:md key:@"token" value:[DDUserSingleton shareInstance].token];
+    [self setWithMutableDict:md key:@"label" value:label];
+    [self postWithAction:@"/tongju/api/set_user_label.php" params:md type:kDDHttpResponseTypeJson block:^(DDResponseModel *result) {
+        if (result.status.integerValue == kDDResponseStateSuccess) {
+            dict(result.data);
+        } else {
+            failure();
+        }
+        [MBProgressHUD showMessage:result.msg_cn toView:[UIApplication sharedApplication].keyWindow];
+    } failure:^{
+        //
+    }];
+}
+
+/**实名认证*/
++ (void)realnameAuthWithToken:(NSString *)token real_name:(NSString *)real_name id_number:(NSString *)id_number positive:(UIImage *)poImage negative:(UIImage *)neImage block:(void(^)(NSDictionary *dict))dict failure:(void(^)())failure {
+    NSMutableArray *images = [NSMutableArray array];
+    NSDictionary *fImage = @{@"name":@"positive",@"image":poImage};
+    [images addObject:fImage];
+    NSDictionary *nImage = @{@"name":@"negative",@"image":neImage};
+    [images addObject:nImage];
+    NSMutableDictionary *md = [NSMutableDictionary dictionary];
+    [self setWithMutableDict:md key:@"token" value:[DDUserSingleton shareInstance].token];
+    [self setWithMutableDict:md key:@"real_name" value:real_name];
+    [self setWithMutableDict:md key:@"id_number" value:id_number];
+    [self uploadInfoContainImageWithAction:@"/tongju/api/user_certification.php" params:md images:images success:^(DDResponseModel *result) {
+        if (result.status.integerValue == kDDResponseStateSuccess) {
+            dict(result.data);
+        } else {
+            failure();
+        }
+        [MBProgressHUD showMessage:result.msg_cn toView:[UIApplication sharedApplication].keyWindow];
+    } fail:^{
+        
+    }];
+}
+
+/**获取黑名单列表*/
++ (void)getblacklistblock:(void(^)(NSDictionary *dict))dict failure:(void(^)())failure {
+    NSMutableDictionary *md = [NSMutableDictionary dictionary];
+    [self setWithMutableDict:md key:@"token" value:[DDUserSingleton shareInstance].token];
+    [self postWithAction:@"/tongju/api/get_blacklist.php" params:md type:kDDHttpResponseTypeJson block:^(DDResponseModel *result) {
+        
+        if (result.status.integerValue == kDDResponseStateSuccess) {
+            dict(result.data);
+        } else {
+            failure();
+        }
+        // [MBProgressHUD showMessage:result.msg_cn toView:[UIApplication sharedApplication].keyWindow];
+    } failure:^{
+        //
+    }];
+}
+
+/**添加黑名单*/
++ (void)addBlacklistByfid:(NSString *)fid block:(void(^)(NSDictionary *dict))dict failure:(void(^)())failure {
+    NSMutableDictionary *md = [NSMutableDictionary dictionary];
+    [self setWithMutableDict:md key:@"token" value:[DDUserSingleton shareInstance].token];
+    [self setWithMutableDict:md key:@"fid" value:fid];
+    [self postWithAction:@"/tongju/api/set_blacklist.php" params:md type:kDDHttpResponseTypeJson block:^(DDResponseModel *result) {
+        
+        if (result.status.integerValue == kDDResponseStateSuccess) {
+            dict(result.data);
+        } else {
+            failure();
+        }
+        [MBProgressHUD showMessage:result.msg_cn toView:[UIApplication sharedApplication].keyWindow];
+    } failure:^{
+        //
+    }];
+}
+
+/**删除黑名单*/
++ (void)deleteBlacklistByfid:(NSString *)fid block:(void(^)(NSDictionary *dict))dict failure:(void(^)())failure {
+    NSMutableDictionary *md = [NSMutableDictionary dictionary];
+    [self setWithMutableDict:md key:@"token" value:[DDUserSingleton shareInstance].token];
+    [self setWithMutableDict:md key:@"fid" value:fid];
+    
+    [self postWithAction:@"/tongju/api/delete_blacklist.php" params:md type:kDDHttpResponseTypeJson block:^(DDResponseModel *result) {
+        
+        if (result.status.integerValue == kDDResponseStateSuccess) {
+            dict(result.data);
+        } else {
+            failure();
+        }
+        [MBProgressHUD showMessage:result.msg_cn toView:[UIApplication sharedApplication].keyWindow];
+    } failure:^{
+        //
+    }];
+}
+
+/**举报用户*/
++ (void)reportUserBybid:(NSString *)bid text:(NSString *)text block:(void(^)(NSDictionary *dict))dict failure:(void(^)())failure {
+    NSMutableDictionary *md = [NSMutableDictionary dictionary];
+    [self setWithMutableDict:md key:@"token" value:[DDUserSingleton shareInstance].token];
+    [self setWithMutableDict:md key:@"bid" value:bid];
+    [self setWithMutableDict:md key:@"text" value:text];
+    
+    [self postWithAction:@"/tongju/api/set_report.php" params:md type:kDDHttpResponseTypeJson block:^(DDResponseModel *result) {
+        if (result.status.integerValue == kDDResponseStateSuccess) {
+            dict(result.data);
+        } else {
+            failure();
+        }
+        [MBProgressHUD showMessage:result.msg_cn toView:[UIApplication sharedApplication].keyWindow];
+    } failure:^{
+        //
+    }];
+}
+
+/**更改用户隐私状态*/
++ (void)editUserPrivacyName:(NSString *)name status:(NSString *)status block:(void(^)(NSDictionary *dict))dict failure:(void(^)())failure {
+    NSMutableDictionary *md = [NSMutableDictionary dictionary];
+    [self setWithMutableDict:md key:@"token" value:[DDUserSingleton shareInstance].token];
+    [self setWithMutableDict:md key:@"name" value:name];
+    [self setWithMutableDict:md key:@"status" value:status];
+    
+    [self postWithAction:@"/tongju/api/set_privacy.php" params:md type:kDDHttpResponseTypeJson block:^(DDResponseModel *result) {
+        
+        if (result.status.integerValue == kDDResponseStateSuccess) {
+            dict(result.data);
+        } else {
+            failure();
+        }
+        //[MBProgressHUD showMessage:result.msg_cn toView:[UIApplication sharedApplication].keyWindow];
+    } failure:^{
+        //
+    }];
+}
+
+/**获取用户隐私状态*/
++ (void)getPrivacyblock:(void(^)(NSDictionary *dict))dict failure:(void(^)())failure {
+    NSMutableDictionary *md = [NSMutableDictionary dictionary];
+    [self setWithMutableDict:md key:@"token" value:[DDUserSingleton shareInstance].token];
+    [self postWithAction:@"/tongju/api/get_user_setup.php" params:md type:kDDHttpResponseTypeJson block:^(DDResponseModel *result) {
+        if (result.status.integerValue == kDDResponseStateSuccess) {
+            dict(result.data);
+        } else {
+            failure();
+        }
+        //[MBProgressHUD showMessage:result.msg_cn toView:[UIApplication sharedApplication].keyWindow];
+    } failure:^{
+        //
+    }];
+}
+
+/**修改当前密码*/
++ (void)editCurrentPwdwithNewpwd:(NSString *)newpwd block:(void(^)(NSDictionary *dict))dict failure:(void(^)())failure {
+    NSMutableDictionary *md = [NSMutableDictionary dictionary];
+    [self setWithMutableDict:md key:@"token" value:[DDUserSingleton shareInstance].token];
+    [self setWithMutableDict:md key:@"newpwd" value:newpwd];
+    [self postWithAction:@"/tongju/api/update_pwd.php" params:md type:kDDHttpResponseTypeJson block:^(DDResponseModel *result) {
+        if (result.status.integerValue == kDDResponseStateSuccess) {
+            dict(result.data);
+        } else {
+            failure();
+        }
+        [MBProgressHUD showMessage:result.msg_cn toView:[UIApplication sharedApplication].keyWindow];
+    } failure:^{
+        //
+    }];
+}
+
+/**设置备注名*/
++ (void)setUserRemark:(NSString *)remark fid:(NSString *)fid block:(void(^)(NSDictionary *dict))dict failure:(void(^)())failure {
+    NSMutableDictionary *md = [NSMutableDictionary dictionary];
+    [self setWithMutableDict:md key:@"token" value:[DDUserSingleton shareInstance].token];
+    [self setWithMutableDict:md key:@"fid" value:fid];
+    [self setWithMutableDict:md key:@"remark" value:remark];
+    [self postWithAction:@"/tongju/api/set_friend_remark.php" params:md type:kDDHttpResponseTypeJson block:^(DDResponseModel *result) {
+        
+        if (result.status.integerValue == kDDResponseStateSuccess) {
+            dict(result.data);
+        } else {
+            failure();
+        }
+        [MBProgressHUD showMessage:result.msg_cn toView:[UIApplication sharedApplication].keyWindow];
+    } failure:^{
+        //
+    }];
+}
+
+/**手机号绑定*/
++ (void)bindMobile:(NSString *)mobile code:(NSString *)code block:(void(^)(NSDictionary *dict))dict failure:(void(^)())failure {
+    NSMutableDictionary *md = [NSMutableDictionary dictionary];
+    [self setWithMutableDict:md key:@"token" value:[DDUserSingleton shareInstance].token];
+    [self setWithMutableDict:md key:@"code" value:code];
+    [self setWithMutableDict:md key:@"mobile" value:mobile];
+    [self postWithAction:@"/tongju/api/binding_phone.php" params:md type:kDDHttpResponseTypeJson block:^(DDResponseModel *result) {
         if (result.status.integerValue == kDDResponseStateSuccess) {
             dict(result.data);
         } else {

@@ -77,6 +77,10 @@
 }
 
 -(void)setStyle:(DDUserCellStyle)style{
+    [self.ntView removeFromSuperview];
+    [self.rewardView removeFromSuperview];
+    [self.albumView removeFromSuperview];
+    [self.activitiesHisView removeFromSuperview];
     switch (style) {
         case DDUserCellStyleVariousNumbers:
         {
@@ -104,7 +108,7 @@
 }
 
 - (void)updateWithModel:(DDUserInfoModel *)model{
-    [self.ntView updateWithModel:model];
+    [self.ntView updateWithModel:model withType:DDNumbersTextViewTypeNormal];
     [self.rewardView updateWithModel:model];
     [self.albumView updateWithModel:model];
     [self.activitiesHisView updateWithModel:model];

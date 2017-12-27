@@ -73,6 +73,16 @@
     _timeLabel.textAlignment = NSTextAlignmentLeft;
 }
 
+//重新设置的UITableViewCellframe,---->改变row之间的间距。
+- (void)setFrame:(CGRect)frame{
+//    frame.origin.x += 5;
+    frame.origin.y += 2;
+    frame.size.height -= 2;
+//    frame.size.width -= 10;
+    [super setFrame:frame];
+}
+
+
 - (void)awakeFromNib {
     [super awakeFromNib];
 }

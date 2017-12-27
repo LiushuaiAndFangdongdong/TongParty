@@ -23,4 +23,7 @@ typedef NS_ENUM(NSUInteger, DDFriendsCellStyle) {
 
 @interface DDFriendsTableViewCell : DDBaseTableViewCell
 @property (nonatomic, assign) DDFriendsCellStyle style;
+
+- (void)updateWithEntity:(id)entity;
 @end
+

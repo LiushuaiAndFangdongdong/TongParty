@@ -65,6 +65,7 @@ typedef NS_ENUM(NSUInteger, DDHomeAttentionListType) {
 #define kDarkGreenColor kRGBColor(71,207,133)
 #define kLightGreenColor kRGBColor(1,216,105)
 #define kBgGreenColor  kRGBColor(0,214,103)
+#define kSubjectPinkRedColor  kRGBColor(227,142,151)
 #define kTongBiBgColor  kRGBColor(43,212,117)
 #define kLeftMargin 15
 //随机色

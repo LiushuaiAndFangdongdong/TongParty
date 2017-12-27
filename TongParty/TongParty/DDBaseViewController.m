@@ -267,13 +267,27 @@
 //获取导航返回按钮
 - (UIBarButtonItem *)backButtonForNavigationBarWithAction:(SEL)action
 {
-    UIImage *image = [UIImage imageNamed:@"back_tj"];
+//    UIImage *image = [UIImage imageNamed:@"back_tj"];
+    UIImage *image = [[UIImage imageNamed:@"back_tj"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     UIBarButtonItem *btnBar = [[UIBarButtonItem alloc] initWithImage:image
                                                                style:UIBarButtonItemStylePlain
                                                               target:self
                                                               action:action];
     return btnBar;
 }
+
+//获取白色返回按钮
+- (UIBarButtonItem *)whiteBackButtonForNavigationBarWithAction:(SEL)action
+{
+    //    UIImage *image = [UIImage imageNamed:@"back_tj"];
+    UIImage *image = [[UIImage imageNamed:@"back_tj_white"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    UIBarButtonItem *btnBar = [[UIBarButtonItem alloc] initWithImage:image
+                                                               style:UIBarButtonItemStylePlain
+                                                              target:self
+                                                              action:action];
+    return btnBar;
+}
+
 //设置控制器的导航标题title
 - (void)navigationWithTitle:(NSString *)title
 {
@@ -284,6 +298,16 @@
     titlelabel.textAlignment = NSTextAlignmentCenter;
     self.navigationItem.titleView = titlelabel;
     self.navigationItem.leftBarButtonItem = [self backButtonForNavigationBarWithAction:@selector(popViewController)];
+}
+//标题，白色返回按钮
+- (void)WhiteBackNavigationWithTitle:(NSString *)title{
+    UILabel *titlelabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth/2.f, 49)];
+    titlelabel.text = title;
+    titlelabel.font = [UIFont systemFontOfSize:15];
+    titlelabel.textColor = [UIColor blackColor];
+    titlelabel.textAlignment = NSTextAlignmentCenter;
+    self.navigationItem.titleView = titlelabel;
+    self.navigationItem.leftBarButtonItem = [self whiteBackButtonForNavigationBarWithAction:@selector(popViewController)];
 }
 
 //控制器push时的模态效果

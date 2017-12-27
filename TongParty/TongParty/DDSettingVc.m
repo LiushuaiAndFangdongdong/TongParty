@@ -18,7 +18,8 @@
 #import "DDShowBlindViewController.h" //绑定
 #import "LXAlertView.h"
 #import "DDLoginViewController.h"
-
+#import "LSCleanCacheTool.h"
+#import "LSBlindPhoneVC.h"
 @interface DDSettingVc ()
 @end
 
@@ -26,7 +27,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-//    self.navItemTitle = @"设置";
+    //    self.navItemTitle = @"设置";
     [self navigationWithTitle:@"设置"];
     [self setUpViews];
 }
@@ -58,11 +59,11 @@
             break;
         case 3:
         {
-             numRows = 2;
+            numRows = 2;
         }break;
         case 4:
         {
-             numRows = 4;
+            numRows = 4;
         }break;
         case 5:
         {
@@ -80,7 +81,7 @@
 }
 - (DDBaseTableViewCell *)tj_cellAtIndexPath:(NSIndexPath *)indexPath {
     DDSettingTableViewCell *cell = [DDSettingTableViewCell cellWithTableView:self.tableView];
-
+    
     if (indexPath.section == 5) {
         cell.style = DDSettingCellStyleCentertext;
         cell.accessoryType = UITableViewCellAccessoryNone;
@@ -89,13 +90,17 @@
         cell.style = DDSettingCellStyleNormal;
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         NSArray *authArr = @[@"手机认证",@"绑定微信",@"绑定QQ",@"绑定微博"];
-        NSArray *authValueArr = @[@"15205145990",@"fxd1101",@"755788561",@"方嘚瑟"];
+        NSString *mobileString = _userModel.mobile;
+        if (!mobileString || [_userModel.mobile isEqualToString:@""]) {
+            mobileString = @"尚未绑定手机号";
+        }
+        NSArray *authValueArr = @[mobileString,@"fxd1101",@"755788561",@"方嘚瑟"];
         NSArray *psdArr= @[@"个人认证",@"密码设置"];
         NSArray *psdValueArr =@[@"方冬冬",@""];
         NSArray *mindArr= @[@"提醒设置",@"隐私"];
         NSArray *mindValueArr =@[@"",@""];
         NSArray *aboutArr= @[@"清除缓存",@"帮助",@"关于桐聚",@"分享桐聚"];
-        NSArray *aboutValueArr =@[@"12.21M",@"",@"",@""];
+        NSArray *aboutValueArr =@[[NSString stringWithFormat:@"%.2fM",[LSCleanCacheTool folderSizeAtPath]],@"",@"",@""];
         NSString *name;
         NSString *value;
         if (indexPath.section == 0) {
@@ -111,7 +116,7 @@
         {
             name = mindArr[indexPath.row];
             value = mindValueArr[indexPath.row];
-
+            
         }else if(indexPath.section == 4)
         {
             name = aboutArr[indexPath.row];
@@ -121,7 +126,7 @@
         cell.namestring = name;
         cell.valuestring   = value;
     }
-  
+    
     
     return cell;
 }
@@ -230,6 +235,7 @@
 }
 -(void)pushPersonAuthVc{
     DDPersonAuthVc *authVC = [[DDPersonAuthVc alloc] init];
+    authVC.currentModel = _userModel;
     [self pushtoVC:authVC];
 }
 -(void)pushPsdSettingVC{
@@ -253,18 +259,31 @@
     [self pushtoVC:aboutVC];
 }
 -(void)pushSocialBlindWithType:(DDSocialBlindType)type{
-    DDShowBlindViewController *showBlindVc = [[DDShowBlindViewController alloc] init];
-    showBlindVc.type = type;
-    [self pushtoVC:showBlindVc];
+    if (!_userModel.mobile || [_userModel.mobile isEqualToString:@""]) {
+        LSBlindPhoneVC *testVC = [[LSBlindPhoneVC alloc] init];
+        [self pushVc:testVC];
+    } else {
+        DDShowBlindViewController *showBlindVc = [[DDShowBlindViewController alloc] init];
+        showBlindVc.userModel = _userModel;
+        showBlindVc.type = type;
+        [self pushtoVC:showBlindVc];
+    }
+    
+    
+    
 }
 -(void)pushtoVC:(UIViewController *)controller{
     [self.navigationController pushViewController:controller animated:YES];
 }
 -(void)clearAppAche{
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"提示" message:@"清除缓存13.14M？" preferredStyle:UIAlertControllerStyleAlert];
+    WeakSelf(weakSelf);
+    NSString *caches = [NSString stringWithFormat:@"清除缓存%@M？",[NSString stringWithFormat:@"%.2f",[LSCleanCacheTool folderSizeAtPath]]];
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"提示" message:caches preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
     UIAlertAction *otherAction = [UIAlertAction actionWithTitle:@"清除"style:UIAlertActionStyleDestructive handler:^(UIAlertAction*action) {
-        NSLog(@"删除");
+        [LSCleanCacheTool cleanCache:^{
+            [weakSelf.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:4]] withRowAnimation:UITableViewRowAnimationFade];
+        }];
     }];
     [alertController addAction:cancelAction];
     [alertController addAction:otherAction];

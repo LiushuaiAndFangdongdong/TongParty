@@ -8,6 +8,7 @@
 //显示绑定的手机号码、微信、QQ、微博
 
 #import "DDBaseViewController.h"
+#import "DDUserInfoModel.h"
 
 typedef NS_ENUM(NSUInteger, DDSocialBlindType) {
     /** 手机号码*/
@@ -22,4 +23,6 @@ typedef NS_ENUM(NSUInteger, DDSocialBlindType) {
 
 @interface DDShowBlindViewController : DDBaseViewController
 @property (nonatomic, assign) DDSocialBlindType type;
+@property (nonatomic, strong)DDUserInfoModel *userModel;
 @end
+

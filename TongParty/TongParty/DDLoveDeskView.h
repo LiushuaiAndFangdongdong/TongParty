@@ -9,5 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface DDLoveDeskView : UIView
-
+@property (nonatomic, copy) void(^selectClickBlcok)(NSInteger index);
+@property (nonatomic, copy) void(^joinLoveClickBlcok)();
 @end

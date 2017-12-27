@@ -64,6 +64,8 @@
 @property (nonatomic, copy) NSString *be_coin;
 /**好友数*/
 @property (nonatomic, copy) NSString *f_num;
+/**是否认证*/
+@property (nonatomic, copy) NSString *is_valid;
 @end
 
 

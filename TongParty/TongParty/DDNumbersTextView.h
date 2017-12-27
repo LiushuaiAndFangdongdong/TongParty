@@ -18,8 +18,9 @@ typedef NS_ENUM(NSUInteger, DDNumbersTextViewType) {
 
 @interface DDNumbersTextView : UIView
 @property (nonatomic, copy) void(^variousNumbersClickBlcok)(NSInteger index);
+@property (nonatomic, copy) void(^careBtnClickBlcok)(BOOL isCare);
 @property (nonatomic, assign) DDNumbersTextViewType type;
-- (void)updateWithModel:(DDUserInfoModel *)model;
+- (void)updateWithModel:(id)model withType:(DDNumbersTextViewType)style;
 @end
 
 

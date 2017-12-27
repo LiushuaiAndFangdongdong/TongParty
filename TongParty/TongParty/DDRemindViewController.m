@@ -17,7 +17,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.navItemTitle = @"提醒设置";
+    [self navigationWithTitle:@"提醒设置"];
+    self.navigationItem.leftBarButtonItem = [self backButtonForNavigationBarWithAction:@selector(pop)];
     [self setUpViews];
 }
 // 设置子视图

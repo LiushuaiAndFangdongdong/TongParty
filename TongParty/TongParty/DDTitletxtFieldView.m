@@ -7,12 +7,12 @@
 //
 
 #import "DDTitletxtFieldView.h"
-#import "DDCustomPlaceHolderTextView.h"
+
 
 @interface DDTitletxtFieldView()
 @property (nonatomic, strong) UIImageView *titleView;
 @property (nonatomic, strong) UILabel *titleLabel;
-@property (nonatomic, strong) DDCustomPlaceHolderTextView  *textView;
+
 @end
 
 @implementation DDTitletxtFieldView
@@ -26,7 +26,7 @@
 -(void)setPloceholderstr:(NSString *)ploceholderstr{
     self.textView.placehoder = ploceholderstr;
 }
--(void)setStyle:(DDTextFieldStyle)style{
+-(void)setStyle:(DDTextFieldStyle)style {
     switch (style) {
         case DDTextFieldStyleNormal:
         {
@@ -38,7 +38,7 @@
             }];
         }
             break;
-       case DDTextFieldStyleText:
+        case DDTextFieldStyleText:
         {
             [self.titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.left.mas_equalTo(10);
@@ -54,7 +54,7 @@
             }];
         }
             break;
-      case  DDTextFieldStyleImage:
+        case  DDTextFieldStyleImage:
         {
             [self.titleView mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.left.mas_equalTo(10);
@@ -89,7 +89,7 @@
     self.titleLabel.font = kFont(13);
     self.titleLabel.textAlignment = NSTextAlignmentLeft;
     [self addSubview:self.titleLabel];
-
+    
     self.titleView = [[UIImageView alloc] init];
     [self addSubview:self.titleView];
     
@@ -97,7 +97,7 @@
     self.textView.placeholderTopMargin = 18;
     self.textView.placeholderFont = kFont(13);
     [self addSubview:self.textView];
-
+    
 }
 @end
 

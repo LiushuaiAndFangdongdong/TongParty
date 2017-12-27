@@ -9,6 +9,7 @@
 #import "DDBaseViewController.h"
 #import "DDBaseTableView.h"
 #import "DDBaseTableViewCell.h"
+#import "DDCustomCommonEmptyView.h"
 
 //
 typedef void(^DDTableVcCellSelectedHandle)(DDBaseTableViewCell *cell, NSIndexPath *indexPath);

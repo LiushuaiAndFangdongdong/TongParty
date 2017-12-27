@@ -7,7 +7,7 @@
 //
 
 #import "DDBaseTableViewCell.h"
-
+#import "DDRadioButton.h"
 typedef NS_ENUM(NSUInteger, DDSettingCellStyle) {
     /** 常规*/
     DDSettingCellStyleNormal,
@@ -16,7 +16,9 @@ typedef NS_ENUM(NSUInteger, DDSettingCellStyle) {
     /** 开关*/
     DDSettingCellStyleSwitch,
     /** 权限选择 */
-    DDSettingCellStyleSelectImg
+    DDSettingCellStyleSelectImg,
+    /** 单选 */
+    DDSingleSelectStyleSelectImg
 };
 
 @interface DDSettingTableViewCell : DDBaseTableViewCell
@@ -25,4 +27,7 @@ typedef NS_ENUM(NSUInteger, DDSettingCellStyle) {
 @property (nonatomic, strong) UIColor *valueColor;
 @property (nonatomic, copy) NSString *centerText;
 @property (nonatomic, assign) DDSettingCellStyle style;
+@property (nonatomic, strong) DDRadioButton  *ra_btn;
+@property (nonatomic,   copy) void(^setPrivacy)(NSString *statu);
 @end
+

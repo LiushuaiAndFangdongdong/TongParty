@@ -12,6 +12,8 @@
 #import "DDHomeMapViewController.h"   //地图vc
 #import "PlusAnimate.h"
 #import "CYTabBarController.h"
+#import "DDMessageViewController.h"  //消息vc
+#import "LSHomeQRcodeVC.h"  //扫描
 
 @interface DDHomeMainVC ()<UISearchBarDelegate,PYSearchViewControllerDelegate,CYTabBarDelegate>
 
@@ -20,6 +22,7 @@
 @property (nonatomic, strong) UILabel  *lbl_line;
 @property (nonatomic, strong) DDHomeListViewController *listVc;
 @property (nonatomic, strong) DDHomeMapViewController *mapVc;
+@property (nonatomic, strong) DDLoginManager *loginManager;
 
 @end
 
@@ -83,6 +86,14 @@
     return _listVc;
 }
 
+-(DDLoginManager *)loginManager
+{
+    if(!_loginManager) {
+        _loginManager = [[DDLoginManager alloc]initWithController:self];
+    }
+    return _loginManager;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self customNavi];
@@ -99,12 +110,30 @@
 }
 
 -(void)customNavi{
+    
+    //左边消息按钮
+    self.navigationItem.leftBarButtonItem = [self customButtonForNavigationBarWithAction:@selector(messagesAction) imageNamed:@"navi_nf" isRedPoint:NO pointValue:nil CGSizeMake:CGSizeMake(21, 16)];
+    
+    //开启异步并行线程请求用户详情数据
+    dispatch_queue_t queue= dispatch_queue_create("messageNum", DISPATCH_QUEUE_CONCURRENT);
+    dispatch_async(queue, ^{
+        [DDTJHttpRequest getMessageNumWithToken:[DDUserDefault objectForKey:@"token"] block:^(NSDictionary *dict) {
+            NSLog(@"未读消息数量%@",dict);
+            //主线程刷新
+            dispatch_async(dispatch_get_main_queue(), ^(){
+
+                if ([dict[@"num"] intValue] > 0) {
+                    //左边消息按钮
+                    self.navigationItem.leftBarButtonItem = [self customButtonForNavigationBarWithAction:@selector(messagesAction) imageNamed:@"navi_nf" isRedPoint:YES pointValue:[dict[@"num"] stringValue] CGSizeMake:CGSizeMake(21, 16)];
+                }
+            });
+        } failure:^{
+            //
+        }];
+    });
+    
     // title 视图
     self.navigationItem.titleView = self.view_title;
-    //左边消息按钮
-    UIBarButtonItem *leftBtn = [self customButtonForNavigationBarWithAction:@selector(messagesAction) imageNamed:@"navi_nf" isRedPoint:YES pointValue:@"9" CGSizeMake:CGSizeMake(20, 15)];
-    self.navigationItem.leftBarButtonItem = leftBtn;
-    
     //右边items
     self.navigationItem.rightBarButtonItems = [self customVariousButtonForNavigationBarWithFirstAction:@selector(scanAction) firstImage:@"navi_scan" firstIsRedPoint:NO firstPointValue:nil secondAction:@selector(searchAction) secondImage:@"navi_search" secondIsRedPoint:NO secondPointValue:nil];
 }
@@ -141,11 +170,18 @@
 #pragma mark - push
 
 -(void)messagesAction{
-    
+    [self.loginManager pushCheckedLoginWithPopToRoot:NO block:^{
+        DDMessageViewController  *messageVC = [[DDMessageViewController alloc] init];
+        [self.navigationController pushViewController:messageVC animated:YES];
+    }];
 }
 
 -(void)scanAction{
-    
+    LSHomeQRcodeVC *qrScanVc = [[LSHomeQRcodeVC alloc] init];
+    qrScanVc.allBlock = ^(NSString *scanResult) {
+        NSLog(@"%@",scanResult);
+    };
+    [self  presentViewController:qrScanVc animated:YES completion:nil];
 }
 
 - (void)searchAction {

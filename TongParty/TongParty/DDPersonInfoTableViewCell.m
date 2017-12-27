@@ -13,7 +13,6 @@
 @interface DDPersonInfoTableViewCell()
 @property (nonatomic, strong) DDBaseImageView *avatarView;
 @property (nonatomic, strong) UILabel *nameLbl;
-@property (nonatomic, strong) UILabel *valueLbl;
 @end
 
 @implementation DDPersonInfoTableViewCell
@@ -25,7 +24,6 @@
     if (!_avatarView) {
         _avatarView = [[DDBaseImageView alloc] initWithFrame:CGRectMake(10, 3, 54, 54)];
         _avatarView.layerCornerRadius = 54/2;
-        _avatarView.image = [UIImage imageNamed:@"AppIcon"];
     }
     return _avatarView;
 }
@@ -53,6 +51,9 @@
 -(void)setValuestring:(NSString *)valuestring{
     self.valueLbl.text = valuestring;
 }
+- (void)setImageUrl:(NSString *)imageUrl {
+    [self.avatarView setImageWithURL:[NSURL URLWithString:imageUrl] placeHolder:kDefaultAvatar];
+}
 -(void)setStyle:(DDPersonInfoCellStyle)style{
     switch (style) {
         case DDPersonInfoCellStyleNormal:
@@ -74,6 +75,8 @@
             break;
     }
 }
+
+
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
 }

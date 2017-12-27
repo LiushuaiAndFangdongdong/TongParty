@@ -7,8 +7,8 @@
 //
 //商家详情页
 
-#import "DDBaseTableViewController.h"
+#import "DDBaseViewController.h"
 
-@interface DDShopDetailViewController : DDBaseTableViewController
+@interface DDShopDetailViewController : DDBaseViewController
 
 @end

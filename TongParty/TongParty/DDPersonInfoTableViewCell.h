@@ -21,5 +21,8 @@ typedef NS_ENUM(NSUInteger, DDPersonInfoCellStyle) {
 @interface DDPersonInfoTableViewCell : DDBaseTableViewCell
 @property (nonatomic, copy) NSString *namestring;
 @property (nonatomic, copy) NSString *valuestring;
+@property (nonatomic, copy) NSString *imageUrl;
+@property (nonatomic, strong) UILabel *valueLbl;
 @property (nonatomic, assign) DDPersonInfoCellStyle style;
 @end
+

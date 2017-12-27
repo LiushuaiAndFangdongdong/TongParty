@@ -184,7 +184,8 @@
     // 1邀请  0加入 // 控件中信息被打包成dict 返回。。
     [[LSCouponView shareInstance] showCouponViewOnWindowWithType:0 doneBlock:^(NSDictionary *dict) {
         [MBProgressHUD showLoading:@"申请中..." toView:self.view];
-        [DDTJHttpRequest applyJoinDeskWithToken:TOKEN tid:tmpModel.id t_uid:_tModel.uid block:^(NSDictionary *dict) {
+        
+        [DDTJHttpRequest applyJoinDeskWithToken:TOKEN tid:tmpModel.id t_uid:_tModel.uid prop:@"" block:^(NSDictionary *dict) {
             [MBProgressHUD hideAllHUDsInView:self.view];
             NSLog(@"申请加桌  %@",dict);
         } failure:^{

@@ -8,7 +8,14 @@
 //我的相册
 
 #import "DDBaseViewController.h"
-
+typedef NS_ENUM(NSUInteger, DDAlbumViewControllerStyle) {
+    /** 个人相册*/
+    DDAlbumCurrentUserStyle = 0,
+    /** 他人相册*/
+    DDAlbumOtherUserStyle,
+};
 @interface DDAlbumViewController : DDBaseViewController
-@property(nonatomic,strong)NSMutableArray *urls; //数据源
+@property (nonatomic, assign)DDAlbumViewControllerStyle style;
+@property (nonatomic, copy)NSString *fid;
 @end
+

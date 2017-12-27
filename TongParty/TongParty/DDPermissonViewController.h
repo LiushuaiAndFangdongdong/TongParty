@@ -11,4 +11,14 @@
 
 @interface DDPermissonViewController : DDBaseTableViewController
 
+/**
+ 隐私设置名称
+ */
+@property (nonatomic, strong)NSString *name;
+
+/**
+ 隐私权限
+ */
+@property (nonatomic, strong)NSString *statu;
 @end
+

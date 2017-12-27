@@ -9,7 +9,7 @@
 #import "PlusAnimate.h"
 #define W [UIScreen mainScreen].bounds.size.width
 #define H [UIScreen mainScreen].bounds.size.height
-#define CenterPoint CGPointMake(W/2 ,H-38.347785)
+//#define CenterPoint CGPointMake(W/2 ,H-38.347785)
 #define bl [[UIScreen mainScreen]bounds].size.width/375
 #define Color(r, g, b , a) [UIColor colorWithRed:(r)/255.0 green:(g)/255.0 blue:(b)/255.0 alpha:(a)]
 
@@ -34,12 +34,15 @@
     UIWindow *keyWindow = [UIApplication sharedApplication].keyWindow;
     [keyWindow addSubview:animateView];
     CGRect rect = [animateView convertRect:view.frame fromView:view.superview];
+    NSLog(@"==%f,%f,%f,%f",view.frame.origin.y,view.frame.origin.x,view.frame.size.height,view.frame.size.width);
+    NSLog(@"==%f,%f,%f,%f",rect.origin.y,rect.origin.x,rect.size.height,rect.size.width);
     rect.origin.y += 5;
     rect.size.height = h;
     rect.origin.x += (rect.size.width-rect.size.height)/2;
     rect.size.width = h;
     animateView.rect = rect;
-    
+    NSLog(@"~~%f,%f,%f,%f",rect.origin.y,rect.origin.x,rect.size.height,rect.size.width);
+
     //Add button
     [animateView CrentBtnImageName:@"pop_createdesk" Title:@"创建桌子" tag:0];
     [animateView CrentBtnImageName:@"pop_joinlovedesk" Title:@"加入心跳桌" tag:1];

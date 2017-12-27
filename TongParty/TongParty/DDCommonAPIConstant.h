@@ -31,8 +31,18 @@ UIKIT_EXTERN NSString *const kTJUserFindPasswordAPI;
 
 /** 上传相册 */
 UIKIT_EXTERN NSString *const kTJUserUploadAlbumAPI;
-
-
+/** 他人用户详情*/
+UIKIT_EXTERN NSString *const kTJOtherUserInfoDetailAPI;
+/** 关注用户*/
+UIKIT_EXTERN NSString *const kTJCareOtherUserAPI;
+/** 取消关注用户*/
+UIKIT_EXTERN NSString *const kTJCancelcareOtherUserAPI;
+/**获取我关注列表*/
+UIKIT_EXTERN NSString *const kTJCareListAPI;
+/**获取关注我列表*/
+UIKIT_EXTERN NSString *const kTJCaredListAPI;
+/**获取他人被关注列表*/
+UIKIT_EXTERN NSString *const kTJOtherCaredListAPI;
 /** 添加地址*/
 UIKIT_EXTERN NSString *const kTJAddAddressAPI;
 /** 修改地址*/
@@ -43,6 +53,8 @@ UIKIT_EXTERN NSString *const kTJDeleteAddressAPI;
 UIKIT_EXTERN NSString *const kTJGetAddressListAPI;
 /** 设置默认地址*/
 UIKIT_EXTERN NSString *const kTJSetDefaultAddressAPI;
+/**上传用户头像*/
+UIKIT_EXTERN NSString *const kTJUpUserHeaderAPI;
 
 
 /** 创建桌子*/
@@ -91,7 +103,8 @@ UIKIT_EXTERN NSString *const kTJDeskInviteFriedAPI;
 UIKIT_EXTERN NSString *const kTJInviteFriedsJoinDeskAPI;
 /** 桌主发送公告*/
 UIKIT_EXTERN NSString *const kTJHosterSendNoticeAPI;
-
+/** 获取券的信息*/
+UIKIT_EXTERN NSString *const kTJTicketsInfoAPI;
 
 
 /** 获取用户未读消息条数*/
@@ -111,67 +124,25 @@ UIKIT_EXTERN NSString *const kTJUserRewardOthersRecordAPI;
 /** 获取标签列表*/
 UIKIT_EXTERN NSString *const kTJUserLabelListsAPI;
 
+/** 系统消息*/
+UIKIT_EXTERN NSString *const MSG_TYPE_SYS;
+/** 打赏通知*/
+UIKIT_EXTERN NSString *const MSG_TYPE_REWORD;
+/** 我的关注*/
+UIKIT_EXTERN NSString *const MSG_TYPE_ATTENTION;
+/** 申请回复*/
+UIKIT_EXTERN NSString *const MSG_TYPE_APPLY;
+/** 邀请我加入的*/
+UIKIT_EXTERN NSString *const MSG_TYPE_INVITE;
+/** 桌主消息*/
+UIKIT_EXTERN NSString *const MSG_TYPE_HOST;
+/** 参加桌子消息*/
+UIKIT_EXTERN NSString *const MSG_TYPE_JOIN;
 
-
-
-
-#pragma mark - HOME / 首页
-/** 内涵动态列表*/
-UIKIT_EXTERN NSString *const kNHHomeServiceListAPI;
-/** 内涵当前用户关注的用户发布的动态列表*/
-UIKIT_EXTERN NSString *const kNHHomeAttentionDynamicListAPI;
-/** 内涵某个动态评论列表*/
-UIKIT_EXTERN NSString *const kNHHomeDynamicCommentListAPI;
-/** 内涵某个分类的动态列表*/
-UIKIT_EXTERN NSString *const kNHHomeCategoryDynamicListAPI;
-/** 内涵举报动态*/
-UIKIT_EXTERN NSString *const kNHHomeReportDynamicAPI;
-/** 内涵点赞动态*/
-UIKIT_EXTERN NSString *const kNHHomeDynamicLikeAPI;
-
-#pragma mark - DISCOVER / 发现
-/** 内涵热吧列表和轮播图*/
-UIKIT_EXTERN NSString *const kNHDiscoverHotListAPI;
-/** 内涵当前用户订阅的热吧列表*/
-UIKIT_EXTERN NSString *const kNHDiscoverSubscribeListAPI;
-/** 内涵搜索用户列表*/
-UIKIT_EXTERN NSString *const kNHDiscoverSearchUserListAPI;
-/** 内涵搜索热吧列表*/
-UIKIT_EXTERN NSString *const kNHDiscoverSearchHotDraftListAPI;
-/** 内涵搜索动态列表*/
-UIKIT_EXTERN NSString *const kNHDiscoverSearchDynamicListAPI;
-/** 内涵附近的用户列表*/
-UIKIT_EXTERN NSString *const kNHDiscoverNearByUserListAPI;
-/** 内涵推荐的用户列表*/
-UIKIT_EXTERN NSString *const kNHDiscoverRecommendUserListAPI;
-
-#pragma mark - PUBLISH / 发布
-/** 内涵用户发布动态可选择的热吧列表*/
-UIKIT_EXTERN NSString *const kNHUserPublishSelectDraftListAPI;
-/** 内涵用户发布动态*/
-UIKIT_EXTERN NSString *const kNHUserPublishDraftAPI;
-
-#pragma mark - USER / 用户
-/** 内涵用户个人信息*/
-UIKIT_EXTERN NSString *const kNHUserProfileInfoAPI;
-/** 内涵用户的关注用户列表*/
-UIKIT_EXTERN NSString *const kNHUserFansListAPI;
-/** 内涵用户的粉丝列表*/
-UIKIT_EXTERN NSString *const kNHUserAttentionListAPI;
-/** 内涵用户的投稿列表*/
-UIKIT_EXTERN NSString *const kNHUserPublishDraftListAPI;
-/** 内涵用户的收藏列表*/
-UIKIT_EXTERN NSString *const kNHUserColDynamicListAPI;
-/** 内涵用户的评论列表*/
-UIKIT_EXTERN NSString *const kNHUserDynamicCommentListAPI;
-/** 内涵用户的黑名单列表*/
-UIKIT_EXTERN NSString *const kNHUserBlackUserListAPI;
-/** 内涵用户的积分*/
-UIKIT_EXTERN NSString *const kNHUserPointAPI;
-
-
-#pragma mark - CHECK / 审核
-/** 内涵审核的动态列表*/
-UIKIT_EXTERN NSString *const kNHCheckDynamicListAPI;
 
 @end
+
+
+
+
+

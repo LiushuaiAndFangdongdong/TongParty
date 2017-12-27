@@ -24,7 +24,82 @@
 + (void)uploadUserAlbumWithToken:(NSString *)token images:(NSArray *)images block:(void(^)(NSDictionary *dict))dict failure:(void(^)())failure;
 
 
+/**他人用户详情页*/
++ (void)getOtherUserDetailInfoWithToken:(NSString *)token fid:(NSString *)fid block:(void(^)(NSDictionary *dict))dict failure:(void(^)())failure;
+
+/**关注用户*/
++ (void)careOtherUserByfid:(NSString *)fid is_special:(NSString *)is_special block:(void(^)(NSDictionary *dict))dict failure:(void(^)())failure;
+
+/**取消关注用户*/
++ (void)cancelCareOtherUserByfid:(NSString *)fid block:(void(^)(NSDictionary *dict))dict failure:(void(^)())failure;
+
+/**获取我关注列表*/
++ (void)getCareListblock:(void(^)(NSDictionary *dict))dict failure:(void(^)())failure;
+
+/**获取关注我列表*/
++ (void)getCaredListblock:(void(^)(NSDictionary *dict))dict failure:(void(^)())failure;
+
+/**获取他人关注列表*/
++ (void)getOhterCareListByFid:(NSString *)fid block:(void(^)(NSDictionary *dict))dict failure:(void(^)())failure;
+
+/**获取他人被关注列表*/
++ (void)getOhterCaredListByFid:(NSString *)fid block:(void(^)(NSDictionary *dict))dict failure:(void(^)())failure;
+
+/**上传用户头像*/
++ (void)upUserHeaderImage:(UIImage *)image block:(void(^)(NSDictionary *dict))dict failure:(void(^)())failure;
+
+/**用户信息完善*/
++ (void)upUserInfoWith:(id)model block:(void(^)(NSDictionary *dict))dict failure:(void(^)())failure;
+
+/**获取用户标签*/
++ (void)getUserLabelsblock:(void(^)(NSDictionary *dict))dict failure:(void(^)())failure;
+
+/**添加用户标签*/
++ (void)addUserLabels:(NSString *)label block:(void(^)(NSDictionary *dict))dict failure:(void(^)())failure;
+
+/**删除用户标签*/
++ (void)deleteUserLabels:(NSString *)label block:(void(^)(NSDictionary *dict))dict failure:(void(^)())failure;
+
+/**实名认证*/
++ (void)realnameAuthWithToken:(NSString *)token real_name:(NSString *)real_name id_number:(NSString *)id_number positive:(UIImage *)poImage negative:(UIImage *)neImage block:(void(^)(NSDictionary *dict))dict failure:(void(^)())failure;
+
+/**获取黑名单列表*/
++ (void)getblacklistblock:(void(^)(NSDictionary *dict))dict failure:(void(^)())failure;
+
+/**添加黑名单*/
++ (void)addBlacklistByfid:(NSString *)fid block:(void(^)(NSDictionary *dict))dict failure:(void(^)())failure;
+
+/**删除黑名单*/
++ (void)deleteBlacklistByfid:(NSString *)fid block:(void(^)(NSDictionary *dict))dict failure:(void(^)())failure;
+
+/**举报用户*/
++ (void)reportUserBybid:(NSString *)bid text:(NSString *)text block:(void(^)(NSDictionary *dict))dict failure:(void(^)())failure;
+
+/**更改用户隐私状态*/
++ (void)editUserPrivacyName:(NSString *)name status:(NSString *)status block:(void(^)(NSDictionary *dict))dict failure:(void(^)())failure;
+
+/**获取用户隐私状态*/
++ (void)getPrivacyblock:(void(^)(NSDictionary *dict))dict failure:(void(^)())failure;
+
+/**修改当前密码*/
++ (void)editCurrentPwdwithNewpwd:(NSString *)newpwd block:(void(^)(NSDictionary *dict))dict failure:(void(^)())failure;
+
+/**设置备注名*/
++ (void)setUserRemark:(NSString *)remark fid:(NSString *)fid block:(void(^)(NSDictionary *dict))dict failure:(void(^)())failure;
+
+/**手机号绑定*/
++ (void)bindMobile:(NSString *)mobile code:(NSString *)code block:(void(^)(NSDictionary *dict))dict failure:(void(^)())failure;
+
+
 #pragma mark  ------------- 桌子 -- - ----
+
+/**
+ 获取地址标签
+ 
+ @param dict 成功
+ @param failure 失败
+ */
++ (void)getAddrLabelsblock:(void(^)(NSDictionary *dict))dict failure:(void(^)())failure;
 
 /**创建桌子
  * @token  用户token
@@ -160,10 +235,12 @@
  * @token  用户token
  * @tid 桌子id
  * @t_uid  桌子创建人id
+ * @prop 加入券数量
  */
 + (void)applyJoinDeskWithToken:(NSString *)token
                               tid:(NSString *)tid
                               t_uid:(NSString *)t_uid
+                             prop:(NSString *)prop
                             block:(void(^)(NSDictionary *dict))dict
                           failure:(void(^)())failure;
 
@@ -300,6 +377,15 @@
                             block:(void(^)(NSDictionary *dict))dict
                           failure:(void(^)())failure;
 
+/**获取券的信息
+ * @token  用户token
+ * @m 1.邀请券   2加入券
+ */
++ (void)getTicketsInfoWithToken:(NSString *)token
+                              m:(NSString *)m
+                            block:(void(^)(NSDictionary *dict))dict
+                          failure:(void(^)())failure;
+
 #pragma mark  ------------- 消息 -- - ----
 /** 获取用户未读消息条数
  * @token
@@ -366,6 +452,111 @@
                                failure:(void(^)())failure;
 
 
+
+/**
+ 获取好友列表
+ @param token 参数token
+ */
++ (void)getFriendsListWithToken:(NSString *)token
+                          block:(void(^)(NSDictionary *dict))dict
+                        failure:(void(^)())failure;
+
+/**
+ 获取他人好友列表
+ @param fid 参数fid
+ */
++ (void)getFriendsListWithFid:(NSString *)fid
+                        block:(void(^)(NSDictionary *dict))dict
+                      failure:(void(^)())failure;
+
+
+/**
+ 添加好友
+ 
+ @param token token
+ @param fid 好友id
+ @param dict 成功回调
+ @param failure 失败回调
+ */
++ (void)addFriendsToListWithToken:(NSString *)token
+                              fid:(NSString *)fid
+                            block:(void(^)(NSDictionary *dict))dict
+                          failure:(void(^)())failure;
+
+/**
+ 删除好友
+ 
+ @param token token
+ @param fid 好友id
+ @param dict 成功回调
+ @param failure 失败回调
+ */
++ (void)deleteFriendWithToken:(NSString *)token
+                          fid:(NSString *)fid
+                        block:(void(^)(NSDictionary *dict))dict
+                      failure:(void(^)())failure;
+
+/**
+ 邀请添加好友
+ 
+ @param token token
+ @param fid 好友id
+ @param dict 成功回调
+ @param failure 失败回调
+ */
++ (void)inviteFriendsToListWithToken:(NSString *)token
+                                 fid:(NSString *)fid
+                               block:(void(^)(NSDictionary *dict))dict
+                             failure:(void(^)())failure;
+
+/**
+ 通讯录好友
+ 
+ @param token token
+ @param phones 参数
+ @param dict 成功回调
+ @param failure 失败回调
+ */
++ (void)getContactsListWithToken:(NSString *)token
+                           phone:(NSString *)phones
+                           block:(void(^)(NSDictionary *dict))dict
+                         failure:(void(^)())failure;
+
+/**
+ 获取个人相册
+ 
+ @param token 参数token
+ @param dict 成功
+ @param failure 失败
+ */
++ (void)getUserAlbumWithToken:(NSString *)token
+                        block:(void(^)(NSDictionary *dict))dict
+                      failure:(void(^)())failure;
+
+/**
+ 查看他人相册
+ 
+ @param fid id
+ @param dict 成功
+ @param failure 失败
+ */
++ (void)getOtherUserAlbumByFid:(NSString *)fid
+                         block:(void(^)(NSDictionary *dict))dict
+                       failure:(void(^)())failure;
+
+
+/**
+ 删除照片
+ 
+ @param token 参数token
+ @param photoId 照片id
+ @param dict 成功
+ @param failure 失败
+ */
++ (void)deleteUserAlbumWithToken:(NSString *)token
+                         photoId:(NSString *)photoId
+                           block:(void(^)(NSDictionary *dict))dict
+                         failure:(void(^)())failure;
 
 #pragma mark  ------------- 地址 -- - ----
 

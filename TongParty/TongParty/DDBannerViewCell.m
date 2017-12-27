@@ -49,7 +49,8 @@
 - (void)setUrl:(NSString *)url {
     _url = url;
     if (url.length) {
-        [self.imgView sd_setImageWithURL:[NSURL URLWithString:url]];
+        
+        [self.imgView sd_setImageWithURL:[NSURL URLWithString:url] placeholderImage:kImage(@"banner_default")];
     }
 }
 

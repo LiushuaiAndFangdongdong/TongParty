@@ -66,9 +66,6 @@
     }];
     self.inviteBtn.layerCornerRadius = 5;
     self.inviteBtn.titleLabel.font = kFont(15);
-    self.inviteBtn.backgroundColor = kBgGreenColor;
-    [self.inviteBtn setTitleColor:kWhiteColor forState:UIControlStateNormal];
-    [self.inviteBtn setTitle:@"邀请" forState:UIControlStateNormal];
     [self.inviteBtn addTarget:self action:@selector(inviteFriendAction) forControlEvents:UIControlEventTouchUpInside];
 }
 
@@ -80,6 +77,18 @@
         self.nickName.text = [NSString stringWithFormat:@"%@(%@)",model.name,model.remark];
     }
     self.scoreLabel.text = [NSString stringWithFormat:@"积分：%@",model.score];
+    if ([model.is_send intValue] == 0) {
+        //未邀请
+        self.inviteBtn.backgroundColor = kBgGreenColor;
+        [self.inviteBtn setTitleColor:kWhiteColor forState:UIControlStateNormal];
+        [self.inviteBtn setTitle:@"邀请" forState:UIControlStateNormal];
+    }else if ([model.is_send intValue] == 1){
+        //已邀请
+        self.inviteBtn.backgroundColor = kBgGrayColor;
+        [self.inviteBtn setTitleColor:kWhiteColor forState:UIControlStateNormal];
+        [self.inviteBtn setTitle:@"已邀请" forState:UIControlStateNormal];
+    }
+    else{}
 }
 
 //邀请好友
