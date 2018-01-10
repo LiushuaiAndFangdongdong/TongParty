@@ -18,6 +18,7 @@
 #import "FDDMenu.h"
 #import "LSHisUserInfoModel.h"
 #import "TSActionDemoView.h"
+#import "LSPlayRewardGiftVC.h"
 #define kAvatarWidth   50
 #define kMarginGapWidth 18
 #define kActivityItemWidth (kScreenWidth - kMarginGapWidth*6)/5
@@ -42,7 +43,7 @@ height=305;\
 @property (nonatomic ,strong) UIImageView *heagderImageV;
 @property (nonatomic , strong) NSMutableArray *menusTitles;  //下拉菜单数组
 @property (nonatomic, strong) LSHisUserInfoModel *model;
-
+@property (nonatomic, strong)LSPlayRewardGiftVC *giftVc;
 // UI
 @property (nonatomic, strong)UIImageView *avatar;
 @property (nonatomic, strong)UILabel *nameLbl;
@@ -274,6 +275,9 @@ height=305;\
         default:
             break;
     }
+    cell.playReward = ^{
+        self.giftVc.view.hidden = NO;
+    };
     [cell updateValueWith:_model];
     //单元格内容动画
     static CGFloat initialDelay = 0.2f;
@@ -312,9 +316,7 @@ height=305;\
     }
 }
 #pragma mark - scrollViewDelegate
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView
-{
-    
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     UIView *barView = [self.navigationController.view viewWithTag:120];
     CGFloat offsetY = scrollView.contentOffset.y+200;
     if (offsetY < 0) {
@@ -368,7 +370,7 @@ height=305;\
 #pragma mark - UI
 //背景图切换
 -(void)changeBgClick:(UITapGestureRecognizer *)tap{
-    DDCustomActionSheet *actionSheet = [DDCustomActionSheet actionSheetWithCancelTitle:@"取消" alertTitle:@"选择个人中心背景图" SubTitles:@[@"相机",@"相册"]];
+    DDCustomActionSheet *actionSheet = [DDCustomActionSheet actionSheetWithCancelTitle:@"取消" alertTitle:@"选择个人中心背景图" SubTitles:@"相机",@"相册"];
     [actionSheet show];
     //    WeakSelf(weakSelf);
     [actionSheet setCustomActionSheetItemClickHandle:^(DDCustomActionSheet *actionSheet, NSInteger currentIndex, NSString *title) {
@@ -625,6 +627,17 @@ height=305;\
                           ] mutableCopy];
     }
     return _menusTitles;
+}
+
+- (LSPlayRewardGiftVC *)giftVc {
+    if (!_giftVc) {
+        _giftVc = [[LSPlayRewardGiftVC alloc] init];
+        [self addChildVc:_giftVc];
+        _giftVc.view.frame = CGRectMake(0, 0, kScreenWidth, kScreenHeight - kNavigationBarHeight);
+        [self.view addSubview:_giftVc.view];
+        _giftVc.view.hidden = YES;
+    }
+    return _giftVc;
 }
 
 - (void)setMenusTitles:(NSMutableArray *)menusTitles{

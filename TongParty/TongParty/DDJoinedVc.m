@@ -18,6 +18,7 @@
 
 @implementation DDJoinedVc
 
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setUpViews];
@@ -52,6 +53,34 @@
         _emptyView = empty;
     }
     return _emptyView;
+}
+
+- (void)tj_refresh {
+    [DDTJHttpRequest getJoinedDeskWithToken:TOKEN lat:@"" lon:@"" block:^(NSDictionary *dict) {
+        _dataArray = [DDTableModel mj_objectArrayWithKeyValuesArray:dict];
+        [self tj_endRefresh];
+        if (_dataArray.count == 0) {
+            [self.emptyView showInView:self.view];
+        }else{
+            [self.tableView reloadData];
+        }
+    } failure:^{
+        [self.emptyView showInView:self.view];
+    }];
+}
+
+- (void)tj_loadMore {
+    [DDTJHttpRequest getJoinedDeskWithToken:TOKEN lat:@"" lon:@"" block:^(NSDictionary *dict) {
+        _dataArray = [DDTableModel mj_objectArrayWithKeyValuesArray:dict];
+        [self tj_endLoadMore];
+        if (_dataArray.count == 0) {
+            [self.emptyView showInView:self.view];
+        }else{
+            [self.tableView reloadData];
+        }
+    } failure:^{
+        [self.emptyView showInView:self.view];
+    }];
 }
 #pragma mark - UITableViewDelegate
 - (NSInteger)tj_numberOfSections {

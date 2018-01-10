@@ -20,6 +20,11 @@
 
 @implementation DDFriendsViewController
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self tj_refresh];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self loadData];

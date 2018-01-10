@@ -9,5 +9,5 @@
 #import "DDBaseViewController.h"
 
 @interface LSContenSortVC : DDBaseViewController
-
+@property (nonatomic, copy) void(^confirmSort)(NSArray *selectedArray);
 @end

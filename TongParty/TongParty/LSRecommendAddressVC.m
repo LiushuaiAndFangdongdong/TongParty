@@ -14,6 +14,7 @@
 #import "LSContenSortVC.h"
 #import "LSRegionDumpsVC.h"
 #import "LSTimeSortVC.h"
+#import "LSShopEntity.h"
 @interface LSRecommendAddressVC ()<UISearchBarDelegate>
 @property (nonatomic, strong) UISearchBar *searchBar;
 @property (nonatomic, strong) LSSortingView *sortingView;
@@ -26,10 +27,20 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self loadData];
     [self setupNavi];
     [self setUpViews];
 }
 
+- (void)loadData {
+    [super loadData];
+    [DDTJHttpRequest getShopListsWithContent:@"" price_star:@"" price_end:@"" position_lat:@"" position_lon:@"" star_time:@"" end_time:@"" block:^(NSDictionary *dict) {
+        self.dataArray = [LSShopEntity mj_objectArrayWithKeyValuesArray:dict];
+        [self.tableView reloadData];
+    } failure:^{
+        
+    }];
+}
 
 - (void)tj_refresh {
     [self tj_endRefresh];
@@ -145,12 +156,12 @@
 }
 
 - (NSInteger)tj_numberOfRowsInSection:(NSInteger)section {
-    return 3;
+    return self.dataArray.count;
 }
 
 - (DDBaseTableViewCell *)tj_cellAtIndexPath:(NSIndexPath *)indexPath {
     LSRecommendAddressCell *cell = [LSRecommendAddressCell cellWithTableView:self.tableView];
-    
+    [cell updateValueWith:self.dataArray[indexPath.row]];
     return cell;
 }
 
@@ -163,11 +174,13 @@
 }
 
 - (void)tj_didSelectCellAtIndexPath:(NSIndexPath *)indexPath cell:(DDBaseTableViewCell *)cell {
-//    if (_selectedAddressResult) {
-//        _selectedAddressResult(@"阜北社区8号楼41单元9号");
-//    }
-//    [self pop];
     DDShopDetailViewController *shopVC = [[DDShopDetailViewController alloc] init];
+    shopVC.selectedAddressResult = ^(LSShopDetailEntity *shop) {
+        if (_selectedAddressResult) {
+            _selectedAddressResult(shop);
+        }
+    };
+    shopVC.shop_entity = self.dataArray[indexPath.row];
     [self.navigationController pushViewController:shopVC animated:YES];
 }
 
@@ -176,7 +189,20 @@
     return self.sortingView;
 }
 
+#pragma mark - 搜索
 
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
+    if ([searchText isEqualToString:@""]) {
+        [self loadData];
+    } else {
+        [DDTJHttpRequest searchShopWithText:searchText block:^(NSDictionary *dict) {
+            self.dataArray = [LSShopEntity mj_objectArrayWithKeyValuesArray:dict];
+            [self.tableView reloadData];
+        } failure:^{
+            
+        }];
+    }
+}
 
 
 

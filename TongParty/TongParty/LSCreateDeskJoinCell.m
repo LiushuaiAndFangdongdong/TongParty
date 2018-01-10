@@ -105,10 +105,10 @@
 - (void)didSelectedRadioButton:(DDRadioButton *)radio groupId:(NSString *)groupId {
 
     if ([radio.nameString isEqualToString:@"no"]) {
-        self.isHeart = @"1";
+        self.isHeart = @"0";
     }
     if ([radio.nameString isEqualToString:@"yes"]) {
-        self.isHeart = @"0";
+        self.isHeart = @"1";
     }
     
     if (_selectIsHeart) {

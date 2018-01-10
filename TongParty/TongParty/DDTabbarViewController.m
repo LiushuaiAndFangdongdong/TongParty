@@ -24,6 +24,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+
     [CYTabBarConfig shared].selectedTextColor = [UIColor orangeColor];
     [CYTabBarConfig shared].textColor = [UIColor grayColor];
     [CYTabBarConfig shared].backgroundColor = [UIColor whiteColor];
@@ -50,6 +51,8 @@
     [kNotificationCenter addObserver:self selector:@selector(didSelectBtnWithBtnTag:) name:@"centerPopAction" object:nil];
     
 }
+
+
 
 - (void)didSelectBtnWithBtnTag:(NSNotification *)notification {
     UIButton *btn = (UIButton *)notification.object;

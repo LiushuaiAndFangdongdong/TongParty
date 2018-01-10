@@ -176,15 +176,17 @@
 }
 
 - (void)updateWithModel:(DDTableModel *)model{
-    
+    if (!model) {
+        return;
+    }
     _sAvatar.avatarstring  = model.image;
     _titleLabel.text = model.title;
     _subjectLabel.text = [NSString stringWithFormat:@"主题：%@",model.custom];
     [_timeBtn setTitle:model.begin_time forState:UIControlStateNormal];
     [_numPerople setTitle:model.person_num forState:UIControlStateNormal];
-    _distanceLabel.text = @"198m | 10人已参加";
-     [_storeBtn setTitle:model.place forState:UIControlStateNormal];
-    [_addressBtn setTitle:@"北京市海淀区中关村" forState:UIControlStateNormal];
+    _distanceLabel.text = [NSString stringWithFormat:@"%@m | %@人已参加",model.distance,model.num];
+     [_storeBtn setTitle:model.shop_name forState:UIControlStateNormal];
+    [_addressBtn setTitle:model.place forState:UIControlStateNormal];
     if ([model.type intValue] == 1) {
         _sAvatar.statusstring  = @"desklist_status_host";
     }else if ([model.type intValue] == 2){

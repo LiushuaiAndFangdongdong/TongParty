@@ -15,7 +15,7 @@
     if (view == nil) view = [UIApplication sharedApplication].keyWindow;
     // 快速显示一个提示信息
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:view animated:YES];
-    hud.labelText = text;
+    hud.label.text = text;
     // 设置图片
     hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:[NSString stringWithFormat:@"MBProgressHUD.bundle/%@", icon]]];
     // 再设置模式
@@ -24,7 +24,7 @@
     hud.removeFromSuperViewOnHide = YES;
     
     // 1秒之后再消失
-    [hud hide:YES afterDelay:0.7];
+    [hud hideAnimated:YES afterDelay:0.7];
 }
 
 - (void)startAnimation:(UIView *)img {
@@ -61,10 +61,10 @@
     // 快速显示一个提示信息
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:view animated:YES];
     // Set the label text.
-    hud.labelText = text;
-    hud.color = [UIColor colorWithRed:0.41f green:0.46f blue:0.50f alpha:0.600f];
+    hud.label.text = text;
+    hud.bezelView.color = [UIColor colorWithRed:0.41f green:0.46f blue:0.50f alpha:0.600f];
     hud.removeFromSuperViewOnHide = YES;
-    [hud hide:YES afterDelay:15];
+    [hud hideAnimated:YES afterDelay:15];
     
 }
 
@@ -79,32 +79,32 @@
     if (view == nil) view = [UIApplication sharedApplication].keyWindow;
     // 快速显示一个提示信息
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:view animated:YES];
-    hud.labelText = message;
+    hud.label.text = message;
     hud.mode = MBProgressHUDModeText;
     hud.margin = 10.f;
     // 设置hub颜色
-    hud.color = [UIColor colorWithRed:0.41f green:0.46f blue:0.50f alpha:0.600f];
-    hud.cornerRadius = 5.0f;
+    hud.bezelView.color = [UIColor colorWithRed:0.41f green:0.46f blue:0.50f alpha:0.600f];
+    hud.bezelView.layer.cornerRadius = 5.0f;
     // 设置边框颜色
     // 隐藏时候从父控件中移除
     hud.removeFromSuperViewOnHide = YES;
     
     // 1.3秒之后再消失
-    [hud hide:YES afterDelay:2.0f];
+    [hud hideAnimated:YES afterDelay:2.0f];
 }
 
 + (void)showMessage:(NSString *)message detailMessage:(NSString*)detailMessage toView:(UIView *)view {
     if (view == nil) view = [UIApplication sharedApplication].keyWindow;
     // 快速显示一个提示信息
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:view animated:YES];
-    hud.labelText = message;
-    hud.detailsLabelText = detailMessage;
+    hud.label.text = message;
+    hud.detailsLabel.text = detailMessage;
     hud.mode = MBProgressHUDModeText;
     hud.margin = 10.f;
     hud.removeFromSuperViewOnHide = YES;
     
     // 1秒之后再消失
-    [hud hide:YES afterDelay:1.8];
+    [hud hideAnimated:YES afterDelay:1.8];
     
 }
 

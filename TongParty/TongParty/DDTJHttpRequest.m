@@ -58,12 +58,11 @@
             DDUserSingleton *user = [DDUserSingleton shareInstance];
             user = [DDUserSingleton mj_objectWithKeyValues:d];
             [kNotificationCenter postNotificationName:kUpdateUserInfoNotification object:nil];
-            [kNotificationCenter postNotificationName:kUpdateUserInfoNotification object:nil];
             dict(result.data);
         } else {
             failure();
         }
-        [MBProgressHUD showMessage:result.msg_cn toView:[UIApplication sharedApplication].keyWindow];
+        //[MBProgressHUD showMessage:result.msg_cn toView:[UIApplication sharedApplication].keyWindow];
     } failure:^{
         failure();
     }];
@@ -322,7 +321,6 @@
     NSMutableDictionary *md = [NSMutableDictionary dictionary];
     [self setWithMutableDict:md key:@"token" value:token];
     [self setWithMutableDict:md key:@"aid" value:aid];
-    
     [self postWithAction:kTJSetDefaultAddressAPI params:md type:kDDHttpResponseTypeJson block:^(DDResponseModel *result) {
         if (result.status.integerValue == kDDResponseStateSuccess) {
             dict(result.data);
@@ -332,6 +330,71 @@
         [MBProgressHUD showMessage:result.msg_cn toView:[UIApplication sharedApplication].keyWindow];
     } failure:^{
         //
+    }];
+}
+
+/**添加地址标签*/
++ (void)addCustomAddressLabelWithName:(NSString *)name block:(void(^)(NSDictionary *dict))dict failure:(void(^)())failure {
+    NSMutableDictionary *md = [NSMutableDictionary dictionary];
+    [self setWithMutableDict:md key:@"token" value:TOKEN];
+    [self setWithMutableDict:md key:@"name" value:name];
+    [self postWithAction:@"/tongju/api/set_addr_label.php" params:md type:kDDHttpResponseTypeJson block:^(DDResponseModel *result) {
+        if (result.status.integerValue == kDDResponseStateSuccess) {
+            dict(result.data);
+        } else {
+            failure();
+        }
+        //[MBProgressHUD showMessage:result.msg_cn toView:[UIApplication sharedApplication].keyWindow];
+    } failure:^{
+        //
+    }];
+}
+
+/**
+ 获取桌子地图
+ 
+ @param range 范围
+ @param activity 活动ID json数组
+ @param begin_time 开始时间
+ @param end_time 结束时间
+ @param text 搜索文本
+ @param dict 成功
+ @param failure 失败
+ */
++ (void)getMapTablesWithRange:(NSString *)range
+                     activity:(NSArray *)activity
+                   begin_time:(NSString*)begin_time
+                     end_time:(NSString*)end_time
+                         text:(NSString *)text
+                          lon:(NSString *)lon
+                          lat:(NSString *)lat
+                        block:(void(^)(NSDictionary *dict))dict
+                      failure:(void(^)())failure {
+    NSMutableDictionary *md = [NSMutableDictionary dictionary];
+    NSString *jsonStr;
+    if (activity) {
+        NSData *data=[NSJSONSerialization dataWithJSONObject:activity options:NSJSONWritingPrettyPrinted error:nil];
+        jsonStr = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+    }
+    
+    [self setWithMutableDict:md key:@"token" value:TOKEN];
+    [self setWithMutableDict:md key:@"range" value:range];
+    [self setWithMutableDict:md key:@"begin_time" value:begin_time];
+    [self setWithMutableDict:md key:@"end_time" value:end_time];
+    [self setWithMutableDict:md key:@"text" value:text];
+    [self setWithMutableDict:md key:@"activity" value:jsonStr];
+    [self setWithMutableDict:md key:@"lon" value:lon];
+    [self setWithMutableDict:md key:@"lat" value:lat];
+    
+    [self postWithAction:@"/tongju/api/get_table_map.php" params:md type:kDDHttpResponseTypeJson block:^(DDResponseModel *result) {
+        if (result.status.integerValue == kDDResponseStateSuccess) {
+            dict(result.data);
+        } else {
+            failure();
+        }
+        //[MBProgressHUD showMessage:result.msg_cn toView:[UIApplication sharedApplication].keyWindow];
+    } failure:^{
+        
     }];
 }
 
@@ -345,7 +408,6 @@
     NSMutableDictionary *md = [NSMutableDictionary dictionary];
     [self setWithMutableDict:md key:@"token" value:TOKEN];
     [self postWithAction:@"/tongju/api/get_addr_label.php" params:md type:kDDHttpResponseTypeJson block:^(DDResponseModel *result) {
-        
         if (result.status.integerValue == kDDResponseStateSuccess) {
             dict(result.data);
         } else {
@@ -357,8 +419,102 @@
     }];
 }
 
+/**
+ 获取商户列表
+ 
+ @param content 内容 （可选）
+ @param price_star 人均下线 （可选）
+ @param price_end 人均上线 （可选）
+ @param position_lat 经度范围 （可选）
+ @param position_lon 纬度范围 （可选）
+ @param star_time 开始时间 （可选）
+ @param end_time 结束时间 （可选）
+ @param dict 成功
+ @param failure 失败
+ */
++ (void)getShopListsWithContent:(NSString *)content
+                     price_star:(NSString *)price_star
+                      price_end:(NSString *)price_end
+                   position_lat:(NSString *)position_lat
+                   position_lon:(NSString *)position_lon
+                      star_time:(NSString *)star_time
+                       end_time:(NSString *)end_time
+                          block:(void(^)(NSDictionary *dict))dict
+                        failure:(void(^)())failure {
+    NSMutableDictionary *md = [NSMutableDictionary dictionary];
+    [self setWithMutableDict:md key:@"token" value:TOKEN];
+    [self setWithMutableDict:md key:@"content" value:content];
+    [self setWithMutableDict:md key:@"price_star" value:price_star];
+    [self setWithMutableDict:md key:@"price_end" value:price_end];
+    [self setWithMutableDict:md key:@"position_lat" value:position_lat];
+    [self setWithMutableDict:md key:@"position_lon" value:position_lon];
+    [self setWithMutableDict:md key:@"star_time" value:star_time];
+    [self setWithMutableDict:md key:@"end_time" value:end_time];
+    [self postWithAction:@"/tongju/api/get_shop_list.php" params:md type:kDDHttpResponseTypeJson block:^(DDResponseModel *result) {
+        if (result.status.integerValue == kDDResponseStateSuccess) {
+            dict(result.data);
+        } else {
+            failure();
+        }
+        //[MBProgressHUD showMessage:result.msg_cn toView:[UIApplication sharedApplication].keyWindow];
+    } failure:^{
+        
+    }];
+}
+
+/**
+ 获取商家详情
+ 
+ @param sid 商家id
+ @param dict 成功
+ @param failure 失败
+ */
++ (void)getShopDetailWithSid:(NSString *)sid
+                       block:(void(^)(NSDictionary *dict))dict
+                     failure:(void(^)())failure {
+    NSMutableDictionary *md = [NSMutableDictionary dictionary];
+    [self setWithMutableDict:md key:@"token" value:TOKEN];
+    [self setWithMutableDict:md key:@"sid" value:sid];
+    [self postWithAction:@"/tongju/api/get_shop_info.php" params:md type:kDDHttpResponseTypeJson block:^(DDResponseModel *result) {
+        if (result.status.integerValue == kDDResponseStateSuccess) {
+            dict(result.data);
+        } else {
+            failure();
+        }
+        //[MBProgressHUD showMessage:result.msg_cn toView:[UIApplication sharedApplication].keyWindow];
+    } failure:^{
+        
+    }];
+}
+
+/**
+ 搜索商户
+ 
+ @param text 搜索文本
+ @param dict 成功
+ @param failure 失败
+ */
++ (void)searchShopWithText:(NSString *)text
+                     block:(void(^)(NSDictionary *dict))dict
+                   failure:(void(^)())failure {
+    NSMutableDictionary *md = [NSMutableDictionary dictionary];
+    [self setWithMutableDict:md key:@"token" value:TOKEN];
+    [self setWithMutableDict:md key:@"text" value:text];
+    [self postWithAction:@"/tongju/api/search_shop.php" params:md type:kDDHttpResponseTypeJson block:^(DDResponseModel *result) {
+        if (result.status.integerValue == kDDResponseStateSuccess) {
+            dict(result.data);
+        } else {
+            failure();
+        }
+        //[MBProgressHUD showMessage:result.msg_cn toView:[UIApplication sharedApplication].keyWindow];
+    } failure:^{
+        
+    }];
+}
+
 /**创建桌子*/
 + (void)createDeskWithToken:(NSString *)token
+                        sid:(NSString *)sid
                    activity:(NSString *)activity
                      custom:(NSString *)custom
                       title:(NSString *)title
@@ -386,13 +542,10 @@
     [self setWithMutableDict:md key:@"time_range" value:time_range];
     [self setWithMutableDict:md key:@"average_price" value:average_price];
     [self setWithMutableDict:md key:@"description" value:description];
-    [self setWithMutableDict:md key:@"is_heart" value:is_heart];
+    [self setWithMutableDict:md key:@"is_heart" value:!is_heart ? @"1" : is_heart];
     [self setWithMutableDict:md key:@"latitude" value:latitude];
     [self setWithMutableDict:md key:@"longitude" value:longitude];
-    
-    //    UIImage *image1 = [
-    
-    //    NSArray *images =
+    [self setWithMutableDict:md key:@"sid" value:!sid? @"0" : sid];
     
     [self uploadMultiImageWithAction:kTJCreateDeskAPI params:md images:image success:^(DDResponseModel *result) {
         if (result.status.integerValue == kDDResponseStateSuccess) {
@@ -435,7 +588,7 @@
         } else {
             failure();
         }
-        [MBProgressHUD showMessage:result.msg_cn toView:[UIApplication sharedApplication].keyWindow];
+       // [MBProgressHUD showMessage:result.msg_cn toView:[UIApplication sharedApplication].keyWindow];
     } failure:^{
         //
     }];
@@ -463,7 +616,7 @@
         } else {
             failure();
         }
-        [MBProgressHUD showMessage:result.msg_cn toView:[UIApplication sharedApplication].keyWindow];
+        //[MBProgressHUD showMessage:result.msg_cn toView:[UIApplication sharedApplication].keyWindow];
     } failure:^{
         //
     }];
@@ -511,7 +664,7 @@
         } else {
             failure();
         }
-        [MBProgressHUD showMessage:result.msg_cn toView:[UIApplication sharedApplication].keyWindow];
+        //[MBProgressHUD showMessage:result.msg_cn toView:[UIApplication sharedApplication].keyWindow];
     } failure:^{
         //
     }];
@@ -1018,7 +1171,7 @@
         } else {
             failure();
         }
-        [MBProgressHUD showMessage:result.msg_cn toView:[UIApplication sharedApplication].keyWindow];
+        //[MBProgressHUD showMessage:result.msg_cn toView:[UIApplication sharedApplication].keyWindow];
     } failure:^{
         //
     }];
@@ -1402,9 +1555,139 @@
         } else {
             failure();
         }
-        [MBProgressHUD showMessage:result.msg_cn toView:[UIApplication sharedApplication].keyWindow];
+        //[MBProgressHUD showMessage:result.msg_cn toView:[UIApplication sharedApplication].keyWindow];
     } failure:^{
         //
+    }];
+}
+
+/**
+ 搜索活动
+ 
+ @param text 搜索文本
+ @param dict 成功
+ @param failure 失败
+ */
++ (void)searchActivityByText:(NSString *)text
+                       block:(void(^)(NSDictionary *dict))dict
+                     failure:(void(^)())failure {
+    NSMutableDictionary *md = [NSMutableDictionary dictionary];
+    [self setWithMutableDict:md key:@"token" value:TOKEN];
+    [self setWithMutableDict:md key:@"text" value:text];
+    [self postWithAction:@"/tongju/api/search_activity.php" params:md type:kDDHttpResponseTypeJson block:^(DDResponseModel *result) {
+        if (result.status.integerValue == kDDResponseStateSuccess) {
+            dict(result.data);
+        } else {
+            failure();
+        }
+        //[MBProgressHUD showMessage:result.msg_cn toView:[UIApplication sharedApplication].keyWindow];
+    } failure:^{
+        
+    }];
+}
+
+/**
+ 自定义活动
+ 
+ @param name 活动名称
+ @param dict 成功
+ @param failure 失败
+ */
++ (void)customActivitieWith:(NSString *)name block:(void(^)(NSDictionary *dict))dict
+                    failure:(void(^)())failure {
+    NSMutableDictionary *md = [NSMutableDictionary dictionary];
+    [self setWithMutableDict:md key:@"token" value:TOKEN];
+    [self setWithMutableDict:md key:@"name" value:name];
+    [self postWithAction:@"/tongju/api/set_activity.php" params:md type:kDDHttpResponseTypeJson block:^(DDResponseModel *result) {
+        if (result.status.integerValue == kDDResponseStateSuccess) {
+            dict(result.data);
+        } else {
+            failure();
+        }
+        //[MBProgressHUD showMessage:result.msg_cn toView:[UIApplication sharedApplication].keyWindow];
+    } failure:^{
+        //
+    }];
+}
+
+/**
+ 获取行政区
+ 
+ @param pid 当前地址的id
+ @param dict 成功
+ @param failure 失败
+ */
++ (void)getAdministrativeRegionWith:(NSString *)pid
+                              block:(void(^)(NSDictionary *dict))dict
+                            failure:(void(^)())failure {
+    NSMutableDictionary *md = [NSMutableDictionary dictionary];
+    [self setWithMutableDict:md key:@"token" value:TOKEN];
+    [self setWithMutableDict:md key:@"pid" value:pid];
+    
+    [self postWithAction:@"/tongju/api/get_addr_parent.php" params:md type:kDDHttpResponseTypeJson block:^(DDResponseModel *result) {
+        
+        if (result.status.integerValue == kDDResponseStateSuccess) {
+            dict(result.data);
+        } else {
+            failure();
+        }
+        //[MBProgressHUD showMessage:result.msg_cn toView:[UIApplication sharedApplication].keyWindow];
+    } failure:^{
+        //
+    }];
+}
+
+/**
+ 获取行政区子级
+ 
+ @param pid 当前地址的id
+ @param dict 成功
+ @param failure 失败
+ */
++ (void)getAdministrativeChildRegionWith:(NSString *)pid
+                                   block:(void(^)(NSDictionary *dict))dict
+                                 failure:(void(^)())failure {
+    NSMutableDictionary *md = [NSMutableDictionary dictionary];
+    [self setWithMutableDict:md key:@"token" value:TOKEN];
+    [self setWithMutableDict:md key:@"pid" value:pid];
+    
+    [self postWithAction:@"/tongju/api/get_addr_list.php" params:md type:kDDHttpResponseTypeJson block:^(DDResponseModel *result) {
+        
+        if (result.status.integerValue == kDDResponseStateSuccess) {
+            dict(result.data);
+        } else {
+            failure();
+        }
+        //[MBProgressHUD showMessage:result.msg_cn toView:[UIApplication sharedApplication].keyWindow];
+    } failure:^{
+        
+    }];
+}
+
+/**
+ 获取地铁字典
+ 
+ @param aid 当前市区id
+ @param dict 成功
+ @param failure 失败
+ */
++ (void)getSubwayDataWithAid:(NSString *)aid
+                       block:(void(^)(NSDictionary *dict))dict
+                     failure:(void(^)())failure {
+    NSMutableDictionary *md = [NSMutableDictionary dictionary];
+    [self setWithMutableDict:md key:@"token" value:TOKEN];
+    [self setWithMutableDict:md key:@"aid" value:aid];
+    
+    [self postWithAction:@"/tongju/api/get_subway_list.php" params:md type:kDDHttpResponseTypeJson block:^(DDResponseModel *result) {
+        
+        if (result.status.integerValue == kDDResponseStateSuccess) {
+            dict(result.data);
+        } else {
+            failure();
+        }
+        //[MBProgressHUD showMessage:result.msg_cn toView:[UIApplication sharedApplication].keyWindow];
+    } failure:^{
+        
     }];
 }
 
@@ -1691,6 +1974,47 @@
             failure();
         }
         [MBProgressHUD showMessage:result.msg_cn toView:[UIApplication sharedApplication].keyWindow];
+    } failure:^{
+        //
+    }];
+}
+
+
+/**获取礼物字典*/
++ (void)getGiftsDicblock:(void(^)(NSDictionary *dict))dict failure:(void(^)())failure {
+    NSMutableDictionary *md = [NSMutableDictionary dictionary];
+    [self setWithMutableDict:md key:@"token" value:[DDUserSingleton shareInstance].token];
+    [self postWithAction:@"/tongju/api/get_gift_list.php" params:md type:kDDHttpResponseTypeJson block:^(DDResponseModel *result) {
+        if (result.status.integerValue == kDDResponseStateSuccess) {
+            dict(result.data);
+        } else {
+            failure();
+        }
+        //[MBProgressHUD showMessage:result.msg_cn toView:[UIApplication sharedApplication].keyWindow];
+    } failure:^{
+        //
+    }];
+}
+
+/**
+ 获取附近内容
+ 
+ @param lat 纬度
+ @param lon 经度
+ */
+
++ (void)getNearByDiscoverWithLat:(NSString *)lat lon:(NSString *)lon block:(void(^)(NSDictionary *dict))dict failure:(void(^)())failure{
+    NSMutableDictionary *md = [NSMutableDictionary dictionary];
+    [self setWithMutableDict:md key:@"token" value:[DDUserSingleton shareInstance].token];
+    [self setWithMutableDict:md key:@"lat" value:lat];
+    [self setWithMutableDict:md key:@"lon" value:lon];
+    [self postWithAction:@"/tongju/api/get_find.php" params:md type:kDDHttpResponseTypeJson block:^(DDResponseModel *result) {
+        if (result.status.integerValue == kDDResponseStateSuccess) {
+            dict(result.data);
+        } else {
+            failure();
+        }
+        //[MBProgressHUD showMessage:result.msg_cn toView:[UIApplication sharedApplication].keyWindow];
     } failure:^{
         //
     }];

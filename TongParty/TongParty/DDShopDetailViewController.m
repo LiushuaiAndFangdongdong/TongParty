@@ -12,13 +12,14 @@
 #import "DDShopInfoTableViewCell.h"
 #import "DDShopDescTableViewCell.h"
 #import "LXAlertView.h"
-
+#import "PhotoViewController.h"
 @interface DDShopDetailViewController ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic, strong) UIImageView *bgImageView ;
 @property (nonatomic ,strong) UITableView *tableView;
 @property (nonatomic, strong) DDLoginManager *loginManager;
 @property (nonatomic, strong) DDStretchableTableHeaderView *stretchHeaderView;
 @property (nonatomic, strong) UIButton *confirmBtn;
+@property (nonatomic, strong) LSShopDetailEntity *entity;
 @end
 
 @implementation DDShopDetailViewController
@@ -63,10 +64,13 @@ static NSString *descriCell = @"descriCell";
 
 - (void)confirmAddress{
     LXAlertView *alert=[[LXAlertView alloc] initWithTitle:@"联系商户" message:@"我们建议您选择地点后联系商户订座确认，以免商户因位满，导致您的活动时间。" cancelBtnTitle:@"暂不联系" otherBtnTitle:@"拨打电话" clickIndexBlock:^(NSInteger clickIndex) {
-
+        if (_selectedAddressResult) {
+            _selectedAddressResult(_entity);
+            [self popToRootVc];
+        }
         //拨打电话
         if (clickIndex == 1) {
-            NSString *callPhone = [NSString stringWithFormat:@"telprompt://%@", @"15205145990"];
+            NSString *callPhone = [NSString stringWithFormat:@"telprompt://%@", _entity.phone];
             if (@available(iOS 10.0, *)) {
                 [[UIApplication sharedApplication] openURL:[NSURL URLWithString:callPhone] options:@{} completionHandler:nil];
             } else {
@@ -96,6 +100,7 @@ static NSString *descriCell = @"descriCell";
     [super viewDidLoad];
 //    self.navigationItem.leftBarButtonItem = [self whiteBackButtonForNavigationBarWithAction:@selector(dismiss)];
     [self WhiteBackNavigationWithTitle:@""];
+    [self loadData];
     [self setUpViews];
     [self initStretchHeader];
 }
@@ -117,7 +122,6 @@ static NSString *descriCell = @"descriCell";
     //背景之上的内容
     UIView *contentView = [[UIView alloc] initWithFrame:_bgImageView.bounds];
     contentView.backgroundColor = [UIColor clearColor];
-    
     [contentView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(watchPic:)]];
 
     //    self.pageLabel = [[UILabel alloc] initWithFrame:CGRectMake(contentView.frame.size.width - 90, contentView.frame.size.height - 30, 80, 20)];
@@ -128,7 +132,31 @@ static NSString *descriCell = @"descriCell";
     
     self.stretchHeaderView = [DDStretchableTableHeaderView new];
     [self.stretchHeaderView stretchHeaderForTableView:self.tableView withView:_bgImageView subViews:contentView];
-    
+}
+
+- (void)loadData {
+    [super loadData];
+    [DDTJHttpRequest getShopDetailWithSid:_shop_entity.id block:^(NSDictionary *dict) {
+        _entity = [LSShopDetailEntity mj_objectWithKeyValues:dict];
+        [self.tableView reloadData];
+    } failure:^{
+        
+    }];
+}
+
+- (void)watchPic:(UITapGestureRecognizer *)tap {
+    if (_entity && _entity.photo && _entity.photo.count > 0) {
+        PhotoViewController *photoVC = [[PhotoViewController alloc] init];
+        NSMutableArray *imagesArr = [NSMutableArray array];
+        for (NSDictionary *dd in _entity.photo) {
+            [imagesArr addObject:dd[@"image"]];
+        }
+        photoVC.urls = imagesArr;
+        photoVC.index = 0;
+        [self presentViewController:photoVC animated:YES completion:NULL];
+    } else {
+        return;
+    }
 }
 
 #pragma mark - stretchableTable delegate
@@ -181,16 +209,30 @@ static NSString *descriCell = @"descriCell";
     }
     DDBaseTableViewCell *cell =  [self createCellWithTableView:tableView indexPath:indexPath class:clazz cellId:cellId];
 //    [cell updateWithModel:self.rodetailModel];
+    
 //    cell.sd_indexPath = indexPath;
     return cell;
     
 }
 
-- (DDBaseTableViewCell *)createCellWithTableView:(UITableView *)tableView indexPath:(NSIndexPath *)indexPath class:(Class)clazz cellId:(NSString *)cellId
-{
+- (DDBaseTableViewCell *)createCellWithTableView:(UITableView *)tableView indexPath:(NSIndexPath *)indexPath class:(Class)clazz cellId:(NSString *)cellId {
     DDBaseTableViewCell *cell =  [tableView dequeueReusableCellWithIdentifier:cellId forIndexPath:indexPath];
     if (!cell) {
         cell = [[clazz alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellId];
+    }
+    switch (indexPath.row) {
+        case 0: {
+            DDShopInfoTableViewCell *iCell = (DDShopInfoTableViewCell *)cell;
+            [iCell updateValueWithModel:_entity];
+        }
+            break;
+        case 1: {
+            DDShopDescTableViewCell *dCell = (DDShopDescTableViewCell *)cell;
+            [dCell updateValueWithModel:_entity];
+        }
+            break;
+        default:
+            break;
     }
     
     return cell;

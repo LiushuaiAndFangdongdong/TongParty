@@ -53,9 +53,15 @@
     return _ntView;
 }
 -(DDRewardCellView *)rewardView{
+    WeakSelf(weakSelf);
     if (!_rewardView) {
         _rewardView =[[DDRewardCellView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, 60)];
         _rewardView.type = DDRewardTypeHis;
+        _rewardView.playReward = ^{
+            if (weakSelf.playReward) {
+                weakSelf.playReward();
+            }
+        };
     }
     return _rewardView;
 }

@@ -9,5 +9,5 @@
 #import "DDBaseTableViewCell.h"
 
 @interface DDShopInfoTableViewCell : DDBaseTableViewCell
-
+- (void)updateValueWithModel:(id)model;
 @end

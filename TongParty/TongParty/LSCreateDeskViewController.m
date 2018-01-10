@@ -15,7 +15,11 @@
 #import "LSManageAddressVC.h"
 #import "LSRecommendAddressVC.h"
 #import "DDPrefectDataVC.h"
-
+#import "LSCreateDeskContentSortVC.h"
+#import "DDAddressModel.h"
+#import "LSAddressLabelEntity.h"
+#import "BRPickerView.h"
+#import "DDLocationAddressVC.h"
 @interface LSCreateDeskViewController ()<UITableViewDelegate,UITableViewDataSource,LSUpLoadImageManagerDelegate,UIScrollViewDelegate>
 @property (nonatomic, strong)UITableView    *tableview;
 @property (nonatomic, strong)UIButton       *btn_createDesk;
@@ -23,6 +27,7 @@
 @property (nonatomic, strong)LSManageAddressVC    *manageAddressVC;
 @property (nonatomic, strong)LSRecommendAddressVC *recommandVC;
 @property (nonatomic, strong)NSMutableDictionary  *labelDict;
+@property (nonatomic, strong)LSCreateDeskContentSortVC  *contenSortVc;
 @end
 
 @implementation LSCreateDeskViewController
@@ -40,17 +45,25 @@
 }
 
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self loadData];
+}
+
 // 加载数据
 - (void)loadData {
     [super loadData];
     
-    NSArray *labelArr = @[@"KTV",@"咖啡厅",@"家",@"公司",@"酒吧",@"球场",@"夜店",@"餐厅",@"夜总会",@"公园",@"水吧",@"俱乐部",@"茶馆"];
-    [_labelDict setObject:labelArr forKey:@"array"];
-    [_labelDict setObject:@"1" forKey:@"isexpand"];
+//    NSArray *labelArr = @[@"KTV",@"咖啡厅",@"家",@"公司",@"酒吧",@"球场",@"夜店",@"餐厅",@"夜总会",@"公园",@"水吧",@"俱乐部",@"茶馆"];
+//    [_labelDict setObject:labelArr forKey:@"array"];
+//    [_labelDict setObject:@"1" forKey:@"isexpand"];
     [self.tableview reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:2 inSection:1]] withRowAnimation:UITableViewRowAnimationFade];
     // 获取标签
     [DDTJHttpRequest getAddrLabelsblock:^(NSDictionary *dict) {
-        
+        NSArray *arr = [LSAddressLabelEntity mj_objectArrayWithKeyValuesArray:dict];
+        [_labelDict setObject:arr forKey:@"array"];
+        [_labelDict setObject:@"1" forKey:@"isexpand"];
+        [self.tableview reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:2 inSection:1]] withRowAnimation:UITableViewRowAnimationFade];
     } failure:^{
         
     }];
@@ -185,9 +198,7 @@ static NSString *addPicCell = @"addPicCell";
                 cell.iv_action.image = kImage(@"desk_activity");
                 cell.tf_action_content.placeholder = @"请选择创建桌子内容";
                 cell.lbl_action_name.text = @"活动：";
-                cell.didEndEdit = ^(NSString *content) {
-                    _requestEntity.activity = content;
-                };
+                cell.tf_action_content.enabled = NO;
             } break;
             case 1:{
                 cell.iv_action.image = kImage(@"desk_subject");
@@ -208,25 +219,24 @@ static NSString *addPicCell = @"addPicCell";
                 cell.iv_action.image = kImage(@"desk_starttime");
                 cell.tf_action_content.placeholder = @"2017年12月24日 星期二 13:00";
                 cell.lbl_action_name.text = @"开始时间：";
-                cell.didEndEdit = ^(NSString *content) {
-                    _requestEntity.begin_time = content;
-                };
+                cell.tf_action_content.enabled = NO;
             } break;
             case 1:{// 所在地点
                 cell.iv_action.image = kImage(@"desk_address");
                 cell.tf_action_content.placeholder = @"请选择活动地址";
                 cell.lbl_action_name.text = @"所在地点：";
-                cell.didEndEdit = ^(NSString *content) {
-                    _requestEntity.place = content;
-                };
+                cell.tf_action_content.enabled = NO;
                 cell.btn_recomand.hidden = NO;
                 __block LSCreateDeskCommonCell *blockCell = cell;
                 cell.recommandAddressBlcok = ^{
                     [self.navigationController pushViewController:self.recommandVC animated:YES];
                 };
-                self.recommandVC.selectedAddressResult = ^(NSString *addressString) {
-                    weakSelf.requestEntity.place = addressString;
-                    blockCell.tf_action_content.text = addressString;
+                self.recommandVC.selectedAddressResult = ^(LSShopDetailEntity *shop) {
+                    weakSelf.requestEntity.place = shop.address;
+                    weakSelf.requestEntity.sid = shop.id;
+                    weakSelf.requestEntity.longitude = shop.longitude;
+                    weakSelf.requestEntity.latitude = shop.latitude;
+                    blockCell.tf_action_content.text = shop.address;
                 };
             }break;
             case 2:{
@@ -249,10 +259,7 @@ static NSString *addPicCell = @"addPicCell";
                     [self.navigationController pushViewController:self.manageAddressVC animated:YES];
                 };
                 acell.selectionStyle = UITableViewCellSelectionStyleNone;
-                
                 [acell updatePhotoWithArray:_labelDict];
-                
-                
                 return acell;
             }break;
             default:
@@ -265,6 +272,7 @@ static NSString *addPicCell = @"addPicCell";
             case 0:{// 人数
                 cell.iv_action.image = kImage(@"desk_person");
                 cell.tf_action_content.placeholder = @"活动至少两人";
+                cell.tf_action_content.keyboardType = UIKeyboardTypeNumberPad;
                 cell.lbl_action_name.text = @"人数：";
                 cell.didEndEdit = ^(NSString *content) {
                     _requestEntity.person_num = content;
@@ -273,6 +281,7 @@ static NSString *addPicCell = @"addPicCell";
             case 1:{// 预估时长
                 cell.iv_action.image = kImage(@"desk_duration");
                 cell.tf_action_content.placeholder = @"2天2夜";
+                cell.tf_action_content.keyboardType = UIKeyboardTypeNumberPad;
                 cell.lbl_action_name.text = @"预估时长：";
                 cell.didEndEdit = ^(NSString *content) {
                     _requestEntity.time_range = content;
@@ -281,6 +290,7 @@ static NSString *addPicCell = @"addPicCell";
             case 2:{// 预估人均
                 cell.iv_action.image = kImage(@"desk_average_price");
                 cell.tf_action_content.placeholder = @"66元/人";
+                cell.tf_action_content.keyboardType = UIKeyboardTypeDecimalPad;
                 cell.lbl_action_name.text = @"预估人均：";
                 cell.didEndEdit = ^(NSString *content) {
                     _requestEntity.average_price = content;
@@ -314,7 +324,6 @@ static NSString *addPicCell = @"addPicCell";
                 apcell.deleteClicked = ^(NSInteger indx) {
                     
                     [_requestEntity.Images enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-
                         [_requestEntity.Images removeObjectAtIndex:indx];
                         *stop = YES;
                     }];
@@ -347,22 +356,90 @@ static NSString *addPicCell = @"addPicCell";
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView endEditing:YES];
-    
-    
+    WeakSelf(weakSelf);
+    __block LSCreateDeskCommonCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    if (indexPath.section == 0) {
+        switch (indexPath.row) {
+            case 0:{
+                // 选择活动
+                self.contenSortVc.selectActivity = ^(LSActivityEntity *entity) {
+                    cell.tf_action_content.text = entity.name;
+                    weakSelf.requestEntity.activity = entity.id;
+                    weakSelf.requestEntity.custom = entity.name;
+                };
+                [self pushVc:self.contenSortVc];
+                }break;
+            default:
+                break;
+        }
+
+    }
+    if (indexPath.section == 1) {
+        switch (indexPath.row) {
+            case 0:{
+                // 从现在开始的一周内的时间
+                NSDateFormatter *format = [[NSDateFormatter alloc] init];
+                [format setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+                NSString *minDateS = [format stringFromDate:[NSDate date]];
+                //NSString *maxDateS = [format stringFromDate:[[NSDate date] initWithTimeIntervalSinceNow:24*60*60*7]];
+                [BRDatePickerView showDatePickerWithTitle:@"开始时间" dateType:UIDatePickerModeDateAndTime defaultSelValue:@"" minDateStr:minDateS maxDateStr:@"" isAutoSelect:YES resultBlock:^(NSString *selectValue, NSDate *date) {
+                    NSDateFormatter *format1 = [[NSDateFormatter alloc] init];
+                    [format1 setDateFormat:@"yyyy-MM-dd HH:mm"];
+                    NSString *s = [format1 stringFromDate:date];
+                    _requestEntity.begin_time = s;
+                    cell.tf_action_content.text = selectValue;
+                }];
+                }break;
+            case 1:{
+                // 地图选择地点
+                DDLocationAddressVC *locationVC   = [[DDLocationAddressVC alloc] init];
+                locationVC.locationAddressSelectBlcok = ^(AMapPOI *POI) {
+                    cell.tf_action_content.text = POI.name;
+                    weakSelf.requestEntity.place = POI.name;
+                    weakSelf.requestEntity.longitude = [NSString stringWithFormat:@"%lf",POI.location.longitude];
+                    weakSelf.requestEntity.latitude = [NSString stringWithFormat:@"%lf",POI.location.latitude];;
+                };
+                [self.navigationController pushViewController:locationVC animated:YES];
+            }break;
+            default:
+                break;
+        }
+    }
+}
+
+- (LSCreateDeskContentSortVC *)contenSortVc {
+    if (!_contenSortVc) {
+        _contenSortVc = [[LSCreateDeskContentSortVC alloc] init];
+    }
+    return _contenSortVc;
 }
 
 - (void)didSelectedToCreateDesk:(UIButton *)sender {
     
     //判断资料是否完善，如果没有完善则
-    DDPrefectDataVC *dataVC = [[DDPrefectDataVC alloc] init];
-    [self.navigationController pushViewController:dataVC animated:YES];
+//    DDPrefectDataVC *dataVC = [[DDPrefectDataVC alloc] init];
+//    [self.navigationController pushViewController:dataVC animated:YES];
     
     //资料已经完善则判断创建桌子的活动时间人数人均等信息是否为空
-    
-    
-    
-    [DDTJHttpRequest createDeskWithToken:TOKEN activity:_requestEntity.activity custom:@"" title:_requestEntity.title place:_requestEntity.place begin_time:_requestEntity.begin_time person_num:_requestEntity.person_num time_range:_requestEntity.time_range average_price:_requestEntity.average_price description:_requestEntity.dEscription is_heart:_requestEntity.is_heart latitude:@"" longitude:@"" image:_requestEntity.Images block:^(NSDictionary *dict) {
-        
+    [MBProgressHUD showMessage:@"正在为您创桌..." toView:self.view];
+    [DDTJHttpRequest createDeskWithToken:TOKEN
+                                     sid:_requestEntity.sid
+                                activity:_requestEntity.activity
+                                  custom:_requestEntity.custom
+                                   title:_requestEntity.title
+                                   place:_requestEntity.place
+                              begin_time:_requestEntity.begin_time
+                              person_num:_requestEntity.person_num
+                              time_range:_requestEntity.time_range
+                           average_price:_requestEntity.average_price
+                             description:_requestEntity.dEscription
+                                is_heart:_requestEntity.is_heart
+                                latitude:_requestEntity.latitude
+                               longitude:_requestEntity.longitude
+                                   image:_requestEntity.Images
+                                   block:^(NSDictionary *dict) {
+                                       [MBProgressHUD hideAllHUDsInView:self.view];
+                                       [self dismiss];
     } failure:^{
         
     }];

@@ -45,11 +45,11 @@ static const NSString *locationManagerKey = @"locationManagerKey";
     //2、设置定位精度
     self.locationManager = [[AMapLocationManager alloc] init];
     // 带逆地理信息的一次定位（返回坐标和地址信息）
-    [self.locationManager setDesiredAccuracy:kCLLocationAccuracyHundredMeters];
+    [self.locationManager setDesiredAccuracy:kCLLocationAccuracyBest];
     // 定位超时时间，最低2s，此处设置为2s
-    self.locationManager.locationTimeout = 2;
+    self.locationManager.locationTimeout = 10;
     // 逆地理请求超时时间，最低2s，此处设置为2s
-    self.locationManager.reGeocodeTimeout = 2;
+    self.locationManager.reGeocodeTimeout = 10;
     
     [self.locationManager setAllowsBackgroundLocationUpdates:NO];
 
@@ -63,11 +63,12 @@ static const NSString *locationManagerKey = @"locationManagerKey";
                 self.locationBlock(nil, nil, NO, nil); return;
             }
         }
-        NSLog(@"经度longitude：%f",location.coordinate.longitude); //经度
-        NSLog(@"纬度latitude：%f",location.coordinate.latitude);   //纬度
+        
+        [DDUserSingleton shareInstance].latitude = [NSString stringWithFormat:@"%f",location.coordinate.latitude];
+        [DDUserSingleton shareInstance].longitude = [NSString stringWithFormat:@"%f",location.coordinate.longitude];
         //逆向编码、传值(定位成功)
         NSLog(@"位置：%@",regeocode);
-        if(regeocode){ self.locationBlock(location, regeocode, YES, nil); }
+       // if(regeocode){ self.locationBlock(location, regeocode, YES, nil); }
     }];
 }
 

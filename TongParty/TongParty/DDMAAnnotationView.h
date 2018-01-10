@@ -11,5 +11,6 @@
 #import "LSMapAnnotationModel.h"
 
 @interface DDMAAnnotationView : MAAnnotationView
-
+- (void)updateValueWith:(id)model;
+@property (nonatomic, copy) void(^onClicked)(void);
 @end

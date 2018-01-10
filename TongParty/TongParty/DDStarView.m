@@ -10,7 +10,7 @@
 #import "DDStarView.h"
 
 @interface DDStarView()
-
+@property (nonatomic) CGRect oldRect;
 @end
 
 @implementation DDStarView
@@ -34,22 +34,29 @@
 
 //重绘视图
 - (void)drawRect:(CGRect)rect {
+    _oldRect = rect;
+
     CGContextRef context = UIGraphicsGetCurrentContext();
-    
+
     NSString* stars = @"★★★★★";
     rect = self.bounds;
     UIFont *font = [UIFont boldSystemFontOfSize:_starSize];
     CGSize starSize = [stars sizeWithFont:font];
-    rect.size=starSize;
+    rect.size = starSize;
     [_emptyColor set];
     [stars drawInRect:rect withFont:font];
-    
+
     CGRect clip = rect;
     // 裁剪的宽度 = 点亮星星宽度 = （显示的星星数/总共星星数）*总星星的宽度
     clip.size.width = clip.size.width * _showStar / _maxStar;
     CGContextClipToRect(context,clip);
     [_fullColor set];
     [stars drawInRect:rect withFont:font];
+}
+
+- (void)setShowStar:(NSInteger)showStar {
+    _showStar = showStar;
+    [self setNeedsDisplay];
 }
 
 @end

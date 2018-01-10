@@ -8,7 +8,7 @@
 //
 
 #import "DDShopDescTableViewCell.h"
-
+#import "LSShopDetailEntity.h"
 @interface DDShopDescTableViewCell()
 @property (nonatomic, strong) UILabel *titleLbl;
 @property (nonatomic, strong) UILabel *introduceLbl;
@@ -42,7 +42,7 @@
         make.left.mas_equalTo(_titleLbl.mas_left);
         make.right.mas_equalTo(-20);
     }];
-    _introduceLbl.text  = @"特色服务，有wifi，产品好吃，味道鲜美，你来过就知道吗了啊。好的知道了。";
+    
     _introduceLbl.textColor = kBlackColor;
     _introduceLbl.textAlignment = NSTextAlignmentLeft;
     _introduceLbl.numberOfLines = 0;
@@ -56,6 +56,14 @@
     frame.size.height -= 5;
     //    frame.size.width -= 10;
     [super setFrame:frame];
+}
+
+- (void)updateValueWithModel:(id)model {
+    if (!model) {
+        return;
+    }
+    LSShopDetailEntity *shop = (LSShopDetailEntity *)model;
+    _introduceLbl.text  = shop.introduction;
 }
 
 

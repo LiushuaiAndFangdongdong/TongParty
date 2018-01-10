@@ -9,4 +9,6 @@
 #import "DDBaseViewController.h"
 
 @interface DDHomeMapViewController : DDBaseViewController
+
+- (void)searchActivitiesByText:(NSString *)text;
 @end

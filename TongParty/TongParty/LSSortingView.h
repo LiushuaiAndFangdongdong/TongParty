@@ -10,4 +10,5 @@
 
 @interface LSSortingView : UIView
 @property (nonatomic, copy) void(^onTapBlcok)(NSInteger index);
+- (void)clean;
 @end

@@ -7,7 +7,7 @@
 //
 
 #import "LSRecommendAddressCell.h"
-
+#import "LSShopEntity.h"
 @interface LSRecommendAddressCell ()
 
 @property (nonatomic, strong)UIImageView      *iv_header;
@@ -189,8 +189,6 @@
     _lbl_BusinessHours.textColor = kCommonGrayTextColor;
     _lbl_BusinessHours.font = DDFitFont(12.f);
     
-    
-    //NSArray *normal_star_array = @[_iv_star_normal1,_iv_star_normal2,_iv_star_normal3,_iv_star_normal4,_iv_star_normal5];
     NSArray *hightlight_star_array = @[_iv_star_highLight1,_iv_star_highLight2,_iv_star_highLight3,_iv_star_highLight4,_iv_star_highLight5];
     for (UIImageView *iv_star in hightlight_star_array) {
         iv_star.hidden = YES;
@@ -205,8 +203,24 @@
     }
 }
 
-
-
+- (void)updateValueWith:(id)model {
+    LSShopEntity *shop = (LSShopEntity *)model;
+    if (!shop) {
+        return;
+    }
+    [_iv_header sd_setImageWithURL:[NSURL URLWithString:shop.image] placeholderImage:kImage(@"")];
+    _lbl_addressType.text = shop.name;
+    _lbl_pricePer.text = [NSString stringWithFormat:@"¥ %@/人",shop.average_price];
+    _lbl_road_distance.text = shop.address;
+    NSArray *hightlight_star_array = @[_iv_star_highLight1,_iv_star_highLight2,_iv_star_highLight3,_iv_star_highLight4,_iv_star_highLight5];
+    for (int starCount = 0; starCount < hightlight_star_array.count; starCount ++) {
+        if (starCount <= shop.star.intValue) {
+            UIImageView *iv = hightlight_star_array[starCount];
+            iv.hidden = NO;
+        }
+    }
+    _lbl_BusinessHours.text = [NSString stringWithFormat:@"营业时间 %@-%@",shop.star_time,shop.end_time];
+}
 
 
 

@@ -159,7 +159,9 @@ typedef NS_ENUM(NSUInteger, DDHomeAttentionListType) {
 #define SMSMobAppSecretTest @""
 #define BuglyKey @""
 
+//#define AMapKey @"cf1471fbdbf487d386d66fd698247a74" //高德地图key test
 #define AMapKey @"ceb5cd0e123e1b54347117883f0365a0" //高德地图key
+
 
 
 

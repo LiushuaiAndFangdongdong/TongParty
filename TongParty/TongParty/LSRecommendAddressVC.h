@@ -7,7 +7,8 @@
 //
 
 #import "DDBaseTableViewController.h"
-
+#import "LSShopDetailEntity.h"
 @interface LSRecommendAddressVC : DDBaseTableViewController
-@property (nonatomic, copy) void(^selectedAddressResult)(NSString *addressString);
+@property (nonatomic, copy) void(^selectedAddressResult)(LSShopDetailEntity *shop);
+
 @end

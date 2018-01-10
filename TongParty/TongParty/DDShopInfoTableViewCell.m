@@ -11,7 +11,7 @@
 #import "DDShopInfoTableViewCell.h"
 #import "DDStarView.h"
 #import "UIButton+DDImagePosition.h"
-
+#import "LSShopDetailEntity.h"
 @interface DDShopInfoTableViewCell()
 @property (nonatomic, strong) UILabel *recommendLbl;
 @property (nonatomic, strong) UILabel *shopNameLbl;
@@ -52,7 +52,6 @@
         make.left.mas_equalTo(_recommendLbl.mas_left);
         make.height.mas_equalTo(20);
     }];
-    _shopNameLbl.text = @"甘家口麦当劳/人均¥69";
     
     _starView = [DDStarView new];
     [self.contentView addSubview:_starView];
@@ -62,7 +61,8 @@
         make.width.mas_equalTo(100);
         make.height.mas_equalTo(40);
     }];
-    _starView.showStar = 3*20;
+    //_starView.showStar = 3*20;
+    
     
     _phoneView = [UIImageView new];
     [self.contentView addSubview:_phoneView];
@@ -90,7 +90,6 @@
         make.height.mas_equalTo(20);
         make.right.mas_equalTo(_verLineLbl.mas_left).offset(-20);
     }];
-    _distanceLbl.text = @"1.3km";
     _distanceLbl.textColor = kBlackColor;
     _distanceLbl.font = kFont(13);
     
@@ -102,10 +101,27 @@
         make.height.mas_equalTo(20);
     }];
     [_addressBtn setImage:kImage(@"desk_address") forState:UIControlStateNormal];
-    [_addressBtn setTitle:@"酒仙桥路52号院东方科技园4号楼" forState:UIControlStateNormal];
     _addressBtn.titleLabel.font = kFont(12);
     [_addressBtn setTitleColor:kBgGreenColor forState:UIControlStateNormal];
     [_addressBtn layoutButtonWithEdgeInsetsStyle:DDButtonEdgeInsetsStyleLeft imageTitleSpace:5];
+}
+
+- (void)updateValueWithModel:(id)model {
+    if (!model) {
+        return;
+    }
+    LSShopDetailEntity *shop = (LSShopDetailEntity *)model;
+    _shopNameLbl.text = [NSString stringWithFormat:@"%@%@/人均¥%@",shop.trad_area,shop.name,shop.average_price];
+    [_addressBtn setTitle:[NSString stringWithFormat:@"%@",shop.address] forState:UIControlStateNormal];
+    _distanceLbl.text = [NSString stringWithFormat:@"%.fkm",[self distanceBetweenOrderBy:[DDUserSingleton shareInstance].latitude.doubleValue :shop.latitude.doubleValue :[DDUserSingleton shareInstance].longitude.doubleValue :shop.longitude.doubleValue]/1000.f];
+    _starView.showStar = (shop.star.doubleValue)*20;
+}
+
+-(double)distanceBetweenOrderBy:(double) lat1 :(double) lat2 :(double) lng1 :(double) lng2{
+    CLLocation *curLocation = [[CLLocation alloc] initWithLatitude:lat1 longitude:lng1];
+    CLLocation *otherLocation = [[CLLocation alloc] initWithLatitude:lat2 longitude:lng2];
+    double  distance  = [curLocation distanceFromLocation:otherLocation];
+    return  distance;
 }
 
 - (void)awakeFromNib {

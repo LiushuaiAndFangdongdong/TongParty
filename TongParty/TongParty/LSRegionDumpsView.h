@@ -9,5 +9,10 @@
 #import <UIKit/UIKit.h>
 
 @interface LSRegionDumpsView : UIView
-@property (nonatomic, copy) void(^onSelected)(NSString *addString);
+@property (nonatomic, copy) void(^onSelected)(NSString *lat, NSString *lon);
+@property (nonatomic, copy) void(^switchToSubway)(void);
+@property (nonatomic, copy) void(^switchToRefionDumps)(void);
+@property (nonatomic, strong)NSArray  *regionArray;
+@property (nonatomic, strong)NSArray  *subwayArray;
+@property (nonatomic, strong)NSArray     *dataArray;
 @end

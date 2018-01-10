@@ -9,5 +9,5 @@
 #import "DDBaseViewController.h"
 
 @interface LSRegionDumpsVC : DDBaseViewController
-
+@property (nonatomic, copy) void(^confirmSort)(NSString *lon, NSString *lat);
 @end

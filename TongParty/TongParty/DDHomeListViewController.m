@@ -95,9 +95,10 @@
 
 #pragma mark  -  请求数据
 - (void)loadData {
+    page = 1;
     [super loadData];
     [MBProgressHUD showLoading:self.view];
-    [DDTJHttpRequest getDeskListsWithToken:[DDUserDefault objectForKey:@"token"] activity:@"0" page:1 lat:@"" lon:@"" position_lat:@"" position_lon:@"" begin_time:@"" block:^(NSDictionary *dict) {
+    [DDTJHttpRequest getDeskListsWithToken:[DDUserDefault objectForKey:@"token"] activity:@"0" page:page lat:@"" lon:@"" position_lat:@"" position_lon:@"" begin_time:@"" block:^(NSDictionary *dict) {
         [MBProgressHUD hideAllHUDsInView:self.view];
         _dataArray = [DDTableModel mj_objectArrayWithKeyValuesArray:dict[@"table"]];
         if (_dataArray.count == 0) {
@@ -121,6 +122,37 @@
         }
     } failure:^{
         //
+    }];
+}
+
+- (void)tj_refresh {
+    page = 1;
+    [DDTJHttpRequest getDeskListsWithToken:TOKEN activity:@"0" page:page lat:@"" lon:@"" position_lat:@"" position_lon:@"" begin_time:@"" block:^(NSDictionary *dict) {
+        [self tj_endRefresh];
+        _dataArray = [DDTableModel mj_objectArrayWithKeyValuesArray:dict[@"table"]];
+        if (_dataArray.count == 0) {
+            [self.emptyView showInView:self.view];
+        }else{
+            [self.tableView reloadData];
+        }
+    } failure:^{
+        [self.emptyView showInView:self.view];
+    }];
+}
+static NSInteger page = 1;
+- (void)tj_loadMore {
+    page ++;
+    
+    [DDTJHttpRequest getDeskListsWithToken:TOKEN activity:@"0" page:page lat:@"" lon:@"" position_lat:@"" position_lon:@"" begin_time:@"" block:^(NSDictionary *dict) {
+        [self tj_endLoadMore];
+        _dataArray = [DDTableModel mj_objectArrayWithKeyValuesArray:dict[@"table"]];
+//        if (_dataArray.count == 0) {
+//            [self.emptyView showInView:self.view];
+//        }else{
+//            [self.tableView reloadData];
+//        }
+    } failure:^{
+        //[self.emptyView showInView:self.view];
     }];
 }
 

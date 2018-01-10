@@ -57,10 +57,25 @@ static NSInteger btn_baseTag = 253;
 }
 
 - (void)tapAction:(UITapGestureRecognizer *)tap {
+    for (id obj in self.subviews) {
+        if ([obj isKindOfClass:[UILabel class]]) {
+            UILabel* theLabel = (UILabel*)obj;
+            theLabel.textColor = kCommonGrayTextColor;
+        }
+    }
     UILabel *lbltap = (UILabel *)[tap view];
     lbltap.textColor = kBlackColor;
     if (_onTapBlcok) {
         _onTapBlcok([tap.view tag] - baseTag);
+    }
+}
+
+- (void)clean {
+    for (id obj in self.subviews) {
+        if ([obj isKindOfClass:[UILabel class]]) {
+            UILabel* theLabel = (UILabel*)obj;
+            theLabel.textColor = kCommonGrayTextColor;
+        }
     }
 }
 @end

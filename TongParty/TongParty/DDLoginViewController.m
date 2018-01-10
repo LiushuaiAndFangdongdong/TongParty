@@ -249,12 +249,14 @@
     [self.navigationController pushViewController:rVC animated:NO];
 }
 #pragma mark - other
--(void)popViewController
-{
+-(void)popViewController {
     if (self.isPopToRoot) {
         [self.navigationController popToRootViewControllerAnimated:YES];
     } else {
         [self.navigationController popViewControllerAnimated:YES];
+    }
+    if (_isModen) {
+        [self dismiss];
     }
 }
 - (void)didReceiveMemoryWarning {

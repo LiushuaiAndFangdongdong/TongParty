@@ -113,6 +113,7 @@
                 make.centerY.mas_equalTo(self);
             }];
             [self.accessBtn setTitle:@"打赏" forState:UIControlStateNormal];
+            [self.accessBtn addTarget:self action:@selector(playReward:) forControlEvents:UIControlEventTouchUpInside];
             [self.accessBtn setTitleColor:kGrayColor forState:UIControlStateNormal];
             self.accessBtn.titleLabel.font = kFont(13);
             self.accessBtn.layerBorderColor = kBgGreenColor;
@@ -120,6 +121,12 @@
         }break;
         default:
             break;
+    }
+}
+
+- (void)playReward:(UIButton *)sender {
+    if ((_playReward)) {
+        _playReward();
     }
 }
 @end

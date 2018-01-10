@@ -18,6 +18,7 @@ typedef NS_ENUM(NSUInteger, DDRewardType) {
 };
 @interface DDRewardCellView : UIView
 @property (nonatomic, assign) DDRewardType type;
+@property (nonatomic, copy)void(^playReward)();
 - (void)updateWithModel:(DDUserInfoModel *)model;
 @end
 

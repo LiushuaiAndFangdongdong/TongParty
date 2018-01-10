@@ -59,7 +59,7 @@
     
     self.window = [[UIWindow alloc]initWithFrame:[[UIScreen mainScreen]bounds]];
     self.window.backgroundColor = kWhiteColor;
-    
+    [self startLocation];
     [[DDTJShareManager sharedManager] registerAllPlatForms];
     [AMapServices sharedServices].apiKey = AMapKey;
     [self initShortcutItems];

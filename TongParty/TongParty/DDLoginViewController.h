@@ -10,6 +10,6 @@
 #import "DDBaseViewController.h"
 
 @interface DDLoginViewController : DDBaseViewController
-
+@property (nonatomic, assign) BOOL isModen;
 @property (nonatomic, assign) BOOL isPopToRoot;
 @end

@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 
 @interface LSCreatDeskEntity : NSObject
+/**商户id*/
+@property (nonatomic, copy)NSString *sid;
 /**活动id*/
 @property (nonatomic, copy)NSString *activity;
 /**活动名称*/

@@ -9,5 +9,8 @@
 #import <UIKit/UIKit.h>
 
 @interface LSContentSortingView : UIView
-@property (nonatomic, strong)NSMutableArray *dataArray;
+@property (nonatomic, copy) void(^addCustomActivity)(void);
+@property (nonatomic, copy) void(^confirmSort)(NSArray *selectedArray);
+@property (nonatomic, strong)NSMutableDictionary *dataDict;
+
 @end

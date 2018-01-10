@@ -27,6 +27,11 @@
 /**城市*/
 @property (nonatomic, copy) NSString *city;
 
+/**经度*/
+@property (nonatomic, copy) NSString *longitude;
+/**纬度*/
+@property (nonatomic, copy) NSString *latitude;
+
 - (void)clearUserInfo;
 
 +(DDUserSingleton *)shareInstance;

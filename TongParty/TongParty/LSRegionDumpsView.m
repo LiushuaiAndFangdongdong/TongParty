@@ -7,17 +7,18 @@
 //
 
 #import "LSRegionDumpsView.h"
-
-
+#import "LSSubwayEntity.h"
+#import "LSAdmRegionEntity.h"
 @interface LSRegionDumpsView ()<UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic, strong)UITableView *father_tableView;
 @property (nonatomic, strong)UITableView *child_tableView;
 @property (nonatomic, strong)UIButton    *btn_region;
 @property (nonatomic, strong)UIButton    *btn_subway;
+@property (nonatomic, strong)UIImageView *iv_region;
+@property (nonatomic, strong)UIImageView *iv_subway;
 @property (nonatomic, strong)NSArray     *area_array; // 商圈区域数据
-@property (nonatomic, strong)NSMutableArray  *region_array; // 商圈数据
-@property (nonatomic, strong)NSArray         *circles_array; // 商圈数据
-
+@property (nonatomic, strong)NSArray     *region_array; // 商圈数据
+@property (nonatomic, strong)NSArray     *circles_array; // 商圈数据
 @end
 
 @implementation LSRegionDumpsView
@@ -38,6 +39,16 @@
         make.width.equalTo(self).multipliedBy(0.5f);
         make.height.mas_equalTo(DDFitHeight(45.f));
     }];
+    [_btn_region addTarget:self action:@selector(regionDump:) forControlEvents:UIControlEventTouchUpInside];
+    _iv_region = [UIImageView new];
+    [_btn_region addSubview:_iv_region];
+    [_iv_region mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(_btn_region.mas_centerX).offset(-DDFitWidth(25.f));
+        make.centerY.equalTo(_btn_region);
+        make.height.width.mas_equalTo(DDFitHeight(20.f));
+        make.width.mas_equalTo(DDFitHeight(25.f));
+    }];
+    _iv_region.image = kImage(@"region_selected");
     
     [self addSubview:self.btn_subway];
     [_btn_subway mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -45,6 +56,15 @@
         make.width.equalTo(self).multipliedBy(0.5f);
         make.height.mas_equalTo(DDFitHeight(45.f));
     }];
+    [_btn_subway addTarget:self action:@selector(subway:) forControlEvents:UIControlEventTouchUpInside];
+    _iv_subway = [UIImageView new];
+    [_btn_subway addSubview:_iv_subway];
+    [_iv_subway mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(_btn_subway.mas_centerX).offset(-DDFitWidth(25.f));
+        make.centerY.equalTo(_btn_region);
+        make.height.width.mas_equalTo(DDFitHeight(18.f));
+    }];
+    _iv_subway.image = kImage(@"subway_normal");
     
     _father_tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
     _father_tableView.delegate = self;
@@ -99,8 +119,10 @@
     if (!_btn_region) {
         _btn_region = [UIButton new];
         [_btn_region setTitle:@"商圈" forState:UIControlStateNormal];
-        [_btn_region setTitleColor:kCommonGrayTextColor forState:UIControlStateNormal];
+        [_btn_region setTitleColor:kBlackColor forState:UIControlStateNormal];
         _btn_region.titleLabel.font = DDFitFont(15.f);
+        
+        
     }
     return _btn_region;
 }
@@ -115,7 +137,36 @@
     return _btn_subway;
 }
 
+#pragma mark - action
 
+- (void)regionDump:(UIButton *)sender {
+    [_btn_subway setTitleColor:kCommonGrayTextColor forState:UIControlStateNormal];
+    [_btn_region setTitleColor:kBlackColor forState:UIControlStateNormal];
+    _iv_subway.image = kImage(@"subway_normal");
+    _iv_region.image = kImage(@"region_selected");
+    if (!_regionArray) {
+        if (_switchToRefionDumps) {
+            _switchToRefionDumps();
+        }
+    } else {
+        self.dataArray = _regionArray;
+    }
+}
+
+- (void)subway:(UIButton *)sender {
+    [_btn_region setTitleColor:kCommonGrayTextColor forState:UIControlStateNormal];
+    [_btn_subway setTitleColor:kBlackColor forState:UIControlStateNormal];
+    _iv_subway.image = kImage(@"subway_selected");
+    _iv_region.image = kImage(@"region_normal");
+    if (!_subwayArray) {
+        if (_switchToSubway) {
+            _switchToSubway();
+        }
+    } else {
+        self.dataArray = _subwayArray;
+    }
+
+}
 
 
 #pragma mark - UITableView Delegate && Data source
@@ -132,9 +183,16 @@
         if (_circles_array) {
             return _circles_array.count;
         } else {
-            _circles_array = [NSArray new];
-            NSDictionary *firstDic = self.region_array[0];
-            _circles_array = firstDic[@"circles"];
+            id entity = self.area_array[0];
+            if ([entity isKindOfClass:[LSSubwayEntity class]]) {
+                LSSubwayEntity *sEntity = (LSSubwayEntity *)entity;
+                _circles_array = [LSSubwayEntity mj_objectArrayWithKeyValuesArray:sEntity.children];
+            }
+            if ([entity isKindOfClass:[LSAdmRegionEntity class]]) {
+                LSAdmRegionEntity *aEntity = (LSAdmRegionEntity *)entity;
+                _circles_array = [LSAdmRegionEntity mj_objectArrayWithKeyValuesArray:aEntity.children];
+            }
+            
             return _circles_array.count;
         }
     }
@@ -152,13 +210,18 @@
         if (!cell) {
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:fatherCellID];
         }
-        cell.selectedBackgroundView.backgroundColor = kBgWhiteGrayColor;
-        cell.textLabel.text = self.area_array[indexPath.row];
+        id entity = self.area_array[indexPath.row];
+        if ([entity isKindOfClass:[LSSubwayEntity class]]) {
+            LSSubwayEntity *sEntity = (LSSubwayEntity *)entity;
+            cell.textLabel.text = sEntity.name;
+        }
+        if ([entity isKindOfClass:[LSAdmRegionEntity class]]) {
+            LSAdmRegionEntity *aEntity = (LSAdmRegionEntity *)entity;
+            cell.textLabel.text = aEntity.name;
+        }
+        
         cell.textLabel.textAlignment = NSTextAlignmentCenter;
         cell.textLabel.textColor = kCommonGrayTextColor;
-        if (indexPath.row == 0) {
-            cell.selected = YES;
-        }
         return cell;
     }
     if (tableView == self.child_tableView) {
@@ -167,11 +230,19 @@
         if (!cell) {
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:childCellID];
         }
+        id entity = self.circles_array[indexPath.row];
+        if ([entity isKindOfClass:[LSSubwayEntity class]]) {
+            LSSubwayEntity *sEntity = (LSSubwayEntity *)entity;
+            cell.textLabel.text = sEntity.name;
+        }
+        if ([entity isKindOfClass:[LSAdmRegionEntity class]]) {
+            LSAdmRegionEntity *aEntity = (LSAdmRegionEntity *)entity;
+            cell.textLabel.text = aEntity.name;
+        }
         cell.contentView.backgroundColor = kBgWhiteGrayColor;
-        NSDictionary *circlesDic = _circles_array[indexPath.row];
-        cell.textLabel.text = circlesDic[@"name"];
         cell.textLabel.textAlignment = NSTextAlignmentCenter;
         cell.textLabel.textColor = kCommonGrayTextColor;
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
     }
     return nil;
@@ -189,64 +260,85 @@
         cell.textLabel.textColor = kBlackColor;
     }
     if (tableView == self.child_tableView) {
-        if (_onSelected) {
-            UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-            _onSelected(cell.textLabel.text);
+        
+        id entity = self.circles_array[indexPath.row];
+        if ([entity isKindOfClass:[LSSubwayEntity class]]) {
+            LSSubwayEntity *sEntity = (LSSubwayEntity *)entity;
+            if (_onSelected) {
+                _onSelected(sEntity.latitude,sEntity.longitude);
+            }
+        }
+        if ([entity isKindOfClass:[LSAdmRegionEntity class]]) {
+            LSAdmRegionEntity *aEntity = (LSAdmRegionEntity *)entity;
+            if (_onSelected) {
+                _onSelected(aEntity.latitude,aEntity.longitude);
+            }
         }
     }
 }
 
-- (void)updateChildTableViewDataWithAreaString:(NSString *)areaString {
-    _circles_array = [NSArray new];
-    for (NSDictionary *circlesDic in _region_array) {
-        if ([areaString isEqualToString:circlesDic[@"name"]]) {
-            _circles_array = circlesDic[@"circles"];
-        }
+- (void)updateChildTableViewDataWithAreaString:(id)entity {
+    if ([entity isKindOfClass:[LSSubwayEntity class]]) {
+        LSSubwayEntity *e = (LSSubwayEntity *)entity;
+        _circles_array = [LSSubwayEntity mj_objectArrayWithKeyValuesArray:e.children];
+    }
+    if ([entity isKindOfClass:[LSAdmRegionEntity class]]) {
+        LSAdmRegionEntity *e = (LSAdmRegionEntity *)entity;
+        _circles_array = [LSAdmRegionEntity mj_objectArrayWithKeyValuesArray:e.children];
     }
     [_child_tableView reloadData];
 }
 
-- (NSArray *)area_array {
-    if (![[DDUserSingleton shareInstance].city isEqualToString:[DDUserDefault objectForKey:@"currentCity"]] && [DDUserSingleton shareInstance].city && ![[DDUserSingleton shareInstance].city isEqualToString:@""]) {
-        _area_array = nil;
-        [DDUserDefault setObject:[DDUserSingleton shareInstance].city forKey:@"currentCity"];
-    }
-    if (!_area_array) {
-        NSData *JSONData = [NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"region_dumps" ofType:@"json"]];
-        NSArray *dataArray = [NSJSONSerialization JSONObjectWithData:JSONData options:NSJSONReadingAllowFragments error:nil];
-        NSMutableArray *newArray = [NSMutableArray array];
-        for (NSDictionary *dict in dataArray) {
-            NSArray *citiesArray = dict[@"cities"];
-            if (citiesArray.count > 0 ) {
-                NSDictionary *citiesDict = citiesArray[0];
-                NSString *cityString = [NSString string];
-                if (![[DDUserSingleton shareInstance].city isEqualToString:@""] && [DDUserSingleton shareInstance].city) {
-                    cityString = citiesDict[@"name"];
-                } else if ([DDUserDefault objectForKey:@"currentCity"]) {
-                    cityString = [DDUserDefault objectForKey:@"currentCity"];
-                } else {
-                    // 在数据为空的时候，设置默认当前城市
-                    cityString = @"北京市";
-                }
-                if ([cityString isEqualToString:citiesDict[@"name"]]) {
-                    NSArray *countiesArray = citiesDict[@"counties"];
-                    for (NSDictionary *areaDic in countiesArray) {
-                        [newArray addObject:areaDic[@"name"]];
-                        [self.region_array addObject:areaDic];
-                    }
-                }
-            }
-        }
-        _area_array = newArray;
-    }
-    return _area_array;
-}
+//- (NSArray *)area_array {
+//    if (![[DDUserSingleton shareInstance].city isEqualToString:[DDUserDefault objectForKey:@"currentCity"]] && [DDUserSingleton shareInstance].city && ![[DDUserSingleton shareInstance].city isEqualToString:@""]) {
+//        _area_array = nil;
+//        [DDUserDefault setObject:[DDUserSingleton shareInstance].city forKey:@"currentCity"];
+//    }
+//    if (!_area_array) {
+//        NSData *JSONData = [NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"region_dumps" ofType:@"json"]];
+//        NSArray *dataArray = [NSJSONSerialization JSONObjectWithData:JSONData options:NSJSONReadingAllowFragments error:nil];
+//        NSMutableArray *newArray = [NSMutableArray array];
+//        for (NSDictionary *dict in dataArray) {
+//            NSArray *citiesArray = dict[@"cities"];
+//            if (citiesArray.count > 0 ) {
+//                NSDictionary *citiesDict = citiesArray[0];
+//                NSString *cityString = [NSString string];
+//                if (![[DDUserSingleton shareInstance].city isEqualToString:@""] && [DDUserSingleton shareInstance].city) {
+//                    cityString = citiesDict[@"name"];
+//                } else if ([DDUserDefault objectForKey:@"currentCity"]) {
+//                    cityString = [DDUserDefault objectForKey:@"currentCity"];
+//                } else {
+//                    // 在数据为空的时候，设置默认当前城市
+//                    cityString = @"北京市";
+//                }
+//                if ([cityString isEqualToString:citiesDict[@"name"]]) {
+//                    NSArray *countiesArray = citiesDict[@"counties"];
+//                    for (NSDictionary *areaDic in countiesArray) {
+//                        [newArray addObject:areaDic[@"name"]];
+//                        [self.region_array addObject:areaDic];
+//                    }
+//                }
+//            }
+//        }
+//        _area_array = newArray;
+//    }
+//    return _area_array;
+//}
 
-- (NSMutableArray *)region_array {
-    if (!_region_array) {
-        _region_array = [NSMutableArray new];
-    }
-    return _region_array;
+//- (NSMutableArray *)region_array {
+//    if (!_region_array) {
+//        _region_array = [NSMutableArray new];
+//    }
+//    return _region_array;
+//}
+
+- (void)setDataArray:(NSArray *)dataArray {
+    
+    _dataArray = dataArray;
+    self.area_array = dataArray;
+    self.circles_array = nil;
+    [self.father_tableView reloadData];
+    [self.child_tableView reloadData];
 }
 
 @end

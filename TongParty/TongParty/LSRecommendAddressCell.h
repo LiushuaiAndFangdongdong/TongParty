@@ -9,5 +9,5 @@
 #import "DDBaseTableViewCell.h"
 
 @interface LSRecommendAddressCell : DDBaseTableViewCell
-
+- (void)updateValueWith:(id)model;
 @end

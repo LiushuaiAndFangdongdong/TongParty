@@ -90,9 +90,31 @@
 /**手机号绑定*/
 + (void)bindMobile:(NSString *)mobile code:(NSString *)code block:(void(^)(NSDictionary *dict))dict failure:(void(^)())failure;
 
-
+/**获取礼物字典*/
++ (void)getGiftsDicblock:(void(^)(NSDictionary *dict))dict failure:(void(^)())failure;
 #pragma mark  ------------- 桌子 -- - ----
 
+
+/**
+ 获取桌子地图
+
+ @param range 范围
+ @param activity 活动ID json数组
+ @param begin_time 开始时间
+ @param end_time 结束时间
+ @param text 搜索文本
+ @param dict 成功
+ @param failure 失败
+ */
++ (void)getMapTablesWithRange:(NSString *)range
+                     activity:(NSArray *)activity
+                   begin_time:(NSString*)begin_time
+                     end_time:(NSString*)end_time
+                         text:(NSString *)text
+                          lon:(NSString *)lon
+                          lat:(NSString *)lat
+                        block:(void(^)(NSDictionary *dict))dict
+                      failure:(void(^)())failure;
 /**
  获取地址标签
  
@@ -100,6 +122,52 @@
  @param failure 失败
  */
 + (void)getAddrLabelsblock:(void(^)(NSDictionary *dict))dict failure:(void(^)())failure;
+
+/**
+ 获取商户列表
+
+ @param content 内容 （可选）
+ @param price_star 人均下线 （可选）
+ @param price_end 人均上线 （可选）
+ @param position_lat 经度范围 （可选）
+ @param position_lon 纬度范围 （可选）
+ @param star_time 开始时间 （可选）
+ @param end_time 结束时间 （可选）
+ @param dict 成功
+ @param failure 失败
+ */
++ (void)getShopListsWithContent:(NSString *)content
+                     price_star:(NSString *)price_star
+                      price_end:(NSString *)price_end
+                   position_lat:(NSString *)position_lat
+                   position_lon:(NSString *)position_lon
+                      star_time:(NSString *)star_time
+                       end_time:(NSString *)end_time
+                          block:(void(^)(NSDictionary *dict))dict
+                        failure:(void(^)())failure;
+
+
+/**
+ 获取商家详情
+
+ @param sid 商家id
+ @param dict 成功
+ @param failure 失败
+ */
++ (void)getShopDetailWithSid:(NSString *)sid
+                       block:(void(^)(NSDictionary *dict))dict
+                     failure:(void(^)())failure;
+
+/**
+ 搜索商户
+
+ @param text 搜索文本
+ @param dict 成功
+ @param failure 失败
+ */
++ (void)searchShopWithText:(NSString *)text
+                       block:(void(^)(NSDictionary *dict))dict
+                     failure:(void(^)())failure;
 
 /**创建桌子
  * @token  用户token
@@ -118,6 +186,7 @@
  * @image     桌子图片
  */
 + (void)createDeskWithToken:(NSString *)token
+                        sid:(NSString *)sid
                    activity:(NSString *)activity
                      custom:(NSString *)custom
                       title:(NSString *)title
@@ -567,6 +636,63 @@
 + (void)getActivitiesListblock:(void(^)(NSDictionary *dict))dict
                        failure:(void(^)())failure;
 
+/**
+ 搜索活动
+
+ @param text 搜索文本
+ @param dict 成功
+ @param failure 失败
+ */
++ (void)searchActivityByText:(NSString *)text
+                       block:(void(^)(NSDictionary *dict))dict
+                       failure:(void(^)())failure;
+
+/**
+ 自定义活动
+
+ @param name 活动名称
+ @param dict 成功
+ @param failure 失败
+ */
++ (void)customActivitieWith:(NSString *)name
+                      block:(void(^)(NSDictionary *dict))dict
+                       failure:(void(^)())failure;
+
+
+/**
+ 获取行政区
+
+ @param pid 当前地址的id
+ @param dict 成功
+ @param failure 失败
+ */
++ (void)getAdministrativeRegionWith:(NSString *)pid
+                              block:(void(^)(NSDictionary *dict))dict
+                            failure:(void(^)())failure;
+
+/**
+ 获取行政区子级
+ 
+ @param pid 当前地址的id
+ @param dict 成功
+ @param failure 失败
+ */
++ (void)getAdministrativeChildRegionWith:(NSString *)pid
+                              block:(void(^)(NSDictionary *dict))dict
+                            failure:(void(^)())failure;
+
+
+/**
+ 获取地铁字典
+
+ @param aid 当前市区id
+ @param dict 成功
+ @param failure 失败
+ */
++ (void)getSubwayDataWithAid:(NSString *)aid
+                       block:(void(^)(NSDictionary *dict))dict
+                     failure:(void(^)())failure;
+
 #pragma mark  ------------- 地址 -- - ----
 
 /**添加地址*/
@@ -583,6 +709,20 @@
 
 /**设置默认地址*/
 + (void)setDefaultAddressWithToken:(NSString *)token aid:(NSString *)aid  block:(void(^)(NSDictionary *dict))dict failure:(void(^)())failure;
+
+
+/**添加地址标签*/
++ (void)addCustomAddressLabelWithName:(NSString *)name block:(void(^)(NSDictionary *dict))dict failure:(void(^)())failure;
+
+
+/**
+ 获取附近内容
+ 
+ @param lat 纬度
+ @param lon 经度
+ */
+
++ (void)getNearByDiscoverWithLat:(NSString *)lat lon:(NSString *)lon block:(void(^)(NSDictionary *dict))dict failure:(void(^)())failure;
 
 
 

@@ -35,6 +35,7 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:NO animated:YES];
+    self.navigationController.navigationBar.subviews[0].subviews[0].hidden = YES;
 
     _isHidden=YES;
     //================第一种通过注册通知的方法
