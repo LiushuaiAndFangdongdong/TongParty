@@ -31,7 +31,9 @@
 
 - (void)loadData {
     [super loadData];
+    [MBProgressHUD showLoading:self.contentSortView];
     [DDTJHttpRequest getActivitiesListblock:^(NSDictionary *dict) {
+        [MBProgressHUD hideAllHUDsInView:self.contentSortView];
         if (dict) {
             self.contentSortView.dataDict = [[NSMutableDictionary alloc] initWithDictionary:dict];
         }

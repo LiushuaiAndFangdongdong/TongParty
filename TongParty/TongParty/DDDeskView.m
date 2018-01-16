@@ -40,17 +40,24 @@
 //桌子的高度(kScreenWidth - 100)*1.7 减去向上向下的偏移25+20 再减去标题牌的高度(kScreenWidth-100)*227/443*114/227 即为6项数据的高度 /6
 //标题牌宽高之比：227/114    标题牌占桌子的宽度之比：227/443
 @implementation DDDeskView
+
 - (instancetype)init {
     self = [super init];
     if (self) {
-//        [self initViews];
+        [self initViews];
     }
     return self;
 }
 
--(void)layoutSubviews{
-    [super layoutSubviews];
-    
+- (instancetype)initWithFrame:(CGRect)frame {
+    self = [super initWithFrame:frame];
+    if (self) {
+        [self initViews];
+    }
+    return self;
+}
+- (void)initViews{
+   
     self.bgView = [[UIImageView alloc] init];
     [self addSubview:self.bgView];
     self.signBoard = [[UIImageView alloc] init];
@@ -91,13 +98,18 @@
     [self.bgView addSubview:self.descrKey];
     self.descrValue = [[UILabel alloc] init];
     [self.bgView addSubview:self.descrValue];
-    
+
+}
+
+
+-(void)layoutSubviews{
+    [super layoutSubviews];
 
     [self.bgView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.mas_equalTo(0);
     }];
     self.bgView.image = kImage(@"desk_bg");
-    
+
     [self.signBoard mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(25);
         make.centerX.mas_equalTo(self);
@@ -105,7 +117,7 @@
         make.height.mas_equalTo(kSignBoardHeight);
     }];
     self.signBoard.image = kImage(@"desk_signBoard");
-    
+
 
     [self.titleLbl mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.and.right.mas_equalTo(0);
@@ -114,7 +126,7 @@
     }];
 //    [self createLabel:self.titleLbl text:@"狼人杀" TextColor:kWhiteColor font:kBoldFont(18) textAlignment:NSTextAlignmentCenter];
   //
-    
+
 
     [self.startTimeKey mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self.signBoard.mas_bottom);
@@ -122,7 +134,7 @@
         make.height.mas_equalTo(kDataItemHeight/2);
     }];
     [self createLabel:self.startTimeKey text:@"开始时间" TextColor:kBlackColor font:kFont(12) textAlignment:NSTextAlignmentCenter];
-    
+
 
     [self.startTimeVlaue mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self.startTimeKey.mas_bottom);
@@ -130,7 +142,7 @@
         make.height.mas_equalTo(kDataItemHeight/2);
     }];
 //     [self createLabel:self.startTimeVlaue text:@"10-20 20：08" TextColor:kBlackColor font:kFont(13) textAlignment:NSTextAlignmentCenter];
-    
+
 
     [self.lineView0 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self.startTimeVlaue.mas_bottom);
@@ -139,7 +151,7 @@
         make.height.mas_equalTo(kSeLineHeight);
     }];
     self.lineView0.image = kImage(@"desk_itemsLine_red1");
-    
+
 
     [self.countDownKey mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self.lineView0.mas_bottom);
@@ -147,7 +159,7 @@
         make.height.mas_equalTo(kDataItemHeight/2);
     }];
      [self createLabel:self.countDownKey text:@"倒计时" TextColor:kBlackColor font:kFont(12) textAlignment:NSTextAlignmentCenter];
-    
+
 #pragma mark - 倒计时
 
     [self.countDownValue mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -159,7 +171,7 @@
 //    self.countDownValue.hour = 2;
 //    self.countDownValue.minute = 11;
 //    self.countDownValue.second = 30;
-    
+
 
     [self.lineView1 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self.countDownValue.mas_bottom);
@@ -168,7 +180,7 @@
         make.height.mas_equalTo(kSeLineHeight);
     }];
     self.lineView1.image = kImage(@"desk_itemsLine_green");
-    
+
 
     [self.numbersPeopleKey mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self.lineView1.mas_bottom);
@@ -176,7 +188,7 @@
         make.height.mas_equalTo(kDataItemHeight/2);
     }];
    [self createLabel:self.numbersPeopleKey text:@"活动人数" TextColor:kBlackColor font:kFont(12) textAlignment:NSTextAlignmentCenter];
-    
+
 
     [self.numbersPeopleValue mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self.numbersPeopleKey.mas_bottom);
@@ -192,7 +204,7 @@
         make.height.mas_equalTo(kSeLineHeight);
     }];
     self.lineView2.image = kImage(@"desk_itemsLine_green1");
-    
+
 
     [self.averagePriceKey mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self.lineView2.mas_bottom);
@@ -200,7 +212,7 @@
         make.height.mas_equalTo(kDataItemHeight/2);
     }];
        [self createLabel:self.averagePriceKey text:@"人均价格" TextColor:kBlackColor font:kFont(12) textAlignment:NSTextAlignmentCenter];
-    
+
 
     [self.averagePriceValue mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self.averagePriceKey.mas_bottom);
@@ -208,7 +220,7 @@
         make.height.mas_equalTo(kDataItemHeight/2);
     }];
 //     [self createLabel:self.averagePriceValue text:@"16元/人" TextColor:kBlackColor font:kFont(13) textAlignment:NSTextAlignmentCenter];
-    
+
 
     [self.lineView3 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self.averagePriceValue.mas_bottom);
@@ -217,7 +229,7 @@
         make.height.mas_equalTo(kSeLineHeight);
     }];
     self.lineView3.image = kImage(@"desk_itemsLine_blue");
-    
+
 
     [self.addressKey mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self.lineView3.mas_bottom);
@@ -225,9 +237,9 @@
         make.height.mas_equalTo(kDataItemHeight/2);
     }];
      [self createLabel:self.addressKey text:@"地址" TextColor:kBlackColor font:kFont(12) textAlignment:NSTextAlignmentCenter];
-    
 
-    
+
+
     [self.addressValue mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self.addressKey.mas_bottom);
         make.left.and.right.mas_equalTo(0);
@@ -235,7 +247,7 @@
     }];
     self.addressValue.numberOfLines = 2;
 //      [self createLabel:self.addressValue text:@"北京市海淀区阜成路北8号楼" TextColor:kBlackColor font:kFont(11) textAlignment:NSTextAlignmentCenter];
-    
+
 
     [self.lineView4 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self.addressValue.mas_bottom);
@@ -244,9 +256,7 @@
         make.height.mas_equalTo(kSeLineHeight);
     }];
     self.lineView4.image = kImage(@"desk_itemsLine_red");
-    
 
-    
     [self.descrKey mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self.lineView4.mas_bottom);
         make.left.and.right.mas_equalTo(0);
@@ -290,7 +300,7 @@
     NSDate *end = [endDate dateByAddingTimeInterval: endInterval];
     NSUInteger voteCountTime = ([end timeIntervalSinceDate:localDate]) / 3600 / 24;
     
-    NSString *timeStr = [NSString stringWithFormat:@"%d", voteCountTime];
+    NSString *timeStr = [NSString stringWithFormat:@"%lu", (unsigned long)voteCountTime];
     
     return timeStr;
 }
@@ -309,7 +319,7 @@
     
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm"];
-    NSDate *begin_timeDate = [dateFormatter dateFromString:model.begin_time];
+//    NSDate *begin_timeDate = [dateFormatter dateFromString:model.begin_time];
     
     
    [self createLabel:self.numbersPeopleValue text:model.person_num TextColor:kBlackColor font:kFont(13) textAlignment:NSTextAlignmentCenter];

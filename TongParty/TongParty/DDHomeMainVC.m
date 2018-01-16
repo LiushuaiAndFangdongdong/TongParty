@@ -15,7 +15,8 @@
 #import "DDMessageViewController.h"  //消息vc
 #import "LSHomeQRcodeVC.h"  //扫描
 #import "DDLoginViewController.h"
-@interface DDHomeMainVC ()<UISearchBarDelegate,PYSearchViewControllerDelegate,CYTabBarDelegate>
+#import <CoreLocation/CoreLocation.h>
+@interface DDHomeMainVC ()<UISearchBarDelegate,PYSearchViewControllerDelegate,CYTabBarDelegate,CLLocationManagerDelegate,UIAlertViewDelegate>
 
 @property (nonatomic, strong) UIScrollView *scrollView;
 @property (nonatomic, strong) UIView   *view_title;
@@ -25,7 +26,7 @@
 @property (nonatomic, strong) DDLoginManager *loginManager;
 @property (nonatomic, strong) UIButton *btn_map;
 @property (nonatomic, strong) UIButton *btn_list;
-
+@property (nonatomic, strong) UIAlertView *alertView;
 @end
 
 @implementation DDHomeMainVC
@@ -96,20 +97,65 @@
     return _loginManager;
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    if (![DDUserDefault objectForKey:@"token"]){
+        [self toLogin];
+    } else {
+        // 判断是否开启位置权限
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [self modelTransform:self.btn_map];
+        });
+    }
+}
+
+// 登录
+- (void)toLogin {
+    WeakSelf(weakSelf);
+    DDLoginViewController *loginVC = [[DDLoginViewController alloc] init];
+    loginVC.islogSuccess = ^(BOOL isSuccess) {
+        if (isSuccess) {
+            [weakSelf isOpenLocation];
+        }
+    };
+    [self.navigationController pushViewController:loginVC animated:YES];
+}
+
+- (void)isOpenLocation {
+    if([CLLocationManager authorizationStatus] == kCLAuthorizationStatusDenied) {
+        [self.alertView show];
+    } else {
+        
+    }
+}
+
+- (UIAlertView *)alertView {
+    if (!_alertView) {
+        _alertView = [[UIAlertView alloc]initWithTitle:@"打开[定位服务]来允许桐聚确定您的位置" message:@"请在系统设置中开启定位服务(设置>隐私>定位服务>开启)" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"设置" , nil];
+        _alertView.delegate = self;
+    }
+    return _alertView;
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (buttonIndex == 1) {
+        //跳转到定位权限页面
+        NSURL *url = [NSURL URLWithString:UIApplicationOpenSettingsURLString];
+        if( [[UIApplication sharedApplication]canOpenURL:url] ) {
+            [[UIApplication sharedApplication] openURL:url];
+        }
+    }
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self customNavi];
     [self initWithScrollView];
-    CYTABBARCONTROLLER.tabbar.delegate = self;
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [self modelTransform:self.btn_map];
-    });
-    if (![DDUserDefault objectForKey:@"token"]){
-        [self toLogin];
-    }
+    //CYTABBARCONTROLLER.tabbar.delegate = self;
     self.tabBarItem.badgeValue = @"remind";
 }
 -(void)initWithScrollView{
+    
     self.view.backgroundColor = kWhiteColor;
     [self.view addSubview:self.scrollView];
     [self addChildViewController:self.mapVc];
@@ -118,11 +164,6 @@
     [self.scrollView addSubview:self.listVc.view];
 }
 
-// 登录
-- (void)toLogin {
-    DDLoginViewController *loginVC = [[DDLoginViewController alloc] init];
-    [self.navigationController pushViewController:loginVC animated:YES];
-}
 
 -(void)customNavi{
     
@@ -151,33 +192,32 @@
     //右边items
     self.navigationItem.rightBarButtonItems = [self customVariousButtonForNavigationBarWithFirstAction:@selector(scanAction) firstImage:@"navi_scan" firstIsRedPoint:NO firstPointValue:nil secondAction:@selector(searchAction) secondImage:@"navi_search" secondIsRedPoint:NO secondPointValue:nil];
 }
-#pragma mark - CYTabBarDelegate
-//中间按钮点击
-- (void)tabbar:(CYTabBar *)tabbar clickForCenterButton:(CYCenterButton *)centerButton{
-    [PlusAnimate standardPublishAnimateWithView:centerButton];
-}
-//是否允许切换
-- (BOOL)tabBar:(CYTabBar *)tabBar willSelectIndex:(NSInteger)index{
-    NSLog(@"将要切换到---> %ld",index);
-    return YES;
-}
-//通知切换的下标
-- (void)tabBar:(CYTabBar *)tabBar didSelectIndex:(NSInteger)index{
-    NSLog(@"切换到---> %ld",index);
-}
-
-#pragma mark - PYSearchViewControllerDelegate
-- (void)searchViewController:(PYSearchViewController *)searchViewController searchTextDidChange:(UISearchBar *)seachBar searchText:(NSString *)searchText
-{
+//#pragma mark - CYTabBarDelegate
+////中间按钮点击
+//- (void)tabbar:(CYTabBar *)tabbar clickForCenterButton:(CYCenterButton *)centerButton{
+//    [PlusAnimate standardPublishAnimateWithView:centerButton];
+//}
+////是否允许切换
+//- (BOOL)tabBar:(CYTabBar *)tabBar willSelectIndex:(NSInteger)index{
+//    NSLog(@"将要切换到---> %ld",index);
+//    return YES;
+//}
+////通知切换的下标
+//- (void)tabBar:(CYTabBar *)tabBar didSelectIndex:(NSInteger)index{
+//    NSLog(@"切换到---> %ld",index);
+//}
+//
+//#pragma mark - PYSearchViewControllerDelegate
+- (void)searchViewController:(PYSearchViewController *)searchViewController searchTextDidChange:(UISearchBar *)seachBar searchText:(NSString *)searchText {
     if (searchText.length) {
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.25 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            NSMutableArray *searchSuggestionsM = [NSMutableArray array];
-            for (int i = 0; i < arc4random_uniform(5) + 10; i++) {
-                NSString *searchSuggestion = [NSString stringWithFormat:@"Search suggestion %d", i];
-                [searchSuggestionsM addObject:searchSuggestion];
-            }
-            searchViewController.searchSuggestions = searchSuggestionsM;
-        });
+//        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.25 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//            NSMutableArray *searchSuggestionsM = [NSMutableArray array];
+//            for (int i = 0; i < arc4random_uniform(5) + 10; i++) {
+//                NSString *searchSuggestion = [NSString stringWithFormat:@"Search suggestion %d", i];
+//                [searchSuggestionsM addObject:searchSuggestion];
+//            }
+//            searchViewController.searchSuggestions = searchSuggestionsM;
+       // });
     }
 }
 
@@ -202,7 +242,12 @@
     WeakSelf(weakSelf);
     NSArray *hotSeaches = @[@"狼人杀", @"三国杀", @"万纸牌", @"麻将", @"斗地主", @"跑团", @"唱K", @"夜店", @"撸串儿", @"咖啡厅", @"JYClub", @"吃鸡", @"小龙虾", @"桌游"];
     PYSearchViewController *searchViewController = [PYSearchViewController searchViewControllerWithHotSearches:hotSeaches searchBarPlaceholder: @"搜索活动" didSearchBlock:^(PYSearchViewController *searchViewController, UISearchBar *searchBar, NSString *searchText) {
-        [weakSelf.mapVc searchActivitiesByText:searchText];
+        if (weakSelf.scrollView.contentOffset.x == kScreenWidth) {
+            [weakSelf.listVc searchActivitiesByText:searchText];
+        } else {
+           [weakSelf.mapVc searchActivitiesByText:searchText];
+        }
+        
         searchViewController.searchHistoryStyle = PYHotSearchStyleDefault;
         [searchViewController dismissViewControllerAnimated:YES completion:nil];
     }];
@@ -214,7 +259,7 @@
 
 //地图和列表模式切换
 -(void)modelTransform:(UIButton *)sender {
-    
+    [self isOpenLocation];
     for (id obj in [_view_title subviews]) {
         if ([obj isKindOfClass:[UIButton class]]) {
             UIButton *btn = (UIButton *)obj;

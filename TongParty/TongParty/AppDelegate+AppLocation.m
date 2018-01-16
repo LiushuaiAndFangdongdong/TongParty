@@ -50,26 +50,33 @@ static const NSString *locationManagerKey = @"locationManagerKey";
     self.locationManager.locationTimeout = 10;
     // 逆地理请求超时时间，最低2s，此处设置为2s
     self.locationManager.reGeocodeTimeout = 10;
-    
+    self.locationManager.delegate = self;
     [self.locationManager setAllowsBackgroundLocationUpdates:NO];
+
 
     //3.创建定位管理者
     //带逆地理（返回坐标和地址信息。将下面代码中的 YES改成NO,则不会返回地址信息。
-    // MBProgressHUD *hud = [MBProgressHUD showMessage:@"正在定位"];
+//     MBProgressHUD *hud = [MBProgressHUD showMessage:@"正在定位"];
     [self.locationManager requestLocationWithReGeocode:YES completionBlock:^(CLLocation *location, AMapLocationReGeocode *regeocode, NSError *error) {
-
-        if (error){
-            if (error.code == AMapLocationErrorLocateFailed){
-                self.locationBlock(nil, nil, NO, nil); return;
-            }
-        }
-        
+//        if (error){
+//            if (error.code == AMapLocationErrorLocateFailed){
+//                self.locationBlock(nil, nil, NO, nil); return;
+//            }
+//        }
         [DDUserSingleton shareInstance].latitude = [NSString stringWithFormat:@"%f",location.coordinate.latitude];
         [DDUserSingleton shareInstance].longitude = [NSString stringWithFormat:@"%f",location.coordinate.longitude];
+        [DDUserSingleton shareInstance].city = regeocode.city;
+        [DDUserDefault setObject:regeocode.city forKey:@"current_city"];
+        [self.locationManager startUpdatingLocation];
         //逆向编码、传值(定位成功)
         NSLog(@"位置：%@",regeocode);
        // if(regeocode){ self.locationBlock(location, regeocode, YES, nil); }
     }];
+}
+
+- (void)amapLocationManager:(AMapLocationManager *)manager didUpdateLocation:(CLLocation *)location {
+    [DDUserSingleton shareInstance].latitude = [NSString stringWithFormat:@"%f",location.coordinate.latitude];
+    [DDUserSingleton shareInstance].longitude = [NSString stringWithFormat:@"%f",location.coordinate.longitude];
 }
 
 //接收block

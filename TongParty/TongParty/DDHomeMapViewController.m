@@ -17,18 +17,19 @@
 #import "LSMapTableEntity.h"
 #import "LSActivityEntity.h"
 #import "DDDeskShowViewController.h"
+#import "LSMACustomCalloutView.h"
 @interface DDHomeMapViewController ()<MAMapViewDelegate> {
     CLLocationCoordinate2D oldCoordinate;
 }
-@property (nonatomic, strong)UIImageView *iv_mark;
-@property (nonatomic, strong)MAMapView *mapView;
-@property (nonatomic, strong)LSSortingView *sortingView;
-@property (nonatomic, strong)LSContenSortVC *contentsortVc;
-@property (nonatomic, strong)LSRegionDumpsVC *regionDumpsVc;
-@property (nonatomic, strong)LSHomwTimeSortVC *timesortVc;
-@property (nonatomic, strong)NSArray *dataArray;
-@property (nonatomic, strong)MAAnnotationView *userLocationAnnotationView;
-@property (nonatomic, strong)UIButton *btn_localSelf;
+@property (nonatomic, strong) UIImageView *iv_mark;
+@property (nonatomic, strong) MAMapView *mapView;
+@property (nonatomic, strong) LSSortingView *sortingView;
+@property (nonatomic, strong) LSContenSortVC *contentsortVc;
+@property (nonatomic, strong) LSRegionDumpsVC *regionDumpsVc;
+@property (nonatomic, strong) LSHomwTimeSortVC *timesortVc;
+@property (nonatomic, strong) NSArray *dataArray;
+@property (nonatomic, strong) MAAnnotationView *userLocationAnnotationView;
+@property (nonatomic, strong) UIButton *btn_localSelf;
 @end
 
 @implementation DDHomeMapViewController
@@ -46,7 +47,6 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
 }
-
 
 #pragma mark - 懒加载
 - (UIButton *)btn_localSelf {
@@ -105,9 +105,9 @@
                 [idArr addObject:at.id];
             }
             if (idArr.count == 0) {
-                [weakSelf updateDataWith:markCoordinate withActivities:nil text:nil begin_time:nil end_time:nil];
+                [weakSelf updateDataWith:markCoordinate withRange:nil activities:nil text:nil begin_time:nil end_time:nil];
             } else {
-                [weakSelf updateDataWith:markCoordinate withActivities:idArr text:nil begin_time:nil end_time:nil];
+                [weakSelf updateDataWith:markCoordinate withRange:nil activities:idArr text:nil begin_time:nil end_time:nil];
             }
             weakSelf.contentsortVc.view.hidden = YES;
             [weakSelf.sortingView clean];
@@ -130,7 +130,12 @@
             markCoordinate.longitude = lon.floatValue;
             // 在进行地理搜索时将地图中心点移至目标点并显示周边数据
             weakSelf.mapView.centerCoordinate = markCoordinate;
-            [weakSelf updateDataWith:markCoordinate withActivities:nil text:nil begin_time:nil end_time:nil];
+            [weakSelf updateDataWith:markCoordinate withRange:nil activities:nil text:nil begin_time:nil end_time:nil];
+            weakSelf.regionDumpsVc.view.hidden = YES;
+            [weakSelf.sortingView clean];
+        };
+        _regionDumpsVc.selectRangeSort = ^(NSString *range) {
+            [weakSelf updateDataWith:weakSelf.mapView.centerCoordinate withRange:range activities:nil text:nil begin_time:nil end_time:nil];
             weakSelf.regionDumpsVc.view.hidden = YES;
             [weakSelf.sortingView clean];
         };
@@ -148,7 +153,7 @@
         _timesortVc = [[LSHomwTimeSortVC alloc] init];
         _timesortVc.confirmSort = ^(NSString *begin_time, NSString *end_time) {
             CLLocationCoordinate2D markCoordinate = [weakSelf.mapView convertPoint:weakSelf.iv_mark.frame.origin toCoordinateFromView:weakSelf.view];
-            [weakSelf updateDataWith:markCoordinate withActivities:nil text:nil begin_time:begin_time end_time:end_time];
+            [weakSelf updateDataWith:markCoordinate withRange:nil activities:nil text:nil begin_time:begin_time end_time:end_time];
             weakSelf.timesortVc.view.hidden = YES;
             [weakSelf.sortingView clean];
         };
@@ -199,7 +204,7 @@
     oldCoordinate = coor;
     dispatch_queue_t queue= dispatch_queue_create("loadMapInfo", DISPATCH_QUEUE_CONCURRENT);
     dispatch_async(queue, ^{
-        [DDTJHttpRequest getMapTablesWithRange:@"1500" activity:nil begin_time:nil end_time:nil text:nil lon:[NSString stringWithFormat:@"%lf",oldCoordinate.longitude] lat:[NSString stringWithFormat:@"%lf",oldCoordinate.latitude] block:^(NSDictionary *dict) {
+        [DDTJHttpRequest getMapTablesWithRange:nil activity:nil begin_time:nil end_time:nil text:nil lon:[NSString stringWithFormat:@"%lf",oldCoordinate.longitude] lat:[NSString stringWithFormat:@"%lf",oldCoordinate.latitude] block:^(NSDictionary *dict) {
             dispatch_async(dispatch_get_main_queue(), ^(){
                 self.dataArray = [LSMapTableEntity mj_objectArrayWithKeyValuesArray:dict];
                 [self addAnnotationsToMapView:self.mapView withArray:self.dataArray];
@@ -220,7 +225,6 @@
         CLLocationDegrees longitude = entity.longitude.doubleValue;
         annotation.coordinate = CLLocationCoordinate2DMake(latitude,longitude);
         annotation.entity = entity;
-        annotation.title = @" "; //
         [annotations addObject:annotation];
     }
     [self updateMapViewAnnotationsWithAnnotations:annotations];
@@ -263,19 +267,16 @@
         self.userLocationAnnotationView = annotationView;
         return annotationView;
     }
-    NSString* kPin = @"pin";
+    static NSString* kPin = @"pin";
     DDMAAnnotationView* pinView = (DDMAAnnotationView *)
-    [mapView dequeueReusableAnnotationViewWithIdentifier:kPin];
-    //判断是否是自己的定位气泡，如果是自己的定位气泡，不做任何设置，显示为蓝点，如果不是自己的定位气泡，比如大头针就会进入
+    [mapView dequeueReusableAnnotationViewWithIdentifier:kPin];\
     if ([annotation isKindOfClass:[LSMAPointAnnotation class]]) {
         if (!pinView) {
             pinView = [[DDMAAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:kPin];
             //[pinView setDraggable:YES];
-            pinView.canShowCallout = YES;
-            pinView.enabled = YES;
-            pinView.userInteractionEnabled = YES;
+            pinView.canShowCallout = NO;
+            pinView.calloutOffset = CGPointMake(0, -5);
         }
-        //MAPinAnnotationView
         LSMAPointAnnotation *an = (LSMAPointAnnotation *)annotation;
         pinView.onClicked = ^{
             DDDeskShowViewController *deskShowVC = [[DDDeskShowViewController alloc] init];
@@ -284,7 +285,8 @@
             deskShowVC.tmpModel = model;
             [weakSelf.navigationController pushViewController:deskShowVC animated:YES];
         };
-        [pinView updateValueWith:an.entity];
+        [pinView updateValueWith:an.entity onMapView:self.mapView];
+        
         [self addMarkAnimationOn:pinView.layer];
     }
     return pinView;
@@ -295,12 +297,16 @@
     CLLocationCoordinate2D markCoordinate = [self.mapView convertPoint:_iv_mark.frame.origin toCoordinateFromView:self.view];
     double distance = [self distanceBetweenOrderBy:markCoordinate.latitude :oldCoordinate.latitude :markCoordinate.longitude :oldCoordinate.longitude];
     if (distance > 1000) {
-        [self updateDataWith:markCoordinate withActivities:nil text:nil begin_time:nil end_time:nil];
+        [self updateDataWith:markCoordinate withRange:nil activities:nil text:nil begin_time:nil end_time:nil];
         [self addMarkAnimationOn:self.iv_mark.layer];
     }
 }
 
 - (void)mapView:(MAMapView *)mapView didUpdateUserLocation:(MAUserLocation *)userLocation updatingLocation:(BOOL)updatingLocation {
+    
+    [DDUserSingleton shareInstance].latitude = [NSString stringWithFormat:@"%f",userLocation.coordinate.latitude];
+    [DDUserSingleton shareInstance].longitude = [NSString stringWithFormat:@"%f",userLocation.coordinate.longitude];
+    
     // 让定位箭头随着方向旋转
     if (!updatingLocation && self.userLocationAnnotationView != nil) {
         [UIView animateWithDuration:0.1 animations:^{
@@ -311,17 +317,35 @@
 }
 
 // 点击大头针事件
-//- (void)mapView:(MAMapView *)mapView didSelectAnnotationView:(MAAnnotationView *)view {
-//
-//    if ([view.annotation isKindOfClass:[LSMAPointAnnotation class]]) {
-//        LSMAPointAnnotation *annotation = (LSMAPointAnnotation *)view.annotation;
-//        DDDeskShowViewController *deskShowVC = [[DDDeskShowViewController alloc] init];
-//        DDTableModel *model = [DDTableModel new];
-//        model.id = annotation.entity.id;
-//        deskShowVC.tmpModel = model;
-//        [self.navigationController pushViewController:deskShowVC animated:YES];
-//    }
-//}
+#define kCalloutViewMargin          -8
+- (void)mapView:(MAMapView *)mapView didSelectAnnotationView:(MAAnnotationView *)view {
+
+    /* Adjust the map center in order to show the callout view completely. */
+    if ([view isKindOfClass:[DDMAAnnotationView class]]) {
+        DDMAAnnotationView *cusView = (DDMAAnnotationView *)view;
+        CGRect frame = [cusView convertRect:cusView.calloutView.frame toView:self.mapView];
+        
+        frame = UIEdgeInsetsInsetRect(frame, UIEdgeInsetsMake(kCalloutViewMargin, kCalloutViewMargin, kCalloutViewMargin, kCalloutViewMargin));
+        
+        if (!CGRectContainsRect(self.mapView.frame, frame)) {
+            CGSize offset = [self offsetToContainRect:frame inRect:self.mapView.frame];
+            
+            CGPoint theCenter = self.mapView.center;
+            theCenter = CGPointMake(theCenter.x - offset.width, theCenter.y - offset.height);
+            CLLocationCoordinate2D coordinate = [self.mapView convertPoint:theCenter toCoordinateFromView:self.mapView];
+            [self.mapView setCenterCoordinate:coordinate animated:YES];
+        }
+        
+    }
+}
+
+- (CGSize)offsetToContainRect:(CGRect)innerRect inRect:(CGRect)outerRect {
+    CGFloat nudgeRight = fmaxf(0, CGRectGetMinX(outerRect) - (CGRectGetMinX(innerRect)));
+    CGFloat nudgeLeft = fminf(0, CGRectGetMaxX(outerRect) - (CGRectGetMaxX(innerRect)));
+    CGFloat nudgeTop = fmaxf(0, CGRectGetMinY(outerRect) - (CGRectGetMinY(innerRect)));
+    CGFloat nudgeBottom = fminf(0, CGRectGetMaxY(outerRect) - (CGRectGetMaxY(innerRect)));
+    return CGSizeMake(nudgeLeft ?: nudgeRight, nudgeTop ?: nudgeBottom);
+}
 
 #pragma mark - tools
 // 给棒棒糖加动画
@@ -362,12 +386,12 @@
 
 #pragma mark - actions
 
-- (void)updateDataWith:(CLLocationCoordinate2D)coorr withActivities:(NSArray *)activities text:(NSString *)text begin_time:(NSString *)begin_time end_time:(NSString *)end_time{
+- (void)updateDataWith:(CLLocationCoordinate2D)coorr withRange:(NSString *)range activities:(NSArray *)activities text:(NSString *)text begin_time:(NSString *)begin_time end_time:(NSString *)end_time{
     oldCoordinate = coorr;
     //开启异步并行线程请求用户详情数据
     dispatch_queue_t queue= dispatch_queue_create("loadMapInfo", DISPATCH_QUEUE_CONCURRENT);
     dispatch_async(queue, ^{
-        [DDTJHttpRequest getMapTablesWithRange:@"1500" activity:activities begin_time:begin_time end_time:end_time text:text lon:[NSString stringWithFormat:@"%lf",oldCoordinate.longitude] lat:[NSString stringWithFormat:@"%lf",oldCoordinate.latitude] block:^(NSDictionary *dict) {
+        [DDTJHttpRequest getMapTablesWithRange:range activity:activities begin_time:begin_time end_time:end_time text:text lon:[NSString stringWithFormat:@"%lf",oldCoordinate.longitude] lat:[NSString stringWithFormat:@"%lf",oldCoordinate.latitude] block:^(NSDictionary *dict) {
             dispatch_async(dispatch_get_main_queue(), ^(){
                 self.dataArray = [LSMapTableEntity mj_objectArrayWithKeyValuesArray:dict];
                 [self addAnnotationsToMapView:self.mapView withArray:self.dataArray];
@@ -380,13 +404,13 @@
 - (void)backSelfLocation {
     [self.mapView setCenterCoordinate:_mapView.userLocation.coordinate animated:YES];
     CLLocationCoordinate2D markCoordinate = [self.mapView convertPoint:self.iv_mark.frame.origin toCoordinateFromView:self.view];
-    [self updateDataWith:markCoordinate withActivities:nil text:nil begin_time:nil end_time:nil];
+    [self updateDataWith:markCoordinate withRange:nil activities:nil text:nil begin_time:nil end_time:nil];
 }
 
 // 根据文本搜索桌子地图
 - (void)searchActivitiesByText:(NSString *)text {
     CLLocationCoordinate2D markCoordinate = [self.mapView convertPoint:_iv_mark.frame.origin toCoordinateFromView:self.view];
-    [self updateDataWith:markCoordinate withActivities:nil text:text begin_time:nil end_time:nil];
+    [self updateDataWith:markCoordinate withRange:nil activities:nil text:text begin_time:nil end_time:nil];
 }
 
 

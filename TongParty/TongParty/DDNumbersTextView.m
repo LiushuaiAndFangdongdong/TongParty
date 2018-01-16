@@ -246,37 +246,53 @@
     switch (style) {
         case DDNumbersTextViewTypeNormal:{
             DDUserInfoModel *uModel = (DDUserInfoModel *)model;
-            if (uModel.coin) {
-                self.itemViewCoin.itemNumbers  = uModel.coin;
-            }
-            if (uModel.bl_num) {
-                self.itemViewCare.itemNumbers  = uModel.bl_num;
-            }
-            if (uModel.tl_num) {
-                self.itemViewCared.itemNumbers  = uModel.tl_num;
-            }
-            if (uModel.f_num) {
-                self.itemViewFriends.itemNumbers  = uModel.f_num;
+            if (!uModel) {
+                
+                self.itemViewCoin.itemNumbers = @"0";
+                self.itemViewCare.itemNumbers  = @"0";
+                self.itemViewCared.itemNumbers  = @"0";
+                self.itemViewFriends.itemNumbers  = @"0";
+            } else {
+                if (uModel.coin) {
+                    self.itemViewCoin.itemNumbers  = uModel.coin;
+                }
+                if (uModel.bl_num) {
+                    self.itemViewCare.itemNumbers  = uModel.bl_num;
+                }
+                if (uModel.tl_num) {
+                    self.itemViewCared.itemNumbers  = uModel.tl_num;
+                }
+                if (uModel.f_num) {
+                    self.itemViewFriends.itemNumbers  = uModel.f_num;
+                }
             }
         }break;
         case DDNumbersTextViewTypeOthers:{
             LSHisUserInfoModel *hModel = (LSHisUserInfoModel *)model;
-            self.itemViewCoin.itemNumbers = hModel.coin;
-            self.itemViewCare.itemNumbers  = hModel.bl_num;
-            self.itemViewCared.itemNumbers  = hModel.tl_num;
-            self.itemViewFriends.itemNumbers  = hModel.f_num;
-            if (hModel.is_like.integerValue == YES) {
-                [_careBtn setTitle:@"已关注" forState:UIControlStateNormal];
-                [_careBtn setTitleColor:kBgGreenColor forState:UIControlStateNormal];
-                _careBtn.backgroundColor = kWhiteColor;
-                _careBtn.layerBorderColor = kBgGreenColor;
-                _careBtn.layerBorderWidth = 1;
-                [_careBtn addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(cancelCareAtction:)]];
+            if (!hModel) {
+                
+                self.itemViewCoin.itemNumbers = @"0";
+                self.itemViewCare.itemNumbers  = @"0";
+                self.itemViewCared.itemNumbers  = @"0";
+                self.itemViewFriends.itemNumbers  = @"0";
             } else {
-                [_careBtn setTitle:@"关注" forState:UIControlStateNormal];
-                [_careBtn setTitleColor:kWhiteColor forState:UIControlStateNormal];
-                _careBtn.backgroundColor = kBgGreenColor;
-                [_careBtn addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(careAtction:)]];
+                self.itemViewCoin.itemNumbers = hModel.coin;
+                self.itemViewCare.itemNumbers  = hModel.bl_num;
+                self.itemViewCared.itemNumbers  = hModel.tl_num;
+                self.itemViewFriends.itemNumbers  = hModel.f_num;
+                if (hModel.is_like.integerValue == YES) {
+                    [_careBtn setTitle:@"已关注" forState:UIControlStateNormal];
+                    [_careBtn setTitleColor:kBgGreenColor forState:UIControlStateNormal];
+                    _careBtn.backgroundColor = kWhiteColor;
+                    _careBtn.layerBorderColor = kBgGreenColor;
+                    _careBtn.layerBorderWidth = 1;
+                    [_careBtn addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(cancelCareAtction:)]];
+                } else {
+                    [_careBtn setTitle:@"关注" forState:UIControlStateNormal];
+                    [_careBtn setTitleColor:kWhiteColor forState:UIControlStateNormal];
+                    _careBtn.backgroundColor = kBgGreenColor;
+                    [_careBtn addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(careAtction:)]];
+                }
             }
         }break;
         default:

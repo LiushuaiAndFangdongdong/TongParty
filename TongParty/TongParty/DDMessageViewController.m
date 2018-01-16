@@ -33,9 +33,19 @@
     [super loadData];
     [DDTJHttpRequest getMessageListsWithToken:TOKEN block:^(NSDictionary *dict) {
         NSLog(@"消息列表%@",dict);
+        _dataArray = [NSMutableArray array];
         _masterMsgArray = [DDMessageModel mj_objectArrayWithKeyValuesArray:dict[@"ct"]];
+        if (_masterMsgArray.count > 0) {
+            [_dataArray addObject:_masterMsgArray];
+        }
         _joinMsgArray = [DDMessageModel mj_objectArrayWithKeyValuesArray:dict[@"jt"]];
+        if (_joinMsgArray.count > 0) {
+            [_dataArray addObject:_joinMsgArray];
+        }
         _otherMsgArray = [DDMessageModel mj_objectArrayWithKeyValuesArray:dict[@"other"]];
+        if (_otherMsgArray.count > 0) {
+            [_dataArray addObject:_otherMsgArray];
+        }
         [self.tableView reloadData];
     } failure:^{
         //
@@ -50,44 +60,16 @@
 }
 #pragma mark - UITableViewDelegate
 - (NSInteger)tj_numberOfSections {
-    int a1 = (int)_masterMsgArray.count;
-    int a2 = (int)_joinMsgArray.count;
-    int a3 = (int)_otherMsgArray.count;
-    if (a1 == 0 && a2 == 0 && a3 == 0) {
-        return 0;
-    }else if ((a1 == 0 && a2 >0 && a3 > 0) || (a1 > 0 && a2 ==0 && a3 > 0) || (a1 > 0 && a2 >0 && a3 == 0)){
-        return 2;
-    }else if ((a1 == 0 && a2 ==0 && a3 > 0) || (a1 == 0 && a2 >0 && a3 == 0) || (a1 > 0 && a2 ==0 && a3 == 0)){
-        return 1;
-    }else if (a1 > 0 && a2 > 0 && a3 > 0){
-        return 3;
-    }
-    else{
-        return 0;
-    }
+    return _dataArray.count;
 }
 
 - (NSInteger)tj_numberOfRowsInSection:(NSInteger)section {
-    if (section == 0) {
-        return _masterMsgArray.count;
-    }else if (section == 1){
-        return _joinMsgArray.count;
-    }else if (section == 2){
-        return _otherMsgArray.count;
-    }else{return 0;}
+    return [_dataArray[section] count];
 }
 
 - (DDBaseTableViewCell *)tj_cellAtIndexPath:(NSIndexPath *)indexPath {
     DDJoinDeskMessageCell *cell = [DDJoinDeskMessageCell cellWithTableView:self.tableView];
-    if (indexPath.section == 0) {
-        [cell updateMessageCellWithModel:_masterMsgArray[indexPath.row]];
-    }
-   else if (indexPath.section == 1) {
-        [cell updateMessageCellWithModel:_joinMsgArray[indexPath.row]];
-    }
-   else if (indexPath.section == 2) {
-        [cell updateMessageCellWithModel:_otherMsgArray[indexPath.row]];
-   }else{}
+    [cell updateMessageCellWithModel:_dataArray[indexPath.section][indexPath.row]];
     return cell;
 }
 

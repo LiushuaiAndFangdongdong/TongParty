@@ -37,14 +37,15 @@
     self.deskView = [[DDBigDeskView alloc] init];
     [self addSubview:self.deskView];
     self.deskView.type = DDDeskShowTypeCard;
+    
 }
 
 - (void)cc_layoutSubviews  {    
     self.deskView.frame = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height);
 }
 
-- (void)installData:(NSDictionary *)element {
-    self.deskView.transform = CGAffineTransformIdentity;
+- (void)installData:(DDTableInfoModel *)element{
+    [self.deskView updateDeskInfoModel:element];
 }
 
 @end

@@ -60,9 +60,8 @@
     }
     // 快速显示一个提示信息
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:view animated:YES];
-    // Set the label text.
     hud.label.text = text;
-    hud.bezelView.color = [UIColor colorWithRed:0.41f green:0.46f blue:0.50f alpha:0.600f];
+    hud.bezelView.color = [UIColor clearColor];
     hud.removeFromSuperViewOnHide = YES;
     [hud hideAnimated:YES afterDelay:15];
     

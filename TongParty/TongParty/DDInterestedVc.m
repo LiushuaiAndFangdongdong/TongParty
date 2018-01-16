@@ -47,7 +47,7 @@
 
 - (DDCustomCommonEmptyView *)emptyView {
     if (!_emptyView) {
-        DDCustomCommonEmptyView *empty = [[DDCustomCommonEmptyView alloc] initWithTitle:@"" secondTitle:@"" iconname:@"nocontent"];
+        DDCustomCommonEmptyView *empty = [[DDCustomCommonEmptyView alloc] initWithTitle:@"尚未有感兴趣的桌子哦！" secondTitle:@"" iconname:@"nocontent"];
         [self.view addSubview:empty];
         _emptyView = empty;
     }
@@ -64,6 +64,7 @@
 
 - (DDBaseTableViewCell *)tj_cellAtIndexPath:(NSIndexPath *)indexPath {
     DDInterestTableViewCell *cell = [DDInterestTableViewCell cellWithTableView:self.tableView];
+    cell.joinedBtn.hidden = NO;
     [cell updateWithModel:_dataArray[indexPath.row]];
     return cell;
 }

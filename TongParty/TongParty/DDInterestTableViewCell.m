@@ -21,7 +21,7 @@
 @property (nonatomic, strong) UILabel *horizontalLine;
 @property (nonatomic, strong) UIButton*storeBtn;
 @property (nonatomic, strong) UIButton *addressBtn;
-@property (nonatomic, strong) UIButton *joinedBtn;
+
 @end
 
 @implementation DDInterestTableViewCell
@@ -91,7 +91,7 @@
     [self.contentView addSubview:_numPerople];
     [_numPerople mas_makeConstraints:^(MASConstraintMaker *make) {
        make.top.mas_equalTo(_timeBtn);
-        make.left.mas_equalTo(_timeBtn.mas_right).offset(5);
+        make.left.mas_equalTo(_timeBtn.mas_right).offset(10.f);
 //        make.width.mas_equalTo(50);
         make.height.mas_equalTo(20);
     }];
@@ -99,7 +99,7 @@
     [_numPerople setTitleColor:kGrayColor forState:UIControlStateNormal];
     _numPerople.titleLabel.font = kFont(12);
     [_numPerople setImage:kImage(@"desklist_people") forState:UIControlStateNormal];
-    [_numPerople layoutButtonWithEdgeInsetsStyle:DDButtonEdgeInsetsStyleLeft imageTitleSpace:6];
+    [_numPerople layoutButtonWithEdgeInsetsStyle:DDButtonEdgeInsetsStyleLeft imageTitleSpace:3];
     
     
     _distanceLabel = [UILabel new];
@@ -172,8 +172,10 @@
     [_joinedBtn setTitleColor:kBgGreenColor forState:UIControlStateNormal];
     _joinedBtn.titleLabel.font = kFont(13);
     [_joinedBtn setImage:kImage(@"finger_join") forState:UIControlStateNormal];
+    _joinedBtn.hidden = YES;
     [_joinedBtn layoutButtonWithEdgeInsetsStyle:DDButtonEdgeInsetsStyleLeft imageTitleSpace:2];
 }
+
 
 - (void)updateWithModel:(DDTableModel *)model{
     if (!model) {
@@ -182,9 +184,23 @@
     _sAvatar.avatarstring  = model.image;
     _titleLabel.text = model.title;
     _subjectLabel.text = [NSString stringWithFormat:@"主题：%@",model.custom];
-    [_timeBtn setTitle:model.begin_time forState:UIControlStateNormal];
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    NSDate *begion_timeDate = [formatter dateFromString:model.begin_time];
+    NSDateFormatter *formatter1 = [[NSDateFormatter alloc] init];
+    [formatter1 setDateFormat:@"yyyy-MM-dd HH:mm"];
+    NSString *beginStr = [formatter1 stringFromDate:begion_timeDate];
+    [_timeBtn setTitle:beginStr forState:UIControlStateNormal];
     [_numPerople setTitle:model.person_num forState:UIControlStateNormal];
-    _distanceLabel.text = [NSString stringWithFormat:@"%@m | %@人已参加",model.distance,model.num];
+    double distance = model.distance.doubleValue;
+    NSString *dstanceStr;
+    if (distance >= 100) {
+        dstanceStr = [NSString stringWithFormat:@"%.f%@",distance/1000.f,@"km"];
+    } else {
+        dstanceStr = [NSString stringWithFormat:@"%d%@",(int)distance,@"m"];
+    }
+    
+    _distanceLabel.text = [NSString stringWithFormat:@"%@ | %@人已参加",dstanceStr,model.num];
      [_storeBtn setTitle:model.shop_name forState:UIControlStateNormal];
     [_addressBtn setTitle:model.place forState:UIControlStateNormal];
     if ([model.type intValue] == 1) {
@@ -195,8 +211,22 @@
         _sAvatar.statusstring  = @"desklist_status_apply";
     }else{
     }
+    
+    if (model.status) {
+        switch (model.status.integerValue) {
+            case 0:{
+                // 不可以
+                [_joinedBtn setImage:kImage(@"supplied") forState:UIControlStateNormal];
+                }break;
+            case 1:{
+                // 可以加入
+                [_joinedBtn setImage:kImage(@"finger_join") forState:UIControlStateNormal];
+            }break;
+            default:
+                break;
+        }
+    }
 }
-
 
 //重新设置的UITableViewCellframe,---->改变row之间的间距。
 - (void)setFrame:(CGRect)frame{

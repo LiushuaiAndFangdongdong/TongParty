@@ -185,16 +185,20 @@
     [[LSCouponView shareInstance] showCouponViewOnWindowWithType:0 doneBlock:^(NSDictionary *dict) {
         [MBProgressHUD showLoading:@"申请中..." toView:self.view];
         
+//        [DDTJHttpRequest applyJoinDeskWithToken:TOKEN tid:tmpModel.id t_uid:_tModel.uid prop:@"" block:^(NSDictionary *dict) {
+//            [MBProgressHUD hideAllHUDsInView:self.view];
+//            NSLog(@"申请加桌  %@",dict);
+//        } failure:^{
+//            //
+//        }];
+        
         [DDTJHttpRequest applyJoinDeskWithToken:TOKEN tid:tmpModel.id t_uid:_tModel.uid prop:@"" block:^(NSDictionary *dict) {
-            [MBProgressHUD hideAllHUDsInView:self.view];
-            NSLog(@"申请加桌  %@",dict);
+            //
         } failure:^{
             //
         }];
         
     }];
-    
-
 }
 //联系桌主
 -(void)callMaster{

@@ -9,8 +9,9 @@
 
 #import <UIKit/UIKit.h>
 #import "LSHisUserInfoModel.h"
-
+#import "DDUserInfoModel.h"
 @interface DDAlbumCellView : UIView
-- (void)updateWithModel:(LSHisUserInfoModel *)model;
+- (void)updateWithHisUserModel:(LSHisUserInfoModel *)model;
+- (void)updateWithUserModel:(DDUserInfoModel *)model;
 @end
 

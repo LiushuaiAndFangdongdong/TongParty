@@ -9,8 +9,9 @@
 #import <UIKit/UIKit.h>
 #import <MAMapKit/MAMapKit.h>
 #import "LSMapAnnotationModel.h"
-
+#import "LSMACustomCalloutView.h"
 @interface DDMAAnnotationView : MAAnnotationView
-- (void)updateValueWith:(id)model;
+- (void)updateValueWith:(id)model onMapView:(MAMapView *)mapView;
 @property (nonatomic, copy) void(^onClicked)(void);
+@property (nonatomic, strong) LSMACustomCalloutView *calloutView;
 @end

@@ -22,6 +22,9 @@
 @property (nonatomic, copy) NSString *place;      //地点
 @property (nonatomic, copy) NSString *title;      //标题
 @property (nonatomic, copy) NSString *type;     //1.创建的桌子 2.加入的桌子  3.申请的桌子
+@property (nonatomic, copy) NSString *longitude;
+@property (nonatomic, copy) NSString *latitude;
+@property (nonatomic, copy) NSString *status; // 是否可以点击
 @end
 
 

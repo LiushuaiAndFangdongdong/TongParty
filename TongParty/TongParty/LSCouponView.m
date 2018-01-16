@@ -19,6 +19,7 @@
 @property (nonatomic, strong)UILabel *lbl_des;
 @property (nonatomic, strong)UILabel *lbl_line;
 @property (nonatomic, strong)UIButton *btn_confirm;
+@property (nonatomic, strong)UIButton *btn_couponConfirm;
 @property (nonatomic, strong)UILabel *lbl_ask;
 @property (nonatomic, strong)UIButton *btn_add;
 @property (nonatomic, strong)UIButton *btn_min;
@@ -37,84 +38,86 @@ static LSCouponView *_instance;
 }
 
 - (void)showCouponViewOnWindowWithType:(LSCouponViewShowType)type doneBlock:(void (^)(NSDictionary *dict))doneDict{
-    _reslutDict = [NSMutableDictionary new];
-    tmp_block = doneDict;
-    couponCount = 0;
-    _iv_coupon = [UIImageView new];
-    [KEY_WINDOW addSubview:self.backgroundView];
-    [self.backgroundView addSubview:self.couponView];
-    [self.couponView addSubview:_iv_coupon];
-    [_iv_coupon mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.width.equalTo(self.couponView).multipliedBy(0.75f);
-        make.centerX.equalTo(self.couponView);
-        make.height.mas_equalTo(DDFitHeight(180.f));
-        make.top.mas_equalTo(-DDFitHeight(30.f));
-    }];
-    
-    _lbl_count = [UILabel new];
-    [_iv_coupon addSubview:_lbl_count];
-    [_lbl_count mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.equalTo(_iv_coupon.mas_bottom).offset(-DDFitHeight(23.f));
-        make.left.equalTo(_iv_coupon.mas_centerX).offset(-DDFitWidth(5.f));
-        make.height.mas_equalTo(DDFitHeight(60.f));
-        make.width.mas_equalTo(DDFitWidth(45.f));
-    }];
-    _lbl_count.font = DDFitFont(30.f);
-    _lbl_count.textColor = kWhiteColor;
-    _lbl_count.text = @"5";
-    
-    _btn_close = [UIButton new];
-    [self.couponView addSubview:_btn_close];
-    [_btn_close mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.couponView);
-        make.height.mas_equalTo(DDFitHeight(30.f));
-        make.width.mas_equalTo(DDFitWidth(25.f));
-        make.right.mas_equalTo(-DDFitWidth(10.f));
-    }];
-    [_btn_close setBackgroundImage:kImage(@"coupon_close") forState:UIControlStateNormal];
-    [_btn_close addTarget:self action:@selector(hiddeCouponView) forControlEvents:UIControlEventTouchUpInside];
-
-    _lbl_des = [UILabel new];
-    [self.couponView addSubview:_lbl_des];
-    [_lbl_des mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(_iv_coupon).offset(DDFitHeight(10.f));
-        make.right.equalTo(_iv_coupon).offset(-DDFitHeight(10.f));
-        make.top.equalTo(_iv_coupon.mas_bottom).offset(DDFitHeight(20.f));
-    }];
-    _lbl_des.numberOfLines = 0;
-    _lbl_des.font = DDFitFont(15.f);
-    _lbl_des.textColor = kBlackColor;
-    _lbl_des.textAlignment = NSTextAlignmentCenter;
-    
-    _lbl_line = [UILabel new];
-    [self.couponView addSubview:_lbl_line];
-    [_lbl_line mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.right.equalTo(self.couponView);
-        make.top.equalTo(_lbl_des.mas_bottom).offset(DDFitHeight(30.f));
-        make.height.mas_equalTo(kLineHeight);
-    }];
-    _lbl_line.backgroundColor = kCommonGrayTextColor;
-    
-    _btn_confirm = [UIButton new];
-    [self.couponView addSubview:_btn_confirm];
-    [_btn_confirm mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.equalTo(self.couponView);
-        make.bottom.mas_equalTo(DDFitHeight(-15.f));
-        make.height.mas_equalTo(DDFitHeight(40.f));
-        make.width.equalTo(self.couponView).multipliedBy(0.70f);
-    }];
-    [_btn_confirm setBackgroundImage:kImage(@"desk_manage_address") forState:UIControlStateNormal];
-    _btn_confirm.titleLabel.font = DDFitFont(15.f);
-    
-    _lbl_ask = [UILabel new];
-    [self.couponView addSubview:_lbl_ask];
-    [_lbl_ask mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(_iv_coupon);
-        make.bottom.equalTo(_btn_confirm.mas_top).offset(-DDFitHeight(20.f));
-        make.height.mas_equalTo(DDFitHeight(20.f));
-    }];
-    _lbl_ask.font = DDFitFont(13.f);
     if (type == DDDeskShowTypeJoinCoupon) {
+        
+        _reslutDict = [NSMutableDictionary new];
+        tmp_block = doneDict;
+        couponCount = 0;
+        _iv_coupon = [UIImageView new];
+        [KEY_WINDOW addSubview:self.backgroundView];
+        [self.backgroundView addSubview:self.couponView];
+        [self.couponView addSubview:_iv_coupon];
+        [_iv_coupon mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.width.equalTo(self.couponView).multipliedBy(0.75f);
+            make.centerX.equalTo(self.couponView);
+            make.height.mas_equalTo(DDFitHeight(180.f));
+            make.top.mas_equalTo(-DDFitHeight(30.f));
+        }];
+        
+        _lbl_count = [UILabel new];
+        [_iv_coupon addSubview:_lbl_count];
+        [_lbl_count mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.bottom.equalTo(_iv_coupon.mas_bottom).offset(-DDFitHeight(23.f));
+            make.left.equalTo(_iv_coupon.mas_centerX).offset(-DDFitWidth(5.f));
+            make.height.mas_equalTo(DDFitHeight(60.f));
+            make.width.mas_equalTo(DDFitWidth(45.f));
+        }];
+        _lbl_count.font = DDFitFont(30.f);
+        _lbl_count.textColor = kWhiteColor;
+        _lbl_count.text = @"5";
+        
+        _btn_close = [UIButton new];
+        [self.couponView addSubview:_btn_close];
+        [_btn_close mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(self.couponView);
+            make.height.mas_equalTo(DDFitHeight(30.f));
+            make.width.mas_equalTo(DDFitWidth(25.f));
+            make.right.mas_equalTo(-DDFitWidth(10.f));
+        }];
+        [_btn_close setBackgroundImage:kImage(@"coupon_close") forState:UIControlStateNormal];
+        [_btn_close addTarget:self action:@selector(hiddeCouponView) forControlEvents:UIControlEventTouchUpInside];
+        
+        _lbl_des = [UILabel new];
+        [self.couponView addSubview:_lbl_des];
+        [_lbl_des mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(_iv_coupon).offset(DDFitHeight(10.f));
+            make.right.equalTo(_iv_coupon).offset(-DDFitHeight(10.f));
+            make.top.equalTo(_iv_coupon.mas_bottom).offset(DDFitHeight(20.f));
+        }];
+        _lbl_des.numberOfLines = 0;
+        _lbl_des.font = DDFitFont(15.f);
+        _lbl_des.textColor = kBlackColor;
+        _lbl_des.textAlignment = NSTextAlignmentCenter;
+        
+        _lbl_line = [UILabel new];
+        [self.couponView addSubview:_lbl_line];
+        [_lbl_line mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.right.equalTo(self.couponView);
+            make.top.equalTo(_lbl_des.mas_bottom).offset(DDFitHeight(30.f));
+            make.height.mas_equalTo(kLineHeight);
+        }];
+        _lbl_line.backgroundColor = kCommonGrayTextColor;
+        
+        _btn_confirm = [UIButton new];
+        [self.couponView addSubview:_btn_confirm];
+        [_btn_confirm mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.centerX.equalTo(self.couponView);
+            make.bottom.mas_equalTo(DDFitHeight(-15.f));
+            make.height.mas_equalTo(DDFitHeight(40.f));
+            make.width.equalTo(self.couponView).multipliedBy(0.70f);
+        }];
+        [_btn_confirm setBackgroundImage:kImage(@"desk_manage_address") forState:UIControlStateNormal];
+        _btn_confirm.titleLabel.font = DDFitFont(15.f);
+        
+        _lbl_ask = [UILabel new];
+        [self.couponView addSubview:_lbl_ask];
+        [_lbl_ask mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(_iv_coupon);
+            make.bottom.equalTo(_btn_confirm.mas_top).offset(-DDFitHeight(20.f));
+            make.height.mas_equalTo(DDFitHeight(20.f));
+        }];
+        _lbl_ask.font = DDFitFont(13.f);
+        
         _iv_coupon.image = kImage(@"join_coupon");
         _lbl_des.text = @"Hi~桐友，确定加入张桌子吗，参与桌子后，不能失约哦！！";
         _lbl_ask.text = @"OS: 要使用加入券吗？";
@@ -132,6 +135,94 @@ static LSCouponView *_instance;
         [_sw_use addTarget:self action:@selector(switchAction:) forControlEvents:UIControlEventValueChanged];
         [_btn_confirm addTarget:self action:@selector(confirm:) forControlEvents:UIControlEventTouchUpInside];
     } else {
+        _reslutDict = [NSMutableDictionary new];
+        tmp_block = doneDict;
+        couponCount = 0;
+        _iv_coupon = [UIImageView new];
+        [KEY_WINDOW addSubview:self.backgroundView];
+        [self.backgroundView addSubview:self.couponView];
+        [self.couponView addSubview:_iv_coupon];
+        [_iv_coupon mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.width.equalTo(self.couponView).multipliedBy(0.75f);
+            make.centerX.equalTo(self.couponView);
+            make.height.mas_equalTo(DDFitHeight(180.f));
+            make.top.mas_equalTo(-DDFitHeight(30.f));
+        }];
+        
+        _lbl_count = [UILabel new];
+        [_iv_coupon addSubview:_lbl_count];
+        [_lbl_count mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.bottom.equalTo(_iv_coupon.mas_bottom).offset(-DDFitHeight(23.f));
+            make.left.equalTo(_iv_coupon.mas_centerX).offset(-DDFitWidth(5.f));
+            make.height.mas_equalTo(DDFitHeight(60.f));
+            make.width.mas_equalTo(DDFitWidth(45.f));
+        }];
+        _lbl_count.font = DDFitFont(30.f);
+        _lbl_count.textColor = kWhiteColor;
+        _lbl_count.text = @"5";
+        
+        _btn_close = [UIButton new];
+        [self.couponView addSubview:_btn_close];
+        [_btn_close mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(self.couponView);
+            make.height.mas_equalTo(DDFitHeight(30.f));
+            make.width.mas_equalTo(DDFitWidth(25.f));
+            make.right.mas_equalTo(-DDFitWidth(10.f));
+        }];
+        [_btn_close setBackgroundImage:kImage(@"coupon_close") forState:UIControlStateNormal];
+        [_btn_close addTarget:self action:@selector(hiddeCouponView) forControlEvents:UIControlEventTouchUpInside];
+        
+        _lbl_des = [UILabel new];
+        [self.couponView addSubview:_lbl_des];
+        [_lbl_des mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(_iv_coupon).offset(DDFitHeight(10.f));
+            make.right.equalTo(_iv_coupon).offset(-DDFitHeight(10.f));
+            make.top.equalTo(_iv_coupon.mas_bottom).offset(DDFitHeight(20.f));
+        }];
+        _lbl_des.numberOfLines = 0;
+        _lbl_des.font = DDFitFont(15.f);
+        _lbl_des.textColor = kBlackColor;
+        _lbl_des.textAlignment = NSTextAlignmentCenter;
+        
+        _lbl_line = [UILabel new];
+        [self.couponView addSubview:_lbl_line];
+        [_lbl_line mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.right.equalTo(self.couponView);
+            make.top.equalTo(_lbl_des.mas_bottom).offset(DDFitHeight(30.f));
+            make.height.mas_equalTo(kLineHeight);
+        }];
+        _lbl_line.backgroundColor = kCommonGrayTextColor;
+        
+        _btn_confirm = [UIButton new];
+        [self.couponView addSubview:_btn_confirm];
+        [_btn_confirm mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.right.equalTo(self.couponView.mas_centerX).offset(-DDFitWidth(25.f));
+            make.bottom.mas_equalTo(DDFitHeight(-15.f));
+            make.height.mas_equalTo(DDFitHeight(40.f));
+            make.width.equalTo(self.couponView).multipliedBy(0.4f);
+        }];
+        _btn_confirm.titleLabel.font = DDFitFont(15.f);
+        
+        _btn_couponConfirm = [UIButton new];
+        [self.couponView addSubview:_btn_couponConfirm];
+        [_btn_couponConfirm mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(self.couponView.mas_centerX).offset(DDFitWidth(25.f));
+            make.bottom.mas_equalTo(DDFitHeight(-15.f));
+            make.height.mas_equalTo(DDFitHeight(40.f));
+            make.width.equalTo(self.couponView).multipliedBy(0.40f);
+        }];
+        _btn_couponConfirm.titleLabel.font = DDFitFont(15.f);
+        
+        _lbl_ask = [UILabel new];
+        [self.couponView addSubview:_lbl_ask];
+        [_lbl_ask mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(_iv_coupon);
+            make.bottom.equalTo(_btn_confirm.mas_top).offset(-DDFitHeight(20.f));
+            make.height.mas_equalTo(DDFitHeight(20.f));
+        }];
+        _lbl_ask.font = DDFitFont(13.f);
+        
+        
         _btn_add = [UIButton new];
         [self.couponView addSubview:_btn_add];
         [_btn_add mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -171,8 +262,18 @@ static LSCouponView *_instance;
         _iv_coupon.image = kImage(@"invite_coupon");
         _lbl_ask.text = @"可选择邀请券数量";
         _lbl_ask.textColor = kCommonGrayTextColor;
-        [_btn_confirm setTitle:@"立即使用" forState:UIControlStateNormal];
+        [_btn_confirm setTitle:@"邀请" forState:UIControlStateNormal];
         [_btn_confirm addTarget:self action:@selector(useNow:) forControlEvents:UIControlEventTouchUpInside];
+        _btn_confirm.layer.backgroundColor = kRGBColor(149.f, 213.f, 251.f).CGColor;
+        _btn_confirm.backgroundColor = kWhiteColor;
+        [_btn_confirm setTitleColor:kRGBColor(149.f, 213.f, 251.f) forState:UIControlStateNormal];
+        _btn_confirm.layer.cornerRadius = 20.f;
+        
+        [_btn_couponConfirm setTitle:@"用券邀请" forState:UIControlStateNormal];
+        [_btn_couponConfirm addTarget:self action:@selector(useCounponNow:) forControlEvents:UIControlEventTouchUpInside];
+        _btn_couponConfirm.backgroundColor = kRGBColor(149.f, 213.f, 251.f);
+        [_btn_couponConfirm setTitleColor:kWhiteColor forState:UIControlStateNormal];
+        _btn_couponConfirm.layer.cornerRadius = 20.f;
     }
 }
 
@@ -194,6 +295,7 @@ static LSCouponView *_instance;
     [_btn_min removeFromSuperview];
     [_iv_coupon removeFromSuperview];
     [_btn_close removeFromSuperview];
+    [_btn_couponConfirm removeFromSuperview];
     _reslutDict = nil;
 }
 
@@ -227,6 +329,12 @@ static NSInteger couponCount;
         NSLog(@"关");
         [_reslutDict setObject:@"0" forKey:@"isUseJoinCoupon"];
     }
+}
+
+- (void)useCounponNow:(UIButton *)sender {
+    [_reslutDict setObject:@(0) forKey:@"couponCount"];
+    tmp_block(_reslutDict);
+    [self hiddeCouponView];
 }
 
 - (void)confirm:(UIButton *)sender {

@@ -10,6 +10,7 @@
 
 @interface LSRegionDumpsView : UIView
 @property (nonatomic, copy) void(^onSelected)(NSString *lat, NSString *lon);
+@property (nonatomic, copy) void(^onSelectedRange)(NSString *range);
 @property (nonatomic, copy) void(^switchToSubway)(void);
 @property (nonatomic, copy) void(^switchToRefionDumps)(void);
 @property (nonatomic, strong)NSArray  *regionArray;

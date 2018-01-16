@@ -10,5 +10,6 @@
 #import "DDTableModel.h"
 
 @interface DDInterestTableViewCell : DDBaseTableViewCell
+@property (nonatomic, strong) UIButton *joinedBtn;
 -(void)updateWithModel:(DDTableModel *)model;
 @end

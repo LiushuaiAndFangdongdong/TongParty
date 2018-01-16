@@ -9,5 +9,5 @@
 #import "DDBaseTableViewController.h"
 
 @interface DDHomeListViewController : DDBaseTableViewController
-
+- (void)searchActivitiesByText:(NSString *)text;
 @end

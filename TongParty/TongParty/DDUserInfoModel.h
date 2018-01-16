@@ -39,7 +39,7 @@
 /**头像*/
 @property (nonatomic, copy) NSString *image;
 /**相册*/
-@property (nonatomic, copy) NSString *photo;
+@property (nonatomic, strong)NSArray *photo;
 /**个性签名*/
 @property (nonatomic, copy) NSString *signature;
 /**性别*/

@@ -81,7 +81,7 @@ NSString *const kTJHosterSignInAPI = @"/tongju/api/table_sign.php";
 /** 参与者签到桌子的二维码*/
 NSString *const kTJPartintsSignQRAPI = @"/tongju/api/get_sign_code.php";
 /** 申请加入桌子*/
-NSString *const kTJApplyJoinInDeskAPI = @"/tongju/api/user_in_table.php?m=apply";
+NSString *const kTJApplyJoinInDeskAPI = @"/tongju/api/user_in_table.php";
 /** 用户通过加入桌子*/
 NSString *const kTJUserAcceptJoinDeskAPI = @"/tongju/api/user_in_table.php?m=join";
 /** 参与者签到桌子*/

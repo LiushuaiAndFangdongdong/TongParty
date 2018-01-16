@@ -57,6 +57,7 @@
     }
 }
 
+
 - (void)setTitle:(NSString *)title {
     _title = title;
     if ([title isKindOfClass:[NSString class]]) {

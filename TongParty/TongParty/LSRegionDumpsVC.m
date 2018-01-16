@@ -32,7 +32,9 @@
 //    }];
     
     // 目前只支持北京
+    [MBProgressHUD showLoading:self.regionDumpsView];
     [DDTJHttpRequest getAdministrativeChildRegionWith:@"1" block:^(NSDictionary *dict) {
+        [MBProgressHUD hideAllHUDsInView:self.regionDumpsView];
         NSArray *citys = [LSAdmRegionEntity mj_objectArrayWithKeyValuesArray:dict];
         for (LSAdmRegionEntity *entity in citys) {
             if (entity.pid.integerValue == 1) {
@@ -62,6 +64,9 @@
             if (weakSelf.confirmSort) {
                 weakSelf.confirmSort(lon, lat);
             }
+        };
+        _regionDumpsView.onSelectedRange = ^(NSString *range) {
+            weakSelf.selectRangeSort(range);
         };
         _regionDumpsView.switchToSubway = ^{
             [weakSelf loadSubwayData];

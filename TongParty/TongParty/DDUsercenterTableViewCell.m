@@ -110,7 +110,12 @@
 - (void)updateWithModel:(DDUserInfoModel *)model{
     [self.ntView updateWithModel:model withType:DDNumbersTextViewTypeNormal];
     [self.rewardView updateWithModel:model];
-    [self.albumView updateWithModel:model];
+    if (!model) {
+        self.albumView.height = 60.f;
+    } else {
+        self.albumView.height = 120.f;
+    }
+    [self.albumView updateWithUserModel:model];
     [self.activitiesHisView updateWithModel:model];
 }
 

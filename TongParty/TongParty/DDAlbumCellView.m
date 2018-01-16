@@ -60,7 +60,7 @@
     }];
     self.accessView.image = [UIImage imageNamed:@"usercenter_access"];
 }
-- (void)updateWithModel:(LSHisUserInfoModel *)model{
+- (void)updateWithHisUserModel:(LSHisUserInfoModel *)model{
     //表示未登录
     if (![DDUserDefault objectForKey:@"token"]){
         self.accessView.hidden = YES;
@@ -70,6 +70,39 @@
             //相册图片
             for (int i = 0; i<4; i++) {
                 UIImageView *picView = [[UIImageView alloc] init];
+                [self addSubview:picView];
+                [picView mas_makeConstraints:^(MASConstraintMaker *make) {
+                    make.top.mas_equalTo(self.iconView.mas_bottom).offset(10);
+                    make.width.mas_equalTo(kPicWidth);
+                    make.bottom.mas_equalTo(-5);
+                    make.left.mas_equalTo(kMarginWidth * (i+1) + kPicWidth * i);
+                }];
+                LSAlbumEtity *entity = [LSAlbumEtity mj_objectWithKeyValues:model.photo[i]];
+                [picView sd_setImageWithURL:[NSURL URLWithString:entity.image]];
+            }
+        }
+    }
+}
+static NSInteger baseTag = 171;
+- (void)updateWithUserModel:(LSHisUserInfoModel *)model{
+    //表示未登录
+    if (![DDUserDefault objectForKey:@"token"]){
+        self.accessView.hidden = YES;
+        // 清空
+        for (int j =0; j < 4; j++) {
+            UIImageView *iv = [self viewWithTag:baseTag + j];
+            if (iv) {
+                [iv removeFromSuperview];
+            }
+        }
+        
+    }else{
+        self.accessView.hidden = NO;
+        if (model.photo) {
+            //相册图片
+            for (int i = 0; i<4; i++) {
+                UIImageView *picView = [[UIImageView alloc] init];
+                picView.tag = baseTag + i;
                 [self addSubview:picView];
                 [picView mas_makeConstraints:^(MASConstraintMaker *make) {
                     make.top.mas_equalTo(self.iconView.mas_bottom).offset(10);

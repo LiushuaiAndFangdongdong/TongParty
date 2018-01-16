@@ -7,9 +7,10 @@
 //
 
 #import "CCDraggableCardView.h"
+#import "DDTableInfoModel.h"
 
 @interface CustomCardView : CCDraggableCardView
 
-- (void)installData:(NSDictionary *)element;
+- (void)installData:(DDTableInfoModel *)element;
 
 @end

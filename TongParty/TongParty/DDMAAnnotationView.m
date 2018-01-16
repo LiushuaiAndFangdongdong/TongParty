@@ -16,36 +16,35 @@
 @property (nonatomic, strong)UIImageView *iv_kindOfAction;
 @property (nonatomic, strong)UILabel     *lbl_actionName;
 @property (nonatomic, strong)UIImageView *iv_bg;
+@property (nonatomic, strong)LSMapTableEntity *tempEntity;
+@property (nonatomic, strong)MAMapView   *tempMapView;
 @end
 @implementation DDMAAnnotationView
 
 - (id)initWithAnnotation:(id<MAAnnotation>)annotation reuseIdentifier:(NSString *)reuseIdentifier{
     self = [super initWithAnnotation:annotation reuseIdentifier:reuseIdentifier];
     if (self) {
-       // self.backgroundColor = [UIColor clearColor];
-        self.userInteractionEnabled = YES;
-        self.view_bg.frame = CGRectMake(0, 0, 65, 75);
-        [self addSubview:self.view_bg];
+        self.backgroundColor = [UIColor clearColor];
+        self.frame = CGRectMake(0, 0, 65, 75);
         [self setUpViews];
     }
     return self;
 }
 
 - (void)setUpViews {
-    
-    [self.view_bg addSubview:self.iv_bg];
+    [self addSubview:self.iv_bg];
     [_iv_bg mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.equalTo(self.view_bg);
+        make.edges.equalTo(self);
     }];
     
-    [self.iv_bg addSubview:self.iv_kindOfAction];
+    [self addSubview:self.iv_kindOfAction];
     [_iv_kindOfAction mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(self.iv_bg);
         make.top.mas_equalTo(DDFitHeight(8.f));
         make.height.width.mas_equalTo(DDFitHeight(25.f));
     }];
     
-    [self.iv_bg addSubview:self.lbl_actionName];
+    [self addSubview:self.lbl_actionName];
     [_lbl_actionName mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(_iv_kindOfAction);
         make.top.equalTo(_iv_kindOfAction.mas_bottom);
@@ -59,8 +58,6 @@
 - (UIView *)view_bg {
     if (!_view_bg) {
         _view_bg = [UIView new];
-        _view_bg.userInteractionEnabled = YES;
-        
     }
     return _view_bg;
 }
@@ -68,8 +65,6 @@
 - (UIImageView *)iv_bg {
     if (!_iv_bg) {
         _iv_bg = [UIImageView new];
-        _iv_bg.userInteractionEnabled = YES;
-        [_iv_bg addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tap:)]];
     }
     return _iv_bg;
 }
@@ -77,7 +72,6 @@
 - (UIImageView *)iv_kindOfAction {
     if (!_iv_kindOfAction) {
         _iv_kindOfAction = [UIImageView new];
-        _iv_kindOfAction.userInteractionEnabled = YES;
     }
     return _iv_kindOfAction;
 }
@@ -89,7 +83,8 @@
     return _lbl_actionName;
 }
 
-- (void)updateValueWith:(id)model {
+- (void)updateValueWith:(id)model onMapView:(MAMapView *)mapView {
+    
     if (!model) {
         return;
     }
@@ -110,13 +105,47 @@
     if (dtime < 3600) {
         _iv_bg.image = kImage(@"map_hour");
     }
+    _tempEntity = entity;
+    _tempMapView = mapView;
 }
 
-- (void)tap:(UITapGestureRecognizer *)tap {
-    
-    if (_onClicked) {
-        _onClicked();
+- (void)setSelected:(BOOL)selected {
+    [self setSelected:selected animated:NO];
+}
+
+- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
+    if (self.selected == selected) {
+        return;
     }
+    WeakSelf(weakSelf);
+    if (selected){
+        if (self.calloutView == nil) {
+            self.calloutView = [[LSMACustomCalloutView alloc] initWithFrame:CGRectMake(0, 0, DDFitWidth(110.f), DDFitHeight(70.f))];
+            self.calloutView.toDeskDetail = ^{
+                if (weakSelf.onClicked) {
+                    weakSelf.onClicked();
+                }
+            };
+            [self.calloutView updateValueWith:_tempEntity onMapView:_tempMapView];
+            self.calloutView.center = CGPointMake(CGRectGetWidth(self.bounds) / 2.f + self.calloutOffset.x,
+                                                  -CGRectGetHeight(self.calloutView.bounds) / 2.f + self.calloutOffset.y);
+        }
+        
+        [self addSubview:self.calloutView];
+    } else {
+        // 全部清理!
+        [self.calloutView removeFromSuperview];
+        
+    }
+    [super setSelected:selected animated:animated];
+}
+
+- (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event {
+    BOOL inside = [super pointInside:point withEvent:event];
+    if (!inside && self.selected) {
+        inside = [self.calloutView pointInside:[self convertPoint:point toView:self.calloutView] withEvent:event];
+    }
+    return inside;
 }
 @end
 

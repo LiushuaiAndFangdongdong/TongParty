@@ -14,7 +14,7 @@
  */
 typedef void (^LocationPosition)(CLLocation *currentLocation,AMapLocationReGeocode *regeocode,BOOL isLocationSuccess,MBProgressHUD *hud);
 
-@interface AppDelegate (AppLocation)
+@interface AppDelegate (AppLocation) <AMapLocationManagerDelegate>
 
 @property (copy,nonatomic) LocationPosition locationBlock;          //定位到位置的block
 @property (strong,nonatomic) AMapLocationManager *locationManager;  //管理者

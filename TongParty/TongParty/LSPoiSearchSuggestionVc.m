@@ -18,19 +18,27 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [self setStatusBarBackgroundColor:kRGBColor(233, 236, 239)];
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self view_search];
+    UIView *bg_view = [UIView new];
+    [self.view_search addSubview:bg_view];
+    [bg_view mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.right.equalTo(self.view);
+        make.top.equalTo(self.view_search.mas_bottom);
+        make.bottom.equalTo(self.view);
+    }];
+    bg_view.backgroundColor = kBlackColor;
+    bg_view.alpha = 0.5f;
     [self.view addSubview:self.tv_suggestions];
-    self.view.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.5f];
+    self.view.backgroundColor = kWhiteColor;
 }
 
 - (UIView *)view_search {
     if (!_view_search) {
         _view_search = [[UIView alloc] initWithFrame:CGRectMake(0, kStatusBarHeight, self.view.width, kNavigationBarHeight)];
-        _view_search.backgroundColor = kRGBColor(233, 236, 239);
+        _view_search.backgroundColor = kWhiteColor;
         [self.view addSubview:self.view_search];
         UIButton *btn_cacnel = [UIButton new];
         [_view_search addSubview:btn_cacnel];
@@ -102,7 +110,6 @@
 //        _cancelOnClicked();
 //    }
     _tv_suggestions.hidden = YES;
-    [self setStatusBarBackgroundColor:kClearColor];
     [self dismiss];
 }
 
@@ -164,7 +171,14 @@
         _tv_suggestions.hidden = NO;
         AMapInputTipsSearchRequest *tips = [[AMapInputTipsSearchRequest alloc] init];
         tips.keywords = searchText;
-//        tips.city = _currentCity;
+        // 设置搜索范围的关键地名
+        NSString *city;
+        if ([DDUserSingleton shareInstance].city) {
+            city = [DDUserSingleton shareInstance].city;
+        } else {
+            city = ![DDUserDefault objectForKey:@"current_city"] ? @"北京市" : [DDUserDefault objectForKey:@"current_city"];
+        }
+        tips.city = city;
         [self.search AMapInputTipsSearch:tips];
     }
 }

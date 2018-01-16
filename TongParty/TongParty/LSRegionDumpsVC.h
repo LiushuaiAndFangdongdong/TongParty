@@ -10,4 +10,5 @@
 
 @interface LSRegionDumpsVC : DDBaseViewController
 @property (nonatomic, copy) void(^confirmSort)(NSString *lon, NSString *lat);
+@property (nonatomic, copy) void(^selectRangeSort)(NSString *range);
 @end

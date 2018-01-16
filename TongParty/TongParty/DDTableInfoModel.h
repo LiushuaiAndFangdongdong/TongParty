@@ -13,7 +13,7 @@
 @property (nonatomic, copy) NSString *average_price; //人均消费
 @property (nonatomic, copy) NSString *begin_time;  //开始时间
 @property (nonatomic, copy) NSString *custom;   //自定义活动
-@property (nonatomic, copy) NSString *id;     //id
+@property (nonatomic, copy) NSString *ID;     //id
 @property (nonatomic, copy) NSString *image;  //桌主头像
 @property (nonatomic, copy) NSString *person_num; //限制的人数
 @property (nonatomic, copy) NSString *place;      //地点

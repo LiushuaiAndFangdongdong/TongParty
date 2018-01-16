@@ -9,6 +9,7 @@
 #import "LSRegionDumpsView.h"
 #import "LSSubwayEntity.h"
 #import "LSAdmRegionEntity.h"
+#import "LSRangeEntity.h"
 @interface LSRegionDumpsView ()<UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic, strong)UITableView *father_tableView;
 @property (nonatomic, strong)UITableView *child_tableView;
@@ -19,6 +20,7 @@
 @property (nonatomic, strong)NSArray     *area_array; // 商圈区域数据
 @property (nonatomic, strong)NSArray     *region_array; // 商圈数据
 @property (nonatomic, strong)NSArray     *circles_array; // 商圈数据
+//@property (nonatomic, strong)NSArray     *nearly_array; // 附近数据
 @end
 
 @implementation LSRegionDumpsView
@@ -32,7 +34,6 @@
 }
 
 - (void)setupViews {
-    
     [self addSubview:self.btn_region];
     [_btn_region mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.left.equalTo(self);
@@ -177,23 +178,31 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (tableView == self.father_tableView) {
-        return self.area_array.count;
+        return self.area_array.count + 1;
     }
     if (tableView == self.child_tableView) {
+
         if (_circles_array) {
             return _circles_array.count;
         } else {
-            id entity = self.area_array[0];
-            if ([entity isKindOfClass:[LSSubwayEntity class]]) {
-                LSSubwayEntity *sEntity = (LSSubwayEntity *)entity;
-                _circles_array = [LSSubwayEntity mj_objectArrayWithKeyValuesArray:sEntity.children];
+//            id entity = self.area_array[0];
+//            if ([entity isKindOfClass:[LSSubwayEntity class]]) {
+//                LSSubwayEntity *sEntity = (LSSubwayEntity *)entity;
+//                _circles_array = [LSSubwayEntity mj_objectArrayWithKeyValuesArray:sEntity.children];
+//            }
+//            if ([entity isKindOfClass:[LSAdmRegionEntity class]]) {
+//                LSAdmRegionEntity *aEntity = (LSAdmRegionEntity *)entity;
+//                _circles_array = [LSAdmRegionEntity mj_objectArrayWithKeyValuesArray:aEntity.children];
+//            }
+            NSArray *arr = @[@"500",@"1000",@"2000",@"5000"];
+            NSMutableArray *mArr = [NSMutableArray array];
+            for (int i = 0; i < arr.count; i++) {
+                LSRangeEntity *entity = [LSRangeEntity new];
+                entity.distance = arr[i];
+                [mArr addObject:entity];
             }
-            if ([entity isKindOfClass:[LSAdmRegionEntity class]]) {
-                LSAdmRegionEntity *aEntity = (LSAdmRegionEntity *)entity;
-                _circles_array = [LSAdmRegionEntity mj_objectArrayWithKeyValuesArray:aEntity.children];
-            }
-            
-            return _circles_array.count;
+            self.circles_array = [NSArray arrayWithArray:mArr];
+            return self.circles_array.count;
         }
     }
     return 0;
@@ -204,13 +213,24 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.row == 0 && tableView == self.father_tableView) {
+        static NSString *fatherCellID = @"fatherCellID";
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:fatherCellID];
+        if (!cell) {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:fatherCellID];
+        }
+        cell.textLabel.text = @"附近";
+        cell.textLabel.textAlignment = NSTextAlignmentCenter;
+        cell.textLabel.textColor = kCommonGrayTextColor;
+        return cell;
+    }
     if (tableView == self.father_tableView) {
         static NSString *fatherCellID = @"fatherCellID";
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:fatherCellID];
         if (!cell) {
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:fatherCellID];
         }
-        id entity = self.area_array[indexPath.row];
+        id entity = self.area_array[indexPath.row - 1];
         if ([entity isKindOfClass:[LSSubwayEntity class]]) {
             LSSubwayEntity *sEntity = (LSSubwayEntity *)entity;
             cell.textLabel.text = sEntity.name;
@@ -219,7 +239,6 @@
             LSAdmRegionEntity *aEntity = (LSAdmRegionEntity *)entity;
             cell.textLabel.text = aEntity.name;
         }
-        
         cell.textLabel.textAlignment = NSTextAlignmentCenter;
         cell.textLabel.textColor = kCommonGrayTextColor;
         return cell;
@@ -231,6 +250,10 @@
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:childCellID];
         }
         id entity = self.circles_array[indexPath.row];
+        if ([entity isKindOfClass:[LSRangeEntity class]]) {
+            LSRangeEntity *rEntity = (LSRangeEntity *)entity;
+            cell.textLabel.text = [NSString stringWithFormat:@"%@米",rEntity.distance];
+        }
         if ([entity isKindOfClass:[LSSubwayEntity class]]) {
             LSSubwayEntity *sEntity = (LSSubwayEntity *)entity;
             cell.textLabel.text = sEntity.name;
@@ -251,17 +274,36 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     if (tableView == self.father_tableView) {
+        if (indexPath.row == 0) {
+            NSArray *arr = @[@"500",@"1000",@"2000",@"5000"];
+            NSMutableArray *mArr = [NSMutableArray array];
+            for (int i = 0; i < arr.count; i++) {
+                LSRangeEntity *entity = [LSRangeEntity new];
+                entity.distance = arr[i];
+                [mArr addObject:entity];
+            }
+            self.circles_array = [NSArray arrayWithArray:mArr];
+            [_child_tableView reloadData];
+            return;
+        }
+        
         for (NSIndexPath* i in [tableView indexPathsForVisibleRows]) {
             UITableViewCell *unSelectedCell = [tableView cellForRowAtIndexPath:i];
             unSelectedCell.textLabel.textColor = kCommonGrayTextColor;
         }
         UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-        [self updateChildTableViewDataWithAreaString:self.area_array[indexPath.row]];
+        [self updateChildTableViewDataWithAreaString:self.area_array[indexPath.row - 1]];
         cell.textLabel.textColor = kBlackColor;
     }
     if (tableView == self.child_tableView) {
         
         id entity = self.circles_array[indexPath.row];
+        if ([entity isKindOfClass:[LSRangeEntity class]]) {
+            LSRangeEntity *rEntity = (LSRangeEntity *)entity;
+            if (_onSelectedRange) {
+                _onSelectedRange(rEntity.distance);
+            }
+        }
         if ([entity isKindOfClass:[LSSubwayEntity class]]) {
             LSSubwayEntity *sEntity = (LSSubwayEntity *)entity;
             if (_onSelected) {

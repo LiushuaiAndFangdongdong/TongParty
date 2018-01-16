@@ -32,6 +32,7 @@
 /**纬度*/
 @property (nonatomic, copy) NSString *latitude;
 
+
 - (void)clearUserInfo;
 
 +(DDUserSingleton *)shareInstance;

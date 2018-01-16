@@ -134,11 +134,15 @@
         _iconView.image = kImage(@"hoster_message");
        _positionLabel.text = @" 我是桌主 ";
        _startTimeLabel.text = model.begin_time;
+       _positionLabel.hidden = NO;
+       _startTimeLabel.hidden = NO;
     }
    else if ([model.mid isEqualToString:MSG_TYPE_JOIN]) {
         _iconView.image = kImage(@"joined_message");
        _positionLabel.text = @" 参加的 ";
        _startTimeLabel.text = model.begin_time;
+       _positionLabel.hidden = NO;
+       _startTimeLabel.hidden = NO;
     }else{}
 }
 

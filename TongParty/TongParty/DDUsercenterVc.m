@@ -21,7 +21,6 @@
 #import "DDUsercenterHeaderView.h"      //头部信息
 #import "DDUserInfoModel.h"             //用户详情model
 #import "DDScanAvatarViewController.h"  //查看大头像
-
 #import "DDHisHerViewController.h"
 #import "LSAlbumEtity.h"
 
@@ -136,9 +135,9 @@ height=305;\
         
         [DDTJHttpRequest getUserDetailInfoWithToken:[DDUserSingleton shareInstance].token block:^(NSDictionary *dict) {
             _model = [DDUserInfoModel mj_objectWithKeyValues:dict];
+            _model.photo = [LSAlbumEtity mj_objectArrayWithKeyValuesArray:_model.photo];
             //主线程刷新
             dispatch_async(dispatch_get_main_queue(), ^(){
-                
                 [_headerView updateUserInfoWith:_model];
                 [self.tableView reloadData];
             });
@@ -210,12 +209,13 @@ height=305;\
         return 60;
     }else{
         if (indexPath.section == 2) {
-            //相册
             if (_model.photo) {
                 return 120;
             }else{
                 return 60;
             }
+            //相册
+
         }else if (indexPath.section == 3){
             //活动历史
             if (!_model.ct_num && !_model.jt_num) {
@@ -272,9 +272,10 @@ height=305;\
             cell.style = DDUserCellStyleTongCoin;
         }
             break;
-        case 2:
-        {
-            cell.style = DDUserCellStyleAlbum;
+        case 2: {
+            if (indexPath.row == 0) {
+                cell.style = DDUserCellStyleAlbum;
+            }
         }
             break;
         case 3:

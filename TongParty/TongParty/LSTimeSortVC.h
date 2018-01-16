@@ -9,5 +9,5 @@
 #import "DDBaseViewController.h"
 
 @interface LSTimeSortVC : DDBaseViewController
-@property (nonatomic, copy) void(^onTimeClickBlcok)(UIButton *sender);
+@property (nonatomic, copy) void(^onTimeClickBlcok)(NSString *begin, NSString *end);
 @end

@@ -9,6 +9,8 @@
 #import "DDResponseBaseHttp.h"
 
 @implementation DDResponseBaseHttp
+
+
 +(void)postWithAction:(NSString *)action params:(NSDictionary *)params type:(DDHttpResponseType)type block:(void (^)(DDResponseModel *result))block failure:(void(^)())failure
 {
     [super postWithUrl:kTJHostAPI action:action params:params type:type block:^(id responseObject) {

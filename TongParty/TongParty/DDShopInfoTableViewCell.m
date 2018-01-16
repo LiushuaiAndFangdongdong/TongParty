@@ -117,12 +117,26 @@
     _starView.showStar = (shop.star.doubleValue)*20;
 }
 
+// 计算两坐标点之间的距离
 -(double)distanceBetweenOrderBy:(double) lat1 :(double) lat2 :(double) lng1 :(double) lng2{
-    CLLocation *curLocation = [[CLLocation alloc] initWithLatitude:lat1 longitude:lng1];
-    CLLocation *otherLocation = [[CLLocation alloc] initWithLatitude:lat2 longitude:lng2];
-    double  distance  = [curLocation distanceFromLocation:otherLocation];
-    return  distance;
+    //地球半径
+    int R = 6378137;
+    //将角度转为弧度
+    float radLat1 = [self radians:lat1];
+    float radLat2 = [self radians:lat2];
+    float radLng1 = [self radians:lng1];
+    float radLng2 = [self radians:lng2];
+    //结果
+    float s = acos(cos(radLat1)*cos(radLat2)*cos(radLng1-radLng2)+sin(radLat1)*sin(radLat2))*R;
+    //精度
+    s = round(s* 10000)/10000;
+    return  round(s);
 }
+
+- (float)radians:(float)degrees{
+    return (degrees*3.14159265)/180.0;
+}
+
 
 - (void)awakeFromNib {
     [super awakeFromNib];

@@ -11,7 +11,6 @@
 @interface LSTimeSortVC ()
 @property (nonatomic, strong)UIButton  *btn_temp;
 @end
-static NSInteger baseTag = 171;
 static NSInteger btn_baseTag = 253;
 @implementation LSTimeSortVC
 
@@ -21,7 +20,7 @@ static NSInteger btn_baseTag = 253;
 }
 
 - (void)setupViews {
-    NSArray *array = @[@"24小时",@"11:00-14:00",@"17:00-21:30",@"17:10-03:30"];
+    NSArray *array = @[@"24小时",@"11:00-14:00",@"17:00-21:30",@"22:00-03:30"];
     CGFloat btn_lableH = DDFitHeight(25.f);
     CGFloat btn_lableW = (kScreenWidth - DDFitWidth(70.f))/4.f;
     for (int btn_count = 0; btn_count < array.count; btn_count++) {
@@ -47,10 +46,28 @@ static NSInteger btn_baseTag = 253;
     }
     [sender setTitleColor:kWhiteColor forState:UIControlStateNormal];
     sender.backgroundColor = kRGBColor(118.f, 213.f, 113.f);
-    if (_onTimeClickBlcok) {
-        _onTimeClickBlcok(sender);
-    }
     _btn_temp = sender;
+    if (!_onTimeClickBlcok) {
+        return;
+    }
+    switch (sender.tag - btn_baseTag) {
+        case 0:{
+            _onTimeClickBlcok(nil,nil);
+            }break;
+        case 1:{
+            _onTimeClickBlcok(@"11:00",@"14:00");
+        }break;
+        case 2:{
+            _onTimeClickBlcok(@"17:00",@"21:30");
+        }break;
+        case 3:{
+            _onTimeClickBlcok(@"22:00",@"03:00");
+        }break;
+
+        default:
+            break;
+    }
+    
 }
 
 

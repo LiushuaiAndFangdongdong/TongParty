@@ -376,7 +376,9 @@
         NSData *data=[NSJSONSerialization dataWithJSONObject:activity options:NSJSONWritingPrettyPrinted error:nil];
         jsonStr = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
     }
-    
+    if (!range) {
+        range = @"3000";
+    }
     [self setWithMutableDict:md key:@"token" value:TOKEN];
     [self setWithMutableDict:md key:@"range" value:range];
     [self setWithMutableDict:md key:@"begin_time" value:begin_time];
@@ -432,24 +434,31 @@
  @param dict 成功
  @param failure 失败
  */
-+ (void)getShopListsWithContent:(NSString *)content
++ (void)getShopListsWithContent:(NSArray *)content
                      price_star:(NSString *)price_star
                       price_end:(NSString *)price_end
                    position_lat:(NSString *)position_lat
                    position_lon:(NSString *)position_lon
                       star_time:(NSString *)star_time
                        end_time:(NSString *)end_time
+                          range:(NSString *)range
                           block:(void(^)(NSDictionary *dict))dict
                         failure:(void(^)())failure {
     NSMutableDictionary *md = [NSMutableDictionary dictionary];
+    NSString *jsonStr;
+    if (content) {
+        NSData *data=[NSJSONSerialization dataWithJSONObject:content options:NSJSONWritingPrettyPrinted error:nil];
+        jsonStr = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+    }
     [self setWithMutableDict:md key:@"token" value:TOKEN];
-    [self setWithMutableDict:md key:@"content" value:content];
+    [self setWithMutableDict:md key:@"content" value:jsonStr];
     [self setWithMutableDict:md key:@"price_star" value:price_star];
     [self setWithMutableDict:md key:@"price_end" value:price_end];
     [self setWithMutableDict:md key:@"position_lat" value:position_lat];
     [self setWithMutableDict:md key:@"position_lon" value:position_lon];
     [self setWithMutableDict:md key:@"star_time" value:star_time];
     [self setWithMutableDict:md key:@"end_time" value:end_time];
+    [self setWithMutableDict:md key:@"range" value:range];
     [self postWithAction:@"/tongju/api/get_shop_list.php" params:md type:kDDHttpResponseTypeJson block:^(DDResponseModel *result) {
         if (result.status.integerValue == kDDResponseStateSuccess) {
             dict(result.data);
@@ -562,24 +571,40 @@
 
 /**获取桌子列表*/
 + (void)getDeskListsWithToken:(NSString *)token
-                     activity:(NSString *)activity
+                     activity:(NSArray *)activity
                          page:(NSInteger)page
                           lat:(NSString *)lat
                           lon:(NSString *)lon
                  position_lat:(NSString *)position_lat
                  position_lon:(NSString *)position_lon
                    begin_time:(NSString *)begin_time
+                     end_time:(NSString *)end_time
+                        range:(NSString *)range
+                         text:(NSString *)text
+                       order1:(NSString *)order1
+                       order2:(NSString *)order2
                         block:(void(^)(NSDictionary *dict))dict
                       failure:(void(^)())failure;{
     
     NSMutableDictionary *md = [NSMutableDictionary dictionary];
+    NSString *jsonStr;
+    if (activity) {
+        NSData *data=[NSJSONSerialization dataWithJSONObject:activity options:NSJSONWritingPrettyPrinted error:nil];
+        jsonStr = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+    }
+    
     [self setWithMutableDict:md key:@"token" value:token];
-    [self setWithMutableDict:md key:@"activity" value:activity];
+    [self setWithMutableDict:md key:@"activity" value:jsonStr];
+    [self setWithMutableDict:md key:@"order1" value:order1];
+    [self setWithMutableDict:md key:@"order2" value:order2];
+    [self setWithMutableDict:md key:@"text" value:text];
+    [self setWithMutableDict:md key:@"range" value:range];
     [self setWithMutableDict:md key:@"lat" value:lat];
     [self setWithMutableDict:md key:@"lon" value:lon];
     [self setWithMutableDict:md key:@"position_lat" value:position_lat];
     [self setWithMutableDict:md key:@"position_lon" value:position_lon];
     [self setWithMutableDict:md key:@"begin_time" value:begin_time];
+    [self setWithMutableDict:md key:@"end_time" value:end_time];
     [self setWithMutableDict:md key:@"page" value:@(page)];
     
     [self postWithAction:kTJGetDeskListsAPI params:md type:kDDHttpResponseTypeJson block:^(DDResponseModel *result) {
@@ -644,7 +669,7 @@
         } else {
             failure();
         }
-        [MBProgressHUD showMessage:result.msg_cn toView:[UIApplication sharedApplication].keyWindow];
+        //[MBProgressHUD showMessage:result.msg_cn toView:[UIApplication sharedApplication].keyWindow];
     } failure:^{
         //
     }];
@@ -793,6 +818,8 @@
     [self setWithMutableDict:md key:@"tid" value:tid];
     [self setWithMutableDict:md key:@"t_uid" value:t_uid];
     [self setWithMutableDict:md key:@"prop" value:prop];
+    [self setWithMutableDict:md key:@"m" value:@"apply"];
+
     [self postWithAction:kTJApplyJoinInDeskAPI params:md type:kDDHttpResponseTypeJson block:^(DDResponseModel *result) {
         if (result.status.integerValue == kDDResponseStateSuccess) {
             dict(result.data);
@@ -1149,7 +1176,7 @@
         } else {
             failure();
         }
-        [MBProgressHUD showMessage:result.msg_cn toView:[UIApplication sharedApplication].keyWindow];
+//        [MBProgressHUD showMessage:result.msg_cn toView:[UIApplication sharedApplication].keyWindow];
     } failure:^{
         //
     }];
@@ -2009,6 +2036,31 @@
     [self setWithMutableDict:md key:@"lat" value:lat];
     [self setWithMutableDict:md key:@"lon" value:lon];
     [self postWithAction:@"/tongju/api/get_find.php" params:md type:kDDHttpResponseTypeJson block:^(DDResponseModel *result) {
+        if (result.status.integerValue == kDDResponseStateSuccess) {
+            dict(result.data);
+        } else {
+            failure();
+        }
+        //[MBProgressHUD showMessage:result.msg_cn toView:[UIApplication sharedApplication].keyWindow];
+    } failure:^{
+        //
+    }];
+}
+
+/**
+ 获取附近桌子卡片
+ 
+ @param lat 纬度
+ @param lon 经度
+ @param page 页码
+ */
++ (void)getNearRecommendCardsWithLat:(NSString *)lat lon:(NSString *)lon page:(NSInteger)page block:(void(^)(NSDictionary *dict))dict failure:(void(^)())failure{
+    NSMutableDictionary *md = [NSMutableDictionary dictionary];
+    [self setWithMutableDict:md key:@"token" value:[DDUserSingleton shareInstance].token];
+    [self setWithMutableDict:md key:@"lat" value:lat];
+    [self setWithMutableDict:md key:@"lon" value:lon];
+    [self setWithMutableDict:md key:@"page" value:@(page)];
+    [self postWithAction:@"/tongju/api/get_find_cord.php" params:md type:kDDHttpResponseTypeJson block:^(DDResponseModel *result) {
         if (result.status.integerValue == kDDResponseStateSuccess) {
             dict(result.data);
         } else {

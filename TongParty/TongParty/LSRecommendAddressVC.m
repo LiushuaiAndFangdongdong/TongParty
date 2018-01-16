@@ -15,12 +15,15 @@
 #import "LSRegionDumpsVC.h"
 #import "LSTimeSortVC.h"
 #import "LSShopEntity.h"
+#import "DDCustomCommonEmptyView.h"
+#import "LSActivityEntity.h"
 @interface LSRecommendAddressVC ()<UISearchBarDelegate>
 @property (nonatomic, strong) UISearchBar *searchBar;
 @property (nonatomic, strong) LSSortingView *sortingView;
 @property (nonatomic, strong)LSContenSortVC *contentsortVc;
 @property (nonatomic, strong)LSRegionDumpsVC *regionDumpsVc;
 @property (nonatomic, strong)LSTimeSortVC *timesortVc;
+@property (nonatomic, weak) DDCustomCommonEmptyView *emptyView;
 @end
 
 @implementation LSRecommendAddressVC
@@ -34,7 +37,7 @@
 
 - (void)loadData {
     [super loadData];
-    [DDTJHttpRequest getShopListsWithContent:@"" price_star:@"" price_end:@"" position_lat:@"" position_lon:@"" star_time:@"" end_time:@"" block:^(NSDictionary *dict) {
+    [DDTJHttpRequest getShopListsWithContent:nil price_star:@"" price_end:@"" position_lat:@"" position_lon:@"" star_time:@"" end_time:@"" range:nil block:^(NSDictionary *dict) {
         self.dataArray = [LSShopEntity mj_objectArrayWithKeyValuesArray:dict];
         [self.tableView reloadData];
     } failure:^{
@@ -69,6 +72,7 @@
     self.view.backgroundColor = kBgWhiteGrayColor;
     self.navigationController.navigationBar.shadowImage = [UIImage new];
 }
+
 
 #pragma  mark search view
 - (UISearchBar *)searchBar {
@@ -117,9 +121,30 @@
     return _sortingView;
 }
 
+
 - (LSContenSortVC *)contentsortVc {
+    WeakSelf(weakSelf);
     if (!_contentsortVc) {
         _contentsortVc = [[LSContenSortVC alloc] init];
+        _contentsortVc.confirmSort = ^(NSArray *selectedArray) {
+            NSMutableArray *idArr = [NSMutableArray array];
+            for (LSActivityEntity *at in selectedArray) {
+                [idArr addObject:at.id];
+            }
+            [DDTJHttpRequest getShopListsWithContent:idArr price_star:nil price_end:nil position_lat:nil position_lon:nil star_time:nil end_time:nil range:nil block:^(NSDictionary *dict) {
+                weakSelf.dataArray = [LSShopEntity mj_objectArrayWithKeyValuesArray:dict];
+                if (weakSelf.dataArray.count == 0) {
+                    [weakSelf.emptyView showInView:weakSelf.view];
+                } else {
+                    [weakSelf.emptyView removeFromSuperview];
+                }
+                weakSelf.contentsortVc.view.hidden = YES;
+                [weakSelf.sortingView clean];
+                [weakSelf.tableView reloadData];
+            } failure:^{
+                [weakSelf.emptyView showInView:weakSelf.view];
+            }];
+        };
         [self addChildVc:_contentsortVc];
         _contentsortVc.view.frame = CGRectMake(0, self.sortingView.bottom, self.view.frame.size.width, kScreenHeight);
         [self.view addSubview:_contentsortVc.view];
@@ -129,8 +154,42 @@
 }
 
 - (LSRegionDumpsVC *)regionDumpsVc {
+    WeakSelf(weakSelf);
     if (!_regionDumpsVc) {
         _regionDumpsVc = [[LSRegionDumpsVC alloc] init];
+        _regionDumpsVc.confirmSort = ^(NSString *lon, NSString *lat) {
+            [DDTJHttpRequest getShopListsWithContent:nil price_star:nil price_end:nil position_lat:lat position_lon:lon star_time:nil end_time:nil range:nil block:^(NSDictionary *dict) {
+                weakSelf.dataArray = [LSShopEntity mj_objectArrayWithKeyValuesArray:dict];
+                if (weakSelf.dataArray.count == 0) {
+                    [weakSelf.emptyView showInView:weakSelf.view];
+                } else {
+                    [weakSelf.emptyView removeFromSuperview];
+                }
+                weakSelf.contentsortVc.view.hidden = YES;
+                [weakSelf.tableView reloadData];
+            } failure:^{
+                [weakSelf.emptyView showInView:weakSelf.view];
+            }];
+            weakSelf.regionDumpsVc.view.hidden = YES;
+            [weakSelf.sortingView clean];
+        };
+        
+        _regionDumpsVc.selectRangeSort = ^(NSString *range) {
+            [DDTJHttpRequest getShopListsWithContent:nil price_star:nil price_end:nil position_lat:nil position_lon:nil star_time:nil end_time:nil range:range block:^(NSDictionary *dict) {
+                weakSelf.dataArray = [LSShopEntity mj_objectArrayWithKeyValuesArray:dict];
+                if (weakSelf.dataArray.count == 0) {
+                    [weakSelf.emptyView showInView:weakSelf.view];
+                } else {
+                    [weakSelf.emptyView removeFromSuperview];
+                }
+                weakSelf.contentsortVc.view.hidden = YES;
+                [weakSelf.tableView reloadData];
+            } failure:^{
+                [weakSelf.emptyView showInView:weakSelf.view];
+            }];
+            weakSelf.regionDumpsVc.view.hidden = YES;
+            [weakSelf.sortingView clean];
+        };
         [self addChildVc:_regionDumpsVc];
         _regionDumpsVc.view.frame = CGRectMake(0, self.sortingView.bottom, self.view.frame.size.width, kScreenHeight);
         [self.view addSubview:_contentsortVc.view];
@@ -140,14 +199,40 @@
 }
 
 - (LSTimeSortVC *)timesortVc {
+    WeakSelf(weakSelf);
     if (!_timesortVc) {
         _timesortVc = [[LSTimeSortVC alloc] init];
+        _timesortVc.onTimeClickBlcok = ^(NSString *begin, NSString *end) {
+            [DDTJHttpRequest getShopListsWithContent:nil price_star:nil price_end:nil position_lat:nil position_lon:nil star_time:begin end_time:end range:nil block:^(NSDictionary *dict) {
+                weakSelf.dataArray = [LSShopEntity mj_objectArrayWithKeyValuesArray:dict];
+                if (weakSelf.dataArray.count == 0) {
+                    [weakSelf.emptyView showInView:weakSelf.view];
+                } else {
+                    [weakSelf.emptyView removeFromSuperview];
+                }
+                weakSelf.contentsortVc.view.hidden = YES;
+                [weakSelf.tableView reloadData];
+            } failure:^{
+                [weakSelf.emptyView showInView:weakSelf.view];
+            }];
+            weakSelf.timesortVc.view.hidden = YES;
+            [weakSelf.sortingView clean];
+        };
         [self addChildVc:_timesortVc];
         _timesortVc.view.frame = CGRectMake(0, self.sortingView.bottom, self.view.frame.size.width, 40.f);
         [self.view addSubview:_timesortVc.view];
         _timesortVc.view.hidden = YES;
     }
     return _timesortVc;
+}
+
+- (DDCustomCommonEmptyView *)emptyView {
+    if (!_emptyView) {
+        DDCustomCommonEmptyView *empty = [[DDCustomCommonEmptyView alloc] initWithTitle:@"暂无数据" secondTitle:@"不好意思，网络跟您开了一个玩笑了" iconname:@"nocontent"];
+        [self.view addSubview:empty];
+        _emptyView = empty;
+    }
+    return _emptyView;
 }
 
 #pragma mark - UITableViewDelegate

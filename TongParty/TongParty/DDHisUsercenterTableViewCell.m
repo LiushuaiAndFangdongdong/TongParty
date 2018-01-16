@@ -123,6 +123,7 @@
 - (void)updateValueWith:(id)model {
     [_infoView updateValueWithModel:model];
     [_ntView updateWithModel:model withType:DDNumbersTextViewTypeOthers];
+    [_albumView updateWithHisUserModel:model];
 }
 
 @end

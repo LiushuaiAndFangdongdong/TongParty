@@ -10,5 +10,9 @@
 #import "DDTableInfoModel.h"
 
 @implementation DDTableInfoModel
-
++ (NSDictionary *)replacedKeyFromPropertyName {
+    return @{
+             @"ID":@"id",
+             };
+}
 @end

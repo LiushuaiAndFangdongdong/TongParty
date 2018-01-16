@@ -136,13 +136,14 @@
  @param dict 成功
  @param failure 失败
  */
-+ (void)getShopListsWithContent:(NSString *)content
++ (void)getShopListsWithContent:(NSArray *)content
                      price_star:(NSString *)price_star
                       price_end:(NSString *)price_end
                    position_lat:(NSString *)position_lat
                    position_lon:(NSString *)position_lon
                       star_time:(NSString *)star_time
                        end_time:(NSString *)end_time
+                          range:(NSString *)range
                           block:(void(^)(NSDictionary *dict))dict
                         failure:(void(^)())failure;
 
@@ -215,13 +216,18 @@
  * @page 页数
  */
 + (void)getDeskListsWithToken:(NSString *)token
-                   activity:(NSString *)activity
+                   activity:(NSArray *)activity
                        page:(NSInteger)page
                          lat:(NSString *)lat
                          lon:(NSString *)lon
                  position_lat:(NSString *)position_lat
                  position_lon:(NSString *)position_lon
                  begin_time:(NSString *)begin_time
+                     end_time:(NSString *)end_time
+                        range:(NSString *)range
+                         text:(NSString *)text
+                       order1:(NSString *)order1
+                       order2:(NSString *)order2
                       block:(void(^)(NSDictionary *dict))dict
                     failure:(void(^)())failure;
 
@@ -724,8 +730,14 @@
 
 + (void)getNearByDiscoverWithLat:(NSString *)lat lon:(NSString *)lon block:(void(^)(NSDictionary *dict))dict failure:(void(^)())failure;
 
-
-
+/**
+ 获取附近桌子卡片
+ 
+ @param lat 纬度
+ @param lon 经度
+ @param page 页码
+ */
++ (void)getNearRecommendCardsWithLat:(NSString *)lat lon:(NSString *)lon page:(NSInteger)page block:(void(^)(NSDictionary *dict))dict failure:(void(^)())failure;
 @end
 
 

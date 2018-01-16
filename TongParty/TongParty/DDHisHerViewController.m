@@ -19,6 +19,7 @@
 #import "LSHisUserInfoModel.h"
 #import "TSActionDemoView.h"
 #import "LSPlayRewardGiftVC.h"
+#import "LSAlbumEtity.h"
 #define kAvatarWidth   50
 #define kMarginGapWidth 18
 #define kActivityItemWidth (kScreenWidth - kMarginGapWidth*6)/5
@@ -113,6 +114,7 @@ height=305;\
     //开启异步并行线程请求用户详情数据
     [DDTJHttpRequest getOtherUserDetailInfoWithToken:[DDUserSingleton shareInstance].token fid:_fid block:^(NSDictionary *dict) {
         self.model = [LSHisUserInfoModel mj_objectWithKeyValues:dict];
+        self.model.photo = [LSAlbumEtity mj_objectArrayWithKeyValuesArray:self.model.photo];
         [self.tableView reloadData];
     } failure:^{
         
@@ -205,10 +207,11 @@ height=305;\
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     
     if (indexPath.section == 3) {
-        if (!self.model.photo) {
-            return 0.00000000001;
+        if (_model.photo) {
+            return 120;
+        }else{
+            return 60;
         }
-        return 120;
     }else if (indexPath.section == 4){
         return 60+kActivityItemWidth+20;
     }else{
@@ -266,9 +269,6 @@ height=305;\
         }
             break;
         case 4: {
-            if (self.model.photo) {
-                cell.style = DDHisUserCellStyleAlbum;
-            }
             cell.style = DDHisUserCellStyleActivities;
         }
             break;
