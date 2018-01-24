@@ -20,6 +20,7 @@
 #import "LSAddressLabelEntity.h"
 #import "BRPickerView.h"
 #import "DDLocationAddressVC.h"
+
 @interface LSCreateDeskViewController ()<UITableViewDelegate,UITableViewDataSource,LSUpLoadImageManagerDelegate,UIScrollViewDelegate>
 @property (nonatomic, strong)UITableView    *tableview;
 @property (nonatomic, strong)UIButton       *btn_createDesk;
@@ -61,6 +62,7 @@
     // 获取标签
     [DDTJHttpRequest getAddrLabelsblock:^(NSDictionary *dict) {
         NSArray *arr = [LSAddressLabelEntity mj_objectArrayWithKeyValuesArray:dict];
+        
         [_labelDict setObject:arr forKey:@"array"];
         [_labelDict setObject:@"1" forKey:@"isexpand"];
         [self.tableview reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:2 inSection:1]] withRowAnimation:UITableViewRowAnimationFade];

@@ -7,7 +7,10 @@
 //
 
 #import "DDBaseTableViewCell.h"
-
+#import "LSPersonEntity.h"
 @interface DDInterestMessageCell : DDBaseTableViewCell
-
+-(void)updateWithModel:(LSPersonEntity *)entity;
+@property (nonatomic, copy)void (^inviteJoin)(NSString *to_id);
 @end
+
+

@@ -10,5 +10,5 @@
 #import "DDBaseViewController.h"
 
 @interface DDPrefectDataVC : DDBaseViewController
-
+@property (nonatomic, assign)BOOL isModen;
 @end

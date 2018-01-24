@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "DDTableInfoModel.h"
 #import "DDParticipantModel.h"
+#import "DDDeskView.h"
 
 typedef NS_ENUM(NSInteger, DDDeskShowType) {
     /**常规展示(有公告，无下边椅子)**/
@@ -22,8 +23,10 @@ typedef NS_ENUM(NSInteger, DDDeskShowType) {
 @interface DDBigDeskView : UIView
 @property (nonatomic, assign) DDDeskShowType type;
 - (void)updateDeskInfoModel:(DDTableInfoModel *)model;
-- (void)updatePartsWithArray:(NSArray <DDParticipantModel*>*)array;
+- (void)updateVistorAvatar:(NSString *)vistorImage;
+- (void)updatePartsWithArray:(NSArray <DDParticipantModel*>*)array person_num:(NSString *)person_num;
 - (void)updateNoticeWith:(NSString *)notice;
+@property (nonatomic, strong) DDDeskView *deskView;         //桌子
 @end
 
 

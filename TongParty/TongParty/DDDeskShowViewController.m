@@ -20,6 +20,9 @@
 #import "DDSignQRcodeViewController.h"  //二维码签到页面
 #import "DDInviteFriedsViewController.h"//邀请好友页面
 #import "LSCouponView.h"                //弹窗加入券和申请券
+#import "DDTicketModel.h"               //加入券model
+#import "DDSelfModel.h"                 //非桌主浏览时用户model
+#import "LXAlertView.h"
 
 @interface DDDeskShowViewController ()
 @property (nonatomic, strong) DDTableInfoModel *tModel;         //桌子信息model
@@ -27,6 +30,8 @@
 @property (nonatomic, strong) DDBigDeskView *deskShowView;      //桌子view
 @property (nonatomic, strong) DDParticipantModel *vistorModel;  //游客
 @property (nonatomic, strong) NSArray *noticeArr;               //公告数组
+@property (nonatomic, strong) DDTicketModel *ticketModel;       //加入券model
+@property (nonatomic, strong) DDSelfModel *selfModel;
 @end
 
 @implementation DDDeskShowViewController
@@ -43,6 +48,7 @@
 -(void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     self.navigationController.navigationBar.translucent = NO;
+    [self.deskShowView.deskView timerDealloc];
 }
 
 - (DDBottomView *)bottomView{
@@ -61,9 +67,9 @@
                 }else if ([_tModel.type intValue] == 2){
                     //参加者----联系桌主
                     [weakSelf callMaster];
-                }else if ([_tModel.type intValue] == 3){
+                }else if ([_tModel.type intValue] == 0){
                     //未参加者----申请加入
-                    [weakSelf vistorApplyForJoinDesk];
+                    [weakSelf prepareApplyTicket];
                 }else{}
             }
             if (index == 2) {
@@ -73,9 +79,19 @@
                 }else if ([_tModel.type intValue] == 2){
                     //参加者----签到
                     [weakSelf partintSign];
-                }else if ([_tModel.type intValue] == 3){
+                }else if ([_tModel.type intValue] == 0){
                     //未参加者----感兴趣
-                    [weakSelf vistorCareDesk];
+                    
+                    if (weakSelf.selfModel) {
+                        if ([weakSelf.selfModel.is_like intValue] == 1) {
+                            //已经关注了，调取消关注接口
+                            [weakSelf vistorsCancelCardDesk];
+                        }else if ([weakSelf.selfModel.is_like intValue] == 0){
+                            //未关注，调关注接口
+                             [weakSelf vistorCareDesk];
+                        }
+                    }
+                    
                 }else{}
             }
             if (index == 3) {
@@ -130,12 +146,21 @@
         [self hideLoadingView];
         NSLog(@"桌子信息----->%@",dict);
         _tModel = [DDTableInfoModel mj_objectWithKeyValues:dict[@"info"]];
+        _selfModel = [DDSelfModel mj_objectWithKeyValues:dict[@"self"]];
         self.noticeArr = [DDNoticeModel mj_objectArrayWithKeyValuesArray:dict[@"info"][@"notice"]];
         NSArray *partsArr = [DDParticipantModel mj_objectArrayWithKeyValuesArray:dict[@"users"]];
         [self.deskShowView updateDeskInfoModel:_tModel];
         [self.deskShowView updateNoticeWith:_tModel.text];
-        [self.deskShowView updatePartsWithArray:partsArr];
-        [_bottomView updateBtnImageWithType:_tModel.type];
+        [self.deskShowView updatePartsWithArray:partsArr person_num:_tModel.person_num];
+        [_bottomView updateBtnImageWithType:_tModel.type is_like:_selfModel.is_like];
+        //TYPE 1\2\0----桌主、参与者、游客
+        if ([_tModel.type intValue] == 0) {
+            self.deskShowView.type = DDDeskShowTypeVisitor;
+            [self.deskShowView updateVistorAvatar:_selfModel.image];
+        }else{
+            self.deskShowView.type = DDDeskShowTypeNormal;
+        }
+       
         
     } failure:^{
         //
@@ -164,42 +189,87 @@
 //邀请好友页面
 - (void)pushInviteFriedsVC{
     DDInviteFriedsViewController *inviteVC = [[DDInviteFriedsViewController alloc] init];
-    inviteVC.tid = tmpModel.id;
+    inviteVC.tid = _tModel.ID;
     [self.navigationController pushViewController:inviteVC animated:YES];
 }
 
 //游客关注桌子
 -(void)vistorCareDesk{
     [MBProgressHUD showLoading:@"关注中..." toView:self.view];
-    [DDTJHttpRequest vistorCaredDeskWithToken:TOKEN tid:tmpModel.id block:^(NSDictionary *dict) {
+    [DDTJHttpRequest vistorCaredDeskWithToken:TOKEN tid:_tModel.ID block:^(NSDictionary *dict) {
         [MBProgressHUD hideAllHUDsInView:self.view];
-        NSLog(@"关注桌子  %@",dict);
+         _selfModel.is_like  =@"1";
+        [_bottomView updateBtnImageWithType:_tModel.type is_like:_selfModel.is_like ];
+//        [self refreshAction];
     } failure:^{
         //
     }];
 }
-//游客申请加入桌子
-- (void)vistorApplyForJoinDesk{
-    
-    // 1邀请  0加入 // 控件中信息被打包成dict 返回。。
-    [[LSCouponView shareInstance] showCouponViewOnWindowWithType:0 doneBlock:^(NSDictionary *dict) {
-        [MBProgressHUD showLoading:@"申请中..." toView:self.view];
-        
-//        [DDTJHttpRequest applyJoinDeskWithToken:TOKEN tid:tmpModel.id t_uid:_tModel.uid prop:@"" block:^(NSDictionary *dict) {
-//            [MBProgressHUD hideAllHUDsInView:self.view];
-//            NSLog(@"申请加桌  %@",dict);
-//        } failure:^{
-//            //
-//        }];
-        
-        [DDTJHttpRequest applyJoinDeskWithToken:TOKEN tid:tmpModel.id t_uid:_tModel.uid prop:@"" block:^(NSDictionary *dict) {
-            //
-        } failure:^{
-            //
-        }];
-        
+
+//游客取消关注桌子
+- (void)vistorsCancelCardDesk{
+    [MBProgressHUD showLoading:@"取消关注中..." toView:self.view];
+    [DDTJHttpRequest vistorCancelCaredDeskWithToken:TOKEN tid:_tModel.ID block:^(NSDictionary *dict) {
+        [MBProgressHUD hideAllHUDsInView:self.view];
+        _selfModel.is_like  =@"0";
+        [_bottomView updateBtnImageWithType:_tModel.type is_like:_selfModel.is_like];
+//        [self refreshAction];
+    } failure:^{
+        //
     }];
 }
+
+
+//获取道具加入券的数量值
+- (void)prepareApplyTicket{
+    // 1邀请  0加入 // 控件中信息被打包成dict 返回。。
+    [[LSCouponView shareInstance] showCouponViewOnWindowWithType:0 doneBlock:^(NSDictionary *dict) {
+        
+        if ([dict[@"isUseJoinCoupon"] intValue] == 0) {
+            //关
+            _ticketModel = [DDTicketModel new];
+            _ticketModel.coin = @"0";
+            [self vistorApplyForJoinDesk];
+        }else if ([dict[@"isUseJoinCoupon"] intValue] == 1){
+            //开
+            //m = 2为加入券
+            [DDTJHttpRequest getTicketsInfoWithToken:TOKEN m:@"2" block:^(NSDictionary *dict) {
+                _ticketModel = [DDTicketModel mj_objectWithKeyValues:dict];
+                if ([_ticketModel.my_coin intValue] < [_ticketModel.coin intValue]) {
+                    [self messageInAppPurchase];
+                }else{
+                    [self vistorApplyForJoinDesk];
+                }
+            } failure:^{
+                //
+            }];
+        }{}
+    }];
+}
+
+//余额不足提示内购
+- (void)messageInAppPurchase{
+    NSString *message = [NSString stringWithFormat:@"当前使用%@价值%@，您余额%@，是否要充值？",_ticketModel.name,_ticketModel.coin,_ticketModel.my_coin];
+    LXAlertView *alert=[[LXAlertView alloc] initWithTitle:@"提示" message:message cancelBtnTitle:@"取消" otherBtnTitle:@"确定" clickIndexBlock:^(NSInteger clickIndex) {
+        
+        if (clickIndex == 1) {
+            NSLog(@"去内购");
+        }
+    }];
+    alert.animationStyle=LXASAnimationDefault;
+    [alert showLXAlertView];
+}
+//申请加入桌子
+- (void)vistorApplyForJoinDesk{
+    [MBProgressHUD showLoading:@"申请中..." toView:self.view];
+    [DDTJHttpRequest applyJoinDeskWithToken:TOKEN tid:_tModel.ID t_uid:_tModel.uid prop:_ticketModel.coin block:^(NSDictionary *dict) {
+        [MBProgressHUD hideAllHUDsInView:self.view];
+        NSLog(@"申请加桌  %@",dict);
+    } failure:^{
+        //
+    }];
+}
+
 //联系桌主
 -(void)callMaster{
     if (_tModel.mobile == nil || _tModel.mobile == NULL) {

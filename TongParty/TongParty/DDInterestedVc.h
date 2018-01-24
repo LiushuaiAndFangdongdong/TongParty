@@ -7,8 +7,8 @@
 //
 //感兴趣的
 
-#import "DDBaseTableViewController.h"
+#import "DDBaseViewController.h"
 
-@interface DDInterestedVc : DDBaseTableViewController
-
+@interface DDInterestedVc : DDBaseViewController
+- (void)userLoadData;
 @end

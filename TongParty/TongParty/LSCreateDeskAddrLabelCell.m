@@ -7,7 +7,7 @@
 //
 
 #import "LSCreateDeskAddrLabelCell.h"
-
+#import "LSAddressLabelEntity.h"
 @interface LSCreateDeskAddrLabelCell (){
     CGFloat finalH;
 }
@@ -28,7 +28,9 @@
 - (void)updatePhotoWithArray:(NSDictionary *)dict {
     _labels = dict[@"array"];
     NSString *isexpand = dict[@"isexpand"]; // 0 展开  1 不展
-    
+    if (!_labels) {
+        return;
+    }
     if (isexpand.integerValue == 0) {
         [self.btn_expandMore setTitle:@"收起部分" forState:UIControlStateNormal];
     } else {
@@ -58,6 +60,7 @@
     
     for (int btn_count = 0; btn_count < _labels.count; btn_count++) {
         UIButton *btn_label = [UIButton new];
+        LSAddressLabelEntity *einty = _labels[btn_count];
         if (btn_count < 4) {
             btn_label.frame = CGRectMake(DDFitWidth(20.f) + (btn_lableW + DDFitWidth(10.f))  * btn_count, DDFitHeight(10.f), btn_lableW, btn_lableH);
         }else {
@@ -75,7 +78,7 @@
         btn_label.layer.borderColor = kCommonGrayTextColor.CGColor;
         btn_label.layer.borderWidth = kLineHeight;
         btn_label.layer.cornerRadius = 3.f;
-        [btn_label setTitle:_labels[btn_count] forState:UIControlStateNormal];
+        [btn_label setTitle:einty.name forState:UIControlStateNormal];
         [btn_label setTitleColor:kCommonGrayTextColor forState:UIControlStateNormal];
         btn_label.titleLabel.font = DDFitFont(12.f);
 //        [btn_label addTarget:self action:@selector(chooseLabel:) forControlEvents:UIControlEventTouchUpInside];

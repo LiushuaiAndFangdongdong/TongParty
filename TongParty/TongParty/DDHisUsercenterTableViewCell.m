@@ -67,7 +67,7 @@
 }
 -(DDAlbumCellView *)albumView{
     if (!_albumView) {
-        _albumView =[[DDAlbumCellView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, 120)];
+        _albumView =[[DDAlbumCellView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, 130)];
     }
     return _albumView;
 }
@@ -123,7 +123,19 @@
 - (void)updateValueWith:(id)model {
     [_infoView updateValueWithModel:model];
     [_ntView updateWithModel:model withType:DDNumbersTextViewTypeOthers];
+
     [_albumView updateWithHisUserModel:model];
+    LSHisUserInfoModel *m = (LSHisUserInfoModel *)model;
+    if (m.table.count == 0 || !m) {
+        self.activitiesHisView.height = 60;
+    }else{
+        self.activitiesHisView.height = 60+kActivityItemWidth+20;
+    }
+    if (!m && m.photo && m.photo.count > 0) {
+        self.albumView.height = 60.f;
+    } else {
+        self.albumView.height = 130.f;
+    }
 }
 
 @end

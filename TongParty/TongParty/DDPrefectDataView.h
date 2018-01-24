@@ -9,5 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface DDPrefectDataView : UIScrollView
-
+@property (nonatomic, strong) UIImageView *avatarView;
+@property (nonatomic, copy)void (^uploadHeaderImage)();
+@property (nonatomic, copy)void (^confirmUpInfo)(NSString *sex, NSString *name);
 @end

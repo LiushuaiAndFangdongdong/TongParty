@@ -10,7 +10,6 @@
 #import "DDPrefectDataView.h"
 
 @interface DDPrefectDataView()
-@property (nonatomic, strong) UIImageView *avatarView;
 @property (nonatomic, strong) UILabel *nameKeyLbl;
 @property (nonatomic, strong) UITextField *nameTxt;
 @property (nonatomic, strong) UILabel *horLine1;
@@ -25,6 +24,8 @@
 @property (nonatomic, strong) UIButton *secretBtn;
 @property (nonatomic, strong) UILabel *horLine2;
 @property (nonatomic, strong) UIButton *completeBtn;
+@property (nonatomic, strong) NSArray  *btnarray;
+@property (nonatomic, copy) NSString  *sex;
 @end
 
 @implementation DDPrefectDataView
@@ -48,6 +49,8 @@
     }];
     _avatarView.userInteractionEnabled = YES;
     _avatarView.image = kImage(@"add_avatar_default");
+    _avatarView.layer.cornerRadius = DDFitWidth(50.f);
+    _avatarView.layer.masksToBounds = YES;
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(avatarTap)];
     [_avatarView addGestureRecognizer:tap];
     
@@ -114,6 +117,12 @@
     [_maleBtn setTitleColor:kWhiteColor forState:UIControlStateNormal];
     [_maleBtn setBackgroundColor:kBgGreenColor];
     _maleBtn.layerCornerRadius = 8;
+    _maleBtn.layer.borderColor = kBgGreenColor.CGColor;
+    [_maleBtn setTitleColor:kBlackColor forState:UIControlStateNormal];
+    [_maleBtn setBackgroundColor:kClearColor];
+    _maleBtn.layer.borderWidth = 1.f;
+    _maleBtn.titleLabel.font = DDFitFont(15.f);
+    [_maleBtn addTarget:self action:@selector(selectSex:) forControlEvents:UIControlEventTouchUpInside];
     
     _verLine1 = [UILabel new];
     [self addSubview:_verLine1];
@@ -143,9 +152,13 @@
         make.right.mas_equalTo(-10);
     }];
     [_femaleBtn setTitle:@"女" forState:UIControlStateNormal];
-    [_femaleBtn setTitleColor:kWhiteColor forState:UIControlStateNormal];
-    [_femaleBtn setBackgroundColor:kBgGreenColor];
+    _femaleBtn.layer.borderColor = kBgGreenColor.CGColor;
+    [_femaleBtn setTitleColor:kBlackColor forState:UIControlStateNormal];
+    [_femaleBtn setBackgroundColor:kClearColor];
+    _femaleBtn.layer.borderWidth = 1.f;
     _femaleBtn.layerCornerRadius = 8;
+    _femaleBtn.titleLabel.font = DDFitFont(15.f);
+    [_femaleBtn addTarget:self action:@selector(selectSex:) forControlEvents:UIControlEventTouchUpInside];
     
     _verLine2 = [UILabel new];
     [self addSubview:_verLine2];
@@ -175,9 +188,14 @@
         make.right.mas_equalTo(-10);
     }];
     [_secretBtn setTitle:@"保密" forState:UIControlStateNormal];
+    _secretBtn.layer.borderWidth = 1.f;
+    _secretBtn.titleLabel.font = DDFitFont(15.f);
+    _secretBtn.layer.borderColor = [UIColor clearColor].CGColor;
     [_secretBtn setTitleColor:kWhiteColor forState:UIControlStateNormal];
     [_secretBtn setBackgroundColor:kBgGreenColor];
+    self.sex = @"0";
     _secretBtn.layerCornerRadius = 8;
+    [_secretBtn addTarget:self action:@selector(selectSex:) forControlEvents:UIControlEventTouchUpInside];
     
     _horLine2 = [UILabel new];
     [self addSubview:_horLine2];
@@ -203,14 +221,46 @@
     _completeBtn.layerCornerRadius = DDFitWidth(15);
     [_completeBtn addTarget:self action:@selector(dataComplete) forControlEvents:UIControlEventTouchUpInside];
     
+    self.btnarray = @[_maleBtn,_femaleBtn,_secretBtn];
+}
+
+
+- (void)selectSex:(UIButton *)sender {
+    for (UIButton *btn in self.btnarray) {
+        btn.layer.borderColor = kBgGreenColor.CGColor;
+        [btn setTitleColor:kBlackColor forState:UIControlStateNormal];
+        [btn setBackgroundColor:kWhiteColor];
+    }
+    sender.layer.borderColor = [UIColor clearColor].CGColor;
+    [sender setTitleColor:kWhiteColor forState:UIControlStateNormal];
+    [sender setBackgroundColor:kBgGreenColor];
+    if ([sender isEqual:self.btnarray[0]]) {
+        self.sex = @"1";
+    }
+    
+    if ([sender isEqual:self.btnarray[1]]) {
+        self.sex = @"0";
+    }
+    
+    if ([sender isEqual:self.btnarray[2]]) {
+        self.sex = @"0";
+    }
 }
 
 - (void)avatarTap{
-    NSLog(@"上传头像");
+    if (_uploadHeaderImage) {
+        _uploadHeaderImage();
+    }
 }
 
 - (void)dataComplete{
-    NSLog(@"完成资料完善");
+    if ([_nameTxt.text isEqualToString:@""]) {
+        [MBProgressHUD showError:@"请填写名称！" toView:KEY_WINDOW];
+        return;
+    }
+    if (_confirmUpInfo) {
+        _confirmUpInfo(self.sex, _nameTxt.text);
+    }
 }
 
 @end

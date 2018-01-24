@@ -15,7 +15,7 @@
 @property (nonatomic, copy) NSString *mid;//消息类型id
 @property (nonatomic, copy) NSString *num;//未读条数
 @property (nonatomic, copy) NSString *tid;  //桌子id
-//@property (nonatomic, copy) NSString *msg; //msg[id]--消息id  msg[msg_text]--消息内容 msg[uptime]发布时间
+@property (nonatomic, strong) NSArray *msg; //msg[id]--消息id  msg[msg_text]--消息内容 msg[uptime]发布时间
 @property (nonatomic, copy) NSString *msg_id;
 @property (nonatomic, copy) NSString *msg_text;
 @property (nonatomic, copy) NSString *uptime;

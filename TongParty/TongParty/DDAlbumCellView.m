@@ -66,7 +66,7 @@
         self.accessView.hidden = YES;
     }else{
         self.accessView.hidden = NO;
-        if (model.photo) {
+        if (model.photo && model.photo.count > 0) {
             //相册图片
             for (int i = 0; i<4; i++) {
                 UIImageView *picView = [[UIImageView alloc] init];
@@ -78,7 +78,7 @@
                     make.left.mas_equalTo(kMarginWidth * (i+1) + kPicWidth * i);
                 }];
                 LSAlbumEtity *entity = [LSAlbumEtity mj_objectWithKeyValues:model.photo[i]];
-                [picView sd_setImageWithURL:[NSURL URLWithString:entity.image]];
+                [picView sd_setImageWithURL:[NSURL URLWithString:entity.image] placeholderImage:kImage(@"banner_default")];
             }
         }
     }
@@ -98,7 +98,7 @@ static NSInteger baseTag = 171;
         
     }else{
         self.accessView.hidden = NO;
-        if (model.photo) {
+        if (model.photo && model.photo.count > 0) {
             //相册图片
             for (int i = 0; i<4; i++) {
                 UIImageView *picView = [[UIImageView alloc] init];
@@ -111,7 +111,7 @@ static NSInteger baseTag = 171;
                     make.left.mas_equalTo(kMarginWidth * (i+1) + kPicWidth * i);
                 }];
                 LSAlbumEtity *entity = [LSAlbumEtity mj_objectWithKeyValues:model.photo[i]];
-                [picView sd_setImageWithURL:[NSURL URLWithString:entity.image]];
+                [picView sd_setImageWithURL:[NSURL URLWithString:entity.image] placeholderImage:kImage(@"banner_default")];
             }
         }
     }

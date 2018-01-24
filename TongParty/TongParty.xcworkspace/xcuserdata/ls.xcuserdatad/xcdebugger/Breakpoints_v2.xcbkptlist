@@ -35,13 +35,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "TongParty/DDInterestTableViewCell.m"
-            timestampString = "537703851.189736"
+            filePath = "TongParty/DDMessageViewController.m"
+            timestampString = "538051202.953162"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "219"
-            endingLineNumber = "219"
-            landmarkName = "-updateWithModel:"
+            startingLineNumber = "58"
+            endingLineNumber = "58"
+            landmarkName = "-tj_refresh"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

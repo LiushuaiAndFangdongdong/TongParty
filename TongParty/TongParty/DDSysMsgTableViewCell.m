@@ -30,14 +30,13 @@
 - (void)setupViews{
     
     self.contentView.backgroundColor = kBgWhiteGrayColor;
-
+    
     _uptimeLbl = [UILabel new];
     [self.contentView addSubview:_uptimeLbl];
     [_uptimeLbl mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(10);
+        make.top.mas_equalTo(5);
         make.centerX.mas_equalTo(self);
     }];
-    _uptimeLbl.text = @"昨天18：57";
     _uptimeLbl.font = kFont(13);
     _uptimeLbl.textColor = kBlackColor;
     _uptimeLbl.textAlignment = NSTextAlignmentCenter;
@@ -45,11 +44,11 @@
     _bgView = [UIView new];
     [self.contentView addSubview:_bgView];
     [_bgView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(_uptimeLbl.mas_bottom).offset(10);
+        make.top.mas_equalTo(_uptimeLbl.mas_bottom).offset(5);
         make.left.mas_equalTo(10);
         make.right.mas_equalTo(-10);
         make.bottom.mas_equalTo(-10);
-//        make.height.mas_equalTo(150);
+        //        make.height.mas_equalTo(150);
     }];
     _bgView.backgroundColor = kWhiteColor;
     _bgView.layerCornerRadius = 10;
@@ -62,7 +61,6 @@
         make.right.mas_equalTo(-5);
         make.height.mas_equalTo(150);
     }];
-    _imageV.image = kImage(@"banner_image");
     _imageV.layerCornerRadius = 10;
     
     _descLbl = [UILabel new];
@@ -73,10 +71,17 @@
         make.right.mas_equalTo(_imageV.mas_right);
         make.bottom.mas_equalTo(-10);
     }];
-    _descLbl.text = @"jdja你散漫爱慕你萨摩纳木错你那是你撕漫男算慢安大大们，妈的，第三的马萨，的马萨，的，蛮大，迈锐宝不能发布然后我防蚊扣擦~~~~";
     _descLbl.textColor = kGrayColor;
     _descLbl.font = kFont(14);
     _descLbl.numberOfLines = 0;
+}
+
+- (void)updateWithModel:(LSSystemMessageEntity *)model {
+    
+    _descLbl.text = model.msg_text;
+    [_imageV sd_setImageWithURL:[NSURL URLWithString:model.image] placeholderImage:kImage(@"banner_image")];
+    _uptimeLbl.text = model.uptime;
+    
 }
 
 - (void)awakeFromNib {

@@ -23,7 +23,11 @@
 
 @implementation DDTongCoinVC
 //背景图宽高比例727/1015 = 0.7   充值铜币宽高比例 131/112 = 1.17  充值按钮宽高比例 428/80 = 5.35
-
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    UINavigationBar *appearance = [UINavigationBar appearance];
+    [appearance setBarTintColor:kWhiteColor];
+}
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     self.navigationController.navigationBar.translucent = YES;

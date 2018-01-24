@@ -27,6 +27,8 @@
 @property (nonatomic, strong) UIButton *btn_map;
 @property (nonatomic, strong) UIButton *btn_list;
 @property (nonatomic, strong) UIAlertView *alertView;
+@property (nonatomic, assign) BOOL flag;
+@property (nonatomic, strong) PYSearchViewController *searchViewController;
 @end
 
 @implementation DDHomeMainVC
@@ -41,7 +43,6 @@
         _scrollView.pagingEnabled   = YES;
         _scrollView.bounces         = NO;
         _scrollView.scrollEnabled   = NO;
-        _scrollView.backgroundColor = [UIColor blackColor];
     }
     return _scrollView;
 }
@@ -69,7 +70,6 @@
         [view addSubview:_lbl_line];
         _view_title = view;
     }
-    
     return _view_title;
 }
 
@@ -99,14 +99,15 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    if (![DDUserDefault objectForKey:@"token"]){
-        [self toLogin];
-    } else {
-        // 判断是否开启位置权限
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        if (!_flag) {
             [self modelTransform:self.btn_map];
-        });
-    }
+        } else {
+            [self modelTransform:self.btn_list];
+        }
+    });
+    [self loadMessageCount];
+
 }
 
 // 登录
@@ -151,7 +152,6 @@
     [super viewDidLoad];
     [self customNavi];
     [self initWithScrollView];
-    //CYTABBARCONTROLLER.tabbar.delegate = self;
     self.tabBarItem.badgeValue = @"remind";
 }
 -(void)initWithScrollView{
@@ -167,47 +167,27 @@
 
 -(void)customNavi{
     
-    //左边消息按钮
-    self.navigationItem.leftBarButtonItem = [self customButtonForNavigationBarWithAction:@selector(messagesAction) imageNamed:@"navi_nf" isRedPoint:NO pointValue:nil CGSizeMake:CGSizeMake(21, 16)];
-    //开启异步并行线程请求用户详情数据
-    dispatch_queue_t queue= dispatch_queue_create("messageNum", DISPATCH_QUEUE_CONCURRENT);
-    dispatch_async(queue, ^{
-        [DDTJHttpRequest getMessageNumWithToken:[DDUserDefault objectForKey:@"token"] block:^(NSDictionary *dict) {
-            NSLog(@"未读消息数量%@",dict);
-            //主线程刷新
-            dispatch_async(dispatch_get_main_queue(), ^(){
-
-                if ([dict[@"num"] intValue] > 0) {
-                    //左边消息按钮
-                    self.navigationItem.leftBarButtonItem = [self customButtonForNavigationBarWithAction:@selector(messagesAction) imageNamed:@"navi_nf" isRedPoint:YES pointValue:[dict[@"num"] stringValue] CGSizeMake:CGSizeMake(21, 16)];
-                }
-            });
-        } failure:^{
-            //
-        }];
-    });
-    
-    // title 视图
     self.navigationItem.titleView = self.view_title;
     //右边items
     self.navigationItem.rightBarButtonItems = [self customVariousButtonForNavigationBarWithFirstAction:@selector(scanAction) firstImage:@"navi_scan" firstIsRedPoint:NO firstPointValue:nil secondAction:@selector(searchAction) secondImage:@"navi_search" secondIsRedPoint:NO secondPointValue:nil];
 }
-//#pragma mark - CYTabBarDelegate
-////中间按钮点击
-//- (void)tabbar:(CYTabBar *)tabbar clickForCenterButton:(CYCenterButton *)centerButton{
-//    [PlusAnimate standardPublishAnimateWithView:centerButton];
-//}
-////是否允许切换
-//- (BOOL)tabBar:(CYTabBar *)tabBar willSelectIndex:(NSInteger)index{
-//    NSLog(@"将要切换到---> %ld",index);
-//    return YES;
-//}
-////通知切换的下标
-//- (void)tabBar:(CYTabBar *)tabBar didSelectIndex:(NSInteger)index{
-//    NSLog(@"切换到---> %ld",index);
-//}
-//
-//#pragma mark - PYSearchViewControllerDelegate
+
+- (void)loadMessageCount {
+    [DDTJHttpRequest getMessageNumWithToken:[DDUserDefault objectForKey:@"token"] block:^(NSDictionary *dict) {
+        //主线程刷新
+        dispatch_async(dispatch_get_main_queue(), ^(){
+            if ([dict[@"num"] intValue] > 0) {
+                //左边消息按钮
+                self.navigationItem.leftBarButtonItem = [self customButtonForNavigationBarWithAction:@selector(messagesAction) imageNamed:@"navi_nf" isRedPoint:YES pointValue:[dict[@"num"] stringValue] CGSizeMake:CGSizeMake(21, 16)];
+            } else {
+                self.navigationItem.leftBarButtonItem = [self customButtonForNavigationBarWithAction:@selector(messagesAction) imageNamed:@"navi_nf" isRedPoint:NO pointValue:@"" CGSizeMake:CGSizeMake(21, 16)];
+            }
+        });
+    } failure:^{
+        self.navigationItem.leftBarButtonItem = [self customButtonForNavigationBarWithAction:@selector(messagesAction) imageNamed:@"navi_nf" isRedPoint:NO pointValue:@"" CGSizeMake:CGSizeMake(21, 16)];
+    }];
+}
+
 - (void)searchViewController:(PYSearchViewController *)searchViewController searchTextDidChange:(UISearchBar *)seachBar searchText:(NSString *)searchText {
     if (searchText.length) {
 //        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.25 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
@@ -238,22 +218,34 @@
     [self  presentViewController:qrScanVc animated:YES completion:nil];
 }
 
+- (void)didClickCancel:(PYSearchViewController *)searchViewController {
+    if (self.scrollView.contentOffset.x == kScreenWidth) {
+        _flag = YES;
+    } else {
+        _flag = NO;
+    }
+    [_searchViewController dismissViewControllerAnimated:YES completion:nil];
+}
+
 - (void)searchAction {
     WeakSelf(weakSelf);
+    _flag = YES;
     NSArray *hotSeaches = @[@"狼人杀", @"三国杀", @"万纸牌", @"麻将", @"斗地主", @"跑团", @"唱K", @"夜店", @"撸串儿", @"咖啡厅", @"JYClub", @"吃鸡", @"小龙虾", @"桌游"];
-    PYSearchViewController *searchViewController = [PYSearchViewController searchViewControllerWithHotSearches:hotSeaches searchBarPlaceholder: @"搜索活动" didSearchBlock:^(PYSearchViewController *searchViewController, UISearchBar *searchBar, NSString *searchText) {
+    _searchViewController = [PYSearchViewController searchViewControllerWithHotSearches:hotSeaches searchBarPlaceholder: @"搜索活动" didSearchBlock:^(PYSearchViewController *searchViewController, UISearchBar *searchBar, NSString *searchText) {
         if (weakSelf.scrollView.contentOffset.x == kScreenWidth) {
+            _flag = YES;
             [weakSelf.listVc searchActivitiesByText:searchText];
         } else {
+            _flag = NO;
            [weakSelf.mapVc searchActivitiesByText:searchText];
         }
         
         searchViewController.searchHistoryStyle = PYHotSearchStyleDefault;
-        [searchViewController dismissViewControllerAnimated:YES completion:nil];
+        [_searchViewController dismissViewControllerAnimated:YES completion:nil];
     }];
-    searchViewController.hotSearchStyle = PYHotSearchStyleColorfulTag;
-    searchViewController.delegate = self;
-    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:searchViewController];
+    _searchViewController.hotSearchStyle = PYHotSearchStyleColorfulTag;
+    _searchViewController.delegate = self;
+    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:_searchViewController];
     [self presentViewController:nav animated:YES completion:nil];
 }
 
@@ -272,17 +264,17 @@
     [sender setTitleColor:kRGBColor(123.f, 198.f, 239.f) forState:UIControlStateNormal];
     if (sender.tag == 3608) {
         [UIView animateWithDuration:0.5f animations:^{
+            _flag = YES;
             self.scrollView.contentOffset = CGPointMake(kScreenWidth, 0);
             _lbl_line.centerX = sender.centerX;
         } completion:^(BOOL finished) {
-            //
         }];
     } else {
         [UIView animateWithDuration:0.5f animations:^{
+            _flag = NO;
             self.scrollView.contentOffset = CGPointMake(0, 0);
             _lbl_line.centerX = sender.centerX;
         } completion:^(BOOL finished) {
-            //
         }];
     }
     

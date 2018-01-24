@@ -7,7 +7,11 @@
 //
 
 #import "DDBaseTableViewCell.h"
-
+#import "LSPersonEntity.h"
 @interface DDReplyMessageCell : DDBaseTableViewCell
-
+- (void)updateWithModel:(LSPersonEntity *)entity;
+@property (nonatomic, copy)void(^disagree)(NSString *sid);
+@property (nonatomic, copy)void(^agree)(NSString *sid);
 @end
+
+

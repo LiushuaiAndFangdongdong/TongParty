@@ -12,4 +12,6 @@
 
 @interface DDDeskView : UIView
 - (void)updateDeskInfoWithModel:(DDTableInfoModel *)model;
+// 定时器消除
+- (void)timerDealloc;
 @end

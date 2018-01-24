@@ -7,7 +7,9 @@
 //
 
 #import "DDBaseViewController.h"
-
+#import "DDMessageModel.h"
 @interface DDMasterMessageVC : DDBaseViewController
-
+@property (nonatomic, strong)DDMessageModel *messageModel;
 @end
+
+

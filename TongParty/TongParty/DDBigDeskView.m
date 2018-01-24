@@ -9,7 +9,6 @@
 #import "DDBigDeskView.h"
 #import "DDNoticeView.h"
 #import "DDChairView.h"
-#import "DDDeskView.h"
 #import "UIView+Frame.h"
 
 #define kDeskHeight   (self.width-100)*1.75
@@ -24,7 +23,6 @@
 @property (nonatomic, strong) UIView *bgView;
 @property (nonatomic, strong) DDNoticeView *noticeView;     //公告
 @property (nonatomic, strong) DDChairView *holderView;      //桌主椅子
-@property (nonatomic, strong) DDDeskView *deskView;         //桌子
 @property (nonatomic, strong) DDChairView *bottomChariView; //下边椅子
 @property (nonatomic, strong) UIScrollView *leftChairScrollview;  //左边滚动椅子
 @property (nonatomic, strong) UIScrollView *rightChairScrollview; //右边滚动椅子
@@ -165,23 +163,29 @@
     }
 }
 
+- (void)updateVistorAvatar:(NSString *)vistorImage{
+    [self.bottomChariView updateAvatarWithImage:vistorImage];
+}
+
 #pragma mark - 更新参与者椅子信息
-- (void)updatePartsWithArray:(NSArray <DDParticipantModel*>*)array{
+- (void)updatePartsWithArray:(NSArray <DDParticipantModel*>*)array  person_num:(NSString *)person_num{
     //左边椅子数
     int leftChairs = 0;
     //右边椅子数
     int rightChairs = 0;
+    
+    int person_numValue = [person_num intValue];
 
-    if (array.count % 2 == 0) {//如果是偶数
+    if (person_numValue % 2 == 0) {//如果是偶数
         
         //偶数左右椅子数相等
-        leftChairs = rightChairs = (int)array.count /2;
+        leftChairs = rightChairs = (int)person_numValue /2;
         
     }else{//如果是奇数
         
         //奇数左边数量是取余加上取商，右边取商，即左比右多一
-        leftChairs = (int)array.count/2 + (int)array.count % 2;
-        rightChairs = (int)array.count/2;
+        leftChairs = (int)person_numValue/2 + (int)person_numValue % 2;
+        rightChairs = (int)person_numValue/2;
     }
     
     for (int i = 0; i < leftChairs; i ++ ) {
@@ -196,8 +200,14 @@
         leftChair.type = DDChairTypeLeft;
         self.leftChairScrollview.contentSize = CGSizeMake(0, kLeftChairMargin*(i+2)+(i+1)*kLeftChairWidth);
         
-        DDParticipantModel *model = array[i];
-        [leftChair updateAvatarWithImage:model.image];
+            if (i  < array.count) {
+                DDParticipantModel *model = array[i];
+                [leftChair updateAvatarWithImage:model.image];
+            }else{
+                [leftChair updateAvatarWithImage:nil];
+            }
+
+
     }
     
     for (int i = 0; i < rightChairs; i ++ ) {
@@ -211,9 +221,16 @@
         }];
         rightChair.type = DDChairTypeRight;
         self.rightChairScrollview.contentSize = CGSizeMake(0, kLeftChairMargin*(i+2)+(i+1)*kLeftChairWidth);
-        
-        DDParticipantModel *model = array[i + leftChairs];
-        [rightChair updateAvatarWithImage:model.image];
+       
+        int extra =(int)array.count - leftChairs;
+            if (i  < extra) {
+                DDParticipantModel *model = array[i + leftChairs];
+                [rightChair updateAvatarWithImage:model.image];
+            }else{
+                [rightChair updateAvatarWithImage:nil];
+            }
+
+   
     }
 
 }

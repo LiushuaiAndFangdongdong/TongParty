@@ -7,7 +7,9 @@
 //
 
 #import "DDBaseTableViewCell.h"
-
+#import "LSNoticeMessageEntity.h"
 @interface DDNoticeMsgTableViewCell : DDBaseTableViewCell
-
+- (void)updateWithModel:(LSNoticeMessageEntity *)entity;
 @end
+
+

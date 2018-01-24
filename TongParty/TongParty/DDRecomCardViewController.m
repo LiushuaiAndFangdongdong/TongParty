@@ -65,6 +65,11 @@ CCDraggableContainerDelegate
             [self hideLoadingView];
             _cardsArr = [DDTableInfoModel mj_objectArrayWithKeyValuesArray:dict[@"tablecord"]];
             if (_cardsArr.count == 0) {
+                //清楚view上所有视图
+                NSArray *views = [self.view subviews];
+                for (UIView *v in views) {
+                    [v removeFromSuperview];
+                }
                 [self.emptyView showInView:self.view];
             }else{
                 [self loadUI];

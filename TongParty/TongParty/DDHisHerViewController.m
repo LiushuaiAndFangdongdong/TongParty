@@ -207,13 +207,17 @@ height=305;\
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     
     if (indexPath.section == 3) {
-        if (_model.photo) {
-            return 120;
+        if (_model && _model.photo && _model.photo.count > 0) {
+            return 130;
         }else{
             return 60;
         }
     }else if (indexPath.section == 4){
-        return 60+kActivityItemWidth+20;
+        if (!_model.table || _model.table.count == 0) {
+            return 60;
+        }else{
+            return 60+kActivityItemWidth+20;
+        }
     }else{
         return 60;
     }

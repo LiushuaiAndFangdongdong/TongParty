@@ -66,7 +66,6 @@
     if (!model) {
         return;
     }
-    
     LSMapTableEntity *entity = (LSMapTableEntity *)model;
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];

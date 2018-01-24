@@ -15,12 +15,12 @@
 @property (nonatomic, strong) UILabel *distanceLbl;
 @property (nonatomic, strong) UILabel *messageLbl;
 @property (nonatomic, strong) UIButton *inviteBtn;
+@property (nonatomic, copy) NSString *to_id;
 @end
 
 @implementation DDInterestMessageCell
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
-    
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
         [self setupViews];
     }
@@ -62,7 +62,7 @@
     [self.contentView addSubview:_distanceLbl];
     [_distanceLbl mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.mas_equalTo(-10);
-//        make.centerY.mas_equalTo(_namelbl.centerY);
+        //        make.centerY.mas_equalTo(_namelbl.centerY);
         make.top.mas_equalTo(_namelbl.mas_top);
     }];
     _distanceLbl.text = @"距离12km·5分钟前";
@@ -77,14 +77,14 @@
         make.bottom.mas_equalTo(_avatarView.mas_bottom);
         make.left.mas_equalTo(_namelbl.mas_left);
     }];
-    _messageLbl.text = @"学长同意了你加入群";
+    _messageLbl.text = @"对您的桌子产生了兴趣";
     _messageLbl.textColor = kGrayColor;
     _messageLbl.font = kFont(14);
     
     _inviteBtn = [UIButton new];
     [self.contentView addSubview:_inviteBtn];
     [_inviteBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.centerY.mas_equalTo(_messageLbl.centerY);
+        //        make.centerY.mas_equalTo(_messageLbl.centerY);
         make.bottom.mas_equalTo(_avatarView.mas_bottom);
         make.right.mas_equalTo(-10);
         make.width.mas_equalTo(60);
@@ -97,6 +97,34 @@
     _inviteBtn.titleLabel.font = kFont(12);
 }
 
+-(void)updateWithModel:(LSPersonEntity *)entity {
+    _namelbl.text = entity.name;
+    _to_id = entity.uid;
+    _distanceLbl.text = [NSString stringWithFormat:@"%.fkm·%@",entity.distance.integerValue/1000.f,entity.uptime];
+    [_avatarView sd_setImageWithURL:[NSURL URLWithString:entity.image] placeholderImage:kImage(@"avatar_default")];
+    if (entity.is_send.integerValue == 0) {
+        [_inviteBtn setTitle:@"邀请" forState:UIControlStateNormal];
+        [_inviteBtn addTarget:self action:@selector(inviteJoin:) forControlEvents:UIControlEventTouchUpInside];
+    } else {
+        [_inviteBtn setTitle:@"已邀请" forState:UIControlStateNormal];
+    }
+    
+    if (entity.status.integerValue == 0) {
+        _inviteBtn.hidden = YES;
+    } else {
+        _inviteBtn.hidden = NO;
+    }
+}
+
+- (void)inviteJoin:(UIButton *)sender {
+    if (!_to_id) {
+        return;
+    }
+    if (_inviteJoin) {
+        _inviteJoin(_to_id);
+    }
+}
+
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
@@ -104,8 +132,10 @@
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
-
+    
     // Configure the view for the selected state
 }
 
 @end
+
+

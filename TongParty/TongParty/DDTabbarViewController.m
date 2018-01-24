@@ -15,7 +15,8 @@
 #import "PlusAnimate.h"
 #import "LSCreateDeskViewController.h" //创建桌子页面
 #import "DDLoveDeskViewController.h" //心跳桌页
-
+#import "DDPrefectDataVC.h"
+#import "DDLoginViewController.h"
 @interface DDTabbarViewController ()<CYTabBarDelegate>
 @end
 
@@ -52,17 +53,39 @@
     
 }
 
+- (void)toLogin {
+    DDLoginViewController *loginVC = [[DDLoginViewController alloc] init];
+    loginVC.isModen = YES;
+    UINavigationController *nv = [[UINavigationController alloc] initWithRootViewController:loginVC];
+    loginVC.islogSuccess = ^(BOOL isSuccess) {
+        if (isSuccess) {
+            
+        }
+    };
+    [self presentViewController:nv animated:YES completion:^{}];
+}
 
 
 - (void)didSelectBtnWithBtnTag:(NSNotification *)notification {
     UIButton *btn = (UIButton *)notification.object;
     
-    NSLog(@"-----------%ld",(long)btn.tag);
+        if (![DDUserDefault objectForKey:@"token"]){
+            [self toLogin];
+            return;
+        }
+    //判断资料是否完善，如果没有完善则
+    if (![DDUserSingleton shareInstance].image || [[DDUserSingleton shareInstance].image isEqualToString:@""] || ![DDUserSingleton shareInstance].name || [[DDUserSingleton shareInstance].name isEqualToString:@""] || ![DDUserSingleton shareInstance].sex || [[DDUserSingleton shareInstance].sex isEqualToString:@""]) {
+        
+        //判断资料是否完善，如果没有完善则
+        DDPrefectDataVC *dataVC = [[DDPrefectDataVC alloc] init];
+        UINavigationController *nv = [[UINavigationController alloc] initWithRootViewController:dataVC];
+        dataVC.isModen = YES;
+        [self presentViewController:nv animated:YES completion:^{}];
+        return;
+    }
     switch (btn.tag) {
         case 0:{
-            //            DDNavViewController   *nav = [[DDNavViewController alloc]initWithRootViewController:[LSCreateDeskVC new]];
             DDNavViewController   *nav = [[DDNavViewController alloc]initWithRootViewController:[LSCreateDeskViewController new]];
-            
             [self presentViewController:nav animated:YES completion:nil];
         }break;
         case 1:{

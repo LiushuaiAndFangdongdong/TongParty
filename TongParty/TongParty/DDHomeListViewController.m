@@ -17,19 +17,22 @@
 #import "LSRegionDumpsVC.h"
 #import "LSHomwTimeSortVC.h"
 #import "LSActivityEntity.h"
+#import "DDDeskShowViewController.h"
+
+
 @interface DDHomeListViewController ()
 /** 轮播图数据数组*/
 @property (nonatomic, strong) NSMutableArray *bannerImgArray;
 /** 头部视图*/
 @property (nonatomic, strong) DDBannerView *headerView;
-@property (nonatomic, strong)LSSortingView *sortingView;
-@property (nonatomic, strong)UIView *sortsView;
-@property (nonatomic, strong)LSContenSortVC *contentsortVc;
-@property (nonatomic, strong)LSRegionDumpsVC *regionDumpsVc;
-@property (nonatomic, strong)LSHomwTimeSortVC *timesortVc;
-@property (nonatomic, strong)UIView *view_average;
-@property (nonatomic, strong)UILabel *sortLabel;
-@property (nonatomic, strong)NSMutableArray   *btns;
+@property (nonatomic, strong) LSSortingView *sortingView;
+@property (nonatomic, strong) UIView *sortsView;
+@property (nonatomic, strong) LSContenSortVC *contentsortVc;
+@property (nonatomic, strong) LSRegionDumpsVC *regionDumpsVc;
+@property (nonatomic, strong) LSHomwTimeSortVC *timesortVc;
+@property (nonatomic, strong) UIView *view_average;
+@property (nonatomic, strong) UILabel *sortLabel;
+@property (nonatomic, strong) NSMutableArray   *btns;
 @property (nonatomic, weak) DDCustomCommonEmptyView *emptyView;
 
 // 搜索记录
@@ -114,10 +117,9 @@
 }
 
 - (void)tj_didSelectCellAtIndexPath:(NSIndexPath *)indexPath cell:(DDBaseTableViewCell *)cell {
-//    NHDiscoverCategoryElement *elementModel = self.dataArray[indexPath.row];
-//    NHDiscoverTopicViewController *topic = [[NHDiscoverTopicViewController alloc] initWithCategoryElement:elementModel];
-//    //    [[NHDiscoverTopicViewController alloc] initWithCatogoryId:elementModel.ID];
-//    [self pushVc:topic];
+    DDDeskShowViewController *deskVC = [[DDDeskShowViewController alloc] init];
+    deskVC.tmpModel = _dataArray[indexPath.row];
+    [self.navigationController pushViewController:deskVC animated:YES];
 }
 
 - (UIView *)tj_headerAtSection:(NSInteger)section {

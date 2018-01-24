@@ -43,38 +43,38 @@
     return self;
 }
 
-//- (void)loadLabel {
-//    [DDTJHttpRequest getAddrLabelsblock:^(NSDictionary *dict) {
-//        _tagsArray = [NSMutableArray array];
-//        LSAddressLabelEntity *addEntity = [[LSAddressLabelEntity alloc] init];
-//        addEntity.name = @" + ";
-//        [_tagsArray addObject:addEntity];
-//        NSArray *larr = [LSAddressLabelEntity mj_objectArrayWithKeyValuesArray:dict];
-//        [_tagsArray addObjectsFromArray:larr];
-//        self.originalButtonCount = _tagsArray.count;
-//        [_tagsArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-//            LSAddressLabelEntity *entity = (LSAddressLabelEntity *)obj;
-//            DDTag *tag = [DDTag tagWithText: entity.name];
-//            if (idx == 0) {
-//                tag.textColor = kBlackColor;
-//                tag.borderColor = kBgGrayColor;
-//                tag.borderWidth = 1;
-//                tag.fontSize = 15;
-//                tag.padding = UIEdgeInsetsMake(5, 5, 5, 5);
-//                tag.nrmColor = [UIColor clearColor];
-//                tag.cornerRadius = 5;
-//            }else{
-//                [self tj_configTag:tag withIndex:idx];
-//            }
-//            [self.tagView addTag:tag];
-//        }];
-//    } failure:^{
-//
-//    }];
-//}
+- (void)loadLabel {
+    [DDTJHttpRequest getAddrLabelsblock:^(NSDictionary *dict) {
+        _tagsArray = [NSMutableArray array];
+        LSAddressLabelEntity *addEntity = [[LSAddressLabelEntity alloc] init];
+        addEntity.name = @" + ";
+        [_tagsArray addObject:addEntity];
+        NSArray *larr = [LSAddressLabelEntity mj_objectArrayWithKeyValuesArray:dict];
+        [_tagsArray addObjectsFromArray:larr];
+        self.originalButtonCount = _tagsArray.count;
+        [_tagsArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            LSAddressLabelEntity *entity = (LSAddressLabelEntity *)obj;
+            DDTag *tag = [DDTag tagWithText: entity.name];
+            if (idx == 0) {
+                tag.textColor = kBlackColor;
+                tag.borderColor = kBgGrayColor;
+                tag.borderWidth = 1;
+                tag.fontSize = 15;
+                tag.padding = UIEdgeInsetsMake(5, 5, 5, 5);
+                tag.nrmColor = [UIColor clearColor];
+                tag.cornerRadius = 5;
+            }else{
+                [self tj_configTag:tag withIndex:idx];
+            }
+            [self.tagView addTag:tag];
+        }];
+    } failure:^{
+
+    }];
+}
 
 - (void)initFrame:(CGRect)frame{
-    //WeakSelf(weakSelf);
+    WeakSelf(weakSelf);
     float width = frame.size.width;
     float height = frame.size.height;
     _scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0,0,width, height)];
@@ -130,53 +130,54 @@
     _keyLabel.textAlignment = NSTextAlignmentCenter;
     [_scrollView addSubview:_keyLabel];
     
-    _tf_label = [[UITextField alloc] initWithFrame:CGRectMake(_keyLabel.x + _keyLabel.width, 0, kScreenWidth - (_keyLabel.x + _keyLabel.width + 15), _detailAddr.height)];
-    _tf_label.centerY = _keyLabel.centerY;
-    _tf_label.placeholder = @"请输入标签";
-    _tf_label.backgroundColor = kWhiteColor;
-    _tf_label.textColor = kBlackColor;
-    _tf_label.font = kFont(15);
-    [_scrollView addSubview:_tf_label];
+//    _tf_label = [[UITextField alloc] initWithFrame:CGRectMake(_keyLabel.x + _keyLabel.width, 0, kScreenWidth - (_keyLabel.x + _keyLabel.width + 15), _detailAddr.height)];
+//    _tf_label.centerY = _keyLabel.centerY;
+//    _tf_label.placeholder = @"请输入标签";
+//    _tf_label.backgroundColor = kWhiteColor;
+//    _tf_label.textColor = kBlackColor;
+//    _tf_label.font = kFont(15);
+//    [_scrollView addSubview:_tf_label];
     
     
-//    _tagView = [[DDTagView alloc] initWithFrame:CGRectMake(_keyLabel.x+_keyLabel.width, _keyLabel.y, kScreenWidth - _keyLabel.x - _keyLabel.width, _keyLabel.height)];
-//    [_scrollView addSubview:_tagView];
-//    _tagView.backgroundColor=  kWhiteColor;
-//    _tagView.padding = UIEdgeInsetsMake(16, 5, 16, 10);
-//    _tagView.interitemSpacing = 15;
-//    _tagView.lineSpacing = 10;
-//    _tagView.didTapTagAtIndex = ^(NSMutableArray *tags,NSUInteger index){
-//
-//        //点击添加
-//        if (index == 0) {
-//            TSActionDemoView * demoAlertView  = [TSActionDemoView actionAlertViewWithAnimationStyle:TSActionAlertViewTransitionStyleBounce];
-//            demoAlertView.backgroundStyle = TSActionAlertViewBackgroundStyleSolid;;
-//            demoAlertView.isAutoHidden = YES;
-//            demoAlertView.titleString = @"标签名称";
-//            demoAlertView.ploceHolderString = @"请输入标签名称";
-//
-//            typeof(TSActionDemoView) __weak *weakView = demoAlertView;
-//            [demoAlertView setStringHandler:^(TSActionAlertView *alertView,NSString * string){
-//                typeof(TSActionDemoView) __strong *strongView = weakView;
-//                [DDTJHttpRequest addCustomAddressLabelWithName:string block:^(NSDictionary *dict) {
-//                    DDTag *tag = [DDTag tagWithText:string];
-//                    [weakSelf tj_configTag:tag withIndex:weakSelf.originalButtonCount];
-//                    [weakSelf.tagView insertTag:tag atIndex:1];
-//                    weakSelf.originalButtonCount ++ ;
-//                } failure:^{
-//
-//                }];
-//                [strongView dismissAnimated:YES];
-//            }];
-//            [demoAlertView show];
-//        }else{
-//            DDTag *tag = tags[index];
-//            weakSelf.saveModel.label = tag.text;
-//            NSLog(@"点击标签--->%@",tag.text);
-//        }
-//
-//    };
-//    [self loadLabel];
+    _tagView = [[DDTagView alloc] initWithFrame:CGRectMake(_keyLabel.x+_keyLabel.width, _keyLabel.y, kScreenWidth - _keyLabel.x - _keyLabel.width, _keyLabel.height)];
+    [_scrollView addSubview:_tagView];
+    _tagView.backgroundColor=  kWhiteColor;
+    _tagView.padding = UIEdgeInsetsMake(16, 5, 16, 10);
+    _tagView.interitemSpacing = 15;
+    _tagView.lineSpacing = 10;
+    _tagView.didTapTagAtIndex = ^(NSMutableArray *tags,NSUInteger index){
+
+        //点击添加
+        if (index == 0) {
+            TSActionDemoView * demoAlertView  = [TSActionDemoView actionAlertViewWithAnimationStyle:TSActionAlertViewTransitionStyleBounce];
+            demoAlertView.backgroundStyle = TSActionAlertViewBackgroundStyleSolid;;
+            demoAlertView.isAutoHidden = YES;
+            demoAlertView.titleString = @"标签名称";
+            demoAlertView.ploceHolderString = @"请输入标签名称";
+
+            typeof(TSActionDemoView) __weak *weakView = demoAlertView;
+            [demoAlertView setStringHandler:^(TSActionAlertView *alertView,NSString * string){
+                typeof(TSActionDemoView) __strong *strongView = weakView;
+                [DDTJHttpRequest addCustomAddressLabelWithName:string block:^(NSDictionary *dict) {
+                    DDTag *tag = [DDTag tagWithText:string];
+                    [weakSelf tj_configTag:tag withIndex:weakSelf.originalButtonCount];
+                    [weakSelf.tagView insertTag:tag atIndex:1];
+                    weakSelf.originalButtonCount ++ ;
+                } failure:^{
+
+                }];
+                [strongView dismissAnimated:YES];
+            }];
+            [demoAlertView show];
+        }else{
+            DDTag *tag = tags[index];
+            weakSelf.saveModel.label = tag.text;
+            
+            NSLog(@"点击标签--->%@",tag.text);
+        }
+
+    };
+    [self loadLabel];
     _saveBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, height - kNavigationBarHeight - kTabBarHeight - 5, kScreenWidth, kTabBarHeight)];
     [_saveBtn addTarget:self action:@selector(didSelectedToSaveNewAddress:) forControlEvents:UIControlEventTouchUpInside];
     [_saveBtn setTitle:@"保存地址" forState:UIControlStateNormal];
@@ -206,7 +207,6 @@
 - (void)tempEditValueWith:(DDAddressModel *)model{
     _valueAddr.text = model.addr;
     _detailTxt.text = model.detail;
-    _tf_label.text = model.label;
     
     _saveModel.addr = model.addr;
     _saveModel.detail = model.detail;
@@ -224,7 +224,7 @@
 
 - (void)didSelectedToSaveNewAddress:(UIButton*)sender{
     _saveModel.detail = _detailTxt.text;
-    _saveModel.label = _tf_label.text;
+    
     if (_saveAddrBlcok) {
         _saveAddrBlcok(_saveModel);
     }

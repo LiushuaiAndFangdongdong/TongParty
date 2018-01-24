@@ -7,8 +7,8 @@
 //
 //参加的桌子
 
-#import "DDBaseTableViewController.h"
+#import "DDBaseViewController.h"
 
-@interface DDJoinedVc : DDBaseTableViewController
-
+@interface DDJoinedVc : DDBaseViewController
+- (void)userLoadData;
 @end

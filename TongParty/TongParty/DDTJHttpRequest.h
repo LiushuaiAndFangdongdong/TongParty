@@ -416,6 +416,21 @@
                              block:(void(^)(NSDictionary *dict))dict
                            failure:(void(^)())failure;
 
+/**
+ 邀请用户进桌
+ 
+ @param tid 桌子id
+ @param to_id 被邀请人id
+ @param prop 邀请券数量
+ @param dict 成功
+ @param failure 失败
+ */
++ (void)inviteUserJoinTableWithTid:(NSString *)tid
+                             to_id:(NSString *)to_id
+                              prop:(NSNumber *)prop
+                             block:(void(^)(NSDictionary *dict))dict
+                           failure:(void(^)())failure;
+
 /** 获取收到的桌子邀请
  * @token  用户token
  */
@@ -427,6 +442,7 @@
  * @token  用户token
  */
 + (void)inviteFriendsListsWithToken:(NSString *)token
+                                tid:(NSString *)tid
                              block:(void(^)(NSDictionary *dict))dict
                            failure:(void(^)())failure;
 
@@ -738,6 +754,21 @@
  @param page 页码
  */
 + (void)getNearRecommendCardsWithLat:(NSString *)lat lon:(NSString *)lon page:(NSInteger)page block:(void(^)(NSDictionary *dict))dict failure:(void(^)())failure;
+
+/**
+ 匹配加入心跳桌
+ 
+ @param token 用户token
+ @param activity 活动id
+ @param begin_time  开始时间
+ @param end_time  开始时间上限
+ @param average_price 人均
+ @param end_price  人均上限
+ @param lat 纬度
+ @param lon 经度
+ @param range  范围
+ */
++ (void)matchJoinLoveDeskWithToken:(NSString *)token activity:(NSString *)activity begin_time:(NSString *)begin_time end_time:(NSString *)end_time average_price:(NSString *)average_price end_price:(NSString *)end_price lat:(NSString *)lat lon:(NSString *)lon range:(NSString *)range block:(void(^)(NSDictionary *dict))dict failure:(void(^)())failure;
 @end
 
 

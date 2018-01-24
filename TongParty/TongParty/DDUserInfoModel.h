@@ -66,6 +66,9 @@
 @property (nonatomic, copy) NSString *f_num;
 /**是否认证*/
 @property (nonatomic, copy) NSString *is_valid;
+/**活动历史*/
+@property (nonatomic, strong) NSArray *table;
+
 @end
 
 

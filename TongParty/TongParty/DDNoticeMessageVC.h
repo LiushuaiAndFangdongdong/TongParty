@@ -7,7 +7,9 @@
 //
 
 #import "DDBaseTableViewController.h"
-
+#import "DDMessageModel.h"
 @interface DDNoticeMessageVC : DDBaseTableViewController
-
+@property (nonatomic, strong)DDMessageModel *messageModel;
 @end
+
+

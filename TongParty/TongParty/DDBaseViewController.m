@@ -248,7 +248,7 @@
     UIBarButtonItem *informationCardItem = [[UIBarButtonItem alloc] initWithCustomView:informationCardBtn];
     
     UIBarButtonItem *fixedSpaceBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
-    fixedSpaceBarButtonItem.width = 10;
+    fixedSpaceBarButtonItem.width = 20;
     
     UIButton *settingBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [settingBtn addTarget:self action:secondAction forControlEvents:UIControlEventTouchUpInside];

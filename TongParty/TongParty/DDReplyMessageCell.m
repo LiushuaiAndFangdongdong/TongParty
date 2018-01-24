@@ -18,6 +18,7 @@
 @property (nonatomic, strong) UILabel *messageLbl;
 @property (nonatomic, strong) UIButton *agreeBtn;
 @property (nonatomic, strong) UIButton *disagreeBtn;
+@property (nonatomic, strong) NSString *sid;
 @end
 
 @implementation DDReplyMessageCell
@@ -71,12 +72,12 @@
     _distanceLbl.text = @"距离12km·5分钟前";
     _distanceLbl.textColor = kBlackColor;
     _distanceLbl.font = kFont(13);
-
+    
     
     _messageLbl = [UILabel new];
     [self.contentView addSubview:_messageLbl];
     [_messageLbl mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.top.mas_equalTo(_namelbl.mas_bottom).offset(5);
+        //        make.top.mas_equalTo(_namelbl.mas_bottom).offset(5);
         make.bottom.mas_equalTo(_avatarView.mas_bottom);
         make.left.mas_equalTo(_namelbl.mas_left);
     }];
@@ -87,7 +88,7 @@
     _disagreeBtn = [UIButton new];
     [self.contentView addSubview:_disagreeBtn];
     [_disagreeBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.centerY.mas_equalTo(_messageLbl.centerY);
+        //        make.centerY.mas_equalTo(_messageLbl.centerY);
         make.bottom.mas_equalTo(_avatarView.mas_bottom);
         make.right.mas_equalTo(-10);
         make.width.mas_equalTo(60);
@@ -99,11 +100,12 @@
     [_disagreeBtn setBackgroundColor:kGrayColor];
     _disagreeBtn.layerCornerRadius = 8;
     _disagreeBtn.titleLabel.font = kFont(12);
+    [_disagreeBtn addTarget:self action:@selector(disagree:) forControlEvents:UIControlEventTouchUpInside];
     
     _agreeBtn = [UIButton new];
     [self.contentView addSubview:_agreeBtn];
     [_agreeBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.centerY.mas_equalTo(_messageLbl.centerY);
+        //        make.centerY.mas_equalTo(_messageLbl.centerY);
         make.bottom.mas_equalTo(_disagreeBtn.mas_bottom);
         make.right.mas_equalTo(_disagreeBtn.mas_left).offset(-5);
         make.width.mas_equalTo(60);
@@ -114,6 +116,48 @@
     [_agreeBtn setBackgroundColor:kBgGreenColor];
     _agreeBtn.layerCornerRadius = 8;
     _agreeBtn.titleLabel.font = kFont(12);
+    [_agreeBtn addTarget:self action:@selector(agree:) forControlEvents:UIControlEventTouchUpInside];
+}
+
+- (void)updateWithModel:(LSPersonEntity *)entity {
+    _sid = entity.uid;
+    _namelbl.text = entity.name;
+    _distanceLbl.text = [NSString stringWithFormat:@"%.fkm·%@",entity.distance.integerValue/1000.f,entity.uptime];
+    [_avatarView sd_setImageWithURL:[NSURL URLWithString:entity.image] placeholderImage:kImage(@"avatar_default")];
+    // 保密
+    if (entity.sex.integerValue == 0) {
+        _sexView.hidden = YES;
+        _sexView.image = kImage(@"info_male");
+    }
+    // 男
+    if (entity.sex.integerValue == 1) {
+        _sexView.hidden = NO;
+        _sexView.image = kImage(@"info_male");
+    }
+    // 女
+    if (entity.sex.integerValue == 2) {
+        _sexView.hidden = NO;
+        _sexView.image = kImage(@"info_female");
+    }
+    //_messageLbl.text = entity.msg_text;
+}
+
+- (void)disagree:(UIButton *)sender {
+    if (!_sid) {
+        return;
+    }
+    if (_disagree) {
+        _disagree(_sid);
+    }
+}
+
+- (void)agree:(UIButton *)sender {
+    if (!_sid) {
+        return;
+    }
+    if (_agree) {
+        _agree(_sid);
+    }
 }
 
 - (void)awakeFromNib {

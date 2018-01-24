@@ -34,7 +34,9 @@
     [self setWithMutableDict:md key:@"mobile" value:mobile];
     [self setWithMutableDict:md key:@"password" value:passwd];
     [self setWithMutableDict:md key:@"code" value:code];
+    
     [self getWithAction:kTJUserRegisterAPI params:md type:kDDHttpResponseTypeJson block:^(DDResponseModel *result) {
+        
         if (result.status.integerValue == kDDResponseStateSuccess) {
             dict(result.data);
         } else {
@@ -248,7 +250,7 @@
         } else {
             failure();
         }
-        [MBProgressHUD showMessage:result.msg_cn toView:[UIApplication sharedApplication].keyWindow];
+        //[MBProgressHUD showMessage:result.msg_cn toView:[UIApplication sharedApplication].keyWindow];
     } failure:^{
         //
     }];
@@ -266,7 +268,7 @@
         } else {
             failure();
         }
-        [MBProgressHUD showMessage:result.msg_cn toView:[UIApplication sharedApplication].keyWindow];
+        //[MBProgressHUD showMessage:result.msg_cn toView:[UIApplication sharedApplication].keyWindow];
     } failure:^{
         //
     }];
@@ -291,7 +293,7 @@
         } else {
             failure();
         }
-        [MBProgressHUD showMessage:result.msg_cn toView:[UIApplication sharedApplication].keyWindow];
+        //[MBProgressHUD showMessage:result.msg_cn toView:[UIApplication sharedApplication].keyWindow];
     } failure:^{
         //
     }];
@@ -310,7 +312,7 @@
         } else {
             failure();
         }
-        [MBProgressHUD showMessage:result.msg_cn toView:[UIApplication sharedApplication].keyWindow];
+        //[MBProgressHUD showMessage:result.msg_cn toView:[UIApplication sharedApplication].keyWindow];
     } failure:^{
         //
     }];
@@ -327,7 +329,7 @@
         } else {
             failure();
         }
-        [MBProgressHUD showMessage:result.msg_cn toView:[UIApplication sharedApplication].keyWindow];
+        //[MBProgressHUD showMessage:result.msg_cn toView:[UIApplication sharedApplication].keyWindow];
     } failure:^{
         //
     }];
@@ -339,6 +341,7 @@
     [self setWithMutableDict:md key:@"token" value:TOKEN];
     [self setWithMutableDict:md key:@"name" value:name];
     [self postWithAction:@"/tongju/api/set_addr_label.php" params:md type:kDDHttpResponseTypeJson block:^(DDResponseModel *result) {
+        
         if (result.status.integerValue == kDDResponseStateSuccess) {
             dict(result.data);
         } else {
@@ -410,6 +413,7 @@
     NSMutableDictionary *md = [NSMutableDictionary dictionary];
     [self setWithMutableDict:md key:@"token" value:TOKEN];
     [self postWithAction:@"/tongju/api/get_addr_label.php" params:md type:kDDHttpResponseTypeJson block:^(DDResponseModel *result) {
+        
         if (result.status.integerValue == kDDResponseStateSuccess) {
             dict(result.data);
         } else {
@@ -741,9 +745,10 @@
         if (result.status.integerValue == kDDResponseStateSuccess) {
             dict(result.data);
         } else {
+        [MBProgressHUD showMessage:result.msg_cn toView:[UIApplication sharedApplication].keyWindow];
             failure();
         }
-        [MBProgressHUD showMessage:result.msg_cn toView:[UIApplication sharedApplication].keyWindow];
+//        [MBProgressHUD showMessage:result.msg_cn toView:[UIApplication sharedApplication].keyWindow];
     } failure:^{
         //
     }];
@@ -936,7 +941,7 @@
         } else {
             failure();
         }
-        [MBProgressHUD showMessage:result.msg_cn toView:[UIApplication sharedApplication].keyWindow];
+        //[MBProgressHUD showMessage:result.msg_cn toView:[UIApplication sharedApplication].keyWindow];
     } failure:^{
         //
     }];
@@ -1032,7 +1037,7 @@
         } else {
             failure();
         }
-        [MBProgressHUD showMessage:result.msg_cn toView:[UIApplication sharedApplication].keyWindow];
+        //[MBProgressHUD showMessage:result.msg_cn toView:[UIApplication sharedApplication].keyWindow];
     } failure:^{
         //
     }];
@@ -1061,11 +1066,45 @@
         } else {
             failure();
         }
-        [MBProgressHUD showMessage:result.msg_cn toView:[UIApplication sharedApplication].keyWindow];
+        //[MBProgressHUD showMessage:result.msg_cn toView:[UIApplication sharedApplication].keyWindow];
     } failure:^{
         //
     }];
 }
+
+/**
+ 邀请用户进桌
+ 
+ @param tid 桌子id
+ @param to_id 被邀请人id
+ @param prop 邀请券数量
+ @param dict 成功
+ @param failure 失败
+ */
++ (void)inviteUserJoinTableWithTid:(NSString *)tid
+                             to_id:(NSString *)to_id
+                              prop:(NSNumber *)prop
+                             block:(void(^)(NSDictionary *dict))dict
+                           failure:(void(^)())failure{
+    NSMutableDictionary *md = [NSMutableDictionary dictionary];
+    [self setWithMutableDict:md key:@"token" value:TOKEN];
+    [self setWithMutableDict:md key:@"tid" value:tid];
+    [self setWithMutableDict:md key:@"to_id" value:to_id];
+    [self setWithMutableDict:md key:@"prop" value:prop];
+    
+    [self postWithAction:@"/tongju/api/user_invite_table.php" params:md type:kDDHttpResponseTypeJson block:^(DDResponseModel *result) {
+        
+        if (result.status.integerValue == kDDResponseStateSuccess) {
+            dict(result.data);
+        } else {
+            failure();
+        }
+        [MBProgressHUD showMessage:result.msg_cn toView:[UIApplication sharedApplication].keyWindow];
+    } failure:^{
+        
+    }];
+}
+
 /** 获取收到的桌子邀请
  * @token  用户token
  */
@@ -1088,20 +1127,24 @@
 }
 /**邀请好友页面
  * @token  用户token
+ * @tid  桌子id
  */
 + (void)inviteFriendsListsWithToken:(NSString *)token
+                                tid:(NSString *)tid
                               block:(void(^)(NSDictionary *dict))dict
                             failure:(void(^)())failure{
     NSMutableDictionary *md = [NSMutableDictionary dictionary];
     [self setWithMutableDict:md key:@"token" value:token];
+    [self setWithMutableDict:md key:@"tid" value:tid];
     
     [self postWithAction:kTJDeskInviteFriedAPI params:md type:kDDHttpResponseTypeJson block:^(DDResponseModel *result) {
         if (result.status.integerValue == kDDResponseStateSuccess) {
             dict(result.data);
         } else {
+            [MBProgressHUD showMessage:result.msg_cn toView:[UIApplication sharedApplication].keyWindow];
             failure();
         }
-        [MBProgressHUD showMessage:result.msg_cn toView:[UIApplication sharedApplication].keyWindow];
+        
     } failure:^{
         //
     }];
@@ -1218,7 +1261,7 @@
         } else {
             failure();
         }
-        [MBProgressHUD showMessage:result.msg_cn toView:[UIApplication sharedApplication].keyWindow];
+        //[MBProgressHUD showMessage:result.msg_cn toView:[UIApplication sharedApplication].keyWindow];
     } failure:^{
         //
     }];
@@ -1244,7 +1287,7 @@
         } else {
             failure();
         }
-        [MBProgressHUD showMessage:result.msg_cn toView:[UIApplication sharedApplication].keyWindow];
+        //[MBProgressHUD showMessage:result.msg_cn toView:[UIApplication sharedApplication].keyWindow];
     } failure:^{
         //
     }];
@@ -1259,7 +1302,7 @@
                        failure:(void(^)())failure{
     NSMutableDictionary *md = [NSMutableDictionary dictionary];
     [self setWithMutableDict:md key:@"token" value:token];
-    [self setWithMutableDict:md key:@"mid" value:mid];
+    [self setWithMutableDict:md key:@"msg_id" value:mid];
     [self postWithAction:kTJUserDeleteMessageAPI params:md type:kDDHttpResponseTypeJson block:^(DDResponseModel *result) {
         if (result.status.integerValue == kDDResponseStateSuccess) {
             dict(result.data);
@@ -2067,6 +2110,54 @@
             failure();
         }
         //[MBProgressHUD showMessage:result.msg_cn toView:[UIApplication sharedApplication].keyWindow];
+    } failure:^{
+        //
+    }];
+}
+
+
+/**
+ 匹配加入心跳桌
+ 
+ @param token 用户token
+ @param activity 活动id
+ @param begin_time  开始时间
+ @param end_time  开始时间上限
+ @param average_price 人均
+ @param end_price  人均上限
+ @param lat 纬度
+ @param lon 经度
+ @param range  范围
+ */
++ (void)matchJoinLoveDeskWithToken:(NSString *)token
+                          activity:(NSString *)activity
+                        begin_time:(NSString *)begin_time
+                          end_time:(NSString *)end_time
+                     average_price:(NSString *)average_price
+                         end_price:(NSString *)end_price
+                               lat:(NSString *)lat
+                               lon:(NSString *)lon
+                             range:(NSString *)range
+                             block:(void(^)(NSDictionary *dict))dict
+                           failure:(void(^)())failure{
+    
+    NSMutableDictionary *md = [NSMutableDictionary dictionary];
+    [self setWithMutableDict:md key:@"token" value:token];
+    [self setWithMutableDict:md key:@"activity" value:activity];
+    [self setWithMutableDict:md key:@"begin_time" value:begin_time];
+    [self setWithMutableDict:md key:@"end_time" value:end_time];
+    [self setWithMutableDict:md key:@"average_price" value:average_price];
+    [self setWithMutableDict:md key:@"end_price" value:end_price];
+    [self setWithMutableDict:md key:@"range" value:range];
+    [self setWithMutableDict:md key:@"lat" value:lat];
+    [self setWithMutableDict:md key:@"lon" value:lon];
+    [self postWithAction:@"/tongju/api/join_heart_table.php" params:md type:kDDHttpResponseTypeJson block:^(DDResponseModel *result) {
+        if (result.status.integerValue == kDDResponseStateSuccess) {
+            dict(result.data);
+        } else {
+            failure();
+        }
+        [MBProgressHUD showMessage:result.msg_cn toView:[UIApplication sharedApplication].keyWindow];
     } failure:^{
         //
     }];

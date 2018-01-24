@@ -24,7 +24,9 @@
 @property (nonatomic, copy) NSString *desc; //描述
 @property (nonatomic, copy) NSString *uid;     //桌主id
 @property (nonatomic, copy) NSString *uname;   //桌主名称
-@property (nonatomic, copy) NSString *type;  // 1桌主 2参与者 3未参与
+@property (nonatomic, copy) NSString *type;  // 1桌主 2参与者 0未参与
+@property (nonatomic, copy) NSString *status;  //申请的状态，1-可以点击申请加入，0-不可以
+@property (nonatomic, copy) NSString *is_sign; //桌主是否签到，1-是，0-否
 @end
 
 

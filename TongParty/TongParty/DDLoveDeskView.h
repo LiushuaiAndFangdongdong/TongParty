@@ -11,4 +11,5 @@
 @interface DDLoveDeskView : UIView
 @property (nonatomic, copy) void(^selectClickBlcok)(NSInteger index);
 @property (nonatomic, copy) void(^joinLoveClickBlcok)();
+- (void)updateFunctionBtnWithArray:(NSArray *)array;
 @end

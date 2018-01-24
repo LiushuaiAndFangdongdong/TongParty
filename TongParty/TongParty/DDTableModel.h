@@ -25,6 +25,7 @@
 @property (nonatomic, copy) NSString *longitude;
 @property (nonatomic, copy) NSString *latitude;
 @property (nonatomic, copy) NSString *status; // 是否可以点击
+@property (nonatomic, copy) NSString *name;
 @end
 
 

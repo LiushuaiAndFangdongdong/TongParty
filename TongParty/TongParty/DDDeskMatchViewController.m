@@ -12,7 +12,7 @@
 @interface DDDeskMatchViewController ()
 @property (nonatomic, strong) UILabel *descLbl;
 @property (nonatomic, strong) UIImageView *searchView;
-@property (nonatomic, strong) UILabel *matchLabel ;
+@property (nonatomic, strong) UILabel *matchLabel;
 @property (nonatomic, strong) UIImageView *ellipsisView;
 @end
 
@@ -122,9 +122,6 @@
     [_ellipsisView startAnimating];
 //    [self performSelector:@selector(clearAinimationImageMemory) withObject:nil afterDelay:3.f];// 性能优化的重点来了，此处我在执行完序列帧以后我执行了一个清除内存的操作
 }
-
-
-
 
 // 清除animationImages所占用内存
 - (void)clearAinimationImageMemory {

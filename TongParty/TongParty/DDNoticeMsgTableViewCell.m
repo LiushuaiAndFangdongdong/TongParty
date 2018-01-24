@@ -58,7 +58,7 @@
         make.width.mas_equalTo(_namelbl.mas_height);
     }];
     _sexView.image = kImage(@"info_male");
-
+    
     _messageLbl = [UILabel new];
     [self.contentView addSubview:_messageLbl];
     [_messageLbl mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -75,12 +75,33 @@
     [_timeLbl mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.mas_equalTo(self);
         make.right.mas_equalTo(-10);
-//        make.width.mas_equalTo(60);
+        //        make.width.mas_equalTo(60);
         make.height.mas_equalTo(20);
     }];
     _timeLbl.text = @"18-28";
     _timeLbl.textColor = kGrayColor;
     _timeLbl.font = kFont(14);
+}
+
+- (void)updateWithModel:(LSNoticeMessageEntity *)entity {
+    _timeLbl.text = entity.uptime;
+    _namelbl.text = entity.name;
+    // 保密
+    if (entity.sex.integerValue == 0) {
+        _sexView.hidden = YES;
+        _sexView.image = kImage(@"info_male");
+    }
+    // 男
+    if (entity.sex.integerValue == 1) {
+        _sexView.hidden = NO;
+        _sexView.image = kImage(@"info_male");
+    }
+    // 女
+    if (entity.sex.integerValue == 2) {
+        _sexView.hidden = NO;
+        _sexView.image = kImage(@"info_female");
+    }
+    _messageLbl.text = entity.msg_text;
 }
 
 
@@ -93,3 +114,4 @@
 }
 
 @end
+

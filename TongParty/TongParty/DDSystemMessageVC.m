@@ -8,7 +8,8 @@
 
 #import "DDSystemMessageVC.h"
 #import "DDSysMsgTableViewCell.h"
-
+#import "LSSystemMessageEntity.h"
+#import "WKWebViewVC.h"
 @interface DDSystemMessageVC ()
 @property (nonatomic, weak) DDCustomCommonEmptyView *emptyView;
 @end
@@ -18,12 +19,46 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self navigationWithTitle:@"系统消息"];
+    [self loadData];
 }
 // 设置子视图
 - (void)setUpViews {
-//    self.sepLineColor = kSeperatorColor;
+    //    self.sepLineColor = kSeperatorColor;
     self.refreshType = DDBaseTableVcRefreshTypeOnlyCanRefresh;
 }
+
+- (void)loadData {
+    [super loadData];
+    [self showLoadingAnimation];
+    [DDTJHttpRequest getMessageContentWithToken:TOKEN mid:@"1" tid:nil block:^(NSDictionary *dict) {
+        [self hideLoadingAnimation];
+        _dataArray = [LSSystemMessageEntity mj_objectArrayWithKeyValuesArray:dict];
+        if (_dataArray.count == 0) {
+            [self.emptyView showInView:self.view];
+        }else{
+            [self.emptyView removeFromSuperview];
+        }
+        [self.tableView reloadData];
+    } failure:^{
+        [self.emptyView showInView:self.view];
+    }];
+}
+
+-(void)tj_refresh {
+    [DDTJHttpRequest getMessageContentWithToken:TOKEN mid:@"1" tid:nil block:^(NSDictionary *dict) {
+        [self tj_endRefresh];
+        _dataArray = [DDMessageModel mj_objectArrayWithKeyValuesArray:dict];
+        if (_dataArray.count == 0) {
+            [self.emptyView showInView:self.view];
+        }else{
+            [self.emptyView removeFromSuperview];
+        }
+        [self.tableView reloadData];
+    } failure:^{
+        [self.emptyView showInView:self.view];
+    }];
+}
+
 - (DDCustomCommonEmptyView *)emptyView {
     if (!_emptyView) {
         DDCustomCommonEmptyView *empty = [[DDCustomCommonEmptyView alloc] initWithTitle:@"暂无数据" secondTitle:@"不好意思，网络跟您开了一个玩笑了" iconname:@"nocontent"];
@@ -38,38 +73,28 @@
 }
 
 - (NSInteger)tj_numberOfRowsInSection:(NSInteger)section {
-    //    return self.dataArray.count;
-    return 10;
+    return self.dataArray.count;
 }
 
 - (DDBaseTableViewCell *)tj_cellAtIndexPath:(NSIndexPath *)indexPath {
     DDSysMsgTableViewCell *cell = [DDSysMsgTableViewCell cellWithTableView:self.tableView];
-    //    [cell updateWithModel:_dataArray[indexPath.row]];
+    [cell updateWithModel:_dataArray[indexPath.row]];
     return cell;
 }
 
 - (CGFloat)tj_cellheightAtIndexPath:(NSIndexPath *)indexPath {
-    return 300;
+    return DDFitHeight(280.f);
 }
 - (void)tj_didSelectCellAtIndexPath:(NSIndexPath *)indexPath cell:(DDBaseTableViewCell *)cell {
-    //    DDTableModel *model = _dataArray[indexPath.row];
-    //    DDDeskShowViewController *deskShowVC = [[DDDeskShowViewController alloc] init];
-    //    deskShowVC.tmpModel   = model;
-    //    [self.navigationController pushViewController:deskShowVC animated:YES];
+    LSSystemMessageEntity *entity = _dataArray[indexPath.row];
+    WKWebViewVC *vc = [[WKWebViewVC alloc] init];
+    vc.requestUrl = entity.url;
+    [self.navigationController pushViewController:vc animated:YES];
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end
 

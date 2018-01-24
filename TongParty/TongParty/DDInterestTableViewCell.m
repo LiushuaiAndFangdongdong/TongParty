@@ -210,6 +210,7 @@
     }else if ([model.type intValue] == 3){
         _sAvatar.statusstring  = @"desklist_status_apply";
     }else{
+        _sAvatar.statusstring  = @"";
     }
     
     if (model.status) {

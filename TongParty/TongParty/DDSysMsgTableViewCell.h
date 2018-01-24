@@ -7,7 +7,9 @@
 //
 
 #import "DDBaseTableViewCell.h"
-
+#import "LSSystemMessageEntity.h"
 @interface DDSysMsgTableViewCell : DDBaseTableViewCell
-
+- (void)updateWithModel:(LSSystemMessageEntity *)model;
 @end
+
+

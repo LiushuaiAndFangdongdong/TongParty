@@ -110,12 +110,18 @@
 - (void)updateWithModel:(DDUserInfoModel *)model{
     [self.ntView updateWithModel:model withType:DDNumbersTextViewTypeNormal];
     [self.rewardView updateWithModel:model];
-    if (!model) {
+    if (!model && model.photo && model.photo.count > 0) {
         self.albumView.height = 60.f;
     } else {
-        self.albumView.height = 120.f;
+        self.albumView.height = 130.f;
     }
     [self.albumView updateWithUserModel:model];
+    
+    if (model.table.count == 0 || !model) {
+        self.activitiesHisView.height = 60;
+    }else{
+        self.activitiesHisView.height = 60+kActivityItemWidth+20;
+    }
     [self.activitiesHisView updateWithModel:model];
 }
 

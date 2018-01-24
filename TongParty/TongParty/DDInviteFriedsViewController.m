@@ -39,7 +39,7 @@
 - (void)loadData {
     [super loadData];
     [self showLoadingAnimation];
-    [DDTJHttpRequest inviteFriendsListsWithToken:TOKEN block:^(NSDictionary *dict) {
+    [DDTJHttpRequest inviteFriendsListsWithToken:TOKEN tid:(NSString *)tid block:^(NSDictionary *dict) {
         [self hideLoadingAnimation];
         _friedsArr = [DDInviteFriendModel mj_objectArrayWithKeyValuesArray:dict[@"friends"]];
         _caredArr = [DDInviteFriendModel mj_objectArrayWithKeyValuesArray:dict[@"likes"]];

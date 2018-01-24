@@ -20,7 +20,7 @@
 @property (nonatomic, strong) UIImageView *joinView;
 @property (nonatomic, strong) UIButton *joinBtn;
 @property (nonatomic, strong) NSArray *imageArr;
-@property (nonatomic, strong) NSArray *titleArr;
+//@property (nonatomic, strong) NSArray *titleArr;
 @end
 
 @implementation DDLoveDeskView
@@ -52,6 +52,14 @@
     }];
     _bottomView.image = kImage(@"lovedesk_bottomView");
     _bottomView.userInteractionEnabled = YES;
+}
+
+- (void)updateFunctionBtnWithArray:(NSArray *)array{
+    
+    NSArray *views = [_bottomView subviews];
+    for (UIView *v in views) {
+        [v removeFromSuperview];
+    }
     
     _joinView = [UIImageView new];
     [self.bottomView addSubview:_joinView];
@@ -62,6 +70,7 @@
         make.top.mas_equalTo(-30);
     }];
     _joinView.image = kImage(@"lovedesk_joinBntBg");
+    _joinView.userInteractionEnabled = YES;
     
     _joinBtn =[ UIButton new];
     [_joinView addSubview:_joinBtn];
@@ -73,9 +82,9 @@
     [_joinBtn setTitleColor:kSubjectPinkRedColor forState:UIControlStateNormal];
     _joinBtn.titleLabel.font = kFont(16);
     [_joinBtn addTarget:self action:@selector(loveJoinAction) forControlEvents:UIControlEventTouchUpInside];
-
+    
     _imageArr = @[@"lovedesk_time",@"lovedesk_distance",@"lovedesk_activity",@"lovedesk_avePrice"];
-    _titleArr = @[@"选择时间",@"选择距离",@"筛选活动",@"选择人均"];
+//    _titleArr = @[@"选择时间",@"选择距离",@"筛选活动",@"选择人均"];
     for (int i = 0; i < 2; i++) {
         for (int j = 0; j < 2; j++) {
             UIButton *functionBtn = [[UIButton alloc] init];
@@ -83,12 +92,12 @@
             [functionBtn mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.top.mas_equalTo(kBtnHeightMargin*(j+1)+j*kBtnItemWidth);
                 make.left.mas_equalTo(kBtnWidthMargin*(i+1)+i*kBtnItemWidth);
-                make.width.mas_equalTo(kBtnItemWidth);
-                make.height.mas_equalTo(kBtnItemWidth);
+                make.width.mas_equalTo(kBtnItemWidth  + 10);
+                make.height.mas_equalTo(kBtnItemWidth + 10);
             }];
-            functionBtn.tag = i+20;
+            functionBtn.tag = i*10+j;//(0 、 10 、 1、 11)
             [functionBtn setImage:[UIImage imageNamed:_imageArr[2*i+j]] forState:UIControlStateNormal];
-            [functionBtn setTitle:_titleArr[2*i+j] forState:UIControlStateNormal];
+            [functionBtn setTitle:array[2*i+j] forState:UIControlStateNormal];
             [functionBtn setTitleColor:kBlackColor forState:UIControlStateNormal];
             functionBtn.titleLabel.font = kFont(12);
             [functionBtn layoutButtonWithEdgeInsetsStyle:DDButtonEdgeInsetsStyleTop imageTitleSpace:10];
@@ -99,7 +108,7 @@
 
 - (void)functionAction:(UIButton *)sender{
     if (_selectClickBlcok) {
-        _selectClickBlcok(sender.tag - 20);
+        _selectClickBlcok(sender.tag);
     }
 }
 

@@ -172,8 +172,8 @@
         //rotation
         [UIView animateWithDuration:0.7 delay:i*0.14 usingSpringWithDamping:0.46 initialSpringVelocity:0 options:UIViewAnimationOptionAllowUserInteraction animations:^{
             btn.transform = CGAffineTransformScale(btn.transform, 1.2734*bl, 1.2734*bl);//缩放
-            btn.center = CGPointMake((74+i++*113)*bl, self.frame.size.height-165*bl);
-            
+//            btn.center = CGPointMake((74+i++*113)*bl, self.frame.size.height-165*bl);
+            btn.center = CGPointMake((130+i++*113)*bl, self.frame.size.height-165*bl);
         } completion:nil];
 
         //move

@@ -32,7 +32,31 @@
 -(void)loadData{
     [super loadData];
     [DDTJHttpRequest getMessageListsWithToken:TOKEN block:^(NSDictionary *dict) {
+        
         NSLog(@"消息列表%@",dict);
+        _dataArray = [NSMutableArray array];
+        _masterMsgArray = [DDMessageModel mj_objectArrayWithKeyValuesArray:dict[@"ct"]];
+        if (_masterMsgArray.count > 0) {
+            [_dataArray addObject:_masterMsgArray];
+        }
+        _joinMsgArray = [DDMessageModel mj_objectArrayWithKeyValuesArray:dict[@"jt"]];
+        if (_joinMsgArray.count > 0) {
+            [_dataArray addObject:_joinMsgArray];
+        }
+        _otherMsgArray = [DDMessageModel mj_objectArrayWithKeyValuesArray:dict[@"other"]];
+        if (_otherMsgArray.count > 0) {
+            [_dataArray addObject:_otherMsgArray];
+        }
+        [self.tableView reloadData];
+    } failure:^{
+        //
+    }];
+}
+
+- (void)tj_refresh {
+    [DDTJHttpRequest getMessageListsWithToken:TOKEN block:^(NSDictionary *dict) {
+        [self tj_endRefresh];
+        [_dataArray removeAllObjects];
         _dataArray = [NSMutableArray array];
         _masterMsgArray = [DDMessageModel mj_objectArrayWithKeyValuesArray:dict[@"ct"]];
         if (_masterMsgArray.count > 0) {
@@ -55,8 +79,8 @@
 // 设置子视图
 - (void)setUpViews {
     self.sepLineColor = kBgWhiteGrayColor;
-    self.refreshType = DDBaseTableVcRefreshTypeOnlyCanRefresh;
-//        self.tableView.backgroundColor = kRedColor;
+    self.refreshType = DDBaseTableVcRefreshTypeRefreshAndLoadMore;
+    //        self.tableView.backgroundColor = kRedColor;
 }
 #pragma mark - UITableViewDelegate
 - (NSInteger)tj_numberOfSections {
@@ -86,14 +110,47 @@
 }
 
 - (void)tj_didSelectCellAtIndexPath:(NSIndexPath *)indexPath cell:(DDBaseTableViewCell *)cell {
-//    DDMasterMessageVC *masterMsgVC = [[DDMasterMessageVC alloc] init];
-//    [self.navigationController pushViewController:masterMsgVC animated:YES];
+    DDMessageModel *model = self.dataArray[indexPath.section][indexPath.row];
+    if ([_joinMsgArray containsObject:model]) {
+        DDNoticeMessageVC *noticeMsgVC = [[DDNoticeMessageVC alloc] init];
+        noticeMsgVC.messageModel = model;
+        [self.navigationController pushViewController:noticeMsgVC animated:YES];
+    }
     
-//    DDSystemMessageVC *sysMsgVC = [[DDSystemMessageVC alloc] init];
-//    [self.navigationController pushViewController:sysMsgVC animated:YES];
+    if ([_otherMsgArray containsObject:model]) {
+        DDSystemMessageVC *sysMsgVC = [[DDSystemMessageVC alloc] init];
+        sysMsgVC.messageModel = model;
+        [self.navigationController pushViewController:sysMsgVC animated:YES];
+    }
     
-    DDNoticeMessageVC *noticeMsgVC = [[DDNoticeMessageVC alloc] init];
-    [self.navigationController pushViewController:noticeMsgVC animated:YES];
+    if ([_masterMsgArray containsObject:model]) {
+        DDMasterMessageVC *masterMsgVC = [[DDMasterMessageVC alloc] init];
+        masterMsgVC.messageModel = model;
+        [self.navigationController pushViewController:masterMsgVC animated:YES];
+    }
+}
+
+- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
+    return YES;
+}
+
+-(NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return @"删除消息";
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (editingStyle == UITableViewCellEditingStyleDelete){
+        DDMessageModel *model = self.dataArray[indexPath.section][indexPath.row];
+        
+        [DDTJHttpRequest deleteMessageWithToken:TOKEN mid:model.mid block:^(NSDictionary *dict) {
+            [self tj_refresh];
+        } failure:^{ }];
+    }
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [kNotificationCenter postNotificationName:@"loadMessageCount" object:nil];
 }
 
 - (void)didReceiveMemoryWarning {

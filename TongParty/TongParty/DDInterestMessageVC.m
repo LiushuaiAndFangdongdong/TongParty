@@ -10,7 +10,8 @@
 
 #import "DDInterestMessageVC.h"
 #import "DDInterestMessageCell.h"
-
+#import "LSPersonEntity.h"
+#import "LSCouponView.h"
 @interface DDInterestMessageVC ()
 @property (nonatomic, weak) DDCustomCommonEmptyView *emptyView;
 @end
@@ -20,30 +21,32 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setUpViews];
-    [self loadData];
 }
 // 设置子视图
 - (void)setUpViews {
     self.sepLineColor = kSeperatorColor;
-    self.refreshType = DDBaseTableVcRefreshTypeRefreshAndLoadMore;
+    self.refreshType = DDBaseTableVcRefreshTypeOnlyCanRefresh;
 }
 
 #pragma mark  -  请求数据
 - (void)loadData {
     [super loadData];
-    //    [self showLoadingAnimation];
-    //    [DDTJHttpRequest getJoinedDeskWithToken:TOKEN lat:@"" lon:@"" block:^(NSDictionary *dict) {
-    //        [self hideLoadingAnimation];
-    //        _dataArray = [DDTableModel mj_objectArrayWithKeyValuesArray:dict];
-    //        if (_dataArray.count == 0) {
-    //            [self.emptyView showInView:self.view];
-    //        }else{
-    //            [self.tableView reloadData];
-    //        }
-    //    } failure:^{
-    //        [self.emptyView showInView:self.view];
-    //    }];
+    [DDTJHttpRequest deskCaredUserListWithToken:TOKEN tid:_messageModel.tid lon:[DDUserSingleton shareInstance].longitude lat:[DDUserSingleton shareInstance].latitude block:^(NSDictionary *dict) {
+        _dataArray = [LSPersonEntity mj_objectArrayWithKeyValuesArray:dict];
+        if (_dataArray.count == 0) {
+            [self.emptyView showInView:self.view];
+        }else{
+            [self.emptyView removeFromSuperview];
+            if (_members) {
+                _members([NSString stringWithFormat:@"%ld人",_dataArray.count]);
+            }
+        }
+        [self.tableView reloadData];
+    } failure:^{
+        [self.emptyView showInView:self.view];
+    }];
 }
+
 - (DDCustomCommonEmptyView *)emptyView {
     if (!_emptyView) {
         DDCustomCommonEmptyView *empty = [[DDCustomCommonEmptyView alloc] initWithTitle:@"暂无数据" secondTitle:@"不好意思，网络跟您开了一个玩笑了" iconname:@"nocontent"];
@@ -58,13 +61,16 @@
 }
 
 - (NSInteger)tj_numberOfRowsInSection:(NSInteger)section {
-    //    return self.dataArray.count;
-    return 10;
+    return self.dataArray.count;
 }
 
 - (DDBaseTableViewCell *)tj_cellAtIndexPath:(NSIndexPath *)indexPath {
+    WeakSelf(weakSelf);
     DDInterestMessageCell *cell = [DDInterestMessageCell cellWithTableView:self.tableView];
-    //    [cell updateWithModel:_dataArray[indexPath.row]];
+    cell.inviteJoin = ^(NSString *to_id) {
+        [weakSelf inviteJoin:to_id];
+    };
+    [cell updateWithModel:_dataArray[indexPath.row]];
     return cell;
 }
 
@@ -83,14 +89,67 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (void)tj_refresh {
+    [DDTJHttpRequest deskCaredUserListWithToken:TOKEN tid:_messageModel.tid lon:[DDUserSingleton shareInstance].longitude lat:[DDUserSingleton shareInstance].latitude block:^(NSDictionary *dict) {
+        [self tj_endRefresh];
+        _dataArray = [LSPersonEntity mj_objectArrayWithKeyValuesArray:dict];
+        if (_dataArray.count == 0) {
+            [self.emptyView showInView:self.view];
+        }else{
+            [self.emptyView removeFromSuperview];
+        }
+        if (_members) {
+            if (_dataArray.count == 0) {
+                _members(nil);
+            } else {
+                _members([NSString stringWithFormat:@"%ld人",_dataArray.count]);
+            }
+        }
+        [self.tableView reloadData];
+    } failure:^{
+        [self.emptyView showInView:self.view];
+    }];
 }
-*/
+
+- (void)setMessageModel:(DDMessageModel *)messageModel {
+    _messageModel = messageModel;
+    [self showLoadingAnimation];
+    [DDTJHttpRequest deskCaredUserListWithToken:TOKEN tid:_messageModel.tid lon:[DDUserSingleton shareInstance].longitude lat:[DDUserSingleton shareInstance].latitude block:^(NSDictionary *dict) {
+        [self hideLoadingAnimation];
+        _dataArray = [LSPersonEntity mj_objectArrayWithKeyValuesArray:dict];
+        if (_dataArray.count == 0) {
+            [self.emptyView showInView:self.view];
+        }else{
+            [self.emptyView removeFromSuperview];
+        }
+        if (_members) {
+            if (_dataArray.count == 0) {
+                _members(nil);
+            } else {
+                _members([NSString stringWithFormat:@"%ld人",_dataArray.count]);
+            }
+        }
+        [self.tableView reloadData];
+    } failure:^{
+        [self.emptyView showInView:self.view];
+    }];
+}
+
+// 邀请
+- (void)inviteJoin:(NSString *)to_id {
+    
+    [[LSCouponView shareInstance] showCouponViewOnWindowWithType:DDDeskShowTypeInviteCoupon doneBlock:^(NSDictionary *dict) {
+        NSNumber *couponCount = dict[@"couponCount"];
+        [DDTJHttpRequest inviteUserJoinTableWithTid:_messageModel.tid to_id:to_id prop:couponCount block:^(NSDictionary *dict) {
+            [self loadData];
+        } failure:^{
+            
+        }];
+    }];
+    
+    
+}
 
 @end
+
+

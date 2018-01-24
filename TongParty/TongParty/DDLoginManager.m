@@ -41,9 +41,9 @@
 
 
 - (void)loginWithUsername:(NSString *)username password:(NSString *)password block:(void(^)(NSDictionary *dict))block failure:(void(^)())failure {
-    //[MBProgressHUD showLoading:@"登录中..." toView:KEY_WINDOW];
+    [MBProgressHUD showLoading:@"登录中..." toView:KEY_WINDOW];
     [DDTJHttpRequest loginWithMobile:username password:password block:^(NSDictionary *dict) {
-        //[MBProgressHUD hideAllHUDsInView:KEY_WINDOW];
+        [MBProgressHUD hideAllHUDsInView:KEY_WINDOW];
         [DDUserDefault setObject:username forKey:@"mobile"];
         [DDUserDefault setObject:password forKey:@"password"];
         [DDUserDefault setObject:dict[@"token"] forKey:@"token"];

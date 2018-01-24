@@ -8,6 +8,7 @@
 
 #import "DDBaseViewController.h"
 #import "LSActivityEntity.h"
+
 @interface LSCreateDeskContentSortVC : DDBaseViewController
 @property (nonatomic, copy) void(^selectActivity)(LSActivityEntity *entity);
 @end

@@ -172,15 +172,9 @@
 //删除
 - (void)deleteAddressWithIndexPath:(NSIndexPath *)indexPath{
     DDAddressModel *model = _dataArray[indexPath.section];
-    [MBProgressHUD showLoading:self.view];
     [DDTJHttpRequest deleteCustomAddressWithToken:TOKEN aid:model.id block:^(NSDictionary *dict) {
         [MBProgressHUD hideAllHUDsInView:self.view];
-        [_dataArray removeObjectAtIndex:indexPath.section];
-        [_tableview deleteSections:[NSIndexSet indexSetWithIndex:indexPath.section] withRowAnimation:UITableViewRowAnimationMiddle];
-        [_tableview reloadData];
-        if (_dataArray.count == 0) {
-            [self.emptyView showInView:self.view];
-        }
+        [self loadData];
     } failure:^{
         //
     }];

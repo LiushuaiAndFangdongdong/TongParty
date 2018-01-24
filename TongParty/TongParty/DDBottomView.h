@@ -10,5 +10,5 @@
 
 @interface DDBottomView : UIView
 @property (nonatomic, copy) void(^bottomFunctionClickBlcok)(NSInteger index);
-- (void)updateBtnImageWithType:(NSString *)type;
+- (void)updateBtnImageWithType:(NSString *)type is_like:(NSString *)is_Like;
 @end

@@ -23,7 +23,7 @@
 #import "DDScanAvatarViewController.h"  //查看大头像
 #import "DDHisHerViewController.h"
 #import "LSAlbumEtity.h"
-
+#import "DDMessageViewController.h"
 
 #define kAvatarWidth   50
 #define kMarginGapWidth 18
@@ -104,6 +104,24 @@ height=305;\
     self.navigationController.navigationBar.shadowImage = [UIImage new];
     
     [kNotificationCenter addObserver:self selector:@selector(updateUserInfo) name:kUpdateUserInfoNotification object:nil];
+    //左边消息按钮
+    dispatch_queue_t queue= dispatch_queue_create("messageNum", DISPATCH_QUEUE_CONCURRENT);
+    dispatch_async(queue, ^{
+        [DDTJHttpRequest getMessageNumWithToken:[DDUserDefault objectForKey:@"token"] block:^(NSDictionary *dict) {
+            NSLog(@"未读消息数量%@",dict);
+            //主线程刷新
+            dispatch_async(dispatch_get_main_queue(), ^(){
+                if ([dict[@"num"] intValue] > 0) {
+                    //左边消息按钮
+                    self.navigationItem.leftBarButtonItem = [self customButtonForNavigationBarWithAction:@selector(messagesAction) imageNamed:@"usercenter_message" isRedPoint:YES pointValue:[dict[@"num"] stringValue] CGSizeMake:CGSizeMake(21, 16)];
+                } else {
+                    self.navigationItem.leftBarButtonItem = [self customButtonForNavigationBarWithAction:@selector(messagesAction) imageNamed:@"usercenter_message" isRedPoint:NO pointValue:@"" CGSizeMake:CGSizeMake(21, 16)];
+                }
+            });
+        } failure:^{
+            self.navigationItem.leftBarButtonItem = [self customButtonForNavigationBarWithAction:@selector(messagesAction) imageNamed:@"usercenter_message" isRedPoint:NO pointValue:@"" CGSizeMake:CGSizeMake(21, 16)];
+        }];
+    });
 }
 
 -(void)dealloc {
@@ -117,6 +135,7 @@ height=305;\
 -(void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     self.navigationController.navigationBar.translucent = NO;
+
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -165,11 +184,8 @@ height=305;\
     
     //    [self.headerView updateUserInfoWith:_model];
 }
-
 -(void)customNavi{
-    //左边消息按钮
-    UIBarButtonItem *leftBtn = [self customButtonForNavigationBarWithAction:@selector(messageAction) imageNamed:@"usercenter_message" isRedPoint:YES pointValue:@"" CGSizeMake:CGSizeMake(26, 18)];
-    self.navigationItem.leftBarButtonItem = leftBtn;
+
     //右边设置按钮
     UIBarButtonItem *rightBtn = [self customButtonForNavigationBarWithAction:@selector(settingAction) imageNamed:@"usercenter_setting" isRedPoint:NO pointValue:nil CGSizeMake:CGSizeMake(22, 22)];
     self.navigationItem.rightBarButtonItem = rightBtn;
@@ -209,8 +225,8 @@ height=305;\
         return 60;
     }else{
         if (indexPath.section == 2) {
-            if (_model.photo) {
-                return 120;
+            if (_model && _model.photo && _model.photo.count > 0) {
+                return 130;
             }else{
                 return 60;
             }
@@ -218,7 +234,7 @@ height=305;\
 
         }else if (indexPath.section == 3){
             //活动历史
-            if (!_model.ct_num && !_model.jt_num) {
+            if (!_model.table || _model.table.count == 0) {
                 return 60;
             }else{
                 return 60+kActivityItemWidth+20;
@@ -262,13 +278,11 @@ height=305;\
         [self pushDeskVC];
     };
     switch (indexPath.section) {
-        case 0:
-        {
+        case 0:{
             cell.style = DDUserCellStyleVariousNumbers;
         }
             break;
-        case 1:
-        {
+        case 1:{
             cell.style = DDUserCellStyleTongCoin;
         }
             break;
@@ -278,8 +292,7 @@ height=305;\
             }
         }
             break;
-        case 3:
-        {
+        case 3:{
             cell.style = DDUserCellStyleActivities;
         }
             break;
@@ -303,8 +316,7 @@ height=305;\
     switch (indexPath.section) {
         case 0:
         {}break;
-        case 1:
-        {
+        case 1:{
             //打赏明细
             [self pushFriendsVCWithStyle:DDFriendsStyleReward];
         }break;
@@ -321,8 +333,7 @@ height=305;\
 }
 #pragma mark - stretchableTable delegate
 
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView
-{
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     NSLog(@"%f",scrollView.contentOffset.y);
     UIView *barView = [self.navigationController.view viewWithTag:120];
     CGFloat offsetY = scrollView.contentOffset.y;
@@ -339,8 +350,7 @@ height=305;\
     [self.stretchHeaderView scrollViewDidScroll:scrollView];
 }
 
-- (void)viewDidLayoutSubviews
-{
+- (void)viewDidLayoutSubviews {
     [self.stretchHeaderView resizeView];
 }
 
@@ -424,9 +434,9 @@ height=305;\
     return _photo;
 }
 
--(void)messageAction{
-    //    DDHisHerViewController *hisVC = [[DDHisHerViewController alloc] init];
-    //    [self.navigationController pushViewController:hisVC animated:YES];
+-(void)messagesAction{
+    DDMessageViewController *messageVC = [[DDMessageViewController  alloc] init];
+    [self.navigationController pushViewController:messageVC animated:YES];
 }
 -(void)enterLoginVC{
     DDLoginViewController *loginVC = [[DDLoginViewController alloc] init];

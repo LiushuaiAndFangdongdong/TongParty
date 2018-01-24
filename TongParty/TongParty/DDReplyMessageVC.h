@@ -7,7 +7,10 @@
 //
 
 #import "DDBaseTableViewController.h"
-
+#import "DDMessageModel.h"
 @interface DDReplyMessageVC : DDBaseTableViewController
-
+@property (nonatomic, copy) void(^members)(NSString *count);
+@property (nonatomic, strong)DDMessageModel *messageModel;
 @end
+
+

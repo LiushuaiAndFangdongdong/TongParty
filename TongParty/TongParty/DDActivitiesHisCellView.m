@@ -9,7 +9,7 @@
 #import "DDActivitiesHisCellView.h"
 #import "DDLabelView.h"
 #import "UIView+Layer.h"
-
+#import "DDTableModel.h"
 #define kIconWidth  15
 #define kMarginGapWidth 18
 #define kActivityItemWidth (kScreenWidth - kMarginGapWidth*6)/5
@@ -52,7 +52,10 @@
     self.nameLabel.font = kFont(13);
 }
 - (void)updateWithModel:(DDUserInfoModel *)model;{
-    
+    model.table = [DDTableModel mj_objectArrayWithKeyValuesArray:model.table];
+    if (!model.table) {
+        return;
+    }
     if (_scrollView) {
         [_scrollView removeFromSuperview];
     }
@@ -70,8 +73,8 @@
             make.left.and.right.mas_equalTo(0);
         }];
         
-        int n = 10;
-        for (int i=0; i<n; i++) {
+        for (int i=0; i<model.table.count; i++) {
+            DDTableModel *tm = model.table[i];
             //圆形活动
             DDLabelView *labelView = [DDLabelView new];
             [_scrollView addSubview:labelView];
@@ -81,7 +84,7 @@
                 make.left.mas_equalTo(kMarginGapWidth * (i+1) + kActivityItemWidth * i);
             }];
             labelView.bgColor = kLightGreenColor;
-            labelView.textstring = @"狼人杀";
+            labelView.textstring = tm.name;
             labelView.layerCornerRadius = kActivityItemWidth/2;
             labelView.tag = i+10;
             [labelView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(activitiesItemClick:)]];
@@ -96,7 +99,7 @@
                 make.top.mas_equalTo(5+kActivityItemWidth/2);
             }];
             linkline.backgroundColor = kLightGrayColor;
-            if (i == n- 1) {
+            if (i == model.table.count - 1) {
                 linkline.hidden = YES;
             }
             
@@ -109,7 +112,7 @@
                 make.height.mas_equalTo(20);
                 make.left.mas_equalTo(labelView.mas_left);
             }];
-            timeLbl.text = @"9月26号";
+            timeLbl.text = tm.begin_time;
             timeLbl.font = kFont(12);
             timeLbl.textAlignment = NSTextAlignmentCenter;
             timeLbl.textColor = kGrayColor ;
